@@ -21,7 +21,7 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) -o $(NAME)
 
 test: $(TEST)
-	$(TEST)
+	./$(TEST)
 
 $(TEST): $(NO_MAIN) $(TEST_OBJS)
 	$(CC) $(NO_MAIN) $(TEST_OBJS) $(CRITERION) -o $(TEST)
