@@ -1,4 +1,4 @@
-
+SH				= /bin/sh
 CC				= gcc
 CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
@@ -22,9 +22,10 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) -o $(NAME)
 
 test: $(TEST)
+	$(SH) $(TEST)
 
 $(TEST): $(NO_MAIN) $(TEST_OBJS)
-	$(CC) $(NO_MAIN)) $(TEST_OBJS) $(CRITERION) -o $(TEST)
+	$(CC) $(NO_MAIN) $(TEST_OBJS) $(CRITERION) -o $(TEST)
 	$(RM) $(TEST_OBJS)
 
 clean:
