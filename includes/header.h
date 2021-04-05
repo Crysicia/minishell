@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   example.h                                          :+:      :+:    :+:   */
+/*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/03 12:48:31 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/05 15:06:03 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
+/*   Updated: 2021/04/05 14:55:44 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXAMPLE_H
-# define EXAMPLE_H
+#ifndef HEADER_H
+# define HEADER_H
+# include <unistd.h>
+# include <stdio.h>
+# include "get_next_line.h"
 
-int	ft_max(int a, int b);
-
+void	print_prompt(void);
+void	get_command(void);
+int		lexer(char *line);
+char	*get_word(char **line);
+void	skip_spaces(char **line);
 #endif

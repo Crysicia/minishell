@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:46:49 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/03 12:57:33 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/05 15:03:14 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 
 int	ft_max(int a, int b)
 {
-	return ((a > b) ? a : b);
+	if (a > b)
+		return (a);
+	else
+		return (b);
 }
