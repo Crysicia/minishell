@@ -6,6 +6,7 @@ CRITERION		= -lcriterion
 NAME			= Minishell
 PATH_SRCS		= ./srcs/
 SRCS			= main.c \
+				  tests/example.c \
 				  srcs/lexer.c \
 				  srcs/get_next_line.c srcs/get_next_line_utils.c
 
