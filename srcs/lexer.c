@@ -19,14 +19,14 @@ void	get_command(void)
 	int		ret;
 
 	ret = get_next_line(0, &line);
-	if (ret == -1)
+	if (ret == -1 || line == NULL)
 	{
 		puts("gnl error");
 		exit(-1);
 	}
 	else if (ret == 0)
 		exit(0);
-	lexer(line);
+	lexer(NULL);
 }
 
 int	lexer(char *line)
@@ -35,13 +35,17 @@ int	lexer(char *line)
 	int		i;
 
 	i = 0;
+	if (line == NULL)
+	{
+		printf("lexer error");
+		return (-1);
+	}
 	while (*line)
 	{
 		tmp = get_word(&line);
 		printf("%d = %s\n", i++, tmp);
 		skip_spaces(&line);
 	}
-	(void)tmp;
 	return (0);
 }
 
