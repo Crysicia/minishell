@@ -5,7 +5,9 @@ HEADERS 		= -I./includes
 CRITERION		= -lcriterion
 NAME			= Minishell
 SRCS			= main.c \
-				  example.c
+				  example.c \
+				  lexer.c \
+				  get_next_line.c get_next_line_utils.c 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
