@@ -14,7 +14,7 @@
 
 void	print_prompt(void)
 {
-	write(1, "minishell>", 10);
+	write(1, "Minishell>", 10);
 }
 
 int	main(int argc, char *argv[], char *envp[])
