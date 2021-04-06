@@ -1,8 +1,8 @@
 CC				= gcc
 CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
-HEADERS 		= -I./includes -I./criterion/includes/
-CRITERION		= -lcriterion -LCriterion
+HEADERS 		= -I./includes
+CRITERION		= -lcriterion
 NAME			= Minishell
 PATH_SRCS		= ./srcs/
 SRCS			= main.c \
@@ -34,7 +34,7 @@ clean:
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(TEST)
 
 re: fclean all
 

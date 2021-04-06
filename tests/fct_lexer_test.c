@@ -1,4 +1,4 @@
-#include "../criterion/criterion.h"
+#include <criterion/criterion.h>
 #include "../includes/header.h"
 #include <string.h>
 
