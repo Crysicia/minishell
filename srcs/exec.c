@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/06 17:20:22 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/06 17:49:00 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../includes/header.h"
 
-void	print_prompt(void)
+int execute_command(t_command *command)
 {
-	write(1, "Minishell>", 10);
-}
-
-int	main(int argc, char *argv[], char *envp[])
-{
-	while (1)
-	{
-		print_prompt();
-		get_command(envp);
-		sleep(0);
-	}
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	return (0);
+	char *argv[] = { "/bin/ls", "-la", ".", NULL };
+	return execve(command->executable, argv, command->envp);
 }

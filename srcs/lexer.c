@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 16:21:56 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/06 17:27:55 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	get_command(void)
+void	get_command(char *envp[])
 {
 	char	*swap;
 	char	*tmp;
@@ -49,14 +49,18 @@ void	get_command(void)
 			line = swap;
 		}
 	}
-	lexer(line);
+	lexer(line, envp);
 }
 
-int	lexer(char *line)
+int	lexer(char *line, char *envp[])
 {
 	char	*tmp;
 	int		i;
+	t_command command;
 
+	command.executable = NULL;
+	command.args = NULL;
+	command.envp = envp;
 	i = 0;
 	if (line == NULL)
 	{
@@ -67,8 +71,13 @@ int	lexer(char *line)
 	{
 		tmp = get_word(&line);
 		printf("%d = |%s|\n", i++, tmp);
+		if (!command.executable)
+			command.executable = tmp;
+		else
+			command.args = &tmp;
 		skip_spaces(&line);
 	}
+	execute_command(&command);
 	return (0);
 }
 

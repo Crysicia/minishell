@@ -9,7 +9,8 @@ SRCS			= main.c \
 				  srcs/lexer.c \
 				  srcs/get_next_line.c \
 				  srcs/get_next_line_utils.c \
-				  srcs/env.c
+				  srcs/env.c \
+				  srcs/exec.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
