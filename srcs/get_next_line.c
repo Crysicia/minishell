@@ -6,13 +6,13 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 14:20:17 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/05 12:27:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:39:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_read(int fd, char **line, char *buf)
+int	gnl_read(int fd, char **line, char *buf)
 {
 	int		output;
 	char	*temp;
@@ -23,14 +23,14 @@ int	ft_read(int fd, char **line, char *buf)
 		temp = *line;
 		if (output > 0)
 			buf[output] = '\0';
-		*line = ft_join(temp, buf);
+		*line = gnl_join(temp, buf);
 		free(temp);
 		if (!*line)
 			return (-1);
-		output = ft_strchr(&buf[0], '\n');
+		output = gnl_strchr(&buf[0], '\n');
 		if (output > 0)
 		{
-			ft_strcpy_and_fill(&buf[0], &buf[output]);
+			gnl_strcpy_and_fill(&buf[0], &buf[output]);
 			return (1);
 		}
 		output = read(fd, buf, BUFFER_SIZE);
@@ -48,15 +48,15 @@ int	get_next_line(int fd, char **line)
 
 	if (!line || read(fd, *line, 0) || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
-	*line = ft_strdup(buffer, 1);
+	*line = gnl_strdup(buffer, 1);
 	if (*line == NULL)
 		return (-1);
-	output = ft_strchr(&buffer[0], '\n');
+	output = gnl_strchr(&buffer[0], '\n');
 	if (output > 0)
 	{
-		ft_strcpy_and_fill(&buffer[0], &buffer[output]);
+		gnl_strcpy_and_fill(&buffer[0], &buffer[output]);
 		return (1);
 	}
 	else
-		return (ft_read(fd, line, buffer));
+		return (gnl_read(fd, line, buffer));
 }
