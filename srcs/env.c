@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 12:42:09 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/06 12:48:19 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "get_next_line.h"
+#include "../includes/header.h"
 
-void	print_prompt(void);
-void	get_command(void);
-int		lexer(char *line);
-char	*get_word(char **line);
-void	skip_spaces(char **line);
-
-int		builtin_env(char *envp[]);
-#endif
+int builtin_env(char *envp[])
+{
+	while (*envp)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
+	return (0);
+}
