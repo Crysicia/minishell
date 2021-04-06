@@ -11,14 +11,11 @@ Test(header_suite, header_test) {
 Test(get_word_suite, echo_bonjour_test) {
     char *result;
     char *input;
-    char *save;
 
     input = "echo bonjour";
-    save = input;
     result = get_word(&input);
     cr_expect(strcmp(result, "echo") == 0, "Lexing echo bonjour did not return expected command");
     free(result);
     result = get_word(&input);
     cr_expect(strcmp(result, "bonjour") == 0, "Lexing echo bonjour did not return expected argument");
-    (void)save;
 }
