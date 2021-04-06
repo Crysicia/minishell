@@ -1,8 +1,8 @@
 CC				= gcc
 CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
-HEADERS 		= -I./includes
-CRITERION		= -lcriterion
+HEADERS 		= -I./includes -I./criterion/includes/
+CRITERION		= -lcriterion -LCriterion
 NAME			= Minishell
 PATH_SRCS		= ./srcs/
 SRCS			= main.c \

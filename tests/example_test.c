@@ -1,4 +1,4 @@
-#include <criterion/criterion.h>
+#include "../criterion/criterion.h"
 #include "../includes/example.h"
 
 Test(example_suite, example_test) {
