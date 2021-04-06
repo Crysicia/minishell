@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 16:13:31 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:21:56 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ void	get_command(void)
 		exit(-1);
 	}
 	else if (ret == 0)
-<<<<<<< HEAD
-		exit(0);
-=======
 	{
 		if (ft_strlen(line) == 0)
 			exit(0);
@@ -52,7 +49,6 @@ void	get_command(void)
 			line = swap;
 		}
 	}
->>>>>>> master
 	lexer(line);
 }
 
