@@ -4,12 +4,12 @@
 #include "../includes/grammar.h"
 #include <string.h>
 
-Test(grammar_suite, fail_test, .signal=SIG_SEGV)
+Test(grammar_suite, fail_test, .signal=SIGSEGV)
 {
     t_word  error;
 
     error.token = NULL;
-    is_a_command(error);
+    is_a_command(&error);
 }
 
 Test(grammar_suite, is_a_command_suite)
@@ -26,6 +26,6 @@ Test(grammar_suite, is_a_command_suite)
     cr_expect(is_a_command(&error) == -1, "this test should return -1, word is an error");
 //should have a test for NULL string
     cr_free(echo.token);
-    cr_free(echo.token);
+    cr_free(env.token);
     cr_free(error.token);
 }
