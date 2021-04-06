@@ -1,2 +1,5 @@
-Criterion
 *~
+*.o
+*.test
+criterion/
+Criterion

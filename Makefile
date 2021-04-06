@@ -7,12 +7,15 @@ NAME			= Minishell
 PATH_SRCS		= ./srcs/
 SRCS			= main.c \
 				  srcs/lexer.c \
-				  srcs/get_next_line.c srcs/get_next_line_utils.c
+				  srcs/get_next_line.c \
+				  srcs/get_next_line_utils.c \
+				  srcs/env.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
-TEST_SRCS		= tests/fct_lexer_test.c
+TEST_SRCS		= tests/fct_lexer_test.c \
+				  tests/env_test.c
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
 all: $(NAME)
