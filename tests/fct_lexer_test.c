@@ -19,6 +19,6 @@ Test(get_word_suite, echo_bonjour_test) {
     cr_expect(strcmp(result, "echo") == 0, "Lexing echo bonjour did not return expected command");
     free(result);
     result = get_word(&input);
-    cr_expect(strcmp(result, "bonjour") == 0, "Lexing echo bonjour did not return expected argument")
+    cr_expect(strcmp(result, "bonjour") == 0, "Lexing echo bonjour did not return expected argument");
     (void)save;
 }
