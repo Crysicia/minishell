@@ -6,13 +6,13 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/06 12:48:19 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:08:14 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int builtin_env(char *envp[])
+int	builtin_env(char *envp[])
 {
 	while (*envp)
 	{
