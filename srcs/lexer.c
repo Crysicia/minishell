@@ -43,7 +43,7 @@ int	lexer(char *line)
 	while (*line)
 	{
 		tmp = get_word(&line);
-		printf("%d = %s\n", i++, tmp);
+		printf("%d = |%s|\n", i++, tmp);
 		skip_spaces(&line);
 	}
 	return (0);
