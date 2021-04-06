@@ -6,14 +6,13 @@ CRITERION		= -lcriterion -LCriterion
 NAME			= Minishell
 PATH_SRCS		= ./srcs/
 SRCS			= main.c \
-				  tests/example.c \
 				  srcs/lexer.c \
 				  srcs/get_next_line.c srcs/get_next_line_utils.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
-TEST_SRCS		= tests/example_test.c tests/fct_lexer_test.c
+TEST_SRCS		= tests/fct_lexer_test.c
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
 all: $(NAME)
