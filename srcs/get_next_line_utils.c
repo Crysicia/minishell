@@ -6,13 +6,13 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/26 13:24:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/05 12:28:07 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:37:43 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strchr(char *str, char c)
+int	gnl_strchr(char *str, char c)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ int	ft_strchr(char *str, char c)
 	}
 }
 
-size_t	ft_strlen(char *str, int value)
+size_t	gnl_strlen(char *str, int value)
 {
 	size_t	len;
 
@@ -58,12 +58,12 @@ size_t	ft_strlen(char *str, int value)
 	return (len);
 }
 
-char	*ft_strdup(char *str, int value)
+char	*gnl_strdup(char *str, int value)
 {
 	char	*dup;
 	char	*result;
 
-	dup = malloc(sizeof(dup) * (ft_strlen(str, value) + 1));
+	dup = malloc(sizeof(dup) * (gnl_strlen(str, value) + 1));
 	if (dup == NULL)
 		return (NULL);
 	else
@@ -84,12 +84,12 @@ char	*ft_strdup(char *str, int value)
 	}
 }
 
-char	*ft_join(char *s1, char *s2)
+char	*gnl_join(char *s1, char *s2)
 {
 	char	*join;
 	char	*result;
 
-	join = malloc(ft_strlen(s1, 0) + ft_strlen(s2, 1) + 1);
+	join = malloc(gnl_strlen(s1, 0) + gnl_strlen(s2, 1) + 1);
 	if (join == NULL)
 		return (NULL);
 	else
@@ -104,7 +104,7 @@ char	*ft_join(char *s1, char *s2)
 	}
 }
 
-void	ft_strcpy_and_fill(char *dest, char *source)
+void	gnl_strcpy_and_fill(char *dest, char *source)
 {
 	size_t	i;
 
