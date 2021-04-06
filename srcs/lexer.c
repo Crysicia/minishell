@@ -26,7 +26,7 @@ void	get_command(void)
 	}
 	else if (ret == 0)
 		exit(0);
-	lexer(NULL);
+	lexer(line);
 }
 
 int	lexer(char *line)
@@ -43,7 +43,7 @@ int	lexer(char *line)
 	while (*line)
 	{
 		tmp = get_word(&line);
-		printf("%d = %s\n", i++, tmp);
+		printf("%d = |%s|\n", i++, tmp);
 		skip_spaces(&line);
 	}
 	return (0);
