@@ -26,7 +26,7 @@ void	get_command(void)
 	}
 	else if (ret == 0)
 		exit(0);
-	lexer(line);
+	lexer(NULL);
 }
 
 int	lexer(char *line)
