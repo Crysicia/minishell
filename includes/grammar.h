@@ -15,17 +15,17 @@
 
 enum e_role
 {
-    role_not_given = 0,
-    command = 1,
-    argument = 2,
-    redirection = 3,
-    control_operator = 4
+    role_not_given = 0;
+    command = 1;
+    argument = 2;
+    redirection = 3;
+    control_operator = 4;
 };
 
 typedef struct  s_word
 {
     char        *token;
-    enum e_role role;
+    e_role      role;
 }               t_word;
 
 int ft_strcmp(char *dst, char *src);
