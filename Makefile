@@ -10,7 +10,8 @@ SRCS			= main.c \
 				  srcs/get_next_line.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/env.c\
-				  srcs/grammar.c
+				  srcs/grammar.c\
+				  srcs/words.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
