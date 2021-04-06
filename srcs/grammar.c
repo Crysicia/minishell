@@ -21,3 +21,19 @@ int ft_strcmp(char *dst, char *src)
     }
     return (*dst - *src);
 }
+
+int is_a_command(t_word *word)
+{
+    if (ft_strcmp(word->token, "echo") == 0)
+    {
+        word->role = command;
+        return (0);
+    }
+    else if (ft_strcmp(word->token, "env") == 0)
+    {
+        word->role = command;
+        return (0);
+    }
+    else
+        return (-1);
+}

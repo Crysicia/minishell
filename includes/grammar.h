@@ -29,4 +29,5 @@ typedef struct  s_word
 }               t_word;
 
 int ft_strcmp(char *dst, char *src);
+int is_a_command(t_word *word);
 #endif

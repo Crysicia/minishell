@@ -17,7 +17,8 @@ NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
 TEST_SRCS		= tests/fct_lexer_test.c \
 				  tests/env_test.c \
-				  tests/utils_tests.c
+				  tests/utils_tests.c \
+				  tests/grammar_tests.c
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
 all: $(NAME)
