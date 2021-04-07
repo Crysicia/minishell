@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/07 17:52:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/07 18:18:06 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,11 @@ void	get_command(char *envp[])
 
 int	lexer(char *line, char *envp[])
 {
-	// char	*tmp;
-	// int		i;
-	t_command command;
+	t_command	command;
 
 	command.executable = NULL;
 	command.args = NULL;
 	command.envp = envp;
-	// i = 0;
 	if (line == NULL)
 	{
 		printf("lexer error");
