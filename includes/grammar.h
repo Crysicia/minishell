@@ -12,22 +12,27 @@
 
 #ifndef GRAMMAR_H
 # define GRAMMAR_H
+# include <stdlib.h>
 
 enum e_role
 {
-    role_not_given = 0,
-    command = 1,
-    argument = 2,
-    redirection = 3,
-    control_operator = 4
+not_given = 0,
+	command = 1,
+	argument = 2,
+	redirection = 3,
+    control_operator = 4,
+    error = 5
 };
 
-typedef struct  s_word
+typedef struct	s_word
 {
-    char        *token;
-    enum e_role role;
-}               t_word;
+    char		*token;
+    enum e_role	role;
+}				t_word;
 
-int ft_strcmp(char *dst, char *src);
-int is_a_command(t_word *word);
+void	destroy_word(t_word *word);
+t_word	*create_word(char *input);
+int		ft_strcmp(char *dst, char *src);
+int		is_a_command(t_word *word);
+
 #endif
