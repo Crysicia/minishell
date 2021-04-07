@@ -12,7 +12,7 @@
 
 #include "grammar.h"
 
-int ft_strcmp(char *dst, char *src)
+int	ft_strcmp(char *dst, char *src)
 {
 	while (*dst && *src && (*dst == *src))
 	{
@@ -22,7 +22,7 @@ int ft_strcmp(char *dst, char *src)
 	return (*dst - *src);
 }
 
-int is_a_command(t_word *word)
+int	is_a_command(t_word *word)
 {
 	if (ft_strcmp(word->token, "echo") == 0)
 	{
