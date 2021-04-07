@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/07 18:18:06 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/07 22:04:52 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	get_command(char *envp[])
 	char	*line;
 	int		ret;
 
+	line = NULL;
 	ret = get_next_line(0, &line);
 	if (ret == -1 || line == NULL)
 	{
@@ -35,11 +36,12 @@ void	get_command(char *envp[])
 			ret = get_next_line(0, &tmp);
 			swap = gnl_join(line, tmp);
 			free(line);
-			free(tmp);
+			free(tmp);	
 			line = swap;
 		}
 	}
 	lexer(line, envp);
+	free(line);
 }
 
 int	lexer(char *line, char *envp[])

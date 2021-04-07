@@ -6,11 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/07 18:16:11 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/07 19:51:11 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+#include <sys/wait.h>
 
 char	*get_full_path(char *path, char *executable)
 {
@@ -51,6 +52,16 @@ int	find_exe_path(t_command *command)
 
 int	execute_command(t_command *command)
 {
+	int pid;
+
 	find_exe_path(command);
-	return (execve(command->executable, command->args, command->envp));
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(command->executable, command->args, command->envp);
+		exit(0);
+	}
+	else
+		wait(NULL);
+	return (0);
 }
