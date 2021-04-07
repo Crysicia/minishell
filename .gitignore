@@ -3,3 +3,5 @@
 *.test
 criterion/
 Criterion
+trash/
+Minishell
