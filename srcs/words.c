@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   grammar.c                                          :+:      :+:    :+:   */
+/*   words.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 22:56:28 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 22:56:28 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/07 01:29:36 by pcharton          #+#    #+#             */
+/*   Updated: 2021/04/07 01:29:36 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "grammar.h"
+#include "../includes/grammar.h"
 
-int	ft_strcmp(char *dst, char *src)
+t_word	*create_word(char *input)
 {
-	while (*dst && *src && (*dst == *src))
+	t_word	*new;
+
+	new = malloc(sizeof(t_word));
+	if (!new || !input)
+		return (NULL);
+	else
 	{
-		src++;
-		dst++;
+		new->token = input;
+		new->role = not_given;
+		return (new);
 	}
-	return (*dst - *src);
 }
 
-int	is_a_command(t_word *word)
+void	destroy_void(t_word *word)
 {
-	if (ft_strcmp(word->token, "echo") == 0)
-	{
-		word->role = command;
-		return (0);
-	}
-	else if (ft_strcmp(word->token, "env") == 0)
-	{
-		word->role = command;
-		return (0);
-	}
-	else
-		return (-1);
+	free(word->token);
+	word->token = NULL;
+	free(word);
+	word = NULL;
 }
