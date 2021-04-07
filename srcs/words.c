@@ -12,9 +12,9 @@
 
 #include "../includes/grammar.h"
 
-t_word  *create_word(char *input)
+t_word	*create_word(char *input)
 {
-	t_word  *new;
+	t_word	*new;
 
 	new = malloc(sizeof(t_word));
 	if (!new || !input)
@@ -23,14 +23,14 @@ t_word  *create_word(char *input)
 	{
 		new->token = input;
 		new->role = not_given;
-	return (new);
+		return (new);
 	}
 }
 
-void    destroy_void(t_word *word)
+void	destroy_void(t_word *word)
 {
-    free(word->token);
-    word->token = NULL;
-    free(word);
-    word = NULL;
+	free(word->token);
+	word->token = NULL;
+	free(word);
+	word = NULL;
 }
