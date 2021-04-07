@@ -34,4 +34,5 @@ void	destroy_word(t_word *word);
 t_word	*create_word(char *input);
 int		ft_strcmp(char *dst, char *src);
 int		is_a_command(t_word *word);
+
 #endif
