@@ -6,22 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 17:27:55 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/07 17:52:05 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include <stdbool.h>
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 void	get_command(char *envp[])
 {
@@ -54,29 +44,20 @@ void	get_command(char *envp[])
 
 int	lexer(char *line, char *envp[])
 {
-	char	*tmp;
-	int		i;
+	// char	*tmp;
+	// int		i;
 	t_command command;
 
 	command.executable = NULL;
 	command.args = NULL;
 	command.envp = envp;
-	i = 0;
+	// i = 0;
 	if (line == NULL)
 	{
 		printf("lexer error");
 		return (-1);
 	}
-	while (*line)
-	{
-		tmp = get_word(&line);
-		printf("%d = |%s|\n", i++, tmp);
-		if (!command.executable)
-			command.executable = tmp;
-		else
-			command.args = &tmp;
-		skip_spaces(&line);
-	}
+	command.args = ft_split(line, ' ');
 	execute_command(&command);
 	return (0);
 }

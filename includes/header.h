@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 17:21:08 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/07 16:27:50 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/stat.h>
+# include <limits.h>
 # include "get_next_line.h"
+# include "../libft/libft.h"
 
 typedef struct	s_command
 {
@@ -31,5 +34,6 @@ char	*get_word(char **line);
 void	skip_spaces(char **line);
 
 int		builtin_env(char *envp[]);
-int execute_command(t_command *command);
+int 	execute_command(t_command *command);
+int 	find_exe_path(t_command *command);
 #endif
