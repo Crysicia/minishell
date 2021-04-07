@@ -14,17 +14,17 @@
 
 t_word  *create_word(char *input)
 {
-    t_word  *new;
+	t_word  *new;
 
-    new = malloc(sizeof(t_word));
-    if (!new || !input)
-        return (NULL);
-    else
-    {
-        new->token = input;
-        new->role = not_given;
-        return (new);
-    }
+	new = malloc(sizeof(t_word));
+	if (!new || !input)
+		return (NULL);
+	else
+	{
+		new->token = input;
+		new->role = not_given;
+	return (new);
+	}
 }
 
 void    destroy_void(t_word *word)
