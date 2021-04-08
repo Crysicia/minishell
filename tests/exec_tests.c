@@ -20,12 +20,10 @@ Test(exec_suite, find_exe_path_test)
     FILE *fp = NULL;
     int fd = 0;
     char *line = NULL;
+    char *arguments[] = { "ls", "-la", ".", NULL };
 
-    command.args = malloc(4 * sizeof(char *));
-    command.args[0] = strdup("ls");
-    command.args[1] = strdup("-la");
-    command.args[2] = strdup(".");
-    command.args[3] = NULL;
+    command.args = arguments;
+    command.executable = NULL;
 
     fp = freopen("exec.test", "w", stdout);
     system("which ls");
