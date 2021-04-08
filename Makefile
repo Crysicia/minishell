@@ -1,5 +1,6 @@
 CC				= gcc
-CFLAGS 			= -Wall -Wextra -Werror
+CFLAGS 			= -Wall -Wextra #-Werror
+TEST_FLAGS 		= -Wall -Wextra
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
@@ -24,6 +25,7 @@ NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
 TEST_SRCS		= tests/fct_lexer_test.c \
 				  tests/env_test.c \
+				  tests/builtin_echo_tests.c \
 				  tests/scanner_t.c \
 				  tests/scanner_states_t.c \
 				  tests/utils_tests.c \
