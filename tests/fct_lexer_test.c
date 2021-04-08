@@ -3,7 +3,7 @@
 #include <string.h>
 
 Test(header_suite, header_test) {
-    cr_assert((lexer(NULL)) == -1);
+    cr_assert((lexer(NULL, (char **){ NULL })) == -1);
 }
 
 /* Test get word */

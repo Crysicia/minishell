@@ -6,22 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 16:21:56 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/07 22:04:52 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include <stdbool.h>
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 bool	gnl_loop_function(char *line)
 {
@@ -41,7 +31,7 @@ bool	gnl_loop_function(char *line)
 	return (true);
 }
 
-void	get_command(void)
+void	get_command(char *envp[])
 {
 	char	*line;
 	int		ret;
@@ -61,16 +51,19 @@ void	get_command(void)
 	else if (ret == 0)
 		gnl_loop_function(line);
 	if (is_valid_command(line))
-		lexer(line);
+		lexer(line, envp);
 	else
 		printf("line contains forbidden characters\n");
 }
 
-
-int	lexer(char *line)
+int	lexer(char *line, char *envp[])
 {
 	char	**formatted_line;
+	t_command	command;
 
+	command.executable = NULL;
+	command.args = NULL;
+	command.envp = envp;
 	if (line == NULL)
 	{
 		printf("lexer error : line is NULL at line %d of %s\n",
@@ -82,10 +75,10 @@ int	lexer(char *line)
 	puts("here is the tab** sent to exec function :");
 	while (formatted_line && *formatted_line)
 		puts(*(formatted_line++));
+	command.args = ft_split(line, ' ');
+	execute_command(&command);
 	return (0);
 }
-
-
 
 void	skip_spaces(char **line)
 {
