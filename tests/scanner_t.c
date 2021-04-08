@@ -1,4 +1,5 @@
 #include <criterion/criterion.h>
+#include <criterion/parameterized.h>
 #include <string.h>
 #include <signal.h>
 #include "../includes/finite_state_machine.h"
@@ -30,6 +31,18 @@ Test(scanner_suite, evaluate_command_test)
 		cr_free(*(tmp++));
 	cr_free(fct_output);
 }
+/*
+struct format_test_result = {
+	*res_1[] = {"ls", "-la"};
+	*res_2[] = { "ls", " -l", " -a"};
 
+};
+
+ParameterizedTestParameters(scanner_suite, format_command_ptest)
+{
+	static struct result = {};
+}
+
+*/
 Test(scanner_suite, is_valid_command_failure, .signal = SIGSEGV){	is_valid_command(NULL); }
 Test(scanner_suite, evaluate_command_failure, .signal = SIGSEGV){	evaluate_command(NULL); }

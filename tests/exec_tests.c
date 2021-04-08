@@ -1,6 +1,7 @@
 #include <criterion/criterion.h>
 #include "../includes/header.h"
 #include <string.h>
+#include <signal.h>
 #include <fcntl.h>
 
 Test(exec_suite, find_exe_path_test)

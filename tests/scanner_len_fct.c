@@ -5,7 +5,6 @@
 #include "../includes/finite_state_machine.h"
 
 /*
-
 TheoryDataPoints(scanner_suite, command_len_test) = {
 	DataPoints(char *, "", ";", "echo", "ls -la", "ls -l -a", "echo salut", "echo salut;pwd"),
 	DataPoints(size_t, 0, 0, 4, 5, 8, 10, 10),
@@ -17,7 +16,6 @@ Theory((char *test, size_t result), scanner_suite, command_len_test)
 	"command_len : expected %zu for %s ; got %zu\n",
 	result, test, command_len(test));
 }
-
 */
 
 
@@ -27,15 +25,14 @@ Test(scanner_suite, command_len_test)
 	/*
 		Careful this function does not handle many option case
 	*/
-	char 	*test[] = { "", ";", "echo", "ls -la", "ls -l", "ls -l -a", "echo salut", "echo salut;pwd", "env --verbose", "mkdir --verbose test;"};
-	size_t	result[] = {0, 0, 4, 6, 5, 8, 10, 10, 13, 20};
+	char 	*test[] = { "", ";", "echo", "echo ---salut", "ls -la", "ls -l", "ls -l -a", "echo salut", "echo salut;pwd", "env --verbose", "mkdir --verbose test;"};
+	size_t	result[] = {0,   0,      4,               5,       6,       5,          8,           10,               10,              13,               20};
 
 	for (int i = 0; ((test + i) && (test[i])); i++)
 		cr_expect(command_len(test[i]) == result[i],
-		"command_len : expected %zu for %s ; got %zu\n",
+		"command_len : expected %zu for [%s] ; got %zu\n",
 		result[i], test[i], command_len(test[i]));
 }
-
 
 Test(scanner_suite, keyword_len_test)
 {
