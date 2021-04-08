@@ -39,6 +39,7 @@ $(LIBFT):
 
 test: $(TEST)
 	./$(TEST)
+	$(RM) *.test
 
 $(TEST): $(NO_MAIN) $(TEST_OBJS) $(LIBFT)
 	$(CC) $(NO_MAIN) $(TEST_OBJS) $(CRITERION) $(LIBS) -o $(TEST)
