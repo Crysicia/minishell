@@ -16,12 +16,20 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "get_next_line.h"
+# include "scanner.h"
+
+typedef struct s_command
+{
+	char	*executable;
+	char	**args;
+	char	**envp;
+}				t_command;
 
 void	print_prompt(void);
 void	get_command(void);
 int		lexer(char *line);
 char	*get_word(char **line);
 void	skip_spaces(char **line);
-
 int		builtin_env(char *envp[]);
+
 #endif

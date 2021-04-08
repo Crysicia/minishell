@@ -7,7 +7,7 @@ Test(header_suite, header_test) {
 }
 
 /* Test get word */
-
+/*
 Test(get_word_suite, echo_test) {
     char *result;
     char *input;
@@ -17,3 +17,4 @@ Test(get_word_suite, echo_test) {
     cr_expect(strcmp(result, "echo") == 0, "Lexing echo bonjour did not return expected command");
     free(result);
 }
+*/

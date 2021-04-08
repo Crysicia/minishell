@@ -10,16 +10,18 @@ SRCS			= main.c \
 				  srcs/get_next_line.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/env.c\
-				  srcs/grammar.c\
-				  srcs/words.c
+				  srcs/scanner.c\
+				  srcs/scanner_len_fcts.c\
+				  srcs/scanner_states.c\
+				  srcs/scanner_utils.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
 TEST_SRCS		= tests/fct_lexer_test.c \
 				  tests/env_test.c \
-				  tests/utils_tests.c \
-				  tests/grammar_tests.c
+				  tests/scanner_t.c\
+				  tests/scanner_states_t.c
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
 all: $(NAME)
@@ -41,7 +43,7 @@ clean:
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME) $(TEST)
+	$(RM) $(NAME) $(TEST) ${TEST_OBJS}
 
 re: fclean all
 
