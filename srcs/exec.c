@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/08 13:51:14 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/08 13:54:07 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	find_exe_path(t_command *command)
 
 int	execute_command(t_command *command)
 {
-	int pid;
+	int	pid;
 
 	find_exe_path(command);
 	pid = fork();

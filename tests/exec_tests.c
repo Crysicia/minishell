@@ -36,6 +36,7 @@ Test(exec_suite, find_exe_path_test)
     cr_log_info("DON'T REMOVE THIS COMMENT, IT MAKES THE NEXT TEST WORK AUTOMAGICALLY");
     cr_expect(find_exe_path(&command) == 0, "Expect find_exe_path to find the path for ls");
     cr_expect(strcmp(command.executable, line) == 0, "Expect ls path to be %s", line);
+    cr_log_warn("Exec: %s", command.executable);
     cr_free(command.executable);
     cr_free(line);
 }
