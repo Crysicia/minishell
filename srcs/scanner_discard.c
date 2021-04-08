@@ -12,7 +12,6 @@
 
 #include "../includes/scanner.h"
 
-/* To be destroyed */
 bool	is_allowed_character(int c)
 {
 	if (ft_is_lowercase(c)
