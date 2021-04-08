@@ -27,6 +27,7 @@ bool	is_argument_character(int c);
 size_t	keyword_len(char *line);
 size_t	option_len(char *line);
 size_t	argument_len(char *line);
+size_t	command_len(char *line);
 
 //to trash
 bool	is_allowed_character(int c);

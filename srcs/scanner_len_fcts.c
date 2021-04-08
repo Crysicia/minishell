@@ -17,7 +17,10 @@ size_t	command_len(char *line)
 	size_t	count;
 
 	count = 0;
-
+	count += keyword_len(line);
+	while (option_len(&line[count]))
+		count += option_len(&line[count]);
+	count += argument_len(&line[count]);
 	return (count);
 }
 
@@ -35,22 +38,27 @@ size_t	keyword_len(char *line)
 size_t	option_len(char *line)
 {
 	size_t	count;
+	size_t	hyphen_count;
 
 	count = 0;
+	hyphen_count = 0;
 	while (line[count]
-		&& (line[count] == '-'))
+		&& is_space(line[count]))
 		count++;
-	if (!count || (count > 2))
-		return (0);
-	else
-	{
-		while (line[count]
-			&& ft_is_lowercase(line[count]))
-			count++;
-		if (line[count] && !ft_is_lowercase(line[count]))
-			count = 0;
-		return (count);
-	}
+	while (line[count + hyphen_count]
+		&& (line[count + hyphen_count] == '-')
+		&& (hyphen_count < 2))
+		hyphen_count++;
+	count += hyphen_count;
+	while (line[count]
+		&& ft_is_lowercase(line[count]))
+		count++;
+	if (line[count]
+		&& (!is_space(line[count]) || !is_control_operator(line[count])))
+		count = 0;
+	else if (!hyphen_count || hyphen_count > 2)
+		count = 0;
+	return (count);
 }
 
 size_t	argument_len(char *line)

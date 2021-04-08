@@ -1,7 +1,6 @@
 #include <criterion/criterion.h>
 #include <string.h>
 #include <signal.h>
-//#include "../includes/grammar.h"
 #include "../includes/finite_state_machine.h"
 
 Test(scanner_suite, is_valid_command_test)
@@ -32,55 +31,5 @@ Test(scanner_suite, evaluate_command_test)
 	cr_free(fct_output);
 }
 
-TheoryDataPoints(scanner_suite, command_len_test) = {
-	DataPoints(char *, "", ";", "echo", "ls -la", "ls -l -a", "echo salut", "echo salut;pwd"),
-	DataPoints(size_t, 0, 0, 4, 5, 8, 10, 10)
-}
-
-Theory((char *test, size_t result), scanner_suite, command_len_test) = {
-	cr_expect(command_len(test) == result,
-	"command_len : expected %zu for %s ; got %zu\n",
-	result, test, command_len(test));
-}
-
-Test(scanner_suite, keyword_len_test)
-{
-	size_t results_expected[] = { 0, 0, 4, 4, 7};
-	char *test_input[] = { ";", "|", "echo", "echo foo | cat -e .", "/bin/ls"};
-
-	for (int i = 0; i < 5; i++)
-		cr_expect(keyword_len(test_input[i]) == results_expected[i],
-		 "keyword_len did not return the right value, expected %zu for %s, got %zu\n", 
-		 results_expected[i], test_input[i], keyword_len(test_input[i]));
-}
-
-Test(scanner_suite, option_len_test)
-{
-	char	*input[] = { "bonjour", "?", "-*cho", "-la", "--verbose"};
-	size_t	result[] = {0, 0, 0, 3, 9};
-
-	for (int i = 0; i < 5; i++)
-		cr_expect(option_len(input[i]) == result[i],
-		"option_len did not return the right value, expected %zu for %s, got %zu\n", 
-		 result[i], input[i], option_len(input[i])); 
-
-}
-
-Test(scanner_suite, argument_len_test)
-{
-	char	*input[] = { ";", "", "test; cat  -e .", "bonjour", "Salvador Dali"};
-	size_t	result[] = { 0, 0, 4, 7, 13};
-
-	for (int i = 0; i < 5; i++)
-		cr_expect(argument_len(input[i]) == result[i],
-		"argument_len did not return the right value, expected %zu for %s, got %zu\n", 
-		 result[i], input[i], argument_len(input[i])); 
-
-}
-
 Test(scanner_suite, is_valid_command_failure, .signal = SIGSEGV){	is_valid_command(NULL); }
 Test(scanner_suite, evaluate_command_failure, .signal = SIGSEGV){	evaluate_command(NULL); }
-Test(scanner_suite, command_len_failure, .signal = SIGSEGV){  		command_len(NULL); }
-Test(scanner_suite, keyword_len_failure, .signal = SIGSEGV){  		keyword_len(NULL); }
-Test(scanner_suite, option_len_failure, .signal = SIGSEGV){ 		option_len(NULL); }
-Test(scanner_suite, argument_len_failure, .signal = SIGSEGV){ 		argument_len(NULL); }
