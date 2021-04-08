@@ -25,6 +25,6 @@ int		gnl_read(int fd, char **line, char *buffer);
 int		get_next_line(int fd, char **line);
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE	32
+#  define BUFFER_SIZE	512
 # endif
 #endif

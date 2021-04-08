@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   grammar.h                                          :+:      :+:    :+:   */
+/*   scanner.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 22:11:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/06 22:11:36 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/08 01:10:52 by pcharton          #+#    #+#             */
+/*   Updated: 2021/04/08 01:10:52 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GRAMMAR_H
-# define GRAMMAR_H
+#ifndef SCANNER_H
+# define SCANNER_H
+# include <stdbool.h>
 # include <stdlib.h>
+# include "finite_state_machine.h"
 
-enum e_role
-{
-not_given = 0,
-	command = 1,
-	argument = 2,
-	redirection = 3,
-    control_operator = 4,
-    error = 5
-};
+bool	ft_is_lowercase(int c);
+bool	is_space(int c);
+bool	is_control_operator(int c);
+bool	is_keyword_character(int c);
 
-typedef struct	s_word
-{
-    char		*token;
-    enum e_role	role;
-}				t_word;
+size_t	keyword_len(char *line);
+size_t	option_len(char *line);
 
-void	destroy_word(t_word *word);
-t_word	*create_word(char *input);
-int		ft_strcmp(char *dst, char *src);
-int		is_a_command(t_word *word);
+//to trash
+bool 	is_allowed_character(int c);
+bool	is_valid_command(char *line);
+char	**evaluate_command(char *line);
 
 #endif
