@@ -27,8 +27,8 @@ Test(scanner_suite, command_len_test)
 	/*
 		Careful this function does not handle many option case
 	*/
-	char 	*test[] = { "", ";", "echo", "ls -la", "ls -l", "echo salut", "echo salut;pwd", "env --verbose"};
-	size_t	result[] = {0, 0, 4, 6, 5, 10, 10, 13};
+	char 	*test[] = { "", ";", "echo", "ls -la", "ls -l", "ls -l -a", "echo salut", "echo salut;pwd", "env --verbose", "mkdir --verbose test;"};
+	size_t	result[] = {0, 0, 4, 6, 5, 8, 10, 10, 13, 20};
 
 	for (int i = 0; ((test + i) && (test[i])); i++)
 		cr_expect(command_len(test[i]) == result[i],
@@ -50,8 +50,8 @@ Test(scanner_suite, keyword_len_test)
 
 Test(scanner_suite, option_len_test)
 {
-	char	*input[] = { "bonjour", "?", "-*cho", "-la", "--verbose"};
-	size_t	result[] = {0, 0, 0, 3, 9};
+	char	*input[] = { "bonjour", "?", "-*cho", "-la", "--verbose" , "--verbose bonjour"};
+	size_t	result[] = {0, 0, 0, 3, 9, 9};
 
 	for (int i = 0; i < 5; i++)
 		cr_expect(option_len(input[i]) == result[i],

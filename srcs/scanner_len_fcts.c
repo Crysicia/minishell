@@ -54,9 +54,9 @@ size_t	option_len(char *line)
 		&& ft_is_lowercase(line[count]))
 		count++;
 	if (line[count]
-		&& (!is_space(line[count]) || !is_control_operator(line[count])))
+		&& !is_space(line[count]) && !is_control_operator(line[count]))
 		count = 0;
-	else if (!hyphen_count || hyphen_count > 2)
+	else if (!ft_in_range(1, 2, hyphen_count))
 		count = 0;
 	return (count);
 }
