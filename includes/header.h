@@ -35,6 +35,6 @@ char	*get_word(char **line);
 void	skip_spaces(char **line);
 int		builtin_env(char *envp[]);
 
-int 	execute_command(t_command *command);
-int 	find_exe_path(t_command *command);
+int		execute_command(t_command *command);
+int		find_exe_path(t_command *command);
 #endif

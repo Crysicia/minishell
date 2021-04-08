@@ -58,7 +58,7 @@ void	get_command(char *envp[])
 
 int	lexer(char *line, char *envp[])
 {
-	char	**formatted_line;
+	char		**formatted_line;
 	t_command	command;
 
 	command.executable = NULL;

@@ -14,6 +14,7 @@ SRCS			= main.c \
 				  srcs/exec.c \
 				  srcs/env.c\
 				  srcs/scanner.c\
+				  srcs/scanner_discard.c\
 				  srcs/scanner_len_fcts.c\
 				  srcs/scanner_states.c\
 				  srcs/scanner_utils.c

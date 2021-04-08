@@ -26,61 +26,36 @@ char	*ft_strndup(char *str, size_t n)
 	return (result);
 }
 
-/* to be destroyed */
-bool	is_valid_command(char *line)
+bool	is_control_operator(int c)
 {
-	int		letter;
-
-	letter = 0;
-	while (line[letter]
-		&& is_allowed_character(line[letter]))
-		letter++;
-	if (letter)
+	if (c == ';')
 		return (true);
 	else
 		return (false);
 }
 
-static int	awful_tmp_fct(char *line, int *letter, int *start, int *to_end)
+bool	is_redirection(int c)
 {
-	int	count;
-
-	*letter = 0;
-	*start = 0;
-	*to_end = 0;
-	count = 1;
-	while (line[*to_end] && ft_is_lowercase(line[*to_end]))
-		(*to_end) += 1;
-	*letter = *to_end;
-	while (line[*letter] && is_allowed_character(line[*letter]))
-		(*letter) += 1;
-	if (*letter > *to_end)
-		count++;
-	return (count);
+	if ((c == '|') || (c == '>') || (c == '<'))
+		return (true);
+	else
+		return (false);
 }
 
-char	**evaluate_command(char *line)
+bool 	is_keyword_character(int c)
 {
-	int		letter;
-	int		count;
-	int		start;
-	int		to_end;
-	char	**tab;
+	if (ft_is_lowercase(c)
+		|| (c == '/') || (c == '.') || (c == '~'))
+		return (true);
+	else
+		return (false);
+}
 
-	count = awful_tmp_fct(line, &letter, &start, &to_end);
-	tab = malloc(sizeof(char *) * (count + 1));
-	if (tab)
-	{
-		tab[0] = ft_strndup(line, to_end);
-		if (count == 2)
-		{
-			start = to_end;
-			to_end = letter;
-			while (is_space(line[start]) && (start < to_end))
-				start++;
-			tab[1] = ft_strndup(&line[start], to_end - start);
-		}
-		tab[count] = NULL;
-	}
-	return (tab);
+bool	is_argument_character(int c)
+{
+	if (ft_is_lowercase(c)
+		|| is_space(c))
+		return (true);
+	else
+		return (false);
 }
