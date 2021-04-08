@@ -22,6 +22,25 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
+bool	gnl_loop_function(char *line)
+{
+	int		ret;
+	char	*swap;
+	char	*tmp;
+
+	ret = 0;
+	while (ret == 0)
+	{
+		ret = get_next_line(0, &tmp);
+		swap = gnl_join(line, tmp);
+		free(line);
+		free(tmp);
+		line = swap;
+	}
+	return (true);
+}
+
 void	get_command(void)
 {
 	char	*line;
@@ -47,23 +66,6 @@ void	get_command(void)
 		printf("line contains forbidden characters\n");
 }
 
-bool	gnl_loop_function(char *line)
-{
-	int		ret;
-	char	*swap;
-	char	*tmp;
-
-	ret = 0;
-	while (ret == 0)
-	{
-		ret = get_next_line(0, &tmp);
-		swap = gnl_join(line, tmp);
-		free(line);
-		free(tmp);
-		line = swap;
-	}
-	return (true);
-}
 
 int	lexer(char *line)
 {
