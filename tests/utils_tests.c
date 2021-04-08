@@ -1,6 +1,5 @@
 #include <criterion/criterion.h>
 #include <string.h>
-#include "../includes/grammar.h"
 
 // ft_strcmp
 /*
