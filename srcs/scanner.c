@@ -53,8 +53,8 @@ bool 	is_keyword_character(int c)
 
 bool	is_argument_character(int c)
 {
-	if (ft_is_lowercase(c)
-		|| is_space(c))
+	if (ft_isalnum(c)
+		|| is_space(c) || (c == '='))
 		return (true);
 	else
 		return (false);

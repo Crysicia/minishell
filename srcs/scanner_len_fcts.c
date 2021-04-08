@@ -12,6 +12,15 @@
 
 #include "../includes/scanner.h"
 
+size_t	command_len(char *line)
+{
+	size_t	count;
+
+	count = 0;
+
+	return (count);
+}
+
 size_t	keyword_len(char *line)
 {
 	size_t	count;
@@ -42,4 +51,15 @@ size_t	option_len(char *line)
 			count = 0;
 		return (count);
 	}
+}
+
+size_t	argument_len(char *line)
+{
+	size_t	count;
+
+	count = 0;
+	while (line[count]
+		&& is_argument_character(line[count]))
+		count++;
+	return (count);
 }

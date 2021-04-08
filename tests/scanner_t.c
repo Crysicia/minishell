@@ -32,6 +32,17 @@ Test(scanner_suite, evaluate_command_test)
 	cr_free(fct_output);
 }
 
+TheoryDataPoints(scanner_suite, command_len_test) = {
+	DataPoints(char *, "", ";", "echo", "ls -la", "ls -l -a", "echo salut", "echo salut;pwd"),
+	DataPoints(size_t, 0, 0, 4, 5, 8, 10, 10)
+}
+
+Theory((char *test, size_t result), scanner_suite, command_len_test) = {
+	cr_expect(command_len(test) == result,
+	"command_len : expected %zu for %s ; got %zu\n",
+	result, test, command_len(test));
+}
+
 Test(scanner_suite, keyword_len_test)
 {
 	size_t results_expected[] = { 0, 0, 4, 4, 7};
@@ -55,11 +66,10 @@ Test(scanner_suite, option_len_test)
 
 }
 
-/*
 Test(scanner_suite, argument_len_test)
 {
-	char	*input[] = { ";", "test; cat  -e .", "bonjour", "?", "Salvador Dali"};
-	size_t	result[] = { 0, 4, 7, 1, 13};
+	char	*input[] = { ";", "", "test; cat  -e .", "bonjour", "Salvador Dali"};
+	size_t	result[] = { 0, 0, 4, 7, 13};
 
 	for (int i = 0; i < 5; i++)
 		cr_expect(argument_len(input[i]) == result[i],
@@ -67,11 +77,10 @@ Test(scanner_suite, argument_len_test)
 		 result[i], input[i], argument_len(input[i])); 
 
 }
-*/
-//Test(scanner_suite, argument_len_test)
 
 Test(scanner_suite, is_valid_command_failure, .signal = SIGSEGV){	is_valid_command(NULL); }
 Test(scanner_suite, evaluate_command_failure, .signal = SIGSEGV){	evaluate_command(NULL); }
+Test(scanner_suite, command_len_failure, .signal = SIGSEGV){  		command_len(NULL); }
 Test(scanner_suite, keyword_len_failure, .signal = SIGSEGV){  		keyword_len(NULL); }
 Test(scanner_suite, option_len_failure, .signal = SIGSEGV){ 		option_len(NULL); }
-//Test(scanner_suite, argument_len_failure, .signal = SIGSEGV){ 		argumentlen(NULL); }
+Test(scanner_suite, argument_len_failure, .signal = SIGSEGV){ 		argument_len(NULL); }
