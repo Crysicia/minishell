@@ -12,12 +12,6 @@
 
 #include "../includes/finite_state_machine.h"
 
-/*
-	Tests
-	echo bonjour
-	"    "
-	
-*/
 enum e_command	keyword_state_transition(char character)
 {
 	enum e_command	state;
