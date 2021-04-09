@@ -36,7 +36,7 @@ void	get_command(char *envp[])
 	char	*line;
 	int		ret;
 
-	line = calloc(512, 1);
+	line = ft_calloc(512, 1);
 	ret = get_next_line(0, &line);
 	if (ret == -1 || line == NULL)
 	{
