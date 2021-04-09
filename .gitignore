@@ -1,6 +1,7 @@
 *~
 *.o
 *.test
+vgcore*
 criterion/
 Criterion
 trash/

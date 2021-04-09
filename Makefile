@@ -1,6 +1,5 @@
 CC				= gcc
-CFLAGS 			= -Wall -Wextra #-Werror
-TEST_FLAGS 		= -Wall -Wextra
+CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
@@ -13,11 +12,12 @@ SRCS			= main.c \
 				  srcs/get_next_line.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/exec.c \
-				  srcs/env.c\
-				  srcs/scanner.c\
-				  srcs/scanner_discard.c\
-				  srcs/scanner_len_fcts.c\
-				  srcs/scanner_states.c\
+				  srcs/env.c \
+				  srcs/builtin_echo.c \
+				  srcs/scanner.c \
+				  srcs/scanner_discard.c \
+				  srcs/scanner_len_fcts.c \
+				  srcs/scanner_states.c \
 				  srcs/scanner_utils.c
 
 OBJS 			= $(SRCS:.c=.o)
