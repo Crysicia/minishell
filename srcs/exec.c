@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/08 14:06:28 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/08 17:29:46 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*get_full_path(char *path, char *executable)
 {
 	char	current_path[PATH_MAX];
 
-	ft_bzero(current_path, PATH_MAX);
 	ft_strlcpy(current_path, path, ft_strlen(path) + 1);
 	ft_strlcat(current_path, "/", PATH_MAX);
 	ft_strlcat(current_path, executable, PATH_MAX);
@@ -30,7 +29,9 @@ int	find_exe_path(t_command *command)
 	char		*path;
 	char		**path_arr;
 	char		*current_path;
+	int			index;
 
+	index = 0;
 	path = getenv("PATH");
 	if (!path)
 		return (-1);
@@ -38,14 +39,13 @@ int	find_exe_path(t_command *command)
 	if (!path_arr)
 		return (-1);
 	current_path = NULL;
-	while (*path_arr && !command->executable)
+	while (path_arr[index] && !command->executable)
 	{
 		free(current_path);
-		current_path = get_full_path(*path_arr, command->args[0]);
-		stat(current_path, &st);
-		if (st.st_mode & S_IXUSR)
+		current_path = get_full_path(path_arr[index], command->args[0]);
+		if (stat(current_path, &st) == 0 && (st.st_mode & S_IXUSR))
 			command->executable = current_path;
-		path_arr++;
+		index++;
 	}
 	return (0);
 }
@@ -54,14 +54,21 @@ int	execute_command(t_command *command)
 {
 	int	pid;
 
-	find_exe_path(command);
+	if (find_exe_path(command))
+		return (-1);
 	pid = fork();
 	if (pid == 0)
 	{
 		execve(command->executable, command->args, command->envp);
 		exit(0);
 	}
-	else
+	else if (pid > 0)
+	{
+		g_current_pid = pid;
 		wait(NULL);
+		g_current_pid = 0;
+	}
+	else
+		printf("ERROR: Could not create child process.\n");
 	return (0);
 }
