@@ -14,6 +14,7 @@
 # define SCANNER_H
 # include <stdbool.h>
 # include <stdlib.h>
+# include "../libft/libft.h"
 # include "finite_state_machine.h"
 
 char	*ft_strndup(char *str, size_t n);
@@ -21,9 +22,12 @@ bool	ft_is_lowercase(int c);
 bool	is_space(int c);
 bool	is_control_operator(int c);
 bool	is_keyword_character(int c);
+bool	is_argument_character(int c);
 
 size_t	keyword_len(char *line);
 size_t	option_len(char *line);
+size_t	argument_len(char *line);
+size_t	command_len(char *line);
 
 //to trash
 bool	is_allowed_character(int c);

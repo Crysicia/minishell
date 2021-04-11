@@ -6,11 +6,20 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/06 17:20:22 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/08 17:31:13 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+int	g_current_pid;
+
+void	handle_sigint(int signal)
+{
+	printf("Killing [%i]\n", g_current_pid);
+	if (g_current_pid)
+		kill(g_current_pid, signal);
+}
 
 void	print_prompt(void)
 {
@@ -19,6 +28,8 @@ void	print_prompt(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	g_current_pid = 0;
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		print_prompt();
@@ -27,6 +38,5 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	return (0);
 }
