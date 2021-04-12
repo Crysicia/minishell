@@ -6,7 +6,7 @@
 
 typedef struct	s_is_builtin_params {
 	bool ret;
-	char *argument;
+	char argument[42];
 }				t_is_builtin_params;
 
 ParameterizedTestParameters(exec_builtin_suite, is_builtin_test) {
