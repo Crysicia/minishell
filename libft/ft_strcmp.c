@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_builtin.c                                     :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 11:02:14 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/12 11:34:08 by lpassera         ###   ########.fr       */
+/*   Created: 2021/03/17 11:55:33 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/12 11:15:30 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "libft.h"
 
-bool	is_builtin(char *str)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	static char *builtins[BUILTINS_NB] = { "cd", "echo",
-		"env", "exit", "export", "pwd", "unset" };
-	int index;
+	size_t	index;
 
 	index = 0;
-	while (index < BUILTINS_NB)
-	{
-		if (ft_strcmp(builtins[index], str) == 0)
-			return (true);
+	while (s1[index] && s1[index] == s2[index])
 		index++;
-	}
-	return (false);
+	return ((unsigned char)s1[index] - (unsigned char)s2[index]);
 }

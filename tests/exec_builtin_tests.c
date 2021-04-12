@@ -9,18 +9,13 @@ typedef struct	s_is_builtin_params {
 	char *argument;
 }				t_is_builtin_params;
 
-bool is_builtin(char *tmp)
-{
-	(void)tmp;
-	return false;
-}
-
 ParameterizedTestParameters(exec_builtin_suite, is_builtin_test) {
 	static  t_is_builtin_params is_builtin_params[] = {
 		{ .ret = true, .argument = "echo" },
 		{ .ret = true, .argument = "cd" },
 		{ .ret = true, .argument = "exit" },
 		{ .ret = true, .argument = "unset" },
+		{ .ret = true, .argument = "export" },
 		{ .ret = true, .argument = "pwd" },
 		{ .ret = true, .argument = "env" },
 		{ .ret = false, .argument = "echoo" },

@@ -12,6 +12,7 @@ SRCS			= main.c \
 				  srcs/get_next_line.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/exec.c \
+				  srcs/exec_builtin.c \
 				  srcs/env.c\
 				  srcs/scanner.c\
 				  srcs/scanner_discard.c\
