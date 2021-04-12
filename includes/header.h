@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/08 17:09:35 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/12 16:23:43 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@
 # include "get_next_line.h"
 # include "scanner.h"
 
-int g_current_pid;
+typedef struct	s_globals
+{
+	int current_pid;
+	t_list *env;
+}				t_globals;
+
+t_globals *g_globals;
 
 typedef struct s_command
 {

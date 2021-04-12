@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/08 17:29:46 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/12 16:23:37 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	execute_command(t_command *command)
 	}
 	else if (pid > 0)
 	{
-		g_current_pid = pid;
+		g_globals->current_pid = pid;
 		wait(NULL);
-		g_current_pid = 0;
+		g_globals->current_pid = 0;
 	}
 	else
 		printf("ERROR: Could not create child process.\n");
