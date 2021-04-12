@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scanner.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 01:10:52 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/08 01:10:52 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/12 14:35:37 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ bool	is_space(int c);
 bool	is_control_operator(int c);
 bool	is_keyword_character(int c);
 bool	is_argument_character(int c);
+bool	are_quotes_valid(char *line);
 
 size_t	keyword_len(char *line);
 size_t	option_len(char *line);
