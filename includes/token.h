@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/13 16:45:42 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/13 17:47:27 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-enum e_token
+typedef enum	e_token
 {
-	end_of_cmd = 0,
-	pipe = 1,
-	redir_l = 2,
-	append_r = 3,
-	redir_r = 4,
-	command = 5
-};
+	tok_end_of_cmd = 0,
+	tok_pipe = 1,
+	tok_redir_l = 2,
+	tok_append_r = 3,
+	tok_redir_r = 4,
+	tok_command = 5
+}				t_token;
 
 typedef struct		s_tmp
 {
