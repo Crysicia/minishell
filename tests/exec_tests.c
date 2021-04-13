@@ -25,4 +25,5 @@ Test(exec_suite, find_exe_path_test)
     cr_expect(strcmp(command.executable, line) == 0, "Expect ls path to be %s", line);
     cr_free(command.executable);
     cr_free(line);
+    close(fd);
 }

@@ -18,6 +18,7 @@ SRCS			= main.c \
 				  srcs/scanner_discard.c\
 				  srcs/scanner_len_fcts.c\
 				  srcs/scanner_states.c\
+				  srcs/scanner_quotes.c \
 				  srcs/scanner_utils.c
 
 OBJS 			= $(SRCS:.c=.o)
@@ -29,6 +30,7 @@ TEST_SRCS		= tests/test_helpers.c \
 				  tests/scanner_t.c \
 				  tests/scanner_len_fct.c \
 				  tests/scanner_states_t.c \
+				  tests/scanner_quotes_tests.c \
 				  tests/utils_tests.c \
 				  tests/exec_builtin_tests.c \
 				  tests/exec_tests.c
