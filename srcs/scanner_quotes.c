@@ -6,13 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 11:39:03 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/12 15:10:44 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/13 12:32:48 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/scanner.h"
 #include <stdio.h>
-
 
 /*
 ** Shamelessly copy pasted from another minishell
@@ -20,29 +19,71 @@
 */
 bool are_quotes_valid(char *line)
 {
-	int	i;
-	int	open;
+	char inner_quote;
+	char outer_quote;
+	int index;
 
-	i = 0;
-	open = 0;
 	if (!line)
-		return (false);
-	while (line[i])
+		return false;
+	index = 0;
+	inner_quote = 0;
+	outer_quote = 0;
+	while (line[index])
 	{
-		if (i > 0 && line[i - 1] == '\\')
-			;
-		else if (open == 0 && line[i] == '\"')
-			open = 1;
-		else if (open == 0 && line[i] == '\'')
-			open = 2;
-		else if (open == 1 && line[i] == '\"')
-			open = 0;
-		else if (open == 2 && line[i] == '\'')
-			open = 0;
-		i++;
+		if (ft_strchr("\"'", line[index]))
+		{
+			if (index > 0 && line[index - 1] == '\\')
+				;
+			else if (!outer_quote)
+				outer_quote = line[index];
+			else
+			{
+				if (outer_quote == line[index])
+				{
+					inner_quote = 0;
+					outer_quote = 0;
+				}
+				else
+				{
+					if (inner_quote == line[index])
+						inner_quote = 0;
+					else
+						inner_quote = line[index];
+				}
+			}
+		}
+		index++;
 	}
-	return (!open);
+	if (outer_quote)
+		return (false);
+	return (true);
 }
+
+// bool are_quotes_valid(char *line)
+// {
+// 	int	i;
+// 	int	open;
+
+// 	i = 0;
+// 	open = 0;
+// 	if (!line)
+// 		return (false);
+// 	while (line[i])
+// 	{
+// 		if (i > 0 && line[i - 1] == '\\')
+// 			;
+// 		else if (open == 0 && line[i] == '\"')
+// 			open = 1;
+// 		else if (open == 0 && line[i] == '\'')
+// 			open = 2;
+// 		else if (open == 1 && line[i] == '\"')
+// 			open = 0;
+// 		else if (open == 2 && line[i] == '\'')
+// 			open = 0;
+// 		i++;
+// 	}
+// 	return (!open);
+// }
 
 // bool are_quotes_valid(char *line)
 // {

@@ -13,6 +13,7 @@ ParameterizedTestParameters(scanner_quotes_suite, are_quotes_valid_test) {
 		// { .ret = false, .argument = NULL },
 		{ .ret = false, .argument = "'bonjour'\"" },
 		{ .ret = false, .argument = "'bonjour''" },
+		{ .ret = true, .argument = "\\'bonjour ''" },
 		{ .ret = true, .argument = "'bonj\"our'" },
 		{ .ret = true, .argument = "\" Bon ' jour\" ''" },
 		{ .ret = true, .argument = "'bonjour\" tout le monde\"'" },
