@@ -27,6 +27,7 @@ TEST			= minishell_test
 TEST_SRCS		= tests/test_helpers.c \
 				  tests/fct_lexer_test.c \
 				  tests/env_test.c \
+				  tests/parser_tests.c \
 				  tests/scanner_t.c \
 				  tests/scanner_len_fct.c \
 				  tests/scanner_states_t.c \
