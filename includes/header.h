@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/08 17:09:35 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/12 11:19:06 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include "scanner.h"
+# define BUILTINS_NB 7
 
-int g_current_pid;
+int	g_current_pid;
 
 typedef struct s_command
 {
@@ -40,4 +41,5 @@ int		builtin_env(char *envp[]);
 
 int		execute_command(t_command *command);
 int		find_exe_path(t_command *command);
+bool	is_builtin(char *str);
 #endif
