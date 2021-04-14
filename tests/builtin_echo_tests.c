@@ -23,6 +23,8 @@ ParameterizedTestParameters(builtin_echo_suite, echo_valid_args_test) {
 		{ .exit_code = 0, .printed = "bonjour", .arguments = { "echo", "-n", "-n", "bonjour" } },
 		{ .exit_code = 0, .printed = "-m -n bonjour\n", .arguments = { "echo", "-m", "-n", "bonjour" } },
 		{ .exit_code = 0, .printed = "--n\n", .arguments = { "echo", "--n" } },
+		{ .exit_code = 0, .printed = ";\n", .arguments = { "echo", "\\;" } },
+		{ .exit_code = 0, .printed = "\\\n", .arguments = { "echo", "\\\\;" } },
 	};
 
 	return cr_make_param_array(t_echo_params, echo_params, sizeof(echo_params) / sizeof(t_echo_params));
