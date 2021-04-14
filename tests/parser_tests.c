@@ -4,10 +4,10 @@
 #include "../includes/header.h"
 #include <string.h>
 
-t_tmp *parse_command(char *str)
+t_token *parse_command(char *str)
 {
 	(void)str;
-	t_tmp *new = malloc(sizeof(t_tmp));
+	t_token *new = malloc(sizeof(t_token));
 	new->cmd = strdup("echo bonjour");
 	new->role = tok_command;
 	return (new);
@@ -16,7 +16,7 @@ t_tmp *parse_command(char *str)
 typedef struct	s_testing_cmd_parse{
 	char		input[40];
 	char		expected[40];
-	t_token		role;
+	t_tok_type		role;
 }				t_testing_cmd_parse;
 
 ParameterizedTestParameters(parser_suite, command_parse_test) {
@@ -42,7 +42,7 @@ ParameterizedTestParameters(parser_suite, command_parse_test) {
 
 ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, command_parse_test)
 {
-	t_tmp *result = parse_command(tests->input);
+	t_token *result = parse_command(tests->input);
 	cr_expect(strcmp(result->cmd, tests->expected) == 0,
 			 "expected [%s] output for [%s] input, instead, fct returned [%s]",
 			  tests->expected, tests->input, result->cmd);

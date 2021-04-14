@@ -6,12 +6,26 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/07 22:04:52 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/14 16:23:56 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../includes/header.h"
 #include <stdbool.h>
+
+void print_token_list(t_list *list)
+{
+	t_token *token;
+	while (list)
+	{
+		token = list->content;
+		printf("(cmd: [%s], Role: [%d])", token->cmd, token->role);
+		if (list->next)
+			printf(" -> ");
+		list = list->next;
+	}
+	printf("\n");
+}
 
 bool	gnl_loop_function(char *line)
 {
@@ -58,7 +72,7 @@ void	get_command(char *envp[])
 
 int	lexer(char *line, char *envp[])
 {
-	char		**formatted_line;
+	// char		**formatted_line;
 	t_command	command;
 
 	command.executable = NULL;
@@ -71,10 +85,11 @@ int	lexer(char *line, char *envp[])
 		return (-1);
 	}
 	printf("valid line is [%s]\n", line);
-	formatted_line = evaluate_command(line);
-	puts("here is the tab** sent to exec function :");
-	while (formatted_line && *formatted_line)
-		puts(*(formatted_line++));
+	// formatted_line = evaluate_command(line);
+	// puts("here is the tab** sent to exec function :");
+	// while (formatted_line && *formatted_line)
+	// 	puts(*(formatted_line++));
+	print_token_list(command_parse(line));
 	command.args = ft_split(line, ' ');
 	execute_command(&command);
 	return (0);

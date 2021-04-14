@@ -6,14 +6,14 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/13 17:47:27 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/14 16:15:05 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-typedef enum	e_token
+typedef enum	e_tok_type
 {
 	tok_end_of_cmd = 0,
 	tok_pipe = 1,
@@ -21,15 +21,18 @@ typedef enum	e_token
 	tok_append_r = 3,
 	tok_redir_r = 4,
 	tok_command = 5
-}				t_token;
+}				t_tok_type;
 
-typedef struct		s_tmp
+typedef struct		s_token
 {
 	char			*cmd;
-	enum e_token	role;
-}					t_tmp;
+	t_tok_type		role;
+}					t_token;
 
-enum e_token get_next_token(char *str);
-
-
+t_tok_type	get_next_tok_type(char *str);
+t_list		*command_parse(char *line);
+t_tok_type	attribute_tok_type(char chr);
+t_token		*get_next_token(char *line);
+void		free_token(void *token);
+t_token		*new_token(char *str, t_tok_type type);
 #endif

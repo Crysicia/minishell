@@ -19,7 +19,8 @@ SRCS			= main.c \
 				  srcs/scanner_len_fcts.c\
 				  srcs/scanner_states.c\
 				  srcs/scanner_quotes.c \
-				  srcs/scanner_utils.c
+				  srcs/scanner_utils.c \
+				  srcs/tokenizer.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
