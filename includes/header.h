@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/14 10:52:11 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/14 11:32:31 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -49,4 +49,8 @@ int		builtin_env(char *envp[]);
 int		execute_command(t_command *command);
 int		find_exe_path(t_command *command);
 bool	is_builtin(char *str);
+
+
+t_list *array_to_list(char **array);
+char **list_to_array(t_list *list);
 #endif

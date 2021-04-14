@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/12 16:23:37 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/14 12:00:00 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	find_exe_path(t_command *command)
 			command->executable = current_path;
 		index++;
 	}
+	if (!command->executable)
+		return (-2);
 	return (0);
 }
 
