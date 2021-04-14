@@ -6,8 +6,9 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/12 16:23:43 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/14 10:52:11 by lpassera         ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
@@ -21,6 +22,7 @@
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include "scanner.h"
+# define BUILTINS_NB 7
 
 typedef struct	s_globals
 {
@@ -46,4 +48,5 @@ int		builtin_env(char *envp[]);
 
 int		execute_command(t_command *command);
 int		find_exe_path(t_command *command);
+bool	is_builtin(char *str);
 #endif

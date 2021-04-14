@@ -13,21 +13,26 @@ SRCS			= main.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/exec.c \
 				  srcs/builtin_env.c\
+				  srcs/exec_builtin.c \
 				  srcs/scanner.c\
 				  srcs/scanner_discard.c\
 				  srcs/scanner_len_fcts.c\
 				  srcs/scanner_states.c\
+				  srcs/scanner_quotes.c \
 				  srcs/scanner_utils.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
-TEST_SRCS		= tests/fct_lexer_test.c \
+TEST_SRCS		= tests/test_helpers.c \
+				  tests/fct_lexer_test.c \
 				  tests/env_test.c \
 				  tests/scanner_t.c \
 				  tests/scanner_len_fct.c \
 				  tests/scanner_states_t.c \
+				  tests/scanner_quotes_tests.c \
 				  tests/utils_tests.c \
+				  tests/exec_builtin_tests.c \
 				  tests/exec_tests.c
 
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
