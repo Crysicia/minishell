@@ -6,12 +6,17 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/14 16:15:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 12:09:06 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
+
+#include "../libft/libft.h"
+#include "header.h"
+#include <stdlib.h>
+#include <stdbool.h>
 
 typedef enum	e_tok_type
 {
@@ -35,4 +40,9 @@ t_tok_type	attribute_tok_type(char chr);
 t_token		*get_next_token(char *line);
 void		free_token(void *token);
 t_token		*new_token(char *str, t_tok_type type);
+
+bool		is_escape_character(char chr);
+bool		is_token_character(char chr);
+char		*cut_token_string(char *line);
+
 #endif

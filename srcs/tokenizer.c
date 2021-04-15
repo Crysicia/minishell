@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/14 16:27:29 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 12:02:57 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_list		*command_parse(char *line)
 			return (NULL);
 		}
 		ft_lstadd_back(&tokens, node);
+		ptr = ft_strnstr(ptr, token->cmd, ft_strlen(ptr));
 		ptr += ft_strlen(token->cmd);
 	}
 	return (tokens);
@@ -91,6 +92,7 @@ t_token		*get_next_token(char *line)
 	if (role == tok_command)
 		i--;
 	cmd = ft_strndup(line, i + 1);
+// cmd = cut_token_string(line);
 	if (cmd)
 		return (new_token(cmd, role));
 	return (NULL);

@@ -15,12 +15,12 @@ SRCS			= main.c \
 				  srcs/exec_builtin.c \
 				  srcs/env.c\
 				  srcs/scanner.c\
-				  srcs/scanner_discard.c\
 				  srcs/scanner_len_fcts.c\
 				  srcs/scanner_states.c\
 				  srcs/scanner_quotes.c \
 				  srcs/scanner_utils.c \
-				  srcs/tokenizer.c
+				  srcs/tokenizer.c \
+				  srcs/token_fcts.c
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))

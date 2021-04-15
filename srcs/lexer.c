@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 09:48:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 12:12:21 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ void	get_command(char *envp[])
 	}
 	else if (ret == 0)
 		gnl_loop_function(line);
-	if (is_valid_command(line))
-		lexer(line, envp);
-	else
-		printf("line contains forbidden characters\n");
+	lexer(line, envp);
 }
 
 int	lexer(char *line, char *envp[])

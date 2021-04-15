@@ -6,7 +6,7 @@
 #    By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/15 11:22:32 by lpassera          #+#    #+#              #
-#    Updated: 2021/04/12 11:16:23 by lpassera         ###   ########.fr        #
+#    Updated: 2021/04/15 12:00:14 by pcharton         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS 		= ft_memset.c \
 			  ft_atoi.c \
 			  ft_calloc.c \
 			  ft_strdup.c \
+			  ft_strndup.c \
 			  ft_substr.c \
 			  ft_strjoin.c \
 			  ft_strtrim.c \
