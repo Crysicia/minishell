@@ -6,17 +6,13 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 14:16:04 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:02:47 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
-
-#include "../libft/libft.h"
-#include "header.h"
-#include <stdlib.h>
-#include <stdbool.h>
+# include "header.h"
 
 typedef enum	e_tok_type
 {
@@ -32,6 +28,7 @@ typedef struct		s_token
 {
 	char			*cmd;
 	t_tok_type		role;
+	size_t			word_len;
 }					t_token;
 
 t_tok_type	get_next_tok_type(char *str);
@@ -40,11 +37,8 @@ t_tok_type	attribute_tok_type(char chr);
 t_token		*get_next_token(char *line);
 void		free_token(void *token);
 t_token		*new_token(char *str, t_tok_type type);
-
 bool		is_escape_character(char chr);
 bool		is_token_character(char chr);
 char		*get_escaped_string(char *str);
 char		*cut_token_string(char *line);
-
-
 #endif

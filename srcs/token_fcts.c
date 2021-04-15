@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 14:16:33 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:04:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 char	*cut_token_string(char *line)
 {
 	char	*trimmed_str;
-	char	*ptr;
 	size_t	i;
 
-	ptr = line;
-	skip_spaces(&ptr);
-	if (is_escape_character(*ptr))
+	if (is_escape_character(*line))
 		trimmed_str = get_escaped_string(line);
-	else if (is_token_character(*ptr))
-		trimmed_str = ft_strndup(ptr, 1);
+	else if (is_token_character(*line))
+	{
+		trimmed_str = ft_strndup(line, 1);
+	}
 	else
 	{
 		i = 0;
-		while (ptr[i] && !is_token_character(ptr[i]))
+		while (line[i] && !is_token_character(line[i])
+			   && !is_space(line[i]))
 			i++;
-		trimmed_str = ft_strndup(ptr, i);
+		trimmed_str = ft_strndup(line, i);
 	}
 	return (trimmed_str);
 }

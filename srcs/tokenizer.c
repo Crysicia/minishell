@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 12:02:57 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:06:18 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_token		*new_token(char *str, t_tok_type type)
 	if (new)
 	{
 		new->cmd = str;
-	// str is already allocated
 		new->role = type;
 	}
 	return (new);
@@ -45,6 +44,7 @@ t_list		*command_parse(char *line)
 	tokens = NULL;
 	while (*ptr)
 	{
+		skip_spaces(&ptr);
 		token = get_next_token(ptr);
 		node = ft_lstnew(token);
 		if (!token || !node)
@@ -79,21 +79,11 @@ t_token		*get_next_token(char *line)
 {
 	t_tok_type	role;
 	char		*cmd;
-	int			i;
 
-	i = 0;
-	role = attribute_tok_type(line[i]);
-	while (line[i] && !(ft_strchr("|;><", line[i])))
-	{
-		// if (line[i] == '\\')
-		// 	i++;
-		i++;
-	}
-	if (role == tok_command)
-		i--;
-	cmd = ft_strndup(line, i + 1);
-// cmd = cut_token_string(line);
+	role = attribute_tok_type(*line);
+	cmd = cut_token_string(line);
 	if (cmd)
 		return (new_token(cmd, role));
-	return (NULL);
+	else
+		return (NULL);
 }
