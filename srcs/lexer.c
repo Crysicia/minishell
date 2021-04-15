@@ -6,16 +6,17 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:16:43 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:40:15 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include <stdbool.h>
 
-void print_token_list(t_list *list)
+void	print_token_list(t_list *list)
 {
-	t_token *token;
+	t_token	*token;
+
 	while (list)
 	{
 		token = list->content;
