@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:04:53 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:12:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char	*get_escaped_string(char *str)
 				index++;
 			index++;
 		}
+		if (str[index] && str[index] == quote)
+			index++;
 	}
 	result = ft_strndup(str, index);
 	return (result);
