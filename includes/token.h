@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 12:09:06 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 14:16:04 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_token		*new_token(char *str, t_tok_type type);
 
 bool		is_escape_character(char chr);
 bool		is_token_character(char chr);
+char		*get_escaped_string(char *str);
 char		*cut_token_string(char *line);
+
 
 #endif
