@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/14 16:23:56 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 09:48:01 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ int	lexer(char *line, char *envp[])
 
 void	skip_spaces(char **line)
 {
-	while (**line == ' ' || **line == '\t')
+	while (line && *line && (**line == ' ' || **line == '\t'))
 		*line += 1;
 }

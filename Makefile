@@ -33,6 +33,7 @@ TEST_SRCS		= tests/test_helpers.c \
 				  tests/scanner_len_fct.c \
 				  tests/scanner_states_t.c \
 				  tests/scanner_quotes_tests.c \
+				  tests/tokenizer_tests.c \
 				  tests/utils_tests.c \
 				  tests/exec_builtin_tests.c \
 				  tests/exec_tests.c
