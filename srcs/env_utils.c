@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 10:53:54 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/15 10:20:55 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 12:11:55 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ t_list *array_to_list(char **array)
 	while (array[i])
 	{
 		dup = ft_strdup(array[i]);
-		if (!dup)
-			return (NULL);
 		node = ft_lstnew_safe(dup);
+		if (!dup || !node)
+		{
+			free(dup);
+			ft_lstclear(&head, free);
+			return (NULL);	
+		}
 		ft_lstadd_back(&head, node);
 		i++;
 	}
@@ -67,4 +71,21 @@ char **list_to_array(t_list *list)
 	}
 	array[i] = NULL;
 	return (array);
+}
+
+char *ft_getenv(const char *name)
+{
+	t_list *node;
+	size_t size;
+
+	size = ft_strlen(name);
+	node = g_globals->env;
+	while (node)
+	{
+		if (!ft_strncmp((char *)node->content, name, size))
+			if (*(char *)(node->content + size) == '=')
+				return (ft_substr((char *)node->content, size, -1));
+		node = node->next;
+	}
+	return (NULL);
 }

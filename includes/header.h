@@ -6,9 +6,8 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/14 11:32:31 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 12:07:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
@@ -53,4 +52,5 @@ bool	is_builtin(char *str);
 
 t_list *array_to_list(char **array);
 char **list_to_array(t_list *list);
+char *ft_getenv(const char *name);
 #endif

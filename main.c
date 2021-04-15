@@ -6,18 +6,28 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/14 10:53:26 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 11:42:32 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-bool	init_globals(void)
+bool	destroy_globals(void)
+{
+	ft_lstclear(&g_globals->env, free);
+	free(g_globals);
+	return (false);
+}
+
+bool	init_globals(char *envp[])
 {
 	g_globals = malloc(sizeof(t_globals));
 	if (!g_globals)
 		return (false);
 	g_globals->current_pid = 0;
+	g_globals->env = array_to_list(envp);
+	if (!g_globals->env)
+		return (destroy_globals());
 	return (true);
 }
 
@@ -35,7 +45,9 @@ void	print_prompt(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	if (!init_globals())
+	(void)argc;
+	(void)argv;
+	if (!init_globals(envp))
 		return (1);
 	signal(SIGINT, handle_sigint);
 	while (1)
@@ -44,7 +56,5 @@ int	main(int argc, char *argv[], char *envp[])
 		get_command(envp);
 		sleep(0);
 	}
-	(void)argc;
-	(void)argv;
 	return (0);
 }

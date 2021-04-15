@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/14 12:00:00 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 12:07:34 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	find_exe_path(t_command *command)
 	int			index;
 
 	index = 0;
-	path = getenv("PATH");
+	path = ft_getenv("PATH");
 	if (!path)
 		return (-1);
 	path_arr = ft_split(path, ':');
