@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:02:47 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:15:07 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define TOKEN_H
 # include "header.h"
 
-typedef enum	e_tok_type
+typedef enum e_tok_type
 {
 	tok_end_of_cmd = 0,
 	tok_pipe = 1,
@@ -24,7 +24,7 @@ typedef enum	e_tok_type
 	tok_command = 5
 }				t_tok_type;
 
-typedef struct		s_token
+typedef struct s_token
 {
 	char			*cmd;
 	t_tok_type		role;

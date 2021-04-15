@@ -6,14 +6,14 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:06:18 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:16:07 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include "../includes/token.h"
 
-t_token		*new_token(char *str, t_tok_type type)
+t_token	*new_token(char *str, t_tok_type type)
 {
 	t_token	*new;
 
@@ -26,14 +26,14 @@ t_token		*new_token(char *str, t_tok_type type)
 	return (new);
 }
 
-void		free_token(void *token)
+void	free_token(void *token)
 {
 	free(((t_token *)token)->cmd);
 	free(token);
 	token = NULL;
 }
 
-t_list		*command_parse(char *line)
+t_list	*command_parse(char *line)
 {
 	char	*ptr;
 	t_token	*token;
@@ -75,7 +75,7 @@ t_tok_type	attribute_tok_type(char chr)
 		return (tok_command);
 }
 
-t_token		*get_next_token(char *line)
+t_token	*get_next_token(char *line)
 {
 	t_tok_type	role;
 	char		*cmd;
