@@ -46,6 +46,7 @@ t_list	*command_parse(char *line)
 	{
 		skip_spaces(&ptr);
 		token = get_next_token(ptr);
+		puts(token->cmd);
 		node = ft_lstnew(token);
 		if (!token || !node)
 		{
@@ -72,7 +73,7 @@ t_tok_type	attribute_tok_type(char chr)
 	else if (chr == '<')
 		return (tok_redir_l);
 	else
-		return (tok_command);
+		return (tok_word);
 }
 
 t_token	*get_next_token(char *line)
@@ -82,6 +83,7 @@ t_token	*get_next_token(char *line)
 
 	role = attribute_tok_type(*line);
 	cmd = cut_token_string(line);
+	puts(cmd);
 	if (cmd)
 		return (new_token(cmd, role));
 	else

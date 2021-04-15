@@ -4,6 +4,13 @@
 #include "../includes/header.h"
 #include <string.h>
 
+
+/*
+**	Ce fichier contient l'ensemble des commandes bash fonctionnelles
+**	Il est amené à être amélioré avec le projet
+**
+*/
+
 typedef struct	s_testing_cmd_parse{
 	char		input[40];
 	char		expected[40];
@@ -13,7 +20,7 @@ typedef struct	s_testing_cmd_parse{
 ParameterizedTestParameters(parser_suite, command_parse_test) {
 	static t_testing_cmd_parse tests[] = {
 	//Normal usage testing
-		{ .expected = "echo", .role = tok_command, .input = "echo bonjour;"},
+		{ .expected = "echo", .role = tok_word, .input = "echo bonjour;"},
 		{ .expected = ";", .role = tok_end_of_cmd, .input = ";ls" },
 		{ .expected = "|", .role = tok_pipe, .input = "|pwd" },
 		{ .expected = "<", .role = tok_redir_l, .input = "<file"},

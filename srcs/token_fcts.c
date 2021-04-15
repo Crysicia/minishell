@@ -22,6 +22,7 @@ char	*cut_token_string(char *line)
 	else if (is_token_character(*line))
 	{
 		trimmed_str = ft_strndup(line, 1);
+		puts(trimmed_str);
 	}
 	else
 	{
