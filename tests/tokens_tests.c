@@ -22,44 +22,31 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 	{
 		{ .input = "echo bonjour", .expected = "echo", .result_tok = tok_word},
 		{ .input = "echo", .expected = "echo", .result_tok = tok_word },
-		{ .input = "   echo  ", .expected = "echo", .result_tok = tok_word },
 		{ .input = "echo       ", .expected = "echo", .result_tok = tok_word },
-		{ .input = "   echo", .expected = "echo", .result_tok = tok_word },
 		{ .input = "echo;", .expected = "echo", .result_tok = tok_word },
 		
 		//testing ; isolation
 		{ .input = ";", .expected = ";", .result_tok = tok_end_of_cmd },
-		{ .input = "   ;    ", .expected = ";", .result_tok = tok_end_of_cmd },
 		{ .input = ";    ", .expected = ";", .result_tok = tok_end_of_cmd },
-		{ .input = "      ;", .expected = ";", .result_tok = tok_end_of_cmd },
-		{ .input = "      ;bonjour", .expected = ";", .result_tok = tok_end_of_cmd },
 		
 		//testing > isolation
 		{ .input = ">", .expected = ">", .result_tok = tok_redir_r},
-		{ .input = "    >  ", .expected = ">", .result_tok = tok_redir_r},
 		{ .input = ">    ", .expected = ">", .result_tok = tok_redir_r},
-		{ .input = "      >", .expected = ">", .result_tok = tok_redir_r},
 		{ .input = ">file ", .expected = ">", .result_tok = tok_redir_r},
 
 		//testing < isolation
 		{ .input = "<", .expected = "<", .result_tok = tok_redir_l},
-		{ .input = "   <  ", .expected = "<", .result_tok = tok_redir_l},
 		{ .input = "<     ", .expected = "<", .result_tok = tok_redir_l},
-		{ .input = "     <", .expected = "<", .result_tok = tok_redir_l},
-		{ .input = "     <file", .expected = "<", .result_tok = tok_redir_l},
-
-		//testing | isolation
+		{ .input = "<file", .expected = "<", .result_tok = tok_redir_l},
+		
+				//testing | isolation
 		{ .input = "|", .expected = "|", .result_tok = tok_pipe},
-		{ .input = "   |   ", .expected = "|", .result_tok = tok_pipe},
 		{ .input = "|   ", .expected = "|", .result_tok = tok_pipe},
-		{ .input = "    |", .expected = "|", .result_tok = tok_pipe},
-		{ .input = "    |pwd", .expected = "|", .result_tok = tok_pipe},
 
 		//testing >> isolation
 		{ .input = ">>", .expected = ">>", .result_tok = tok_append_r},
-		{ .input = "    >>", .expected = ">>", .result_tok = tok_append_r},
 		{ .input = ">>     ", .expected = ">>", .result_tok = tok_append_r},
-		{ .input = "   >>file", .expected = ">>", .result_tok = tok_append_r},
+		{ .input = ">>file", .expected = ">>", .result_tok = tok_append_r},
 	};
 	return (cr_make_param_array(tokens, tests, sizeof(tests)/sizeof(tokens)));
 }

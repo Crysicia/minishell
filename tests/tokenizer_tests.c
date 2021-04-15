@@ -19,7 +19,7 @@ ParameterizedTestParameters(tokenizer_suite, token_test)
 		{ .input = "\'pwd\'", .result = "\'pwd\'"},
 		/* Single quotes normal use */
 		{ .input = "\'cat file1 file2\'", .result = "\'cat file1 file2\'" },
-		{ .input = "   | bonjour", .result = "|" },
+		{ .input = "| bonjour", .result = "|" },
 //		{ .input = "\\ hello", .result = " hello" },
 	};
 
