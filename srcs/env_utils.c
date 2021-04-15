@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 10:53:54 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/14 12:50:40 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 10:20:55 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ char **list_to_array(t_list *list)
 		list = list->next;
 		i++;
 	}
-	return (NULL);
+	array[i] = NULL;
+	return (array);
 }
