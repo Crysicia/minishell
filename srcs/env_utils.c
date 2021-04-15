@@ -6,15 +6,15 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 10:53:54 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/15 12:11:55 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 16:50:03 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-t_list *ft_lstnew_safe(void *content)
+t_list	*ft_lstnew_safe(void *content)
 {
-	t_list *list;
+	t_list	*list;
 
 	list = ft_lstnew(content);
 	if (!list)
@@ -22,12 +22,12 @@ t_list *ft_lstnew_safe(void *content)
 	return (list);
 }
 
-t_list *array_to_list(char **array)
+t_list	*array_to_list(char **array)
 {
-	t_list *head;
-	t_list *node;
-	char *dup;
-	int i;
+	t_list	*head;
+	t_list	*node;
+	char	*dup;
+	int		i;
 
 	if (!array || !*array)
 		return (NULL);
@@ -42,7 +42,7 @@ t_list *array_to_list(char **array)
 		{
 			free(dup);
 			ft_lstclear(&head, free);
-			return (NULL);	
+			return (NULL);
 		}
 		ft_lstadd_back(&head, node);
 		i++;
@@ -50,11 +50,11 @@ t_list *array_to_list(char **array)
 	return (head);
 }
 
-char **list_to_array(t_list *list)
+char	**list_to_array(t_list *list)
 {
-	char **array;
-	size_t size;
-	int i;
+	char	**array;
+	size_t	size;
+	int		i;
 
 	i = 0;
 	size = ft_lstsize(list);
@@ -73,10 +73,10 @@ char **list_to_array(t_list *list)
 	return (array);
 }
 
-char *ft_getenv(const char *name)
+char	*ft_getenv(const char *name)
 {
-	t_list *node;
-	size_t size;
+	t_list	*node;
+	size_t	size;
 
 	size = ft_strlen(name);
 	node = g_globals->env;

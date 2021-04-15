@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 12:07:23 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 16:51:24 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 # include "scanner.h"
 # define BUILTINS_NB 7
 
-typedef struct	s_globals
+typedef struct s_globals
 {
-	int current_pid;
-	t_list *env;
-}				t_globals;
+	int		current_pid;
+	t_list	*env;
+}			t_globals;
 
-t_globals *g_globals;
+t_globals	*g_globals;
 
 typedef struct s_command
 {
@@ -43,14 +43,15 @@ void	get_command(char *envp[]);
 int		lexer(char *line, char *envp[]);
 char	*get_word(char **line);
 void	skip_spaces(char **line);
-int		builtin_env(char *envp[]);
+int		builtin_env(t_command *command);
 
 int		execute_command(t_command *command);
 int		find_exe_path(t_command *command);
 bool	is_builtin(char *str);
 
-
-t_list *array_to_list(char **array);
-char **list_to_array(t_list *list);
-char *ft_getenv(const char *name);
+t_list	*array_to_list(char **array);
+char	**list_to_array(t_list *list);
+char	*ft_getenv(const char *name);
+bool	destroy_globals(void);
+bool	init_globals(char *envp[]);
 #endif

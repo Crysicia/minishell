@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   globals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/15 16:48:29 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/15 16:34:24 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int	builtin_env(t_command *command)
+bool	destroy_globals(void)
 {
-	t_list	*node;
+	ft_lstclear(&g_globals->env, free);
+	free(g_globals);
+	return (false);
+}
 
-	if (command->args[1])
-		return (1);
-	node = g_globals->env;
-	while (node)
-	{
-		printf("%s\n", (char *)node->content);
-		node = node->next;
-	}
-	return (0);
+bool	init_globals(char *envp[])
+{
+	g_globals = malloc(sizeof(t_globals));
+	if (!g_globals)
+		return (false);
+	g_globals->current_pid = 0;
+	g_globals->env = array_to_list(envp);
+	if (!g_globals->env)
+		return (destroy_globals());
+	return (true);
 }

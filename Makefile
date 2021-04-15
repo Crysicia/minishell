@@ -21,6 +21,7 @@ SRCS			= main.c \
 				  srcs/scanner_quotes.c \
 				  srcs/scanner_utils.c \
 				  srcs/env_utils.c \
+				  srcs/globals.c \
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
