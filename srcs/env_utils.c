@@ -84,8 +84,28 @@ char	*ft_getenv(const char *name)
 	{
 		if (!ft_strncmp((char *)node->content, name, size))
 			if (*(char *)(node->content + size) == '=')
-				return (ft_substr((char *)node->content, size, -1));
+				return (ft_substr((char *)node->content, size + 1, -1));
 		node = node->next;
 	}
 	return (NULL);
+}
+
+int		ft_setenv(const char *name, const char *value)
+{
+	(void)name;
+	(void)value;
+	// Need a strjoin with delimiters to join with = between key and value
+	// Then search for an existing env with the same key
+	// 	If it exists, change the value
+	// 	else add the new variable to the list
+
+	// I think we will need an env structure...
+
+	// char	*to_write;
+	// t_list	*new_node;
+	// t_list	*search_node;
+	// size_t	name_size;
+
+	// name_size = ft_strlen(name);
+	return (0);
 }

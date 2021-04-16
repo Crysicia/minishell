@@ -17,7 +17,7 @@ int	builtin_env(t_command *command)
 	t_list	*node;
 
 	if (command->args[1])
-		return (1);
+		return (127);
 	node = g_globals->env;
 	while (node)
 	{
