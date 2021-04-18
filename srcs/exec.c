@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/15 12:07:34 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/18 14:51:25 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ char	*get_full_path(char *path, char *executable)
 int	find_exe_path(t_command *command)
 {
 	struct stat	st;
-	char		*path;
+	t_dict	*path;
 	char		**path_arr;
 	char		*current_path;
 	int			index;
 
 	index = 0;
 	path = ft_getenv("PATH");
-	if (!path)
+	printf("PATH = [%s] [%s]\n", path->key, path->value);
+	if (!path || !path->value)
 		return (-1);
-	path_arr = ft_split(path, ':');
+	path_arr = ft_split(path->value, ':');
 	if (!path_arr)
 		return (-1);
 	current_path = NULL;

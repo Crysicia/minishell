@@ -21,7 +21,7 @@ Test(env_suite, env_no_args_test) {
 	for (int i = 0; i < 4; i++)
 	{
 		get_next_line(fd, &line);
- 	    cr_expect(strcmp(envp[i], line) == 0,  "Expect printed strings to be the same");
+ 	    cr_expect_str_eq(envp[i], line,  "Expect printed strings to be the same, expected [%s], got [%s]", envp[i], line);
 	    cr_free(line);
 	}
 	close(fd);

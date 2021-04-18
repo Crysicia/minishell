@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 16:51:24 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/18 16:08:19 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ typedef struct s_command
 	char	**envp;
 }				t_command;
 
+typedef struct s_dict
+{
+	char *key;
+	char *value;
+}				t_dict;
+
 void	print_prompt(void);
 void	get_command(char *envp[]);
 int		lexer(char *line, char *envp[]);
@@ -51,7 +57,11 @@ bool	is_builtin(char *str);
 
 t_list	*array_to_list(char **array);
 char	**list_to_array(t_list *list);
-char	*ft_getenv(const char *name);
+t_dict	*ft_getenv(const char *name);
 bool	destroy_globals(void);
 bool	init_globals(char *envp[]);
+t_dict *new_dict(char *key, char *value);
+t_dict *env_to_dict(char *env);
+char *dict_to_env(t_dict *dict);
+int		ft_setenv(char *name, char *value);
 #endif
