@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:44:44 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 11:16:10 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_list	*command_parse(char *line)
 	tokens = NULL;
 	while (*ptr)
 	{
-
 		skip_spaces(&ptr);
 		token = get_next_token(ptr);
 		node = ft_lstnew(token);
