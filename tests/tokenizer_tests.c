@@ -32,8 +32,6 @@ ParameterizedTest(t_tok_input_test *params, tokenizer_suite, token_test)
 	char *fct_ret;
 	
 	fct_ret = cut_token_string(params->input);
-	puts("i need to see it");
-	puts(fct_ret);
 	cr_expect_str_eq(fct_ret, params->result,
 			  "Test cut_token_string =\nFor input : [%s] expected [%s], function returned [%s] instead",
 			  params->input, params->result, fct_ret);
