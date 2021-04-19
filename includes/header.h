@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 11:46:38 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 11:48:52 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_command
 
 typedef struct s_dict
 {
-	char *key;
-	char *value;
+	char	*key;
+	char	*value;
 }				t_dict;
 
 void	print_prompt(void);
@@ -61,9 +61,9 @@ char	**list_to_array(t_list *list);
 t_dict	*ft_getenv(const char *name);
 bool	destroy_globals(void);
 bool	init_globals(char *envp[]);
-t_dict *new_dict(char *key, char *value);
-t_dict *env_to_dict(char *env);
-char *dict_to_env(t_dict *dict);
+t_dict	*new_dict(char *key, char *value);
+t_dict	*env_to_dict(char *env);
+char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
-void free_dict(void *elem);
+void	free_dict(void *elem);
 #endif
