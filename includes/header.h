@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 14:37:14 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/19 15:03:54 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char	*get_word(char **line);
 void	skip_spaces(char **line);
 int		builtin_env(t_command *command);
 
-int		execute_command(t_command *command);
-int		find_exe_path(t_command *command);
+int		execute_command(char **command, char *envp[]);
+char	*find_exe_path(char *command);
 bool	is_builtin(char *str);
 
 t_list	*array_to_list(char **array);
@@ -68,4 +68,7 @@ t_dict	*env_to_dict(char *env);
 char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
+
+/* TMP UTILS */
+void	print_token_list(t_list *list);
 #endif

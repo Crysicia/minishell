@@ -30,7 +30,6 @@ OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
 TEST_SRCS		= tests/test_helpers.c \
-				  tests/fct_lexer_test.c \
 				  tests/env_test.c \
 				  tests/inputs_correct.c \
 				  tests/scanner_t.c \

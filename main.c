@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/19 14:40:04 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/19 15:46:57 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	print_prompt(void)
 
 void	handle_sigint(int signal)
 {
-//	printf("Killing [%i]\n", g_globals->current_pid);
 	printf("\n");
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);
@@ -30,6 +29,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_list	*input_list;
 	char	*input_str;
+	char	**tab;
 
 	if (argc != 1)
 		return (-1);
@@ -41,7 +41,9 @@ int	main(int argc, char *argv[], char *envp[])
 		print_prompt();
 		input_str = get_command();
 		input_list = command_parse(input_str);
-//		lexer(input_str, envp);
+		print_token_list(input_list);
+		tab = command_format(input_list);
+		execute_command(tab, envp);
 		sleep(0);
 	}
 	(void)argv;

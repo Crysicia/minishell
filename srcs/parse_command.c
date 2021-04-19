@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 14:40:10 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/19 16:05:38 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,25 @@ t_list	*command_parse(char *line)
 	return (tokens);
 }
 
+size_t	count_command_words(t_list *list)
+{
+	size_t	index;
+	t_list	*tmp;
+	t_token	*tok;
+
+	index = 0;
+	tmp = list;
+	tok = list->content;
+	while (tmp && (tok->role == tok_word))
+	{
+		index++;
+		tmp = tmp->next;
+		if (tmp)
+			tok = tmp->content;
+	}
+	return (index);
+}
+
 char	**command_format(t_list *list)
 {
 	t_list	*tmp;
@@ -49,35 +68,21 @@ char	**command_format(t_list *list)
 	size_t	count;
 	char	**tab;
 
-	tmp = list;
-	tok = list->content;
-	index = 0;
 	count = 0;
-	while (tmp && (tok->role == tok_word))
-	{
-		index++;
-		tmp = tmp->next;
-		if (tmp)
-			tok = tmp->content;
-	}
+	index = count_command_words(list);
 	tab = malloc(sizeof(char **) * (index + 1));
 	if (!tab)
 		return (NULL);
-	else
+	tmp = list;
+	while (count < index)
 	{
-		tmp = list;
-		tok = list->content;
-		while (count < index)
-		{
-			tab[count] = ft_strdup(tok->cmd);
-			if (!tab[count])
-				return (NULL);
-			count++;
-			tmp = tmp->next;
-			if (tmp)
-				tok = tmp->content;
-		}
-		tab[count] = NULL;
-		return (tab);
+		tok = tmp->content;
+		tab[count] = ft_strdup(tok->cmd);
+		if (!tab[count])
+			return (NULL);
+		count++;
+		tmp = tmp->next;
 	}
+	tab[count] = NULL;
+	return (tab);
 }
