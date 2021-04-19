@@ -44,6 +44,12 @@ void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *s1);
 
 /*
+**	Tab utils
+*/
+
+char				**ft_tabdup(char *tab[]);
+
+/*
 ** 42 functions
 */
 char				*ft_substr(char const *s, unsigned int start, size_t len);

@@ -42,8 +42,10 @@ bool	is_escape_character(char chr)
 
 bool	is_token_character(char chr)
 {
-	if ((chr == ';') || (chr == '|') || (chr == '<')
-		|| (chr == '>'))
+	if ((chr == ';')
+	|| (chr == '|')
+	|| (chr == '<')
+	|| (chr == '>'))
 		return (1);
 	else
 		return (0);
