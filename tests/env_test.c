@@ -5,8 +5,9 @@
 #include <fcntl.h>
 
 Test(env_suite, env_no_args_test) {
-	char *envp[] = { "BONJOUR=test", "USER=pcharton", "TEST=test", "ANOTHER=brickinthewall", NULL };
-	init_globals(envp);
+	char *input[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall" };
+	// char *output[] = { "BONJOUR=test", "USER=pcharton", "TEST=test", "ANOTHER=brickinthewall" };
+	init_globals(input);
 	
 	t_command command;
 	command.args = ft_split("env", ' ');
@@ -18,11 +19,12 @@ Test(env_suite, env_no_args_test) {
 	cr_expect(builtin_env(&command) == 0, "Expect builtin_env to return 0 without any argument");
 	fclose(fp);
 	fd = open("env.test", O_RDONLY);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; input[i]; i++)
 	{
 		get_next_line(fd, &line);
- 	    cr_expect_str_eq(envp[i], line,  "Expect printed strings to be the same, expected [%s], got [%s]", envp[i], line);
+ 	    cr_expect_str_eq(input[i], line,  "Expect printed strings to be the same, expected [%s], got [%s]", input[i], line);
 	    cr_free(line);
 	}
 	close(fd);
+	destroy_globals();
 }

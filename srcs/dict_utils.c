@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:12:33 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/19 11:43:18 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 16:08:37 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ t_dict	*env_to_dict(char *env)
 	char	*delimiter;
 
 	delimiter = ft_strchr(env, '=');
-	if (!delimiter || (delimiter + 1) == 0)
+	if (!delimiter)
 		dict = new_dict(env, NULL);
 	else
 	{
 		key = ft_strndup(env, (int)(delimiter - env));
-		dict = new_dict(key, (char *)(delimiter + 1));
+		dict = new_dict(key, &delimiter[1]);
 		free(key);
 	}
 	return (dict);

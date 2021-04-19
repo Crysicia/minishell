@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 10:53:54 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/19 11:44:13 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 17:32:38 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,46 @@ int	ft_setenv(char *name, char *value)
 	t_dict	*env;
 	char	*alloc_value;
 
-	if (!name || !value)
+	if (!name)
 		return (-1);
 	env = ft_getenv(name);
 	if (!env)
 		env = new_dict(name, value);
 	else
 	{
-		alloc_value = ft_strdup(value);
-		if (alloc_value)
-			env->value = alloc_value;
-		else
+		if (value)
+			alloc_value = ft_strdup(value);
+		if (!alloc_value && value)
 			return (-1);
+		env->value = alloc_value;
 	}
 	node = ft_lstnew_safe(env, free_dict);
 	if (!env || !node)
 		return (-1);
 	ft_lstadd_back(&g_globals->env, node);
 	return (0);
+}
+
+int	ft_unsetenv(char *name)
+{
+	t_list	*previous;
+	t_list	*node;
+
+	previous = NULL;
+	node = g_globals->env;
+	while (node)
+	{
+		if (!ft_strcmp(((t_dict *)(node->content))->key, name))
+		{
+			if (!previous)
+				g_globals->env = node->next;
+			else
+				previous->next = node->next;
+			ft_lstdelone(node, free_dict);
+			return (0);
+		}
+		previous = node;
+		node = node->next;
+	}
+	return (-1);
 }

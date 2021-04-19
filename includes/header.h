@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 11:48:52 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 15:58:40 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,5 @@ t_dict	*env_to_dict(char *env);
 char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
+int		ft_unsetenv(char *name);
 #endif

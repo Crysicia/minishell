@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/19 11:45:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 15:22:43 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	find_exe_path(t_command *command)
 	{
 		free(current_path);
 		current_path = get_full_path(path_arr[index], command->args[0]);
-		if (stat(current_path, &st) == 0 && (st.st_mode & S_IXUSR))
+		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))
 			command->executable = current_path;
 		index++;
 	}

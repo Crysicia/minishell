@@ -10,7 +10,7 @@ typedef struct	s_env_to_dict_params {
 	char argument[42];
 }				t_env_to_dict_params;
 
-ParameterizedTestParameters(env_utils_suite, env_to_dict_test) {
+ParameterizedTestParameters(dict_utils_suite, env_to_dict_test) {
 	static  t_env_to_dict_params env_to_dict_params[] = {
 		{ .key = "PATH", .value = "thisisthepath", .argument = "PATH=thisisthepath" },
 		{ .key = "USER", .value = "a=b=c=d=e", .argument = "USER=a=b=c=d=e" },
@@ -21,14 +21,14 @@ ParameterizedTestParameters(env_utils_suite, env_to_dict_test) {
 	return cr_make_param_array(t_env_to_dict_params, env_to_dict_params, sizeof(env_to_dict_params) / sizeof(t_env_to_dict_params));
 }
 
-ParameterizedTest(t_env_to_dict_params *env_to_dict_params, env_utils_suite, env_to_dict_test) {
+ParameterizedTest(t_env_to_dict_params *env_to_dict_params, dict_utils_suite, env_to_dict_test) {
 	t_dict *ret = env_to_dict(env_to_dict_params->argument);
 
 	cr_expect_str_eq(ret->key, env_to_dict_params->key, "Expected env_to_dict to return [%s], instead got [%s]", env_to_dict_params->key, ret->key);
 	cr_expect_str_eq(ret->value, env_to_dict_params->value, "Expected env_to_dict to return [%s], instead got [%s]", env_to_dict_params->value, ret->value);
 }
 
-Test(env_utils_suite, new_dict_test)
+Test(dict_utils_suite, new_dict_test)
 {
 	t_dict *dict = new_dict("PATH", "there is no path");
 	cr_expect_str_eq(dict->key, "PATH");
