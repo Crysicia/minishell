@@ -44,9 +44,11 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 		{ .input = "|   ", .expected = "|", .result_tok = tok_pipe},
 
 		//testing >> isolation
+		/* To be activated
 		{ .input = ">>", .expected = ">>", .result_tok = tok_append_r},
 		{ .input = ">>     ", .expected = ">>", .result_tok = tok_append_r},
 		{ .input = ">>file", .expected = ">>", .result_tok = tok_append_r},
+		*/
 	};
 	return (cr_make_param_array(tokens, tests, sizeof(tests)/sizeof(tokens)));
 }
