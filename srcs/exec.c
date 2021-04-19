@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/19 15:51:51 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/19 16:14:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ char	*find_exe_path(char *command)
 
 int	execute_command(char **command, char *envp[])
 {
-	int	pid;
-	char *path;
+	int		pid;
+	char	*path;
 
 	path = find_exe_path(command[0]);
 	if (!path)

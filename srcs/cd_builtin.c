@@ -6,13 +6,14 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 09:12:40 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 09:13:58 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/19 16:15:09 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int	ft_get_cwd(char	*PATH)
+int	ft_get_cwd(char	*path)
 {
-
+	(void)path;
+	return (0);
 }
