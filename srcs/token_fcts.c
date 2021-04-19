@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:12:19 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/19 11:13:10 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ char	*cut_token_string(char *line)
 	if (is_escape_character(*line))
 		trimmed_str = get_escaped_string(line);
 	else if (is_token_character(*line))
-	{
 		trimmed_str = ft_strndup(line, 1);
-	}
 	else
 	{
 		i = 0;
