@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 11:15:24 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 11:46:38 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include "scanner.h"
+# include "token.h"
 # define BUILTINS_NB 7
 
 typedef struct s_globals

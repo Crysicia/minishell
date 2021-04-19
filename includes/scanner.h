@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 01:10:52 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/12 14:35:37 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/15 12:08:11 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,5 @@ size_t	keyword_len(char *line);
 size_t	option_len(char *line);
 size_t	argument_len(char *line);
 size_t	command_len(char *line);
-
-//to trash
-bool	is_allowed_character(int c);
-bool	is_valid_command(char *line);
-char	**evaluate_command(char *line);
 
 #endif
