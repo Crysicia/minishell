@@ -4,5 +4,4 @@
 # include <string.h>
 
 char *bool_to_str(char *buffer, bool boolean);
-
 #endif

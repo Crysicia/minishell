@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/08 17:29:46 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 11:45:05 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ char	*get_full_path(char *path, char *executable)
 int	find_exe_path(t_command *command)
 {
 	struct stat	st;
-	char		*path;
+	t_dict		*path;
 	char		**path_arr;
 	char		*current_path;
 	int			index;
 
 	index = 0;
-	path = getenv("PATH");
-	if (!path)
+	path = ft_getenv("PATH");
+	if (!path || !path->value)
 		return (-1);
-	path_arr = ft_split(path, ':');
+	path_arr = ft_split(path->value, ':');
 	if (!path_arr)
 		return (-1);
 	current_path = NULL;
@@ -47,6 +47,8 @@ int	find_exe_path(t_command *command)
 			command->executable = current_path;
 		index++;
 	}
+	if (!command->executable)
+		return (-2);
 	return (0);
 }
 
@@ -64,9 +66,9 @@ int	execute_command(t_command *command)
 	}
 	else if (pid > 0)
 	{
-		g_current_pid = pid;
+		g_globals->current_pid = pid;
 		wait(NULL);
-		g_current_pid = 0;
+		g_globals->current_pid = 0;
 	}
 	else
 		printf("ERROR: Could not create child process.\n");

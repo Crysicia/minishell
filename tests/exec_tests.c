@@ -6,6 +6,8 @@
 
 Test(exec_suite, find_exe_path_test)
 {
+    char *envp[] = { "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin", NULL };
+    init_globals(envp);
     t_command command;
     FILE *fp = NULL;
     int fd = 0;
