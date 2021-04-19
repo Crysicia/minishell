@@ -21,6 +21,7 @@ SRCS			= main.c \
 				  srcs/scanner_quotes.c \
 				  srcs/scanner_utils.c \
 				  srcs/env_utils.c \
+				  srcs/dict_utils.c \
 				  srcs/globals.c \
 
 OBJS 			= $(SRCS:.c=.o)
@@ -37,6 +38,7 @@ TEST_SRCS		= tests/test_helpers.c \
 				  tests/exec_builtin_tests.c \
 				  tests/exec_tests.c \
 				  tests/env_utils_tests.c \
+				  tests/dict_utils_tests.c \
 
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 

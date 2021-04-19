@@ -6,78 +6,19 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 10:53:54 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/18 16:15:38 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 11:44:13 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-t_dict *env_to_dict(char *env)
-{
-	t_dict *dict;
-	char *key;
-	char *delimiter;
-
-	delimiter = ft_strchr(env, '=');
-	if (!delimiter || (delimiter + 1) == 0)
-		dict = new_dict(env, NULL);
-	else
-	{
-		key = ft_strndup(env, (int)(delimiter - env));
-		dict = new_dict(key, (char *)(delimiter + 1));
-		free(key);
-	}
-	return (dict);
-}
-
-char *dict_to_env(t_dict *dict)
-{
-	char *env;
-	size_t env_len;
-
-	env_len = ft_strlen(dict->key) + ft_strlen(dict->value) + 2;
-	env = malloc(env_len * sizeof(char));
-	if (!env)
-		return (NULL);
-	ft_strlcpy(env, dict->key, ft_strlen(dict->key) + 1);
-	ft_strlcat(env, "=", env_len);
-	ft_strlcat(env, dict->value, env_len);
-	return (env);
-}
-
-void free_dict(t_dict *dict)
-{
-	free(dict->key);
-	free(dict->value);
-	free(dict);
-}
-
-t_dict *new_dict(char *key, char *value)
-{
-	t_dict *dict;
-
-	dict = malloc(sizeof(t_dict));
-	if (!dict)
-		return (NULL);
-	dict->key = ft_strdup(key);
-	dict->value = NULL;
-	if (value)
-		dict->value = ft_strdup(value);
-	if (!dict->key || (value && !dict->value))
-	{
-		free_dict(dict);
-		return (NULL);
-	}
-	return (dict);
-}
-
-t_list	*ft_lstnew_safe(void *content)
+t_list	*ft_lstnew_safe(void *content, void (*del)(void *))
 {
 	t_list	*list;
 
 	list = ft_lstnew(content);
 	if (!list)
-		free(content);
+		del(content);
 	return (list);
 }
 
@@ -96,7 +37,7 @@ t_list	*array_to_list(char **array)
 	while (array[i])
 	{
 		dict = env_to_dict(array[i]);
-		node = ft_lstnew_safe(dict);
+		node = ft_lstnew_safe(dict, free);
 		if (!dict || !node)
 		{
 			free_dict(dict);
@@ -140,22 +81,17 @@ t_dict	*ft_getenv(const char *name)
 	while (node)
 	{
 		if (!ft_strcmp(((t_dict *)(node->content))->key, name))
-				return ((t_dict *)(node->content));
+			return ((t_dict *)(node->content));
 		node = node->next;
 	}
 	return (NULL);
 }
 
-int		ft_setenv(char *name, char *value)
+int	ft_setenv(char *name, char *value)
 {
-	// Need a strjoin with delimiters to join with = between key and value
-	// Then search for an existing env with the same key
-	// 	If it exists, change the value
-	// 	else add the new variable to the list
-
-	// I think we will need an env structure...
-	t_dict *env;
-	char *alloc_value;
+	t_list	*node;
+	t_dict	*env;
+	char	*alloc_value;
 
 	if (!name || !value)
 		return (-1);
@@ -170,7 +106,9 @@ int		ft_setenv(char *name, char *value)
 		else
 			return (-1);
 	}
-	if (!env)
+	node = ft_lstnew_safe(env, free_dict);
+	if (!env || !node)
 		return (-1);
+	ft_lstadd_back(&g_globals->env, node);
 	return (0);
 }

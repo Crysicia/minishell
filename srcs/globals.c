@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/18 14:56:24 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/19 11:17:36 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	init_globals(char *envp[])
 		return (false);
 	g_globals->current_pid = 0;
 	g_globals->env = array_to_list(envp);
-	if (!g_globals->env)
+	if (!g_globals->env && envp)
 		return (destroy_globals());
 	return (true);
 }

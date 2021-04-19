@@ -9,30 +9,6 @@ typedef struct	s_ft_getenv_params {
 	char argument[42];
 }				t_ft_getenv_params;
 
-typedef struct	s_env_to_dict_params {
-	char key[42];
-	char value[42];
-	char argument[42];
-}				t_env_to_dict_params;
-
-ParameterizedTestParameters(env_utils_suite, env_to_dict_test) {
-	static  t_env_to_dict_params env_to_dict_params[] = {
-		{ .key = "PATH", .value = "thisisthepath", .argument = "PATH=thisisthepath" },
-		{ .key = "USER", .value = "a=b=c=d=e", .argument = "USER=a=b=c=d=e" },
-		// { .ret = { .key = "NULL", .value = NULL }, .argument = "NULL=" },
-		// { .ret = { .key = "NULL2", .value = NULL }, .argument = "NULL2" },
-	};
-
-	return cr_make_param_array(t_env_to_dict_params, env_to_dict_params, sizeof(env_to_dict_params) / sizeof(t_env_to_dict_params));
-}
-
-ParameterizedTest(t_env_to_dict_params *env_to_dict_params, env_utils_suite, env_to_dict_test) {
-	t_dict *ret = env_to_dict(env_to_dict_params->argument);
-
-	cr_expect_str_eq(ret->key, env_to_dict_params->key, "Expected env_to_dict to return [%s], instead got [%s]", env_to_dict_params->key, ret->key);
-	cr_expect_str_eq(ret->value, env_to_dict_params->value, "Expected env_to_dict to return [%s], instead got [%s]", env_to_dict_params->value, ret->value);
-}
-
 ParameterizedTestParameters(env_utils_suite, ft_getenv_test) {
 	static  t_ft_getenv_params ft_getenv_params[] = {
 		{ .ret = "ok", .argument = "PATH" },
@@ -121,13 +97,6 @@ Test(env_utils_suite, array_to_list_null_test) {
 	cr_expect_null(list, "Expected array_to_list returned list to be NULL");
 }
 
-Test(env_utils_suite, new_dict_test)
-{
-	t_dict *dict = new_dict("PATH", "there is no path");
-	cr_expect_str_eq(dict->key, "PATH");
-	cr_expect_str_eq(dict->value, "there is no path");
-}
-
 Test(env_utils_suite, list_to_array_test) {
 	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera" };
 	t_list *list = array_to_list(argument);
@@ -161,43 +130,37 @@ Test(env_utils_suite, list_to_array_null_test) {
 	free(array);
 }
 
-// Test(env_utils_suite, ft_setenv_test) {
-// 	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
-// 	init_globals(envp);
-// 	int ret = ft_setenv("MINISHELL", "iscool");
-// 	t_list *head = list;
-// 	int i = 0;
-	
-// 	while (list)
-// 	{
-// 		cr_expect(strcmp((char *)list->content, argument[i]) == 0,
-// 				  "Expected ft_setenv returned list to contain [%s], instead got [%s], at index [%d]",
-// 				  argument[i], (char *)list->content, i);
-// 		list = list->next;
-// 		i++;
-// 	}
-// 	cr_expect(!list && !argument[i], "Returned list doesn't contain the same number of nodes as the input");
-// 	ft_lstclear(&head, free);
-// }
+Test(env_utils_suite, ft_setenv_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_setenv("MINISHELL", "iscool");
+	t_dict *env = ft_getenv("MINISHELL");
 
-// Test(env_utils_suite, ft_setenv_empty_test) {
-// 	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
-// 	init_globals(envp);
-// 	int ret = ft_setenv(argument);
-// 	t_list *head = list;
-// 	int i = 0;
-	
-// 	while (list)
-// 	{
-// 		cr_expect(strcmp((char *)list->content, argument[i]) == 0,
-// 				  "Expected ft_setenv returned list to contain [%s], instead got [%s], at index [%d]",
-// 				  argument[i], (char *)list->content, i);
-// 		list = list->next;
-// 		i++;
-// 	}
-// 	cr_expect(!list && !argument[i], "Returned list doesn't contain the same number of nodes as the input");
-// 	ft_lstclear(&head, free);
-// }
+	cr_expect_str_eq(env->key, "MINISHELL",
+		"Expected array_to_list returned list to be MINISHELL, instead got [%s]",
+		env->key);
+	cr_expect_str_eq(env->value, "iscool",
+		"Expected array_to_list returned list value to be iscool, instead got [%s]",
+		env->value);
+	cr_expect_eq(ret, 0, "Expected ft_setenv to return 0 on success");
+	destroy_globals();
+}
+
+Test(env_utils_suite, ft_setenv_empty_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_setenv("MINISHELL", "iscool");
+	t_dict *env = ft_getenv("MINISHELL");
+
+	cr_expect_str_eq(env->key, "MINISHELL",
+		"Expected array_to_list returned list to be MINISHELL, instead got [%s]",
+		env->key);
+	cr_expect_str_eq(env->value, "iscool",
+		"Expected array_to_list returned list value to be iscool, instead got [%s]",
+		env->value);
+	cr_expect_eq(ret, 0, "Expected ft_setenv to return 0 on success");
+	destroy_globals();
+}
 
 Test(env_utils_suite, ft_setenv_null_test) {
 	init_globals(NULL);
