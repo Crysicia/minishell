@@ -12,7 +12,8 @@ SRCS			= main.c \
 				  srcs/get_next_line.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/exec.c \
-				  srcs/builtin_env.c\
+				  srcs/builtin_env.c \
+				  srcs/cd_builtin.c \
 				  srcs/exec_builtin.c \
 				  srcs/scanner.c\
 				  srcs/scanner_len_fcts.c\
