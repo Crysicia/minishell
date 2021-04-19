@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:16:07 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/15 15:44:44 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_list	*command_parse(char *line)
 	tokens = NULL;
 	while (*ptr)
 	{
+
 		skip_spaces(&ptr);
 		token = get_next_token(ptr);
 		node = ft_lstnew(token);
@@ -68,11 +69,11 @@ t_tok_type	attribute_tok_type(char chr)
 	else if (chr == '|')
 		return (tok_pipe);
 	else if (chr == '>')
-		return (tok_redir_l);
-	else if (chr == '<')
 		return (tok_redir_r);
+	else if (chr == '<')
+		return (tok_redir_l);
 	else
-		return (tok_command);
+		return (tok_word);
 }
 
 t_token	*get_next_token(char *line)

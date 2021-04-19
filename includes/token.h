@@ -21,14 +21,13 @@ typedef enum e_tok_type
 	tok_redir_l = 2,
 	tok_append_r = 3,
 	tok_redir_r = 4,
-	tok_command = 5
+	tok_word = 5
 }				t_tok_type;
 
 typedef struct s_token
 {
 	char			*cmd;
 	t_tok_type		role;
-	size_t			word_len;
 }					t_token;
 
 t_tok_type	get_next_tok_type(char *str);
