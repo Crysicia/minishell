@@ -36,11 +36,20 @@ ParameterizedTest(t_ft_getenv_params *ft_getenv_params, env_utils_suite, ft_gete
 	destroy_globals();
 }
 	
-Test(env_utils_suite, ft_getenv_null_test) {
+Test(env_utils_suite, ft_getenv_unknown_key_test) {
 	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
 	init_globals(envp);
 	
 	t_dict *ret = ft_getenv("UNKNOWN");
+	cr_expect_null(ret, "Expected ft_getenv to return NULL, instead got [%s]", ret->value);
+	destroy_globals();
+}
+	
+Test(env_utils_suite, ft_getenv_null_key_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	
+	t_dict *ret = ft_getenv(NULL);
 	cr_expect_null(ret, "Expected ft_getenv to return NULL, instead got [%s]", ret->value);
 	destroy_globals();
 }
