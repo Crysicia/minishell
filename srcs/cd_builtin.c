@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-int		change_directory(t_list **env_list, char *new_path)
+int	change_directory(t_list **env_list, char *new_path)
 {
 	if (!new_path)
 		return (-1);
@@ -24,8 +24,8 @@ int		change_directory(t_list **env_list, char *new_path)
 	return (0);
 }
 
-int		is_valid_path(char *path)
+int	is_valid_path(char *path)
 {
 	(void)path;
-	return 42;
+	return (42);
 }
