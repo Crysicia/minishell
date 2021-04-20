@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/19 11:45:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:20:12 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,59 @@ char	*get_full_path(char *path, char *executable)
 	return (ft_strdup(current_path));
 }
 
-int	find_exe_path(t_command *command)
+char	**list_exe_paths(void)
+{
+	t_dict		*path;
+	char		**result;
+
+	path = ft_getenv("PATH");
+	if (!path || !path->value)
+		return (NULL);
+	result = ft_split(path->value, ':');
+	if (!result)
+		return (NULL);
+	else
+		return (result);
+}
+
+char	*find_exe_path(char *command)
 {
 	struct stat	st;
-	t_dict		*path;
 	char		**path_arr;
 	char		*current_path;
+	char		*result;
 	int			index;
 
 	index = 0;
-	path = ft_getenv("PATH");
-	if (!path || !path->value)
-		return (-1);
-	path_arr = ft_split(path->value, ':');
-	if (!path_arr)
-		return (-1);
-	current_path = NULL;
-	while (path_arr[index] && !command->executable)
+	result = NULL;
+	path_arr = list_exe_paths();
+	while (path_arr[index])
 	{
-		free(current_path);
-		current_path = get_full_path(path_arr[index], command->args[0]);
-		if (stat(current_path, &st) == 0 && (st.st_mode & S_IXUSR))
-			command->executable = current_path;
+		current_path = get_full_path(path_arr[index], command);
+		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))
+			result = current_path;
+		else
+		{
+			free(current_path);
+			current_path = NULL;
+		}
 		index++;
 	}
-	if (!command->executable)
-		return (-2);
-	return (0);
+	return (result);
 }
 
-int	execute_command(t_command *command)
+int	execute_command(char **command, char *envp[])
 {
-	int	pid;
+	int		pid;
+	char	*path;
 
-	if (find_exe_path(command))
+	path = find_exe_path(command[0]);
+	if (!path)
 		return (-1);
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(command->executable, command->args, command->envp);
+		execve(path, command, envp);
 		exit(0);
 	}
 	else if (pid > 0)
