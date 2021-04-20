@@ -37,6 +37,7 @@ TEST_SRCS		= tests/test_helpers.c \
 				  tests/tokenizer_tests.c \
 				  tests/tokens_tests.c \
 				  tests/utils_tests.c \
+				  tests/cd_builtin_tests.c \
 				  tests/exec_builtin_tests.c \
 				  tests/exec_tests.c \
 				  tests/env_utils_tests.c \
