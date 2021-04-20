@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/20 15:17:08 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:33:04 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	main(int argc, char *argv[], char *envp[])
 		execute_command(tab, envp);
 		sleep(0);
 	}
-
 	(void)argv;
 	return (0);
 }
