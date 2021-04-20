@@ -15,29 +15,17 @@
 #include <unistd.h>
 #include <errno.h>
 
-void	update_pwd(t_list *env)
+int		change_directory(t_list **env_list, char *new_path)
 {
-	(void)env;
-}
-
-void	update_oldpwd(t_list *env)
-{
-	(void)env;
-}
-
-int		cd_builtin(char *path)
-{
-	char	buffer[MAXPATHLEN];
-	char	*cwd;
-
-	ft_bzero(buffer, MAXPATHLEN);
-	cwd = getcwd(buffer, MAXPATHLEN);
-	if (!cwd || errno)
+	if (!new_path)
 		return (-1);
-	else
-	{
-		(void)path;
-		free(cwd);
-		return (0);
-	}
+	(void)*env_list;
+	(void)new_path;
+	return (0);
+}
+
+int		is_valid_path(char *path)
+{
+	(void)path;
+	return 42;
 }
