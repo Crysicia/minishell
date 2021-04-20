@@ -1,4 +1,5 @@
 #include <criterion/criterion.h>
+#include <criterion/parameterized.h>
 #include "../includes/header.h"
 // CD CMD TEST
 /*
@@ -41,27 +42,46 @@ Test(cd_builtin, new_path_null)
 char *valid_path[] = {"", ".", "../", "./", ".. weviuwviu", "/etc" };
 int	tests_nb = 6;
 
-Test(cd_builtin, change_directory_tests)
+typedef struct	s_cd_testing
 {
-	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=/Users/Pedro/Tests","PWD=/toto",
-					"PATH=/bonjour/haha", "USER=pchartonesque","WSLENV=PAF"};
-	char *expected_oldpwd[] = {"/toto", "/toto", "/toto", "/toto", "/toto", "/toto" };
-	char *expected_pwd[] = {"/root", "/toto", "/", "", "/toto", "/", "/etc" };
+	char path[42];
+	char expected_oldpwd[42];
+	char expected_pwd[42];
+}				t_cd_testing;
 
-	int	res = 0;
+// Need to improve this test.
+
+ParameterizedTestParameters(cd_builtin, valid_path_tests)
+{
+	static t_cd_testing test[] =
+	{
+		{.path = "", .expected_oldpwd = "/toto", .expected_pwd = "/root"},
+		{.path = ".", .expected_oldpwd = "/toto", .expected_pwd = "/toto"},
+		{.path = "../", .expected_oldpwd = "/toto", .expected_pwd = "/"},
+		{.path = "./", .expected_oldpwd = "/toto", .expected_pwd = "/toto"},
+		{.path = ".. ewighqiuvh", .expected_oldpwd = "/toto", .expected_pwd = "/"},
+		{.path = "/etc", .expected_oldpwd = "/toto", .expected_pwd = "/etc"},
+		{.path = "totally_invalid_path", .expected_oldpwd = "OLDPWD=/Users/Pedro/Tests", .expected_pwd = "/toto"},
+	};
+	return cr_make_param_array(t_cd_testing, test, sizeof(test)/sizeof(t_cd_testing));
+}
+
+ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests)
+{
+	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=/Users/Pedro/Tests","PWD=/toto"};
 	t_list	*env = array_to_list(test_var);
 	t_dict *oldpwd = find_var(&env, "OLDPWD");
 	t_dict *pwd = find_var(&env, "PWD");
 
-	for (int i = 0; i < tests_nb; i++)
-	{
-		res = change_directory(&env, valid_path[i]);
-		//expect Old pwd and pwd to change		
-		cr_assert_null(res);
-		cr_assert_str_eq(oldpwd->value, expected_oldpwd[i]);
-		cr_assert_str_eq(pwd->value, expected_pwd[i] );
-	}
+	int	res = 0;
+	res = change_directory(&env, params->path);
+	
+	cr_assert_null(res);
+	cr_assert_str_eq(oldpwd->value, params->expected_oldpwd);
+	cr_assert_str_eq(pwd->value, params->expected_pwd);
 }
+
+//Some unit testings
 
 Test(cd_builtin, is_valid_path_wrong)
 {
