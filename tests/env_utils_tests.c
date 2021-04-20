@@ -4,6 +4,14 @@
 #include "helpers.h"
 #include <fcntl.h>
 
+/*
+**----------------------------------------------
+**-
+**-                 FT_GETENV
+**-
+**----------------------------------------------
+*/
+
 typedef struct	s_ft_getenv_params {
 	char ret[12];
 	char argument[42];
@@ -28,7 +36,7 @@ ParameterizedTest(t_ft_getenv_params *ft_getenv_params, env_utils_suite, ft_gete
 	destroy_globals();
 }
 	
-Test(env_utils_suite, ft_getenv_null_test) {
+Test(env_utils_suite, ft_getenv_unknown_key_test) {
 	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
 	init_globals(envp);
 	
@@ -36,6 +44,23 @@ Test(env_utils_suite, ft_getenv_null_test) {
 	cr_expect_null(ret, "Expected ft_getenv to return NULL, instead got [%s]", ret->value);
 	destroy_globals();
 }
+	
+Test(env_utils_suite, ft_getenv_null_key_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	
+	t_dict *ret = ft_getenv(NULL);
+	cr_expect_null(ret, "Expected ft_getenv to return NULL, instead got [%s]", ret->value);
+	destroy_globals();
+}
+
+/*
+**----------------------------------------------
+**-
+**-               ARRAY_TO_LIST
+**-
+**----------------------------------------------
+*/
 
 Test(env_utils_suite, array_to_list_test) {
 	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera", "TOOMUCHEQ=a=b=c=d=e" };
@@ -97,6 +122,14 @@ Test(env_utils_suite, array_to_list_null_test) {
 	cr_expect_null(list, "Expected array_to_list returned list to be NULL");
 }
 
+/*
+**----------------------------------------------
+**-
+**-               LIST_TO_ARRAY
+**-
+**----------------------------------------------
+*/
+
 Test(env_utils_suite, list_to_array_test) {
 	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera" };
 	t_list *list = array_to_list(argument);
@@ -130,6 +163,14 @@ Test(env_utils_suite, list_to_array_null_test) {
 	free(array);
 }
 
+/*
+**----------------------------------------------
+**-
+**-                 FT_SETENV
+**-
+**----------------------------------------------
+*/
+
 Test(env_utils_suite, ft_setenv_test) {
 	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
 	init_globals(envp);
@@ -137,10 +178,10 @@ Test(env_utils_suite, ft_setenv_test) {
 	t_dict *env = ft_getenv("MINISHELL");
 
 	cr_expect_str_eq(env->key, "MINISHELL",
-		"Expected array_to_list returned list to be MINISHELL, instead got [%s]",
+		"Expected ft_getenv returned key to be MINISHELL, instead got [%s]",
 		env->key);
 	cr_expect_str_eq(env->value, "iscool",
-		"Expected array_to_list returned list value to be iscool, instead got [%s]",
+		"Expected ft_getenv returned value to be iscool, instead got [%s]",
 		env->value);
 	cr_expect_eq(ret, 0, "Expected ft_setenv to return 0 on success");
 	destroy_globals();
@@ -149,14 +190,46 @@ Test(env_utils_suite, ft_setenv_test) {
 Test(env_utils_suite, ft_setenv_empty_test) {
 	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
 	init_globals(envp);
-	int ret = ft_setenv("MINISHELL", "iscool");
+	int ret = ft_setenv("MINISHELL", NULL);
 	t_dict *env = ft_getenv("MINISHELL");
 
 	cr_expect_str_eq(env->key, "MINISHELL",
-		"Expected array_to_list returned list to be MINISHELL, instead got [%s]",
+		"Expected ft_getenv returned key to be MINISHELL, instead got [%s]",
 		env->key);
-	cr_expect_str_eq(env->value, "iscool",
-		"Expected array_to_list returned list value to be iscool, instead got [%s]",
+	cr_expect_null(env->value,
+		"Expected ft_getenv returned value to be NULL, instead got [%s]",
+		env->value);
+	cr_expect_eq(ret, 0, "Expected ft_setenv to return 0 on success");
+	destroy_globals();
+}
+
+Test(env_utils_suite, ft_setenv_existing_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_setenv("USER", "glados");
+	t_dict *env = ft_getenv("USER");
+
+	cr_expect_str_eq(env->key, "USER",
+		"Expected ft_getenv returned key to be USER, instead got [%s]",
+		env->key);
+	cr_expect_str_eq(env->value, "glados",
+		"Expected ft_getenv returned value to be glados, instead got [%s]",
+		env->value);
+	cr_expect_eq(ret, 0, "Expected ft_setenv to return 0 on success");
+	destroy_globals();
+}
+
+Test(env_utils_suite, ft_setenv_existing_null_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_setenv("USER", NULL);
+	t_dict *env = ft_getenv("USER");
+
+	cr_expect_str_eq(env->key, "USER",
+		"Expected ft_getenv returned key to be USER, instead got [%s]",
+		env->key);
+	cr_expect_null(env->value,
+		"Expected ft_getenv returned value to be NULL, instead got [%s]",
 		env->value);
 	cr_expect_eq(ret, 0, "Expected ft_setenv to return 0 on success");
 	destroy_globals();
@@ -168,5 +241,61 @@ Test(env_utils_suite, ft_setenv_null_test) {
 
 	cr_expect_null(g_globals->env, "Expected ft_setenv to not add NULL variable");
 	cr_expect_eq(ret, -1, "Expected ft_setenv to return -1 on error");
+	destroy_globals();
+}
+
+/*
+**----------------------------------------------
+**-
+**-                FT_UNSETENV
+**-
+**----------------------------------------------
+*/
+
+Test(env_utils_suite, ft_unsetenv_start_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_unsetenv("PATH");
+	t_dict *env = ft_getenv("PATH");
+
+	cr_expect_null(env, "Expected ft_unsetenv to remove PATH");
+	cr_expect_not_null(g_globals->env, "Expected env to still have members");
+	cr_expect_eq(ret, 0, "Expected ft_unsetenv to return 0 on success");
+	destroy_globals();
+}
+
+Test(env_utils_suite, ft_unsetenv_middle_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_unsetenv("USER");
+	t_dict *env = ft_getenv("USER");
+
+	cr_expect_null(env, "Expected ft_unsetenv to remove USER");
+	cr_expect_not_null(g_globals->env, "Expected env to still have members");
+	cr_expect_eq(ret, 0, "Expected ft_unsetenv to return 0 on success");
+	destroy_globals();
+}
+
+Test(env_utils_suite, ft_unsetenv_end_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_unsetenv("EMPTY");
+	t_dict *env = ft_getenv("EMPTY");
+
+	cr_expect_null(env, "Expected ft_unsetenv to remove EMPTY");
+	cr_expect_not_null(g_globals->env, "Expected env to still have members");
+	cr_expect_eq(ret, 0, "Expected ft_unsetenv to return 0 on success");
+	destroy_globals();
+}
+
+Test(env_utils_suite, ft_unsetenv_unknown_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	init_globals(envp);
+	int ret = ft_unsetenv("UNKNOWN");
+	t_dict *env = ft_getenv("UNKNOWN");
+
+	cr_expect_null(env, "Expected ft_unsetenv to return NULL");
+	cr_expect_not_null(g_globals->env, "Expected env to still have members");
+	cr_expect_eq(ret, -1, "Expected ft_unsetenv to return -1 on error");
 	destroy_globals();
 }

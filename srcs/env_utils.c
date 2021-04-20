@@ -6,21 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 10:53:54 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/19 11:44:13 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:19:09 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
-
-t_list	*ft_lstnew_safe(void *content, void (*del)(void *))
-{
-	t_list	*list;
-
-	list = ft_lstnew(content);
-	if (!list)
-		del(content);
-	return (list);
-}
 
 t_list	*array_to_list(char **array)
 {
@@ -78,7 +68,7 @@ t_dict	*ft_getenv(const char *name)
 	t_list	*node;
 
 	node = g_globals->env;
-	while (node)
+	while (node && name)
 	{
 		if (!ft_strcmp(((t_dict *)(node->content))->key, name))
 			return ((t_dict *)(node->content));
@@ -90,25 +80,52 @@ t_dict	*ft_getenv(const char *name)
 int	ft_setenv(char *name, char *value)
 {
 	t_list	*node;
-	t_dict	*env;
-	char	*alloc_value;
+	t_dict	*dict;
+	char	*new_value;
 
-	if (!name || !value)
-		return (-1);
-	env = ft_getenv(name);
-	if (!env)
-		env = new_dict(name, value);
+	new_value = NULL;
+	node = NULL;
+	dict = ft_getenv(name);
+	if (dict)
+	{
+		if (value)
+			new_value = ft_strdup(value);
+		if (value && !new_value)
+			return (-1);
+		free(dict->value);
+		dict->value = new_value;
+	}
 	else
 	{
-		alloc_value = ft_strdup(value);
-		if (alloc_value)
-			env->value = alloc_value;
-		else
+		dict = new_dict(name, value);
+		node = ft_lstnew_safe(dict, free_dict);
+		if (!dict || !node)
 			return (-1);
+		ft_lstadd_back(&g_globals->env, node);
 	}
-	node = ft_lstnew_safe(env, free_dict);
-	if (!env || !node)
-		return (-1);
-	ft_lstadd_back(&g_globals->env, node);
 	return (0);
+}
+
+int	ft_unsetenv(char *name)
+{
+	t_list	*previous;
+	t_list	*node;
+
+	previous = NULL;
+	node = g_globals->env;
+	while (node)
+	{
+		if (!ft_strcmp(((t_dict *)(node->content))->key, name))
+		{
+			if (!previous)
+				g_globals->env = node->next;
+			else
+				previous->next = node->next;
+			ft_lstdelone(node, free_dict);
+			return (0);
+		}
+		previous = node;
+		node = node->next;
+	}
+	return (-1);
 }
