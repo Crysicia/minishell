@@ -47,6 +47,7 @@ typedef struct	s_cd_testing
 	char path[42];
 	char expected_oldpwd[42];
 	char expected_pwd[42];
+	int	res;
 }				t_cd_testing;
 
 // Need to improve this test.
@@ -55,13 +56,13 @@ ParameterizedTestParameters(cd_builtin, valid_path_tests)
 {
 	static t_cd_testing test[] =
 	{
-		{.path = "", .expected_oldpwd = "/toto", .expected_pwd = "/root"},
-		{.path = ".", .expected_oldpwd = "/toto", .expected_pwd = "/toto"},
-		{.path = "../", .expected_oldpwd = "/toto", .expected_pwd = "/"},
-		{.path = "./", .expected_oldpwd = "/toto", .expected_pwd = "/toto"},
-		{.path = ".. ewighqiuvh", .expected_oldpwd = "/toto", .expected_pwd = "/"},
-		{.path = "/etc", .expected_oldpwd = "/toto", .expected_pwd = "/etc"},
-		{.path = "totally_invalid_path", .expected_oldpwd = "OLDPWD=/Users/Pedro/Tests", .expected_pwd = "/toto"},
+		{.path = "", .expected_oldpwd = "/toto", .expected_pwd = "/root", .res = 0},
+		{.path = ".", .expected_oldpwd = "/toto", .expected_pwd = "/toto", .res = 0},
+		{.path = "../", .expected_oldpwd = "/toto", .expected_pwd = "/", .res = 0},
+		{.path = "./", .expected_oldpwd = "/toto", .expected_pwd = "/toto", .res = 0},
+		{.path = ".. ewighqiuvh", .expected_oldpwd = "/toto", .expected_pwd = "/", .res = 0},
+		{.path = "/etc", .expected_oldpwd = "/toto", .expected_pwd = "/etc", .res = 0},
+		{.path = "totally_invalid_path", .expected_oldpwd = "OLDPWD=/Users/Pedro/Tests", .expected_pwd = "/toto", .res = -1},
 	};
 	return cr_make_param_array(t_cd_testing, test, sizeof(test)/sizeof(t_cd_testing));
 }
@@ -76,7 +77,7 @@ ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests)
 	int	res = 0;
 	res = change_directory(&env, params->path);
 	
-	cr_assert_null(res);
+	cr_assert_eq(res, params->res);
 	cr_assert_str_eq(oldpwd->value, params->expected_oldpwd);
 	cr_assert_str_eq(pwd->value, params->expected_pwd);
 }
