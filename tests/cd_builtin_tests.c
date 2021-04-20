@@ -13,20 +13,6 @@
 // For cd we need to check that
 // new_path is valid
 // cd only takes the first argument and dumps the other
-int		change_directory(t_list **env_list, char *new_path)
-{
-	if (!new_path)
-		return (-1);
-	(void)*env_list;
-	(void)new_path;
-	return (0);
-}
-
-int		is_valid_path(char *path)
-{
-	(void)path;
-	return 42;
-}
 
 t_dict *find_var(t_list **env, char *var)
 {

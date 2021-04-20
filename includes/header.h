@@ -52,6 +52,8 @@ char	*get_word(char **line);
 void	skip_spaces(char **line);
 int		builtin_env(t_command *command);
 
+int		change_directory(t_list **env_list, char *new_path);
+int		is_valid_path(char *path);
 int		execute_command(t_command *command);
 int		find_exe_path(t_command *command);
 bool	is_builtin(char *str);
