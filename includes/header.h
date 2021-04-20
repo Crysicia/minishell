@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/20 14:54:46 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:16:34 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,16 @@ typedef struct s_dict
 }				t_dict;
 
 void	print_prompt(void);
-void	get_command(char *envp[]);
+t_list	*command_parse(char *line);
+char	**command_format(t_list *list);
+char	*get_command(void);
 int		lexer(char *line, char *envp[]);
 char	*get_word(char **line);
 void	skip_spaces(char **line);
 int		builtin_env(t_command *command);
 
-int		execute_command(t_command *command);
-int		find_exe_path(t_command *command);
+int		execute_command(char **command, char *envp[]);
+char	*find_exe_path(char *command);
 bool	is_builtin(char *str);
 
 t_list	*ft_lstnew_safe(void *content, void (*del)(void *));
@@ -68,4 +70,7 @@ char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
 int		ft_unsetenv(char *name);
+
+/* TMP UTILS */
+void	print_token_list(t_list *list);
 #endif
