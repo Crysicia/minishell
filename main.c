@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/06 17:20:22 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:33:04 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,35 @@ void	print_prompt(void)
 	write(1, "Minishell>", 10);
 }
 
+void	handle_sigint(int signal)
+{
+	printf("\n");
+	if (g_globals->current_pid)
+		kill(g_globals->current_pid, signal);
+	print_prompt();
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
+	t_list	*input_list;
+	char	*input_str;
+	char	**tab;
+
+	if (argc != 1)
+		return (-1);
+	if (!init_globals(envp))
+		return (1);
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		print_prompt();
-		get_command(envp);
+		input_str = get_command();
+		input_list = command_parse(input_str);
+		print_token_list(input_list);
+		tab = command_format(input_list);
+		execute_command(tab, envp);
 		sleep(0);
 	}
-	(void)argc;
 	(void)argv;
-	(void)envp;
 	return (0);
 }

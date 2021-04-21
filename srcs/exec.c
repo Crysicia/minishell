@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/09 17:03:21 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/21 14:15:08 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,74 @@ char	*get_full_path(char *path, char *executable)
 {
 	char	current_path[PATH_MAX];
 
-	ft_bzero(current_path, PATH_MAX);
 	ft_strlcpy(current_path, path, ft_strlen(path) + 1);
 	ft_strlcat(current_path, "/", PATH_MAX);
 	ft_strlcat(current_path, executable, PATH_MAX);
 	return (ft_strdup(current_path));
 }
 
-int	find_exe_path(t_command *command)
+char	**list_exe_paths(void)
 {
-	struct stat	st;
-	char		*path;
-	char		**path_arr;
-	char		*current_path;
+	t_dict		*path;
+	char		**result;
 
-	path = getenv("PATH");
-	if (!path)
-		return (-1);
-	path_arr = ft_split(path, ':');
-	if (!path_arr)
-		return (-1);
-	current_path = NULL;
-	while (*path_arr && !command->executable)
-	{
-		free(current_path);
-		current_path = get_full_path(*path_arr, command->args[0]);
-		stat(current_path, &st);
-		if (st.st_mode & S_IXUSR)
-			command->executable = current_path;
-		path_arr++;
-	}
-	return (0);
+	path = ft_getenv("PATH");
+	if (!path || !path->value)
+		return (NULL);
+	result = ft_split(path->value, ':');
+	if (!result)
+		return (NULL);
+	else
+		return (result);
 }
 
-int	execute_command(t_command *command)
+char	*find_exe_path(char *command)
 {
-	int	pid;
+	struct stat	st;
+	char		**path_arr;
+	char		*current_path;
+	char		*result;
+	int			index;
 
-	find_exe_path(command);
+	index = 0;
+	result = NULL;
+	path_arr = list_exe_paths();
+	while (path_arr[index])
+	{
+		current_path = get_full_path(path_arr[index], command);
+		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))
+			result = current_path;
+		else
+		{
+			free(current_path);
+			current_path = NULL;
+		}
+		index++;
+	}
+	return (result);
+}
+
+int	execute_command(char **command, char *envp[])
+{
+	int		pid;
+	char	*path;
+
+	path = find_exe_path(command[0]);
+	if (!path)
+		return (-1);
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(command->executable, command->args, command->envp);
+		execve(path, command, envp);
 		exit(0);
 	}
-	else
+	else if (pid > 0)
+	{
+		g_globals->current_pid = pid;
 		wait(NULL);
+		g_globals->current_pid = 0;
+	}
+	else
+		printf("ERROR: Could not create child process.\n");
 	return (0);
 }

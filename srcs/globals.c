@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   globals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/06 16:08:14 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/19 11:17:36 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int	builtin_env(char *envp[])
+bool	destroy_globals(void)
 {
-	while (*envp)
-	{
-		printf("%s\n", *envp);
-		envp++;
-	}
-	return (0);
+	ft_lstclear(&g_globals->env, free);
+	free(g_globals);
+	return (false);
+}
+
+bool	init_globals(char *envp[])
+{
+	g_globals = malloc(sizeof(t_globals));
+	if (!g_globals)
+		return (false);
+	g_globals->current_pid = 0;
+	g_globals->env = array_to_list(envp);
+	if (!g_globals->env && envp)
+		return (destroy_globals());
+	return (true);
 }
