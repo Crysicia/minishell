@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:34:15 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/21 16:03:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/21 16:32:08 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
+#include <termcap.h>
 #include <term.h>
 #include <errno.h>
 #include <string.h>
@@ -33,6 +34,12 @@ int	ft_putchar(int c)
 		return (0);
 }
 
+int	ft_putstr(char *str)
+{
+	write(1, str, strlen(str));
+	return (0);
+}
+
 int main(void)
 {
 	int	ret;
@@ -43,7 +50,7 @@ int main(void)
 	ret = tgetent(NULL, term);
 	if (ret == -1)
 		printf("Database is not accessible.\n");
-	else if (!ret)
+	else if (ret == 0)
 		printf("Could not access database.\n");
 
 	column_count = tgetnum("co");
@@ -54,8 +61,9 @@ int main(void)
 	char *clean = tgetstr("cl", NULL);
 	tputs(clean, 0, ft_putchar);
 
-	char *blink = tgetstr("mb", NULL);
-	tputs(blink, 5, ft_putchar);
-	puts("hello");
-	puts("hoho");
+	tputs(enter_bold_mode, 1, ft_putchar);
+	ft_putstr("hello");
+	puts("");
+	puts("test");
+	tputs(erase_chars, 1, ft_putchar);
 }
