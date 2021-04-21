@@ -34,8 +34,7 @@ t_dict *find_var(t_list **env, char *var)
 
 Test(cd_builtin, new_path_null)
 {
-	t_list *empty = NULL;
-	int res = change_directory(&empty, NULL);
+	int res = builtin_cd(NULL);
 	cr_assert_eq(res, -1);
 }
 
@@ -51,31 +50,43 @@ typedef struct	s_cd_testing
 }				t_cd_testing;
 
 // Need to improve this test.
+void init_filesystem(void)
+{
+	system("mkdir -p /parent/child/");
+	chdir("/parent");
+	system("touch /parent/test");
+}
+
+void	destroy_filesystem(void)
+{
+	system("rm -rf /parent");
+}
 
 ParameterizedTestParameters(cd_builtin, valid_path_tests)
 {
 	static t_cd_testing test[] =
 	{
-		{.path = "", .expected_oldpwd = "/toto", .expected_pwd = "/root", .res = 0},
-		{.path = ".", .expected_oldpwd = "/toto", .expected_pwd = "/toto", .res = 0},
-		{.path = "../", .expected_oldpwd = "/toto", .expected_pwd = "/", .res = 0},
-		{.path = "./", .expected_oldpwd = "/toto", .expected_pwd = "/toto", .res = 0},
-		{.path = ".. ewighqiuvh", .expected_oldpwd = "/toto", .expected_pwd = "/", .res = 0},
-		{.path = "/etc", .expected_oldpwd = "/toto", .expected_pwd = "/etc", .res = 0},
-		{.path = "totally_invalid_path", .expected_oldpwd = "OLDPWD=/Users/Pedro/Tests", .expected_pwd = "/toto", .res = -1},
+		{.path = "", .expected_oldpwd = "/parent", .expected_pwd = "/root", .res = 0},
+		{.path = ".", .expected_oldpwd = "/parent", .expected_pwd = "/parent", .res = 0},
+		{.path = "../", .expected_oldpwd = "/parent", .expected_pwd = "/", .res = 0},
+		{.path = "./", .expected_oldpwd = "/parent", .expected_pwd = "/parent", .res = 0},
+		{.path = "./child", .expected_oldpwd = "/parent", .expected_pwd = "/parent/child", .res = 0},
+		{.path = ".. ewighqiuvh", .expected_oldpwd = "/parent", .expected_pwd = "/", .res = 0},
+		{.path = "/etc", .expected_oldpwd = "/parent", .expected_pwd = "/etc", .res = 0},
+		{.path = "totally_invalid_path", .expected_oldpwd = "OLDPWD=/Users/Pedro/Tests", .expected_pwd = "/parent", .res = -1},
 	};
 	return cr_make_param_array(t_cd_testing, test, sizeof(test)/sizeof(t_cd_testing));
 }
 
-ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests)
+ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests, .init=init_filesystem, .fini=destroy_filesystem)
 {
 	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=/Users/Pedro/Tests","PWD=/toto"};
-	t_list	*env = array_to_list(test_var);
-	t_dict *oldpwd = find_var(&env, "OLDPWD");
-	t_dict *pwd = find_var(&env, "PWD");
+	init_globals(test_var);
+	t_dict *oldpwd = find_var(&g_globals->env, "OLDPWD");
+	t_dict *pwd = find_var(&g_globals->env, "PWD");
 
 	int	res = 0;
-	res = change_directory(&env, params->path);
+	res = builtin_cd(params->path);
 	
 	cr_assert_eq(res, params->res);
 	cr_assert_str_eq(oldpwd->value, params->expected_oldpwd);
