@@ -56,7 +56,7 @@ ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export
 		builtin_export_params->contain_value,
 		dict->value);
 	cr_expect_eq(ret, builtin_export_params->ret,
-		"Expected builtin_export to return [%d], instead got [%d]",
-		builtin_export_params->ret, ret);
+		"Expected builtin_export to return [%d], instead got [%d] (Arg: %s, Expected key: %s, Expected value: %s)",
+		builtin_export_params->ret, ret, builtin_export_params->argument, builtin_export_params->contain_key, builtin_export_params->contain_value);
 	destroy_globals();
 }
