@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/20 15:16:34 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/21 15:52:32 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
 int		ft_unsetenv(char *name);
+int builtin_export(char *argument);
 
 /* TMP UTILS */
 void	print_token_list(t_list *list);
