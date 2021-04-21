@@ -14,4 +14,4 @@ RUN cp -r /criterion-v2.3.3/lib/* /usr/lib/ \
 
 WORKDIR /code
 
-ENTRYPOINT tail -f /dev/null
+ENTRYPOINT make test
