@@ -6,14 +6,14 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 16:05:38 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/21 15:23:01 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include "../includes/token.h"
 
-t_list	*command_parse(char *line)
+t_list	*parse_to_list(char *line)
 {
 	char	*ptr;
 	t_token	*token;
@@ -24,7 +24,6 @@ t_list	*command_parse(char *line)
 	tokens = NULL;
 	while (*ptr)
 	{
-		skip_spaces(&ptr);
 		token = get_next_token(ptr);
 		node = ft_lstnew(token);
 		if (!token || !node)

@@ -3,7 +3,7 @@ CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
-LIBS			= -Llibft -lft
+LIBS			= -Llibft -lft -lncurses
 LIBFT 			= libft/libft.a
 NAME			= Minishell
 PATH_SRCS		= ./srcs/
@@ -16,11 +16,6 @@ SRCS			= main.c \
 				  srcs/cd_builtin.c \
 				  srcs/exec_builtin.c \
 				  srcs/parse_command.c \
-				  srcs/scanner.c\
-				  srcs/scanner_len_fcts.c\
-				  srcs/scanner_states.c\
-				  srcs/scanner_quotes.c \
-				  srcs/scanner_utils.c \
 				  srcs/env_utils.c \
 				  srcs/dict_utils.c \
 				  srcs/globals.c \

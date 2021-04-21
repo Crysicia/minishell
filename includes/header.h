@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/21 12:48:40 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/21 15:24:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_dict
 }				t_dict;
 
 void	print_prompt(void);
-t_list	*command_parse(char *line);
+t_list	*parse_to_list(char *line);
 char	**command_format(t_list *list);
 char	*get_command(void);
 int		lexer(char *line, char *envp[]);
