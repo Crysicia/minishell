@@ -12,12 +12,13 @@ SRCS			= main.c \
 				  srcs/get_next_line.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/exec.c \
-				  srcs/builtin_env.c\
+				  srcs/builtin_env.c \
+				  srcs/builtin_pwd.c \
 				  srcs/exec_builtin.c \
 				  srcs/parse_command.c \
-				  srcs/scanner.c\
-				  srcs/scanner_len_fcts.c\
-				  srcs/scanner_states.c\
+				  srcs/scanner.c \
+				  srcs/scanner_len_fcts.c \
+				  srcs/scanner_states.c \
 				  srcs/scanner_quotes.c \
 				  srcs/scanner_utils.c \
 				  srcs/env_utils.c \
@@ -43,6 +44,7 @@ TEST_SRCS		= tests/test_helpers.c \
 				  tests/exec_tests.c \
 				  tests/env_utils_tests.c \
 				  tests/dict_utils_tests.c \
+				  tests/builtin_pwd_tests.c \
 
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
