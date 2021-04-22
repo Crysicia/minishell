@@ -4,7 +4,6 @@
 #include "helpers.h"
 #include <fcntl.h>
 
-
 t_dict *list_dict_search(t_list *list, char *key, char *value)
 {
 	t_dict *dict;
@@ -25,7 +24,7 @@ typedef struct	s_builtin_export_params {
 	char contain_value[42];
 }				t_builtin_export_params;
 
-ParameterizedTestParameters(builtin_export_suite, builtin_export_test) {
+ParameterizedTestParameters(builtin_export_suite, builtin_export_args_test) {
 	static  t_builtin_export_params builtin_export_params[] = {
 		// { .ret = 0, .argument = "PATH", .contain_key = "PATH", .contain_value = NULL },
 		{ .ret = 0, .argument = "PATH=", .contain_key = "PATH", .contain_value = "" },
@@ -39,7 +38,7 @@ ParameterizedTestParameters(builtin_export_suite, builtin_export_test) {
 	return cr_make_param_array(t_builtin_export_params, builtin_export_params, sizeof(builtin_export_params) / sizeof(t_builtin_export_params));
 }
 
-ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export_suite, builtin_export_test) {
+ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export_suite, builtin_export_args_test) {
 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
 	t_dict *dict;
 	int ret;
@@ -58,5 +57,29 @@ ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export
 	cr_expect_eq(ret, builtin_export_params->ret,
 		"Expected builtin_export to return [%d], instead got [%d] (Arg: %s, Expected key: %s, Expected value: %s)",
 		builtin_export_params->ret, ret, builtin_export_params->argument, builtin_export_params->contain_key, builtin_export_params->contain_value);
+	destroy_globals();
+}
+
+#define NUM_OF_TESTS 6
+Test(builtin_export_suite, builtin_export_no_args_test) {
+	char *envp[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall" };
+	char *output[] = { "export ANOTHER=\"brickinthewall\"", "export BONJOUR=\"test\"", "export LOL=\"\"", "export NOPE", "export TEST=\"test\"", "export USER=\"pcharton\"" };
+	init_globals(envp);
+
+	char *line = NULL;
+	FILE *fp = NULL;
+	int fd = 0;
+
+	fp = freopen("export.test", "w", stdout);
+	cr_expect(builtin_export(NULL) == 0, "Expect builtin_export to return 0 without any argument");
+	fclose(fp);
+	fd = open("export.test", O_RDONLY);
+	for (int i = 0; i < NUM_OF_TESTS; i++)
+	{
+		get_next_line(fd, &line);
+ 	    cr_expect_str_eq(output[i], line,  "Expect printed strings to be the same, expected [%s], got [%s]", output[i], line);
+	    cr_free(line);
+	}
+	close(fd);
 	destroy_globals();
 }

@@ -6,7 +6,7 @@
 #    By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/15 11:22:32 by lpassera          #+#    #+#              #
-#    Updated: 2021/04/15 12:00:14 by pcharton         ###   ########.fr        #
+#    Updated: 2021/04/22 14:27:25 by lpassera         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ BONUS_SRCS	= ft_lstnew.c \
 			  ft_lstclear.c \
 			  ft_lstiter.c \
 			  ft_lstmap.c \
+			  ft_lstsort.c \
 
 OBJS 		= $(SRCS:.c=.o)
 BONUS_OBJS 	= $(BONUS_SRCS:.c=.o)
