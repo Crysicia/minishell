@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+         #
+#    By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/15 11:22:32 by lpassera          #+#    #+#              #
-#    Updated: 2021/04/22 14:27:25 by lpassera         ###   ########.fr        #
+#    Updated: 2021/04/23 01:26:17 by crysicia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS 		= ft_memset.c \
 			  ft_split_set.c \
 			  ft_in_range.c \
 			  ft_strcmp.c \
+			  ft_isspace.c \
 
 BONUS_SRCS	= ft_lstnew.c \
 			  ft_lstadd_front.c \

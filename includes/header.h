@@ -27,6 +27,7 @@
 typedef struct s_globals
 {
 	int		current_pid;
+	int		status_code;
 	t_list	*env;
 }			t_globals;
 
@@ -70,7 +71,7 @@ char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
 int		ft_unsetenv(char *name);
-int		builtin_export(char *argument);
+int		builtin_export(char **arguments);
 int		builtin_pwd(t_command *command);
 
 /* TMP UTILS */

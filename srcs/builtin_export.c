@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/22 14:36:34 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 01:30:57 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+
+bool is_env_valid(char *env)
+{
+	int i;
+
+	i = 0;
+	if (ft_isdigit(env[0]))
+		return (false);
+	while (ft_isalnum(env[i]) && env[i] != '=')
+		i++;
+	if (i > 0 && (!env[i] || ft_isspace(env[i]) || env[i] == '='))
+		return (true);
+	return (false);
+}
+
+int set_and_print_error(char *message, char *name, int code)
+{
+	g_globals->status_code = code;
+	ft_putstr_fd(message, STDERR_FILENO);
+	if (name)
+	{
+		ft_putchar_fd(' ', STDERR_FILENO);
+		ft_putstr_fd(name, STDERR_FILENO);
+	}
+	ft_putchar_fd('\n', STDERR_FILENO);
+	return (code);
+}
 
 void	mock_free(void *pointer)
 {
@@ -63,23 +90,27 @@ int	display_export(void)
 	return (0);
 }
 
-int	builtin_export(char *argument)
+int	builtin_export(char **arguments)
 {
 	t_dict	*dict;
 	t_dict	*env;
 	int		ret;
 
 	ret = 0;
-	if (!argument)
+	if (!arguments || !*arguments)
 		return (display_export());
-	dict = env_to_dict(argument);
-	if (!dict)
-		return (-1);
-	env = ft_getenv(dict->key);
-	if (env && (env->value && !dict->value))
-		;
-	else if (ft_setenv(dict->key, dict->value))
-		ret = -1;
-	free_dict(dict);
+	while (*arguments && !ret)
+	{
+		if (!is_env_valid(*arguments))
+			return (set_and_print_error("export: not a valid identifier:", *arguments, 1));
+		dict = env_to_dict(*arguments);
+		if (!dict)
+			return (-1);
+		env = ft_getenv(dict->key);
+		if (!(env && (env->value && !dict->value)) && ft_setenv(dict->key, dict->value))
+			ret = -1;
+		free_dict(dict);
+		arguments++;
+	}
 	return (ret);
 }

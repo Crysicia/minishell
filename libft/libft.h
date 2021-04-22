@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 01:17:22 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/22 14:22:37 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 01:25:38 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ char				**ft_split_set(const char *s, char *set);
 int					ft_in_range(int min, int max, int value);
 int					ft_strcmp(const char *s1, const char *s2);
 void				ft_lstsort(t_list **head, int (*cmp)());
+int					ft_isspace(int c);
 
 #endif
