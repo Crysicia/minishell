@@ -1,5 +1,5 @@
 CC				= gcc
-CFLAGS 			= # -Wall -Wextra -Werror
+CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion

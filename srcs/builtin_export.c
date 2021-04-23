@@ -6,15 +6,15 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/23 13:39:43 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 14:02:53 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-bool is_env_valid(char *env)
+bool	is_env_valid(char *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(env[0]))
@@ -26,7 +26,7 @@ bool is_env_valid(char *env)
 	return (false);
 }
 
-int set_and_print_error(char *message, char *name, int code)
+int	set_and_print_error(char *message, char *name, int code)
 {
 	g_globals->status_code = code;
 	ft_putstr_fd(message, STDERR_FILENO);
@@ -76,12 +76,14 @@ int	builtin_export(char **arguments)
 	while (*arguments && !ret)
 	{
 		if (!is_env_valid(*arguments))
-			return (set_and_print_error("export: not a valid identifier:", *arguments, 1));
+			return (set_and_print_error("export: not a valid identifier:",
+				*arguments, 1));
 		dict = env_to_dict(*arguments);
 		if (!dict)
 			return (-1);
 		env = ft_getenv(dict->key);
-		if (!(env && (env->value && !dict->value)) && ft_setenv(dict->key, dict->value))
+		if (!(env && (env->value && !dict->value))
+				&& ft_setenv(dict->key, dict->value))
 			ret = -1;
 		free_dict(dict);
 		arguments++;

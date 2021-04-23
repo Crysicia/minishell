@@ -92,7 +92,7 @@ Test(builtin_export_suite, builtin_export_no_args_test) {
 	destroy_globals();
 }
 
-#define NUM_OF_TESTS 4
+#define NUM_OF_TESTS_2 4
 Test(builtin_export_suite, builtin_export_multiple_args_test) {
 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
 	char *arguments[] = { "NOTEMPTY", "EXISTING=", "PATH=test", "OOPS===loool" };
@@ -102,15 +102,15 @@ Test(builtin_export_suite, builtin_export_multiple_args_test) {
 	int ret;
 	char **array = malloc(5 * sizeof(char *));
 
-	for (int i = 0; i < NUM_OF_TESTS; i++) {
+	for (int i = 0; i < NUM_OF_TESTS_2; i++) {
 		array[i] = arguments[i];
 	}
-	array[NUM_OF_TESTS] = NULL;
+	array[NUM_OF_TESTS_2] = NULL;
 
 	init_globals(envp);
 	
 	ret = builtin_export(array);
-	for (int i = 0; i < NUM_OF_TESTS; i++) {
+	for (int i = 0; i < NUM_OF_TESTS_2; i++) {
 		dict = ft_getenv(arguments_keys[i]);
 		cr_expect_not_null(dict,
 			"Expected builtin_export to set [%s]",
@@ -126,38 +126,3 @@ Test(builtin_export_suite, builtin_export_multiple_args_test) {
 	}
 	destroy_globals();
 }
-
-// #define NUM_OF_TESTS 4
-// Test(builtin_export_suite, builtin_export_multiple_args_error_test) {
-// 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
-// 	char *arguments[] = { "NOTEMPTY", "EXISTING=", "PATH=test", "OOPS===loool" };
-// 	char *arguments_keys[] = { "3NOTEMPTY", "EXISTING", "PATH", "OOPS" };
-// 	char *arguments_values[] = { "bonjour", "", "test", "==loool" };
-// 	t_dict *dict; 
-// 	int ret;
-// 	char **array = malloc(5 * sizeof(char *));
-
-// 	for (int i = 0; i < NUM_OF_TESTS; i++) {
-// 		array[i] = arguments[i];
-// 	}
-// 	array[NUM_OF_TESTS] = NULL;
-
-// 	init_globals(envp);
-	
-// 	ret = builtin_export(array);
-// 	for (int i = 0; i < NUM_OF_TESTS; i++) {
-// 		dict = ft_getenv(arguments_keys[i]);
-// 		cr_expect_not_null(dict,
-// 			"Expected builtin_export to set [%s]",
-// 			arguments_keys[i]);
-// 		cr_expect_str_eq(dict->value, arguments_values[i],
-// 			"Expected builtin_export to set [%s] value to [%s], instead got [%s]",
-// 			arguments_keys[i],
-// 			arguments_values[i],
-// 			dict->value);
-// 		cr_expect_eq(ret, 0,
-// 			"Expected builtin_export to return [%d], instead got [%d] (Arg: %s, Expected key: %s, Expected value: %s)",
-// 			0, ret, arguments[i], arguments_keys[i], arguments_values[i]);
-// 	}
-// 	destroy_globals();
-// }
