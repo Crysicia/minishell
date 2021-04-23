@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/23 01:30:57 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/04/23 13:39:43 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ int set_and_print_error(char *message, char *name, int code)
 	return (code);
 }
 
-void	mock_free(void *pointer)
-{
-	(void)pointer;
-}
-
 int	dict_key_cmp(void *dict1, void *dict2)
 {
 	if (!dict1 || !dict2)
@@ -51,32 +46,11 @@ int	dict_key_cmp(void *dict1, void *dict2)
 	return (ft_strcmp(((t_dict *)dict1)->key, ((t_dict *)dict2)->key));
 }
 
-// NEED TO USE LSTMAP
-t_list	*list_dup(t_list *list)
-{
-	t_list	*new_list;
-	t_list	*node;
-
-	new_list = NULL;
-	while (list)
-	{
-		node = ft_lstnew(list->content);
-		if (!node)
-		{
-			ft_lstclear(&new_list, mock_free);
-			return (NULL);
-		}
-		ft_lstadd_back(&new_list, node);
-		list = list->next;
-	}
-	return (new_list);
-}
-
 int	display_export(void)
 {
 	t_list	*list;
 
-	list = list_dup(g_globals->env);
+	list = ft_lstmap(g_globals->env, dup_dict, free_dict);
 	ft_lstsort(&list, dict_key_cmp);
 	while (list)
 	{
@@ -86,7 +60,7 @@ int	display_export(void)
 		printf("\n");
 		list = list->next;
 	}
-	ft_lstclear(&list, mock_free);
+	ft_lstclear(&list, free_dict);
 	return (0);
 }
 

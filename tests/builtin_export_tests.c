@@ -28,11 +28,16 @@ ParameterizedTestParameters(builtin_export_suite, builtin_export_args_test) {
 	static  t_builtin_export_params builtin_export_params[] = {
 		// { .ret = 0, .argument = "PATH", .contain_key = "PATH", .contain_value = NULL },
 		{ .ret = 0, .argument = "PATH=", .contain_key = "PATH", .contain_value = "" },
+		{ .ret = 0, .argument = "PATH2=", .contain_key = "PATH2", .contain_value = "" },
 		{ .ret = 0, .argument = "PATH=bonjour", .contain_key = "PATH", .contain_value = "bonjour" },
 		{ .ret = 0, .argument = "NOTEMPTY", .contain_key = "NOTEMPTY", .contain_value = "bonjour" },
 		{ .ret = 0, .argument = "EMPTY=101", .contain_key = "EMPTY", .contain_value = "101" },
 		{ .ret = 0, .argument = "EMPTYSTRING=heyImAString", .contain_key = "EMPTYSTRING", .contain_value = "heyImAString" },
 		{ .ret = 0, .argument = "EXISTING=replaced", .contain_key = "EXISTING", .contain_value = "replaced" },
+		{ .ret = 1, .argument = "EXIS//TING=replaced", .contain_key = "EXISTING", .contain_value = "iexist" },
+		{ .ret = 1, .argument = "1EXISTING=replaced", .contain_key = "EXISTING", .contain_value = "iexist" },
+		{ .ret = 1, .argument = "E#XISTING=replaced", .contain_key = "EXISTING", .contain_value = "iexist" },
+		{ .ret = 1, .argument = "*EXISTING=replaced", .contain_key = "EXISTING", .contain_value = "iexist" },
 	};
 
 	return cr_make_param_array(t_builtin_export_params, builtin_export_params, sizeof(builtin_export_params) / sizeof(t_builtin_export_params));
@@ -87,7 +92,6 @@ Test(builtin_export_suite, builtin_export_no_args_test) {
 	destroy_globals();
 }
 
-
 #define NUM_OF_TESTS 4
 Test(builtin_export_suite, builtin_export_multiple_args_test) {
 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
@@ -122,3 +126,38 @@ Test(builtin_export_suite, builtin_export_multiple_args_test) {
 	}
 	destroy_globals();
 }
+
+// #define NUM_OF_TESTS 4
+// Test(builtin_export_suite, builtin_export_multiple_args_error_test) {
+// 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+// 	char *arguments[] = { "NOTEMPTY", "EXISTING=", "PATH=test", "OOPS===loool" };
+// 	char *arguments_keys[] = { "3NOTEMPTY", "EXISTING", "PATH", "OOPS" };
+// 	char *arguments_values[] = { "bonjour", "", "test", "==loool" };
+// 	t_dict *dict; 
+// 	int ret;
+// 	char **array = malloc(5 * sizeof(char *));
+
+// 	for (int i = 0; i < NUM_OF_TESTS; i++) {
+// 		array[i] = arguments[i];
+// 	}
+// 	array[NUM_OF_TESTS] = NULL;
+
+// 	init_globals(envp);
+	
+// 	ret = builtin_export(array);
+// 	for (int i = 0; i < NUM_OF_TESTS; i++) {
+// 		dict = ft_getenv(arguments_keys[i]);
+// 		cr_expect_not_null(dict,
+// 			"Expected builtin_export to set [%s]",
+// 			arguments_keys[i]);
+// 		cr_expect_str_eq(dict->value, arguments_values[i],
+// 			"Expected builtin_export to set [%s] value to [%s], instead got [%s]",
+// 			arguments_keys[i],
+// 			arguments_values[i],
+// 			dict->value);
+// 		cr_expect_eq(ret, 0,
+// 			"Expected builtin_export to return [%d], instead got [%d] (Arg: %s, Expected key: %s, Expected value: %s)",
+// 			0, ret, arguments[i], arguments_keys[i], arguments_values[i]);
+// 	}
+// 	destroy_globals();
+// }
