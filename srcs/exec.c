@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/20 15:20:12 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 15:36:59 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	execute_command(char **command, char *envp[])
 	int		pid;
 	char	*path;
 
+	if (is_builtin(command[0]))
+		return (execute_builtin(command[0], &command[1]));
 	path = find_exe_path(command[0]);
 	if (!path)
 		return (-1);

@@ -6,18 +6,18 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 10:54:01 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/21 12:13:28 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 15:24:12 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include <limits.h>
 
-int	builtin_pwd(t_command *command)
+int	builtin_pwd(char **arguments)
 {
 	char	*path;
 
-	(void)command;
+	(void)arguments;
 	path = getcwd(NULL, PATH_MAX);
 	if (path)
 	{
