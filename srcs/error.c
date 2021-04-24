@@ -14,10 +14,10 @@
 #include <errno.h>
 #include <string.h>
 
-void ft_malloc_error(void)
+void	ft_malloc_error(void)
 {
-	int swap;
-	char *error;
+	int		swap;
+	char	*error;
 
 	swap = errno;
 	errno = ENOMEM;
