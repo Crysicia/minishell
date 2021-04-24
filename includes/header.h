@@ -77,4 +77,7 @@ int		builtin_pwd(t_command *command);
 
 /* TMP UTILS */
 void	print_token_list(t_list *list);
+
+/* Error managment */
+void	ft_malloc_error();
 #endif
