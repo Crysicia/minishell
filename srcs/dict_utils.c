@@ -6,20 +6,20 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 11:12:33 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/20 15:18:23 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 13:34:24 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-t_list	*ft_lstnew_safe(void *content, void (*del)(void *))
+void	*dup_dict(void *dict_ptr)
 {
-	t_list	*list;
+	t_dict	*dict;
 
-	list = ft_lstnew(content);
-	if (!list)
-		del(content);
-	return (list);
+	dict = dict_ptr;
+	if (!dict)
+		return (NULL);
+	return (new_dict(dict->key, dict->value));
 }
 
 t_dict	*env_to_dict(char *env)

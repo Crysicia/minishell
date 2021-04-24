@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/21 12:13:48 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 13:34:11 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 typedef struct s_globals
 {
 	int		current_pid;
+	int		status_code;
 	t_list	*env;
 }			t_globals;
 
@@ -69,7 +70,9 @@ t_dict	*env_to_dict(char *env);
 char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
+void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
+int		builtin_export(char **arguments);
 int		builtin_pwd(t_command *command);
 
 /* TMP UTILS */
