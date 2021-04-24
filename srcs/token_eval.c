@@ -24,12 +24,41 @@ bool	is_valid_token(t_token tok)
 	else
 		return (false);
 }
-/*
-int	evaluate_token(t_token token)
+
+int	execute_routine(t_tok_type token, t_list *list)
 {
-	if (token)
-//((chr == ';') || (chr == '|') || (chr == '<') || (chr == '>'))
-		return (-1);
+	(void)list;
+	if (token == tok_end_of_cmd)
+		return (0);
+	else if (token == tok_pipe)
+		return (0);
+	else if (token == tok_redir_l)
+		return (0);
+	else if (token == tok_append_r)
+		return (0);
+	else if (token == tok_redir_l)
+		return (0);
 	else
 		return (0);
-}*/
+}
+
+/*
+int	pipe_routine(t_list *list);
+int	redir_l_routine(t_list *list);
+*/
+
+int	evaluate_token(t_list *list)
+{
+	t_token		*tok;
+	t_tok_type	type;
+
+	tok = list->content;
+	if (is_valid_token(*tok))
+	{
+		type = tok->role;
+		return (execute_routine(type, list));
+	}
+	else
+		syntax_error();
+	return (-1);
+}

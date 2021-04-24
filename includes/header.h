@@ -79,5 +79,6 @@ int		builtin_pwd(t_command *command);
 void	print_token_list(t_list *list);
 
 /* Error managment */
-void	ft_malloc_error();
+void	ft_malloc_error(void);
+void	syntax_error(void);
 #endif

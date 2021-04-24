@@ -42,7 +42,6 @@ int	main(int argc, char *argv[], char *envp[])
 		input_str = get_command();
 		input_list = command_parse(input_str);
 		print_token_list(input_list);
-		//evaluate token
 		tab = command_format(input_list);
 		execute_command(tab, envp);
 		sleep(0);

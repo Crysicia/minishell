@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <string.h>
 
-void ft_malloc_error()
+void ft_malloc_error(void)
 {
 	int swap;
 	char *error;
@@ -24,4 +24,9 @@ void ft_malloc_error()
 	error = strerror(errno);
 	printf("Malloc error %s_n", error);
 	errno = swap;
+}
+
+void	syntax_error(void)
+{
+	printf("Minishell invalid token detected\n");
 }
