@@ -6,7 +6,7 @@
 #    By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/15 11:22:32 by lpassera          #+#    #+#              #
-#    Updated: 2021/04/15 12:00:14 by pcharton         ###   ########.fr        #
+#    Updated: 2021/04/23 13:36:14 by lpassera         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,10 @@ SRCS 		= ft_memset.c \
 			  ft_split_set.c \
 			  ft_in_range.c \
 			  ft_strcmp.c \
+			  ft_isspace.c \
 
 BONUS_SRCS	= ft_lstnew.c \
+			  ft_lstnew_safe.c \
 			  ft_lstadd_front.c \
  			  ft_lstsize.c \
 			  ft_lstlast.c \
@@ -71,6 +73,7 @@ BONUS_SRCS	= ft_lstnew.c \
 			  ft_lstclear.c \
 			  ft_lstiter.c \
 			  ft_lstmap.c \
+			  ft_lstsort.c \
 
 OBJS 		= $(SRCS:.c=.o)
 BONUS_OBJS 	= $(BONUS_SRCS:.c=.o)

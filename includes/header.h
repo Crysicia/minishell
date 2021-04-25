@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/23 15:34:50 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/25 15:04:53 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 typedef struct s_globals
 {
 	int		current_pid;
+	int		status_code;
 	t_list	*env;
 }			t_globals;
 
@@ -52,7 +53,6 @@ char	*get_command(void);
 int		lexer(char *line, char *envp[]);
 char	*get_word(char **line);
 void	skip_spaces(char **line);
-int		builtin_env(char **arguments);
 
 int		execute_command(char **command, char *envp[]);
 char	*find_exe_path(char *command);
@@ -69,8 +69,13 @@ t_dict	*env_to_dict(char *env);
 char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
+void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
+
+int		(*get_builtin(char *str))(char **arguments);
 int		builtin_pwd(char **arguments);
+int		builtin_export(char **arguments);
+int		builtin_env(char **arguments);
 int		execute_builtin(char *str, char **arguments);
 
 /* TMP UTILS */

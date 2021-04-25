@@ -13,6 +13,7 @@ SRCS			= main.c \
 				  srcs/get_next_line_utils.c \
 				  srcs/exec.c \
 				  srcs/builtin_env.c \
+				  srcs/builtin_export.c \
 				  srcs/builtin_pwd.c \
 				  srcs/exec_builtin.c \
 				  srcs/parse_command.c \
@@ -25,7 +26,7 @@ SRCS			= main.c \
 				  srcs/dict_utils.c \
 				  srcs/globals.c \
 				  srcs/tokenizer.c \
-				  srcs/token_fcts.c
+				  srcs/token_fcts.c \
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
@@ -44,6 +45,7 @@ TEST_SRCS		= tests/test_helpers.c \
 				  tests/exec_tests.c \
 				  tests/env_utils_tests.c \
 				  tests/dict_utils_tests.c \
+				  tests/builtin_export_tests.c \
 				  tests/builtin_pwd_tests.c \
 
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
@@ -60,7 +62,7 @@ $(LIBFT):
 	@$(MAKE) bonus -C libft
 
 test: $(TEST)
-	./$(TEST)
+	./$(TEST) --jobs 1
 	$(RM) *.test
 
 $(TEST): $(NO_MAIN) $(TEST_OBJS) $(LIBFT)
