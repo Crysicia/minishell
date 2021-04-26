@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/21 15:23:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/26 11:51:15 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ size_t	count_command_words(t_list *list)
 
 	index = 0;
 	tmp = list;
-	tok = list->content;
+	tok = tmp->content;
 	while (tmp && (tok->role == tok_word))
 	{
 		index++;
@@ -59,7 +59,7 @@ size_t	count_command_words(t_list *list)
 	return (index);
 }
 
-char	**command_format(t_list *list)
+char	**command_format(t_list **list)
 {
 	t_list	*tmp;
 	t_token	*tok;
@@ -68,20 +68,22 @@ char	**command_format(t_list *list)
 	char	**tab;
 
 	count = 0;
-	index = count_command_words(list);
+	index = count_command_words(*list);
 	tab = malloc(sizeof(char **) * (index + 1));
 	if (!tab)
-		return (NULL);
-	tmp = list;
+		ft_malloc_error();
 	while (count < index)
 	{
+		tmp = *list;
 		tok = tmp->content;
 		tab[count] = ft_strdup(tok->cmd);
 		if (!tab[count])
-			return (NULL);
+			ft_malloc_error();
 		count++;
-		tmp = tmp->next;
+		*list = (*list)->next;
 	}
+	if (*list && (((t_token *)(*list)->content)->role == tok_end_of_cmd))
+		*list = (*list)->next;
 	tab[count] = NULL;
 	return (tab);
 }

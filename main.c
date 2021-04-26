@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/21 15:23:26 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/26 11:49:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,20 @@ void	handle_sigint(int signal)
 	print_prompt();
 }
 
+void	iterate_over_token_list(t_list *list)
+{
+	t_list	*tmp;
+	int		ret;
+
+	tmp = list;
+	while (tmp && (ret != -1))
+		ret = evaluate_token(&tmp);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_list	*input_list;
 	char	*input_str;
-	char	**tab;
 
 	if (argc != 1)
 		return (-1);
@@ -42,9 +51,7 @@ int	main(int argc, char *argv[], char *envp[])
 		input_str = get_command();
 		input_list = parse_to_list(input_str);
 		print_token_list(input_list);
-		tab = command_format(input_list);
-		execute_command(tab, envp);
-		sleep(0);
+		iterate_over_token_list(input_list);
 	}
 	(void)argv;
 	return (0);
