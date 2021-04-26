@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
 /*   Updated: 2021/04/26 10:30:53 by pcharton         ###   ########.fr       */
@@ -54,7 +54,6 @@ char	*get_command(void);
 
 char	*get_word(char **line);
 void	skip_spaces(char **line);
-int		builtin_env(t_command *command);
 
 int		change_directory(t_list **env_list, char *new_path);
 int		is_valid_path(char *path);
@@ -78,9 +77,12 @@ int		ft_unsetenv(char *name);
 
 /* Builtins */
 
+int		(*get_builtin(char *str))(char **arguments);
 int		builtin_cd(char *new_path);
+int		builtin_pwd(char **arguments);
 int		builtin_export(char **arguments);
-int		builtin_pwd(t_command *command);
+int		builtin_env(char **arguments);
+int		execute_builtin(char *str, char **arguments);
 
 /* TMP UTILS */
 void	print_token_list(t_list *list);

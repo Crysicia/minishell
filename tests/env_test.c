@@ -8,15 +8,13 @@ Test(env_suite, env_no_args_test) {
 	char *input[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall" };
 	char *output[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "ANOTHER=brickinthewall" };
 	init_globals(input);
-	
-	t_command command;
-	command.args = ft_split("env", ' ');
+
 	char *line = NULL;
 	FILE *fp = NULL;
 	int fd = 0;
 
 	fp = freopen("env.test", "w", stdout);
-	cr_expect(builtin_env(&command) == 0, "Expect builtin_env to return 0 without any argument");
+	cr_expect(builtin_env(NULL) == 0, "Expect builtin_env to return 0 without any argument");
 	fclose(fp);
 	fd = open("env.test", O_RDONLY);
 	for (int i = 0; output[i]; i++)
