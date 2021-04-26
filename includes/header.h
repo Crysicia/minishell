@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 13:52:56 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/26 14:13:58 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int		execute_builtin(char *str, char **arguments);
 
 bool	is_path(char *path);
 bool	is_absolute_path(char *path);
-char	*get_absolute_path(char *path);
 
 /* TMP UTILS */
 void	print_token_list(t_list *list);
