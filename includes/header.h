@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 10:30:53 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/26 14:30:42 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ int		builtin_pwd(char **arguments);
 int		builtin_export(char **arguments);
 int		builtin_env(char **arguments);
 int		execute_builtin(char *str, char **arguments);
+
+bool	is_path(char *path);
+bool	is_absolute_path(char *path);
 
 /* TMP UTILS */
 void	print_token_list(t_list *list);
