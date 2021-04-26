@@ -8,21 +8,23 @@ LIBFT 			= libft/libft.a
 NAME			= Minishell
 
 PATH_SRCS		= ./srcs/
-RAW_SRCS		= input.c \
-				  get_next_line.c \
-				  get_next_line_utils.c \
+RAW_SRCS		= builtin_cd.c \
+				  builtin_env.c \
+				  builtin_export.c \
+				  builtin_pwd.c \
+				  dict_utils.c \
+				  env_utils.c \
 				  error.c \
 				  exec.c \
-				  builtin_env.c \
-				  builtin_cd.c \
 				  exec_builtin.c \
-				  parse_command.c \
-				  env_utils.c \
-				  dict_utils.c \
+				  get_next_line.c \
+				  get_next_line_utils.c \
 				  globals.c \
-				  tokenizer.c \
+				  input.c \
+				  parse_command.c \
 				  token_eval.c \
-				  token_fcts.c
+				  token_fcts.c \
+				  tokenizer.c \
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
 OBJS 			= $(SRCS:.c=.o)
@@ -30,16 +32,19 @@ NO_MAIN			= $(filter-out main.o,$(OBJS))
 
 TEST			= minishell_test
 TEST_RAW_SRCS	= test_helpers.c \
+				  builtin_export_tests.c \
+				  builtin_pwd_tests.c \
+				  cd_builtin_tests.c \
+				  dict_utils_tests.c \
 				  env_test.c \
-				  inputs_correct.c \
-				  tokenizer_tests.c \
-				  token_eval_tests.c \
-				  tokens_tests.c \
-				  utils_tests.c \
 				  env_utils_tests.c \
 				  exec_builtin_tests.c \
 				  exec_tests.c \
-				  dict_utils_tests.c 
+				  inputs_correct.c \
+				  token_eval_tests.c \
+				  tokenizer_tests.c \
+				  tokens_tests.c \
+				  utils_tests.c \
 
 TEST_SRCS		= $(addprefix tests/,$(TEST_RAW_SRCS))
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
