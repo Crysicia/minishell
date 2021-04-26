@@ -6,18 +6,18 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/20 15:17:39 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 14:55:24 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int	builtin_env(t_command *command)
+int	builtin_env(char **arguments)
 {
 	t_list	*node;
 	char	*env;
 
-	(void) command;
+	(void)arguments;
 	node = g_globals->env;
 	while (node)
 	{
