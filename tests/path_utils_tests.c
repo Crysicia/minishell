@@ -29,7 +29,6 @@ ParameterizedTestParameters(path_utils_suite, is_path_test) {
 		{ .ret = false, .argument = "bonjour" },
 		{ .ret = false, .argument = "te..st" },
 		{ .ret = false, .argument = ".ls" },
-		{ .ret = false, .argument = "..bin/ls" },
 	};
 
 	return cr_make_param_array(t_is_path_params, is_path_params, sizeof(is_path_params) / sizeof(t_is_path_params));
@@ -39,7 +38,11 @@ ParameterizedTest(t_is_path_params *is_path_params, path_utils_suite, is_path_te
 	char og_buffer[6];
 	char ret_buffer[6];
 	bool ret = is_path(is_path_params->argument);
-	cr_expect(ret == is_path_params->ret, "Expected is_path to return [%s], instead got [%s]", bool_to_str(og_buffer, is_path_params->ret), bool_to_str(ret_buffer, ret));
+	cr_expect(ret == is_path_params->ret, "Expected is_path to return [%s], instead got [%s], for [%s]",
+		bool_to_str(og_buffer, is_path_params->ret),
+		bool_to_str(ret_buffer, ret),
+		is_path_params->argument
+	);
 }
 
 
@@ -78,5 +81,10 @@ ParameterizedTest(t_is_absolute_path_params *is_absolute_path_params, path_utils
 	char og_buffer[6];
 	char ret_buffer[6];
 	bool ret = is_absolute_path(is_absolute_path_params->argument);
-	cr_expect(ret == is_absolute_path_params->ret, "Expected is_absolute_path to return [%s], instead got [%s]", bool_to_str(og_buffer, is_absolute_path_params->ret), bool_to_str(ret_buffer, ret));
+	cr_expect(ret == is_absolute_path_params->ret,
+		"Expected is_absolute_path to return [%s], instead got [%s], for [%s]",
+		bool_to_str(og_buffer, is_absolute_path_params->ret),
+		bool_to_str(ret_buffer, ret),
+		is_absolute_path_params->argument
+	);
 }
