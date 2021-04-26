@@ -6,13 +6,14 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 14:30:42 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/26 15:27:16 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/stat.h>
@@ -78,7 +79,7 @@ int		ft_unsetenv(char *name);
 /* Builtins */
 
 int		(*get_builtin(char *str))(char **arguments);
-int		builtin_cd(char *new_path);
+int		builtin_cd(char **arguments);
 int		builtin_pwd(char **arguments);
 int		builtin_export(char **arguments);
 int		builtin_env(char **arguments);

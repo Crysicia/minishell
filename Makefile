@@ -63,7 +63,7 @@ $(LIBFT):
 	@$(MAKE) bonus -C libft
 
 test: $(TEST)
-	./$(TEST)
+	./$(TEST) --jobs 1
 	$(RM) *.test
 
 $(TEST): $(NO_MAIN) $(TEST_OBJS) $(LIBFT)
