@@ -3,17 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 09:12:40 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 16:15:09 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/19 17:01:31 by pcharton          #+#    #+#             */
+/*   Updated: 2021/04/21 12:48:53 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+#include <sys/param.h>
+#include <unistd.h>
+#include <errno.h>
 
-int	ft_get_cwd(char	*path)
+int	builtin_cd(char *new_path)
+{
+	if (!new_path)
+		return (-1);
+	(void)new_path;
+	return (0);
+}
+
+int	is_valid_path(char *path)
 {
 	(void)path;
-	return (0);
+	return (42);
 }
