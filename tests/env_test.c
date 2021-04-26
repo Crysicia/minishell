@@ -3,7 +3,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <fcntl.h>
-
+/*
 Test(env_suite, env_no_args_test) {
 	char *input[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall" };
 	char *output[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "ANOTHER=brickinthewall" };
@@ -28,3 +28,4 @@ Test(env_suite, env_no_args_test) {
 	close(fd);
 	destroy_globals();
 }
+*/

@@ -71,14 +71,14 @@ char	**command_format(t_list *list)
 	index = count_command_words(list);
 	tab = malloc(sizeof(char **) * (index + 1));
 	if (!tab)
-		return (NULL);
+		ft_malloc_error();
 	tmp = list;
 	while (count < index)
 	{
 		tok = tmp->content;
 		tab[count] = ft_strdup(tok->cmd);
 		if (!tab[count])
-			return (NULL);
+			ft_malloc_error();
 		count++;
 		tmp = tmp->next;
 	}

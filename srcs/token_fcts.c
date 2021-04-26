@@ -33,6 +33,8 @@ char	*cut_token_string(char *line)
 		}
 		trimmed_str = ft_strndup(line, i);
 	}
+	if (!trimmed_str)
+		ft_malloc_error();
 	return (trimmed_str);
 }
 

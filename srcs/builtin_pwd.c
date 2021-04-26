@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/12 18:54:11 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/22 11:58:40 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/21 10:54:01 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/21 12:13:28 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "../includes/header.h"
+#include <limits.h>
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+int	builtin_pwd(t_command *command)
 {
-	if (!lst || !*lst)
-		return ;
-	if ((*lst)->next)
-		ft_lstclear(&(*lst)->next, del);
-	del((*lst)->content);
-	free(*lst);
-	*lst = NULL;
+	char	*path;
+
+	(void)command;
+	path = getcwd(NULL, PATH_MAX);
+	if (path)
+	{
+		printf("%s\n", path);
+		free(path);
+		return (0);
+	}
+	else
+		return (-1);
 }
