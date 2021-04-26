@@ -93,25 +93,3 @@ ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests, .init=init
 	cr_assert_str_eq(oldpwd->value, params->expected_oldpwd);
 	cr_assert_str_eq(pwd->value, params->expected_pwd);
 }
-
-//Some unit testings
-
-Test(cd_builtin, is_valid_path_wrong)
-{
-	int	res = is_valid_path("akghiugehg");
-	cr_expect_eq(res, -1);
-}
-
-Test(cd_builtin, is_valid_path_right)
-{
-	char *ptr = getenv("HOME");
-	int res = is_valid_path(ptr);
-	cr_expect_null(res, "res should return 0 if path is valid");
-	cr_free(ptr);
-
-	for (int i = 0; i < tests_nb; i++)
-	{
-		int res = is_valid_path(valid_path[i]);
-		cr_expect_null(res, "res should return 0 if path is valid");
-	}
-}
