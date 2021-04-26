@@ -40,7 +40,7 @@ ParameterizedTestParameters(parser_suite, command_parse_test) {
 
 ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, command_parse_test)
 {
-	t_list *result_list = command_parse(tests->input);
+	t_list *result_list = parse_to_list(tests->input);
 	t_token *result = result_list->content;
 	cr_expect(strcmp(result->cmd, tests->expected) == 0,
 			 "expected [%s] output for [%s] input, instead, fct returned [%s]",

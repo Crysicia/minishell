@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner_utils.c                                    :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 01:02:07 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/08 01:02:07 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
+/*   Updated: 2021/04/24 14:36:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/scanner.h"
+#include  "../includes/header.h"
+#include <errno.h>
+#include <string.h>
 
-bool	ft_is_lowercase(int c)
+void	ft_malloc_error(void)
 {
-	if ((c >= 'a') && (c <= 'z'))
-		return (true);
-	else
-		return (false);
+	int		swap;
+	char	*error;
+
+	swap = errno;
+	errno = ENOMEM;
+	error = strerror(errno);
+	printf("Malloc error %s_n", error);
+	errno = swap;
 }
 
-bool	is_space(int c)
+void	syntax_error(void)
 {
-	if ((c == ' ') || (c == '\t'))
-		return (true);
-	else
-		return (false);
+	printf("Minishell invalid token detected\n");
 }

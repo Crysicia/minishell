@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/15 15:15:07 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/26 10:15:35 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,17 @@ typedef struct s_token
 	t_tok_type		role;
 }					t_token;
 
-t_tok_type	get_next_tok_type(char *str);
 t_list		*command_parse(char *line);
+int			evaluate_token(t_list **list);
+t_tok_type	get_next_tok_type(char *str);
 t_tok_type	attribute_tok_type(char chr);
 t_token		*get_next_token(char *line);
 void		free_token(void *token);
 t_token		*new_token(char *str, t_tok_type type);
-bool		is_escape_character(char chr);
+bool		is_valid_token(t_token tok);
 bool		is_token_character(char chr);
+bool		is_escape_character(char chr);
 char		*get_escaped_string(char *str);
 char		*cut_token_string(char *line);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/25 15:04:53 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/04/26 10:30:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_globals
 	int		current_pid;
 	int		status_code;
 	t_list	*env;
+	char	**envp_tmp;
 }			t_globals;
 
 t_globals	*g_globals;
@@ -47,13 +48,15 @@ typedef struct s_dict
 }				t_dict;
 
 void	print_prompt(void);
-t_list	*command_parse(char *line);
-char	**command_format(t_list *list);
+t_list	*parse_to_list(char *line);
+char	**command_format(t_list **list);
 char	*get_command(void);
-int		lexer(char *line, char *envp[]);
+
 char	*get_word(char **line);
 void	skip_spaces(char **line);
 
+int		change_directory(t_list **env_list, char *new_path);
+int		is_valid_path(char *path);
 int		execute_command(char **command, char *envp[]);
 char	*find_exe_path(char *command);
 bool	is_builtin(char *str);
@@ -72,7 +75,10 @@ void	free_dict(void *elem);
 void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
 
+/* Builtins */
+
 int		(*get_builtin(char *str))(char **arguments);
+int		builtin_cd(char *new_path);
 int		builtin_pwd(char **arguments);
 int		builtin_export(char **arguments);
 int		builtin_env(char **arguments);
@@ -80,4 +86,8 @@ int		execute_builtin(char *str, char **arguments);
 
 /* TMP UTILS */
 void	print_token_list(t_list *list);
+
+/* Error managment */
+void	ft_malloc_error(void);
+void	syntax_error(void);
 #endif
