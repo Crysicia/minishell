@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 11:53:52 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/26 12:04:56 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	evaluate_token(t_list **list)
 	t_tok_type	type;
 
 	tok = (*list)->content;
-
 	if (((tok->role != tok_word) && is_valid_token(*tok))
 		|| (tok->role == tok_word))
 	{
@@ -76,4 +75,3 @@ int	evaluate_token(t_list **list)
 		return (-1);
 	}
 }
-
