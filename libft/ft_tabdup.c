@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner_utils.c                                    :+:      :+:    :+:   */
+/*   ft_tabdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 01:02:07 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/08 01:02:07 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/17 19:14:13 by pcharton          #+#    #+#             */
+/*   Updated: 2021/04/17 19:14:13 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/scanner.h"
+#include "libft.h"
+#include <stdio.h>
 
-bool	ft_is_lowercase(int c)
+char	**ft_tabdup(char *tab[])
 {
-	if ((c >= 'a') && (c <= 'z'))
-		return (true);
-	else
-		return (false);
-}
+	char	**dup;
+	size_t	i;
+	size_t	len;
 
-bool	is_space(int c)
-{
-	if ((c == ' ') || (c == '\t'))
-		return (true);
-	else
-		return (false);
+	i = 0;
+	len = 0;
+	while (*(tab + len))
+		len++;
+	dup = malloc(sizeof(char **) * (len + 1));
+	while (i < len)
+	{
+		dup[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	dup[len] = NULL;
+	return (dup);
 }

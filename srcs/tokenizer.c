@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 14:31:11 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/21 15:20:49 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_token	*get_next_token(char *line)
 	t_tok_type	role;
 	char		*cmd;
 
+	skip_spaces(&line);
 	role = attribute_tok_type(*line);
 	cmd = cut_token_string(line);
 	if (cmd)

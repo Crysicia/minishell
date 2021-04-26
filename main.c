@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/20 15:33:04 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/21 15:23:26 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		print_prompt();
 		input_str = get_command();
-		input_list = command_parse(input_str);
+		input_list = parse_to_list(input_str);
 		print_token_list(input_list);
 		tab = command_format(input_list);
 		execute_command(tab, envp);

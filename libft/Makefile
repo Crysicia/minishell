@@ -6,7 +6,7 @@
 #    By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/15 11:22:32 by lpassera          #+#    #+#              #
-#    Updated: 2021/04/23 13:36:14 by lpassera         ###   ########.fr        #
+#    Updated: 2021/04/26 08:35:11 by pcharton         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,17 @@ SRCS 		= ft_memset.c \
 			  ft_strlcpy.c \
 			  ft_strlcat.c \
 			  ft_strnstr.c \
+			  ft_strjoin.c \
+			  ft_strtrim.c \
+			  ft_strjoin_free.c \
+			  ft_strcmp.c \
+			  ft_strcchr.c \
+			  ft_tabdup.c \
 			  ft_atoi.c \
 			  ft_calloc.c \
 			  ft_strdup.c \
 			  ft_strndup.c \
 			  ft_substr.c \
-			  ft_strjoin.c \
-			  ft_strtrim.c \
 			  ft_split.c \
 			  ft_itoa.c \
 			  ft_strmapi.c \
@@ -55,9 +59,7 @@ SRCS 		= ft_memset.c \
 			  ft_putnbr_fd.c \
 			  ft_max.c \
 			  ft_min.c \
-			  ft_strjoin_free.c \
 			  ft_free_matrix.c \
-			  ft_strcchr.c \
 			  ft_split_set.c \
 			  ft_in_range.c \
 			  ft_strcmp.c \
