@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 15:27:16 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/27 15:33:46 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,31 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/param.h>
 # include <sys/stat.h>
+# include <sys/errno.h>
 # include <limits.h>
 # include <signal.h>
+# include <string.h>
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include "scanner.h"
 # include "token.h"
 # define BUILTINS_NB 7
 
+/* ERRORS */
+# define SUCCESS 0
+# define ERR_BUILTIN_FAILED 1
+# define ERR_MALLOC_FAILED 256
+# define ERR_ENV_NOT_FOUND 257
+# define ERR_COULD_NOT_SET_ENV 258
+
 typedef struct s_globals
 {
 	int		current_pid;
-	int		status_code;
+	int		status;
+	char	*error_msg;
 	t_list	*env;
-	char	**envp_tmp;
 }			t_globals;
 
 t_globals	*g_globals;
@@ -58,7 +68,7 @@ void	skip_spaces(char **line);
 
 int		change_directory(t_list **env_list, char *new_path);
 int		is_valid_path(char *path);
-int		execute_command(char **command, char *envp[]);
+int		execute_command(char **command);
 char	*find_exe_path(char *command);
 bool	is_builtin(char *str);
 
@@ -77,6 +87,7 @@ void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
 
 /* Builtins */
+void	display_error(char *command, char *custom);
 
 int		(*get_builtin(char *str))(char **arguments);
 int		builtin_cd(char **arguments);
@@ -88,6 +99,7 @@ int		execute_builtin(char *str, char **arguments);
 bool	is_path(char *path);
 bool	is_absolute_path(char *path);
 
+int		set_status_code(int code, bool from_builtin);
 /* TMP UTILS */
 void	print_token_list(t_list *list);
 

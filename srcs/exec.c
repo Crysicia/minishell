@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/26 14:12:29 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/27 15:25:01 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	*find_exe_path(char *command)
 	char		*result;
 	int			index;
 
+	if (is_path(command))
+		return (command);
 	index = 0;
 	result = NULL;
 	path_arr = list_exe_paths();
@@ -65,26 +67,36 @@ char	*find_exe_path(char *command)
 	return (result);
 }
 
-int	execute_command(char **command, char *envp[])
+int	set_status_code(int code, bool from_builtin)
+{
+	if (from_builtin)
+		return (g_globals->status = code);
+	g_globals->status = WEXITSTATUS(code);
+	return (g_globals->status);
+}
+
+int	execute_command(char **command)
 {
 	int		pid;
 	char	*path;
 
 	if (is_builtin(command[0]))
-		return (execute_builtin(command[0], &command[1]));
+		return (set_status_code(execute_builtin(command[0], &command[1]),
+				true));
 	path = find_exe_path(command[0]);
 	if (!path)
 		return (-1);
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(path, command, envp);
+		execve(path, command, list_to_array(g_globals->env));
 		exit(0);
 	}
 	else if (pid > 0)
 	{
 		g_globals->current_pid = pid;
-		wait(NULL);
+		wait(&g_globals->status);
+		set_status_code(g_globals->status, false);
 		g_globals->current_pid = 0;
 	}
 	else

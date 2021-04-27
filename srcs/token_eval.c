@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_eval.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 12:04:56 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/27 14:01:16 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int	execute_routine(t_tok_type token, t_list **list)
 	else if (token == tok_word)
 	{
 		tab = command_format(list);
-		execute_command(tab, g_globals->envp_tmp);
+		execute_command(tab);
+		if (g_globals->status != 0)
+			printf("Status: %d\n", g_globals->status);
 		return (0);
 	}
 	else

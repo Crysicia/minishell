@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/27 14:40:36 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/27 12:31:24 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/27 16:09:13 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int	builtin_env(char **arguments)
+void	display_error(char *command, char *custom)
 {
-	t_list	*node;
-	char	*env;
-
-	(void)arguments;
-	node = g_globals->env;
-	while (node)
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(command, STDERR_FILENO);
+	if (custom)
 	{
-		env = dict_to_env(node->content);
-		if (((t_dict *)node->content)->value)
-			printf("%s\n", env);
-		free(env);
-		node = node->next;
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(custom, STDERR_FILENO);
 	}
-	return (SUCCESS);
+	ft_putchar_fd('\n', STDERR_FILENO);
 }

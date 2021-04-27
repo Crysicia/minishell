@@ -6,15 +6,22 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 17:01:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 16:56:08 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/27 15:13:37 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
-#include <sys/param.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
+
+int	cd_error(char *path, int code)
+{
+	char	buffer[MAXPATHLEN];
+
+	ft_strlcpy(buffer, path, ft_strlen(path) + 1);
+	ft_strlcat(buffer, ": ", MAXPATHLEN);
+	ft_strlcat(buffer, strerror(errno), MAXPATHLEN);
+	display_error("cd", buffer);
+	return (code);
+}
 
 bool	change_pwd_vars(void)
 {
@@ -37,12 +44,12 @@ int	builtin_cd(char **arguments)
 	{
 		home = ft_getenv("HOME");
 		if (!home)
-			return (2);
+			return (ERR_ENV_NOT_FOUND);
 		if (!chdir(home->value))
 			return (!change_pwd_vars());
-		return (1);
+		return (cd_error(home->value, ERR_BUILTIN_FAILED));
 	}
 	if (!chdir(arguments[0]) || !ft_strcmp(arguments[0], ""))
 		return (!change_pwd_vars());
-	return (1);
+	return (cd_error(arguments[0], ERR_BUILTIN_FAILED));
 }

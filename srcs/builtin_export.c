@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/23 14:10:09 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/27 15:14:20 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ bool	is_env_valid(char *env)
 	return (false);
 }
 
-int	set_and_print_error(char *message, char *name, int code)
+int	export_error(char *argument, int code)
 {
-	g_globals->status_code = code;
-	ft_putstr_fd(message, STDERR_FILENO);
-	if (name)
-	{
-		ft_putchar_fd(' ', STDERR_FILENO);
-		ft_putstr_fd(name, STDERR_FILENO);
-	}
-	ft_putchar_fd('\n', STDERR_FILENO);
+	t_dict	*dict;
+	char	buffer[MAXPATHLEN];
+
+	dict = env_to_dict(argument);
+	ft_strlcpy(buffer, "'", 2);
+	ft_strlcat(buffer, dict->key, MAXPATHLEN);
+	ft_strlcat(buffer, "': not a valid identifier", MAXPATHLEN);
+	display_error("export", buffer);
+	free_dict(dict);
 	return (code);
 }
 
@@ -61,7 +62,7 @@ int	display_export(void)
 		list = list->next;
 	}
 	ft_lstclear(&list, free_dict);
-	return (0);
+	return (SUCCESS);
 }
 
 int	builtin_export(char **arguments)
@@ -70,21 +71,20 @@ int	builtin_export(char **arguments)
 	t_dict	*env;
 	int		ret;
 
-	ret = 0;
+	ret = SUCCESS;
 	if (!arguments || !*arguments)
 		return (display_export());
 	while (*arguments && !ret)
 	{
 		if (!is_env_valid(*arguments))
-			return (set_and_print_error("export: not a valid identifier:",
-					*arguments, 1));
+			return (export_error(*arguments, ERR_BUILTIN_FAILED));
 		dict = env_to_dict(*arguments);
 		if (!dict)
-			return (-1);
+			return (ERR_MALLOC_FAILED);
 		env = ft_getenv(dict->key);
 		if (!(env && (env->value && !dict->value))
 			&& ft_setenv(dict->key, dict->value))
-			ret = -1;
+			ret = ERR_COULD_NOT_SET_ENV;
 		free_dict(dict);
 		arguments++;
 	}

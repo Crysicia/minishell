@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 10:54:01 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/23 15:24:12 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/27 14:40:22 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	builtin_pwd(char **arguments)
 	{
 		printf("%s\n", path);
 		free(path);
-		return (0);
+		return (SUCCESS);
 	}
-	else
-		return (-1);
+	return (ERR_BUILTIN_FAILED);
 }
