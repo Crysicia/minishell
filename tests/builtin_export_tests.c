@@ -4,19 +4,6 @@
 #include "helpers.h"
 #include <fcntl.h>
 
-t_dict *list_dict_search(t_list *list, char *key, char *value)
-{
-	t_dict *dict;
-	while (list)
-	{
-		dict = list->content;
-		if (!strcmp(dict->key, key) && (dict->value == value || !strcmp(dict->value, value)))
-			return (dict);
-		list = list->next;
-	}
-	return (NULL);
-}
-
 typedef struct	s_builtin_export_params {
 	int ret;
 	char argument[42];

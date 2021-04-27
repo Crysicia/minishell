@@ -1,4 +1,5 @@
 #include <criterion/criterion.h>
+#include <criterion/parameterized.h>
 #include "../includes/header.h"
 #include <string.h>
 #include <signal.h>
@@ -28,3 +29,42 @@ Test(exec_suite, find_exe_path_test)
     close(fd);
 }
 */
+
+typedef struct  s_set_status_code_params {
+    int ret;
+    int code;
+    bool from_builtin;
+}               t_set_status_code_params;
+
+ParameterizedTestParameters(exec_suite, set_status_code_test) {
+    static  t_set_status_code_params set_status_code_params[] = {
+        { .ret = 0, .code = 0, .from_builtin = true },
+        { .ret = 50, .code = 50, .from_builtin = true },
+        { .ret = 256, .code = 256, .from_builtin = true },
+        { .ret = 1, .code = 256, .from_builtin = false },
+        { .ret = 2, .code = 512, .from_builtin = false },
+        { .ret = 4, .code = 1024, .from_builtin = false },
+    };
+
+    return cr_make_param_array(t_set_status_code_params, set_status_code_params, sizeof(set_status_code_params) / sizeof(t_set_status_code_params));
+}
+
+ParameterizedTest(t_set_status_code_params *set_status_code_params, exec_suite, set_status_code_test) {
+    char *envp[] = { "SAMPLE=test" };
+    int ret;
+
+    init_globals(envp);
+    
+    ret = set_status_code(set_status_code_params->code, set_status_code_params->from_builtin);
+    cr_expect_eq(ret, set_status_code_params->ret,
+        "Expected set_status_code to return [%i], instead got [%i]",
+        set_status_code_params->ret,
+        ret
+    );
+    cr_expect_eq(g_globals->status, set_status_code_params->ret,
+        "Expected set_status_code to set status to [%i], instead got [%i]",
+        set_status_code_params->ret,
+        g_globals->status
+    );
+    destroy_globals();
+}
