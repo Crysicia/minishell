@@ -12,6 +12,7 @@ RAW_SRCS		= builtin_cd.c \
 				  builtin_env.c \
 				  builtin_export.c \
 				  builtin_pwd.c \
+				  builtin_unset.c \
 				  builtin_utils.c \
 				  dict_utils.c \
 				  env_utils.c \
@@ -34,9 +35,10 @@ NO_MAIN			= $(filter-out main.o,$(OBJS))
 
 TEST			= minishell_test
 TEST_RAW_SRCS	= test_helpers.c \
+				  builtin_cd_tests.c \
 				  builtin_export_tests.c \
 				  builtin_pwd_tests.c \
-				  builtin_cd_tests.c \
+				  builtin_unset_tests.c \
 				  builtin_utils_tests.c \
 				  dict_utils_tests.c \
 				  env_test.c \
