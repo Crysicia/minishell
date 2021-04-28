@@ -11,6 +11,7 @@ PATH_SRCS		= ./srcs/
 RAW_SRCS		= builtin_cd.c \
 				  builtin_env.c \
 				  builtin_export.c \
+				  builtin_exit.c \
 				  builtin_pwd.c \
 				  builtin_unset.c \
 				  builtin_utils.c \

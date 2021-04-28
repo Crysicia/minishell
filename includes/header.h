@@ -6,7 +6,7 @@
 /*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/28 13:47:14 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/04/28 13:47:14 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		(*get_builtin(char *str))(char **arguments);
 int		builtin_cd(char **arguments);
 int		builtin_pwd(char **arguments);
 int		builtin_export(char **arguments);
+int		builtin_exit(char **arguments);
 int		builtin_env(char **arguments);
 int		execute_builtin(char *str, char **arguments);
 int		builtin_unset(char **arguments);
