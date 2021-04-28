@@ -33,7 +33,8 @@ int	(*get_builtin(char *str))(char **arguments)
 	static char	*builtins[BUILTINS_NB] = {"cd", "echo",
 		"env", "exit", "export", "pwd", "unset"};
 	static	int	(*builtins_array[BUILTINS_NB])(char **) = {builtin_cd,
-		NULL, builtin_env, builtin_exit, builtin_export, builtin_pwd, builtin_unset};
+		NULL, builtin_env, builtin_exit, builtin_export, builtin_pwd,
+		builtin_unset};
 	int			index;
 
 	index = 0;
