@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 01:17:22 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/12 11:16:03 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/23 13:35:38 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ char				*ft_strnstr(const char *haystack,
 int					ft_atoi(const char *str);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *s1);
+
+/*
+**	Tab utils
+*/
+
+char				**ft_tabdup(char *tab[]);
 
 /*
 ** 42 functions
@@ -88,5 +94,8 @@ char				*ft_strcchr(const char *s, int c);
 char				**ft_split_set(const char *s, char *set);
 int					ft_in_range(int min, int max, int value);
 int					ft_strcmp(const char *s1, const char *s2);
+void				ft_lstsort(t_list **head, int (*cmp)());
+t_list				*ft_lstnew_safe(void *content, void (*del)(void *));
+int					ft_isspace(int c);
 
 #endif

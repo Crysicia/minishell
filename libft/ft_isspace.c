@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner_utils.c                                    :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 01:02:07 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/08 01:02:07 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/23 01:24:34 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/23 13:54:35 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/scanner.h"
+#include "libft.h"
 
-bool	ft_is_lowercase(int c)
+int	ft_isspace(int c)
 {
-	if ((c >= 'a') && (c <= 'z'))
-		return (true);
-	else
-		return (false);
-}
-
-bool	is_space(int c)
-{
-	if ((c == ' ') || (c == '\t'))
-		return (true);
-	else
-		return (false);
+	return ((c >= 9 && 13 >= c) || c == 32);
 }

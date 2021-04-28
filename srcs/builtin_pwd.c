@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/27 14:40:36 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/21 10:54:01 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/27 14:40:22 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+#include <limits.h>
 
-int	builtin_env(char **arguments)
+int	builtin_pwd(char **arguments)
 {
-	t_list	*node;
-	char	*env;
+	char	*path;
 
 	(void)arguments;
-	node = g_globals->env;
-	while (node)
+	path = getcwd(NULL, PATH_MAX);
+	if (path)
 	{
-		env = dict_to_env(node->content);
-		if (((t_dict *)node->content)->value)
-			printf("%s\n", env);
-		free(env);
-		node = node->next;
+		printf("%s\n", path);
+		free(path);
+		return (SUCCESS);
 	}
-	return (SUCCESS);
+	return (ERR_BUILTIN_FAILED);
 }

@@ -6,27 +6,40 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/20 15:16:34 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/27 15:33:46 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/param.h>
 # include <sys/stat.h>
+# include <sys/errno.h>
 # include <limits.h>
 # include <signal.h>
+# include <string.h>
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include "scanner.h"
 # include "token.h"
 # define BUILTINS_NB 7
 
+/* ERRORS */
+# define SUCCESS 0
+# define ERR_BUILTIN_FAILED 1
+# define ERR_MALLOC_FAILED 256
+# define ERR_ENV_NOT_FOUND 257
+# define ERR_COULD_NOT_SET_ENV 258
+
 typedef struct s_globals
 {
 	int		current_pid;
+	int		status;
+	char	*error_msg;
 	t_list	*env;
 }			t_globals;
 
@@ -46,15 +59,16 @@ typedef struct s_dict
 }				t_dict;
 
 void	print_prompt(void);
-t_list	*command_parse(char *line);
-char	**command_format(t_list *list);
+t_list	*parse_to_list(char *line);
+char	**command_format(t_list **list);
 char	*get_command(void);
-int		lexer(char *line, char *envp[]);
+
 char	*get_word(char **line);
 void	skip_spaces(char **line);
-int		builtin_env(t_command *command);
 
-int		execute_command(char **command, char *envp[]);
+int		change_directory(t_list **env_list, char *new_path);
+int		is_valid_path(char *path);
+int		execute_command(char **command);
 char	*find_exe_path(char *command);
 bool	is_builtin(char *str);
 
@@ -69,8 +83,27 @@ t_dict	*env_to_dict(char *env);
 char	*dict_to_env(t_dict *dict);
 int		ft_setenv(char *name, char *value);
 void	free_dict(void *elem);
+void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
 
+/* Builtins */
+void	display_error(char *command, char *custom);
+
+int		(*get_builtin(char *str))(char **arguments);
+int		builtin_cd(char **arguments);
+int		builtin_pwd(char **arguments);
+int		builtin_export(char **arguments);
+int		builtin_env(char **arguments);
+int		execute_builtin(char *str, char **arguments);
+
+bool	is_path(char *path);
+bool	is_absolute_path(char *path);
+
+int		set_status_code(int code, bool from_builtin);
 /* TMP UTILS */
 void	print_token_list(t_list *list);
+
+/* Error managment */
+void	ft_malloc_error(void);
+void	syntax_error(void);
 #endif

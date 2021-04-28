@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_builtin.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew_safe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 09:12:40 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 16:15:09 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/23 13:35:03 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/23 13:35:21 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "libft.h"
 
-int	ft_get_cwd(char	*path)
+t_list	*ft_lstnew_safe(void *content, void (*del)(void *))
 {
-	(void)path;
-	return (0);
+	t_list	*list;
+
+	list = ft_lstnew(content);
+	if (!list)
+		del(content);
+	return (list);
 }

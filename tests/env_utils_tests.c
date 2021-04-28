@@ -130,6 +130,7 @@ Test(env_utils_suite, array_to_list_null_test) {
 **----------------------------------------------
 */
 
+#define NUM_OF_TESTS 4
 Test(env_utils_suite, list_to_array_test) {
 	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera" };
 	t_list *list = array_to_list(argument);
@@ -140,7 +141,7 @@ Test(env_utils_suite, list_to_array_test) {
 	head = list;
 	array = list_to_array(list);
 
-	for (i = 0; array[i]; i++)
+	for (i = 0; i < NUM_OF_TESTS; i++)
 	{
 		cr_expect_str_eq(array[i], argument[i],
 				  "Expected list_to_array returned array to contain [%s], instead got [%s], at index [%d]",
