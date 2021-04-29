@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/27 15:14:20 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/28 13:47:25 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
-
-bool	is_env_valid(char *env)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isdigit(env[0]))
-		return (false);
-	while (ft_isalnum(env[i]) && env[i] != '=')
-		i++;
-	if (i > 0 && (!env[i] || ft_isspace(env[i]) || env[i] == '='))
-		return (true);
-	return (false);
-}
 
 int	export_error(char *argument, int code)
 {
@@ -74,9 +60,9 @@ int	builtin_export(char **arguments)
 	ret = SUCCESS;
 	if (!arguments || !*arguments)
 		return (display_export());
-	while (*arguments && !ret)
+	while (*arguments && ret == SUCCESS)
 	{
-		if (!is_env_valid(*arguments))
+		if (!is_env_valid(*arguments, true))
 			return (export_error(*arguments, ERR_BUILTIN_FAILED));
 		dict = env_to_dict(*arguments);
 		if (!dict)

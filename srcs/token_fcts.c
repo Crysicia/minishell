@@ -19,12 +19,12 @@ char	*cut_token_string(char *line)
 
 	if (is_escape_character(*line))
 		trimmed_str = get_escaped_string(line);
-	else if (is_token_character(*line))
+	else if (is_operator(*line))
 		trimmed_str = ft_strndup(line, 1);
 	else
 	{
 		i = 0;
-		while (line[i] && !is_token_character(line[i])
+		while (line[i] && !is_operator(line[i])
 			   && !is_space(line[i]))
 		{
 			if (line[i] == '\\')
@@ -54,9 +54,10 @@ bool	is_escape_character(char chr)
 		return (0);
 }
 
-bool	is_token_character(char chr)
+bool	is_operator(char *str)
 {
-	if ((chr == ';') || (chr == '|') || (chr == '<') || (chr == '>'))
+	if ((*str == ';') || (*str == '|') || (*str == '<') || (*str == '>')
+		|| ft_strncmp(str, ">>", 2))
 		return (1);
 	else
 		return (0);

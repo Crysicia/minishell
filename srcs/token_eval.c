@@ -15,7 +15,8 @@
 
 bool	is_valid_token(t_token tok)
 {
-	if (tok.cmd && ((!strcmp(";", tok.cmd) && (tok.role == tok_end_of_cmd))
+	if (tok.cmd && 
+			((!strcmp(";", tok.cmd) && (tok.role == tok_end_of_cmd))
 			|| ((tok.role == tok_pipe) && !strcmp("|", tok.cmd))
 			|| ((tok.role == tok_redir_l) && !strcmp("<", tok.cmd))
 			|| ((tok.role == tok_redir_r) && !strcmp(">", tok.cmd))

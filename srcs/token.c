@@ -17,15 +17,12 @@
 typedef enum e_tok_type
 {
 	tok_end_of_cmd = 0,
-
+	tok_pipe = 1,
+	tok_redir_l = 2,
+	tok_append_r = 3,
+	tok_redir_r = 4,
+	tok_word = 5
 }				t_tok_type;
-
-typedef enum e_tok_type0
-{
-	word = 0,
-	operator = 1;
-}				t_tok_type0;
-
 
 typedef struct s_token
 {
