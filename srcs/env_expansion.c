@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/29 15:29:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/29 15:34:19 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ void	handle_quoting(char *str)
 	size_t	str_index;
 	size_t	buffer_index;
 	char	buffer[4096];
-	char	quote;
 
-	quote = 0;
 	str_index = 0;
 	buffer_index= 0;
 	ft_bzero(buffer, 4096);
@@ -88,19 +86,13 @@ void	handle_quoting(char *str)
 			while (is_space(str[str_index]))
 				str_index++;
 		}
-		else if (str[str_index] == '"' && quote != '\'')
+		else if (str[str_index] == '"')
+			;
+		else if (str[str_index] == '\'')
 		{
-			if (quote == '"')
-				quote = 0;
-			else
-				quote = '"';
-		}
-		else if (str[str_index] == '\'' && quote != '"')
-		{
-			if (quote == '\'')
-				quote = 0;
-			else
-				quote = '\'';
+			str = go_to_unescaped_char(&srt[str_index], '\'');
+			if (str == NULL)
+				;// SYNTAX ERROR
 		}
 
 		else if (str[str_index] == '\\')
