@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/29 15:34:19 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/29 15:50:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ void	expansion_flagger(char *str)
   remove antislash
  */
 
+void	expand_env_variable(char *str, char *buffer)
+{
+	char	tmp;
+	char	*env_var;
+	size_t	index;
+
+	index = 0;
+	while (str[i] && ft_isalnum(str[i]))
+		i++;
+	tmp = str[i];
+	str[i] = 0;
+	env_var = ft_getenv(str);
+	if (env_var)
+		ft_strlcpy(buffer, env_var, ft_strlen(env_var));
+}
+
 int		copy_single_quoted_text(char *str, char *buffer,
 								int *str_index, int *buffer_index)
 {
@@ -46,7 +62,7 @@ int		copy_single_quoted_text(char *str, char *buffer,
 	if ((str - start) == ft_strlen(start))
 		return (-1);
 	else
-		return (ft_strlcpy(start, buffer, str - start));
+		return (ft_strlcpy(buffer, start, str - start));
 }
 
 char *go_to_unescaped_char(char *str, char target)
@@ -107,7 +123,7 @@ void	handle_quoting(char *str)
 
 		else if (str[str_index] == '$')
 		{
-			;
+			str_index++;
 		}
 	}
 	//
