@@ -14,17 +14,11 @@
 # define TOKEN_H
 # include "header.h"
 
-typedef enum e_tok_type
-{
-	tok_end_of_cmd = 0,
-
-}				t_tok_type;
-
 typedef enum e_tok_type0
 {
-	word = 0,
-	operator = 1;
-}				t_tok_type0;
+	word,
+	operator 
+}				t_tok_type;
 
 
 typedef struct s_token
