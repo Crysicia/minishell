@@ -82,3 +82,30 @@ Test(builtin_unset_suite, builtin_unset_multiple_args_test) {
 	}
 	destroy_globals();
 }
+
+Test(builtin_unset_suite, builtin_unset_multiple_args_test) {
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *arguments[] = { "NOTEMPTY", "EXIS//TING", "UNKNOWN" };
+	t_dict *dict; 
+	int ret;
+	char **array = malloc(4 * sizeof(char *));
+
+	for (int i = 0; i < 3; i++) {
+		array[i] = arguments[i];
+	}
+	array[3] = NULL;
+
+	init_globals(envp);
+	
+	ret = builtin_unset(array);
+	dict = ft_getenv(arguments[i]);
+	cr_expect_null(dict,
+		"Expected builtin_unset to unset [%s]",
+		arguments[i]
+	);
+	cr_expect_eq(ret, SUCCESS,
+		"Expected builtin_unset to return [%d], instead got [%d], for [%s]",
+		ret, SUCCESS, arguments[i]
+	);
+	destroy_globals();
+}

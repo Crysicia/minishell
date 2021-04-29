@@ -113,3 +113,37 @@ Test(builtin_export_suite, builtin_export_multiple_args_test) {
 	}
 	destroy_globals();
 }
+
+Test(builtin_export_suite, builtin_export_multiple_args_fail_test) {
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *arguments[] = { "NOTEMPTY", "INVA//LID=", "PATH=test", "OOPS===loool" };
+	char *arguments_keys[] = { "NOTEMPTY", "PATH", "OOPS" };
+	char *arguments_values[] = { "bonjour", "test", "==loool" };
+	t_dict *dict; 
+	int ret;
+	char **array = malloc(5 * sizeof(char *));
+
+	for (int i = 0; i < 4; i++) {
+		array[i] = arguments[i];
+	}
+	array[4] = NULL;
+
+	init_globals(envp);
+	
+	ret = builtin_export(array);
+	for (int i = 0; i < 3; i++) {
+		dict = ft_getenv(arguments_keys[i]);
+		cr_expect_not_null(dict,
+			"Expected builtin_export to set [%s]",
+			arguments_keys[i]);
+		cr_expect_str_eq(dict->value, arguments_values[i],
+			"Expected builtin_export to set [%s] value to [%s], instead got [%s]",
+			arguments_keys[i],
+			arguments_values[i],
+			dict->value);
+	}
+	cr_expect_eq(ret, 1,
+		"Expected builtin_export to return [%d], instead got",
+		1, ret);
+	destroy_globals();
+}

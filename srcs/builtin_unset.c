@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 13:25:00 by crysicia          #+#    #+#             */
-/*   Updated: 2021/04/28 14:05:15 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/04/29 16:22:59 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ int	unset_error(char *argument, int code)
 
 int	builtin_unset(char **arguments)
 {
+	int ret;
+
+	ret = SUCCESS;
 	while (*arguments)
 	{
-		if (!is_env_valid(*arguments, false))
-			return (unset_error(*arguments, ERR_BUILTIN_FAILED));
-		ft_unsetenv(*arguments);
+		if (is_env_valid(*arguments, false))
+			ft_unsetenv(*arguments);
+		else
+			ret = unset_error(*arguments, ERR_BUILTIN_FAILED);
 		arguments++;
 	}
-	return (SUCCESS);
+	return (ret);
 }
