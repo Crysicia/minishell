@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 13:25:00 by crysicia          #+#    #+#             */
-/*   Updated: 2021/04/29 16:22:59 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/29 16:52:05 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	unset_error(char *argument, int code)
 
 int	builtin_unset(char **arguments)
 {
-	int ret;
+	int	ret;
 
 	ret = SUCCESS;
 	while (*arguments)
