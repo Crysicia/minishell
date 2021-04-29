@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/21 15:06:10 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/29 11:31:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,8 @@ char	*get_escaped_string(char *str)
 			index++;
 	}
 	result = ft_strndup(str, index);
+	
+
+	
 	return (result);
 }
