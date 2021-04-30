@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/28 13:47:25 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/04/29 16:21:18 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,21 @@ int	builtin_export(char **arguments)
 	ret = SUCCESS;
 	if (!arguments || !*arguments)
 		return (display_export());
-	while (*arguments && ret == SUCCESS)
+	while (*arguments && (ret == SUCCESS || ret == ERR_BUILTIN_FAILED))
 	{
-		if (!is_env_valid(*arguments, true))
-			return (export_error(*arguments, ERR_BUILTIN_FAILED));
-		dict = env_to_dict(*arguments);
-		if (!dict)
-			return (ERR_MALLOC_FAILED);
-		env = ft_getenv(dict->key);
-		if (!(env && (env->value && !dict->value))
-			&& ft_setenv(dict->key, dict->value))
-			ret = ERR_COULD_NOT_SET_ENV;
-		free_dict(dict);
+		if (is_env_valid(*arguments, true))
+		{
+			dict = env_to_dict(*arguments);
+			if (!dict)
+				return (ERR_MALLOC_FAILED);
+			env = ft_getenv(dict->key);
+			if (!(env && (env->value && !dict->value))
+				&& ft_setenv(dict->key, dict->value))
+				ret = ERR_COULD_NOT_SET_ENV;
+			free_dict(dict);
+		}
+		else
+			ret = export_error(*arguments, ERR_BUILTIN_FAILED);
 		arguments++;
 	}
 	return (ret);

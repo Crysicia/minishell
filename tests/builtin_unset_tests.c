@@ -77,8 +77,32 @@ Test(builtin_unset_suite, builtin_unset_multiple_args_test) {
 		);
 		cr_expect_eq(ret, SUCCESS,
 			"Expected builtin_unset to return [%d], instead got [%d], for [%s]",
-			ret, SUCCESS, arguments[i]
+			SUCCESS, ret, arguments[i]
 		);
 	}
+	destroy_globals();
+}
+
+Test(builtin_unset_suite, builtin_unset_multiple_args_failt_test) {
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *arguments[] = { "NOTEMPTY", "EXIS//TING", "UNKNOWN" };
+	int ret;
+	char **array = malloc(4 * sizeof(char *));
+
+	for (int i = 0; i < 3; i++) {
+		array[i] = arguments[i];
+	}
+	array[3] = NULL;
+
+	init_globals(envp);
+	
+	ret = builtin_unset(array);
+	cr_expect_null(ft_getenv("NOTEMPTY"), "Expected builtin_unset to unset [%s]", "NOTEMPTY");
+	cr_expect(ft_getenv("EXISTING"), "Expected builtin_unset to NOT unset [%s]", "EXISTING");
+	cr_expect_null(ft_getenv("UNKNOWN"), "Expected builtin_unset to unset [%s]", "UNKNOWN");
+	cr_expect_eq(ret, 1,
+		"Expected builtin_unset to return [%d], instead got [%d]",
+		1, ret
+	);
 	destroy_globals();
 }
