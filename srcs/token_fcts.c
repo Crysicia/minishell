@@ -14,17 +14,20 @@
 
 #include "../includes/token.h"
 
-int		get_word_size(char *line)
+/*
+**	protect the case \\0
+*/
+
+int	get_word_size(char *line)
 {
 	int	i;
 
 	i = 0;
 	while (line[i] && !is_operator(line + i)
-	   && !is_space(line[i]))
+		&& !is_space(line[i]))
 	{
 		if (line[i] == '\\')
 			i++;
-		//protect \\0 case
 		i++;
 	}
 	return (i);
@@ -47,31 +50,6 @@ char	*cut_token_string(char *line)
 	return (trimmed_str);
 }
 
-bool	is_space(int c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	else
-		return (0);
-}
-
-bool	is_escape_character(char chr)
-{
-	if (chr == '"' || chr == '\'' || chr == '\\')
-		return (1);
-	else
-		return (0);
-}
-
-bool	is_operator(char *str)
-{
-	if ((*str == ';') || (*str == '|') || (*str == '<') || (*str == '>')
-		|| !ft_strncmp(str, ">>", 2))
-		return (1);
-	else
-		return (0);
-}
-
 char	*get_escaped_string(char *str)
 {
 	char	*result;
@@ -89,6 +67,8 @@ char	*get_escaped_string(char *str)
 			index++;
 		}
 		if (str[index] && str[index] == quote)
+			index++;
+		while (ft_isalnum(str[index]))
 			index++;
 	}
 	result = ft_strndup(str, index);
