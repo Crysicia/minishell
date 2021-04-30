@@ -16,7 +16,7 @@
     Tokenizer receives an array cleaned of spaces or tabs.
     Array cannot be null, as it has been checked before (?)
 */
-
+/*
 static struct test_token
 {
     char input[200];
@@ -24,4 +24,12 @@ static struct test_token
     t_tok_type type;
 }   token;
 
-Test
+ParameterizedTestParameters(tokenizer_behaviour, simple_quote_test)
+{
+    static token user_case[] = {
+    {input = ""},
+    };
+        return (cr_make_param_array(t_tok_input_test, tests,
+								sizeof(tests)/sizeof(t_tok_input_test)));
+}
+*/

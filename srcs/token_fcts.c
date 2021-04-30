@@ -24,6 +24,7 @@ int		get_word_size(char *line)
 	{
 		if (line[i] == '\\')
 			i++;
+		//protect \\0 case
 		i++;
 	}
 	return (i);
