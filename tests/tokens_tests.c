@@ -60,15 +60,6 @@ ParameterizedTest(tokens *params, token_attribution_suite, token_attribution_tes
 	cr_expect_str_eq(minishell->cmd, params->expected,
 	"Test_get_next_token = \nFor input : [%s] expected [%s] instead function returned [%s] instead",
 			  params->input, params->expected, minishell->cmd);
-	//cr_assert_eq(minishell->role, params->answer.role);
+	cr_assert_eq(minishell->role, params->result_tok);
 
 }
-/*
-Test(token_cutting_suite, token_cutting_backslash_test)
-{
-	char *input[] = { "\\ ", "   \\   ", "\\   ", "   \\ "};
-	for (int i = 0; ((input + i) && *(input + i)); i++)
-		cr_expect(strcmp(cut_token_string(input[i]), " ") == 0,
-			"Please work your code to fit this condition on backslash");
-}
-*/

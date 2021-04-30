@@ -9,6 +9,10 @@ typedef struct	s_input_test {
 	char result[20];
 }				t_tok_input_test;
 
+/*
+	Testing all the nasty quotes case.
+*/
+
 ParameterizedTestParameters(tokenizer_suite, token_test)
 {
 	static t_tok_input_test tests[] = {
@@ -20,7 +24,7 @@ ParameterizedTestParameters(tokenizer_suite, token_test)
 		/* Single quotes normal use */
 		{ .input = "\'cat file1 file2\'", .result = "\'cat file1 file2\'" },
 		{ .input = "| bonjour", .result = "|" },
-//		{ .input = "\\ hello", .result = " hello" },
+		{ .input = "\\ hello", .result = "\\ hello" },
 	};
 
 	return (cr_make_param_array(t_tok_input_test, tests,

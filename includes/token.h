@@ -37,6 +37,7 @@ bool		is_valid_token(t_token tok);
 bool		is_operator(char *str);
 bool		is_escape_character(char chr);
 char		*get_escaped_string(char *str);
+int			get_word_size(char *line);
 char		*cut_token_string(char *line);
 
 #endif
