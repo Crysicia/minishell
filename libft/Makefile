@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+         #
+#    By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/15 11:22:32 by lpassera          #+#    #+#              #
-#    Updated: 2021/04/28 18:27:13 by crysicia         ###   ########.fr        #
+#    Updated: 2021/04/30 10:12:06 by lpassera         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,8 @@ BONUS_SRCS	= ft_lstnew.c \
 			  ft_dlstsize.c \
 			  ft_dlstlast.c \
 			  ft_dlstadd_back.c \
+			  ft_dlstdelone.c \
+			  ft_dlstclear.c \
 
 OBJS 		= $(SRCS:.c=.o)
 BONUS_OBJS 	= $(BONUS_SRCS:.c=.o)
