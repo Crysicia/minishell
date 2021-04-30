@@ -20,7 +20,7 @@ void	quotes_removal(t_token *tok)
 
 	str = tok->cmd;
 	len = ft_strlen(str);
-	bzero(buffer, 4096);
+	ft_bzero(buffer, 4096);
 	if (len > 4096)
 	{
 		ft_putstr_fd("error command is over 4096 character\n", 1);
