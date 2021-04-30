@@ -44,6 +44,7 @@ TEST_RAW_SRCS	= test_helpers.c \
 				  exec_tests.c \
 				  inputs_correct.c \
 				  path_utils_tests.c \
+				  quotes_tests.c \
 				  token_eval_tests.c \
 				  tokenizer_ftests.c \
 				  tokenizer_tests.c \

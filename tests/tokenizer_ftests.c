@@ -63,7 +63,6 @@ Test(tokenizer_loop_suite, testing_normal_command)
     char        *expected_token_trimmed[] = { "echo", "bonjour", ";"};
     for (int j = 0; j < nb_of_tokens; j++)
     {
-        cr_log_warn("hool");
         quotes_removal(token[j]);
         cr_assert_str_eq(token[j]->cmd, expected_token_trimmed[j]);
     }
