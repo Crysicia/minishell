@@ -6,7 +6,7 @@
 void	init_empty_token(t_token *new)
 {
 	new->cmd = NULL;
-	new->role = tok_end_of_cmd;
+	new->role = operator;
 }
 
 typedef struct token_examples
@@ -20,35 +20,34 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 {
 	static tokens tests[] =
 	{
-		{ .input = "echo bonjour", .expected = "echo", .result_tok = tok_word},
-		{ .input = "echo", .expected = "echo", .result_tok = tok_word },
-		{ .input = "echo       ", .expected = "echo", .result_tok = tok_word },
-		{ .input = "echo;", .expected = "echo", .result_tok = tok_word },
+		{ .input = "echo bonjour", .expected = "echo", .result_tok = word},
+		{ .input = "echo", .expected = "echo", .result_tok = word },
+		{ .input = "echo       ", .expected = "echo", .result_tok = word },
+		{ .input = "echo;", .expected = "echo", .result_tok = word },
 		
 		//testing ; isolation
-		{ .input = ";", .expected = ";", .result_tok = tok_end_of_cmd },
-		{ .input = ";    ", .expected = ";", .result_tok = tok_end_of_cmd },
+		{ .input = ";", .expected = ";", .result_tok = operator },
+		{ .input = ";    ", .expected = ";", .result_tok = operator },
 		
 		//testing > isolation
-		{ .input = ">", .expected = ">", .result_tok = tok_redir_r},
-		{ .input = ">    ", .expected = ">", .result_tok = tok_redir_r},
-		{ .input = ">file ", .expected = ">", .result_tok = tok_redir_r},
+		{ .input = ">", .expected = ">", .result_tok = operator},
+		{ .input = ">    ", .expected = ">", .result_tok = operator},
+		{ .input = ">file ", .expected = ">", .result_tok = operator},
 
 		//testing < isolation
-		{ .input = "<", .expected = "<", .result_tok = tok_redir_l},
-		{ .input = "<     ", .expected = "<", .result_tok = tok_redir_l},
-		{ .input = "<file", .expected = "<", .result_tok = tok_redir_l},
+		{ .input = "<", .expected = "<", .result_tok = operator},
+		{ .input = "<     ", .expected = "<", .result_tok = operator},
+		{ .input = "<file", .expected = "<", .result_tok = operator},
 		
 				//testing | isolation
-		{ .input = "|", .expected = "|", .result_tok = tok_pipe},
-		{ .input = "|   ", .expected = "|", .result_tok = tok_pipe},
+		{ .input = "|", .expected = "|", .result_tok = operator},
+		{ .input = "|   ", .expected = "|", .result_tok = operator},
 
 		//testing >> isolation
-		/* To be activated
-		{ .input = ">>", .expected = ">>", .result_tok = tok_append_r},
-		{ .input = ">>     ", .expected = ">>", .result_tok = tok_append_r},
-		{ .input = ">>file", .expected = ">>", .result_tok = tok_append_r},
-		*/
+
+		{ .input = ">>", .expected = ">>", .result_tok = operator},
+		{ .input = ">>     ", .expected = ">>", .result_tok = operator},
+		{ .input = ">>file", .expected = ">>", .result_tok = operator},
 	};
 	return (cr_make_param_array(tokens, tests, sizeof(tests)/sizeof(tokens)));
 }
