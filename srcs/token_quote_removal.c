@@ -19,7 +19,7 @@ void	quotes_removal(t_token *tok)
 	char	buffer[4096];
 
 	str = tok->cmd;
-	len = strlen(str);
+	len = ft_strlen(str);
 	bzero(buffer, 4096);
 	if (len > 4096)
 	{
@@ -30,7 +30,7 @@ void	quotes_removal(t_token *tok)
 	if (ft_strlen(&buffer[0]) < ft_strlen(str))
 	{
 		free(tok->cmd);
-		tok->cmd = strdup(&buffer[0]);
+		tok->cmd = ft_strdup(&buffer[0]);
 		if (!tok->cmd)
 			ft_malloc_error();
 	}
