@@ -46,7 +46,7 @@ builtin_cd_tests.c \
 				  builtin_utils_tests.c \
 				  env_utils.c \
 				  dict_utils_tests.c \
-				  env_test.c \
+				  env_utils_tests.c \
 				  exec_builtin_tests.c \
 				  exec_tests.c \
 				  inputs_correct.c \
