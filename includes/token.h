@@ -33,9 +33,12 @@ t_tok_type	attribute_tok_type(char chr);
 t_token		*get_next_token(char *line);
 void		free_token(void *token);
 t_token		*new_token(char *str, t_tok_type type);
+
 bool		is_valid_token(t_token tok);
 bool		is_operator(char *str);
+int			is_quoted(char *str);
 bool		is_escape_character(char chr);
+
 char		*get_escaped_string(char *str);
 int			get_word_size(char *line);
 char		*cut_token_string(char *line);

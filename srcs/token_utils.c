@@ -36,3 +36,41 @@ bool	is_operator(char *str)
 	else
 		return (0);
 }
+
+/*
+* 
+* PRIORITY WHEN COMPARING QUOTES
+*
+*/
+
+int	is_quoted(char *str)
+{
+	size_t	i;
+	bool	quoted;
+	char	quote;
+
+	i = 0;
+	quoted = false;
+	quote = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\')
+		{
+			if (str[i + 1])
+				i++;
+			else
+				return (-1);
+		}
+		else if ((str[i] == '\'') || (str[i] == '"'))
+		{
+			if (!quote)
+			{
+				quote = str[i];
+				quoted = true;
+			}
+			else if (quote == str[i] && quoted )
+		}
+		i++;
+	}
+	return (0);
+}
