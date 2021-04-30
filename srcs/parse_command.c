@@ -81,7 +81,7 @@ char	**command_format(t_list **list)
 		*list = (*list)->next;
 	}
 	if (*list && (((t_token *)(*list)->content)->role == operator)
-			&& ft_strncmp(((t_token *)(*list)->content)->cmd, ",", 2))
+			&& ft_strncmp(((t_token *)(*list)->content)->cmd, ";", 2))
 		*list = (*list)->next;
 	tab[count] = NULL;
 	return (tab);
