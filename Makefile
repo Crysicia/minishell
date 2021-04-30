@@ -44,7 +44,7 @@ builtin_cd_tests.c \
 				  builtin_pwd_tests.c \
 				  builtin_unset_tests.c \
 				  builtin_utils_tests.c \
-				  env_tests.c \
+				  env_test.c \
 				  env_utils_tests.c \
 				  dict_utils_tests.c \
 				  exec_builtin_tests.c \
