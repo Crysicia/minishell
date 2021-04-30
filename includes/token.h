@@ -39,5 +39,6 @@ bool		is_escape_character(char chr);
 char		*get_escaped_string(char *str);
 int			get_word_size(char *line);
 char		*cut_token_string(char *line);
+void		quotes_removal(t_token *tok);
 
 #endif

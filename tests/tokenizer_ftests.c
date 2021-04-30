@@ -42,19 +42,29 @@ Test(tokenizer_loop_suite, testing_normal_command)
     int         nb_of_tokens = 3;
     size_t len  = strlen(buffer);
 
-    t_token     *token;
+
+    // Testing only parsing with no quote removal
+    t_token     *token[3];
     char        *tmp = buffer;
     for (int i = 0; i < nb_of_tokens; i++)
     {
-        token = get_next_token(tmp);
-        cr_expect_str_eq(expected_token_str[i], token->cmd,
+        token[i] = get_next_token(tmp);
+        cr_expect_str_eq(expected_token_str[i], token[i]->cmd,
             "Test get_next_token on given command\n"
             "Input : [%s], Expected : [%s], Got : [%s]\n",
-            buffer, expected_token_str[i], token->cmd);
-        cr_assert_eq(expected_token_type[i], token->role);
-        tmp = strstr(buffer, token->cmd);
-        tmp += strlen(token->cmd);
+            buffer, expected_token_str[i], token[i]->cmd);
+        cr_assert_eq(expected_token_type[i], token[i]->role);
+        tmp = strstr(buffer, token[i]->cmd);
+        tmp += strlen(token[i]->cmd);
         if (tmp >= buffer + len)
             break;
+    }
+    // Testing with quote removal juste before execve action
+    char        *expected_token_trimmed[] = { "echo", "bonjour", ";"};
+    for (int j = 0; j < nb_of_tokens; j++)
+    {
+        cr_log_warn("hool");
+        quotes_removal(token[j]);
+        cr_assert_str_eq(token[j]->cmd, expected_token_trimmed[j]);
     }
 }

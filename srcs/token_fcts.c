@@ -16,6 +16,8 @@
 
 /*
 **	protect the case \\0
+** Throw and error and stop execution, the quote removal fct will segv
+** for that case!
 */
 
 int	get_word_size(char *line)

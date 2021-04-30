@@ -40,6 +40,7 @@ int	ft_putstr(char *str)
 	return (0);
 }
 
+/*
 int	main(void)
 {
 	int		ret;
@@ -61,3 +62,4 @@ int	main(void)
 	tputs(enter_bold_mode, 1, ft_putchar);
 	tputs(erase_chars, 1, ft_putchar);
 }
+*/

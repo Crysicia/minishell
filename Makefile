@@ -28,6 +28,7 @@ RAW_SRCS		= builtin_cd.c \
 				  path_utils.c \
 				  token_eval.c \
 				  token_fcts.c \
+				  token_quote_removal.c \
 				  token_utils.c \
 				  tokenizer.c \
 
