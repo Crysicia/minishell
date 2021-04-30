@@ -28,6 +28,8 @@ RAW_SRCS		= builtin_cd.c \
 				  path_utils.c \
 				  token_eval.c \
 				  token_fcts.c \
+				  token_quote_removal.c \
+				  token_utils.c \
 				  tokenizer.c \
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
@@ -35,20 +37,24 @@ OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 
 TEST			= minishell_test
-TEST_RAW_SRCS	= test_helpers.c \
+FAILING_PIERRE	= failing_on_wsl2_tests.c \
 				  builtin_cd_tests.c \
+
+TEST_RAW_SRCS	= test_helpers.c \
 				  builtin_export_tests.c \
-				  builtin_pwd_tests.c \
 				  builtin_unset_tests.c \
+				  builtin_pwd_tests.c \
 				  builtin_utils_tests.c \
-				  dict_utils_tests.c \
 				  env_test.c \
 				  env_utils_tests.c \
+				  dict_utils_tests.c \
 				  exec_builtin_tests.c \
 				  exec_tests.c \
 				  inputs_correct.c \
 				  path_utils_tests.c \
+				  quotes_tests.c \
 				  token_eval_tests.c \
+				  tokenizer_ftests.c \
 				  tokenizer_tests.c \
 				  tokens_tests.c \
 				  utils_tests.c \

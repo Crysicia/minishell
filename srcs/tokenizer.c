@@ -33,27 +33,16 @@ void	free_token(void *token)
 	token = NULL;
 }
 
-t_tok_type	attribute_tok_type(char chr)
-{
-	if (chr == ';')
-		return (tok_end_of_cmd);
-	else if (chr == '|')
-		return (tok_pipe);
-	else if (chr == '>')
-		return (tok_redir_r);
-	else if (chr == '<')
-		return (tok_redir_l);
-	else
-		return (tok_word);
-}
-
 t_token	*get_next_token(char *line)
 {
 	t_tok_type	role;
 	char		*cmd;
 
 	skip_spaces(&line);
-	role = attribute_tok_type(*line);
+	if (is_operator(line))
+		role = operator;
+	else
+		role = word;
 	cmd = cut_token_string(line);
 	if (cmd)
 		return (new_token(cmd, role));

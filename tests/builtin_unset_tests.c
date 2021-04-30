@@ -53,32 +53,26 @@ ParameterizedTest(t_builtin_unset_params *builtin_unset_params, builtin_unset_su
 	destroy_globals();
 }
 
-#define NUM_OF_TESTS 3
-Test(builtin_unset_suite, builtin_unset_multiple_args_test) {
+Test(builtin_unset_suite, builtin_unset_multiple_args_failt_test) {
 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
-	char *arguments[] = { "NOTEMPTY", "EXISTING", "UNKNOWN" };
-	t_dict *dict; 
+	char *arguments[] = { "NOTEMPTY", "EXIS//TING", "UNKNOWN" };
 	int ret;
-	char **array = malloc((NUM_OF_TESTS + 1) * sizeof(char *));
+	char **array = malloc(4 * sizeof(char *));
 
-	for (int i = 0; i < NUM_OF_TESTS; i++) {
+	for (int i = 0; i < 3; i++) {
 		array[i] = arguments[i];
 	}
-	array[NUM_OF_TESTS] = NULL;
+	array[3] = NULL;
 
 	init_globals(envp);
 	
 	ret = builtin_unset(array);
-	for (int i = 0; i < NUM_OF_TESTS; i++) {
-		dict = ft_getenv(arguments[i]);
-		cr_expect_null(dict,
-			"Expected builtin_unset to unset [%s]",
-			arguments[i]
-		);
-		cr_expect_eq(ret, SUCCESS,
-			"Expected builtin_unset to return [%d], instead got [%d], for [%s]",
-			ret, SUCCESS, arguments[i]
-		);
-	}
+	cr_expect_null(ft_getenv("NOTEMPTY"), "Expected builtin_unset to unset [%s]", "NOTEMPTY");
+	cr_expect(ft_getenv("EXISTING"), "Expected builtin_unset to NOT unset [%s]", "EXISTING");
+	cr_expect_null(ft_getenv("UNKNOWN"), "Expected builtin_unset to unset [%s]", "UNKNOWN");
+	cr_expect_eq(ret, 1,
+		"Expected builtin_unset to return [%d], instead got [%d]",
+		1, ret
+	);
 	destroy_globals();
 }

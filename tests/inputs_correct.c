@@ -20,16 +20,16 @@ typedef struct	s_testing_cmd_parse{
 ParameterizedTestParameters(parser_suite, command_parse_test) {
 	static t_testing_cmd_parse tests[] = {
 	//Normal usage testing
-		{ .expected = "echo", .role = tok_word, .input = "echo bonjour;"},
-		{ .expected = ";", .role = tok_end_of_cmd, .input = ";ls" },
-		{ .expected = "|", .role = tok_pipe, .input = "|pwd" },
-		{ .expected = "<", .role = tok_redir_l, .input = "<file"},
-		{ .expected = ">", .role = tok_redir_r, .input = ">file" },
+		{ .expected = "echo", .role = word, .input = "echo bonjour;"},
+		{ .expected = ";", .role = operator, .input = ";ls" },
+		{ .expected = "|", .role = operator, .input = "|pwd" },
+		{ .expected = "<", .role = operator, .input = "<file"},
+		{ .expected = ">", .role = operator, .input = ">file" },
 		// { .expected = ">>", .role = tok_append_r, .input = ">>file" },
 	//Testing with random spaces added
-		{ .expected = ";", .role = tok_end_of_cmd, .input = "; ls" },
-		{ .expected = "<", .role = tok_redir_l, .input = "< file"},
-		{ .expected = ">", .role = tok_redir_r, .input = ">file" },
+		{ .expected = ";", .role = operator, .input = "; ls" },
+		{ .expected = "<", .role = operator, .input = "< file"},
+		{ .expected = ">", .role = operator, .input = ">file" },
 		// { .expected = ">>", .role = tok_append_r, .input = "    >>file" },
 	//Testing with double quotes added
 		// { .expected = "\">>\"", .role = tok_command, .input = "\">>\"" },

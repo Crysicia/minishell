@@ -55,30 +55,6 @@ ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export
 	destroy_globals();
 }
 
-#define NUM_OF_TESTS 6
-Test(builtin_export_suite, builtin_export_no_args_test) {
-	char *envp[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall" };
-	char *output[] = { "export ANOTHER=\"brickinthewall\"", "export BONJOUR=\"test\"", "export LOL=\"\"", "export NOPE", "export TEST=\"test\"", "export USER=\"pcharton\"" };
-	init_globals(envp);
-
-	char *line = NULL;
-	FILE *fp = NULL;
-	int fd = 0;
-
-	fp = freopen("export.test", "w", stdout);
-	cr_expect(builtin_export(NULL) == 0, "Expect builtin_export to return 0 without any argument");
-	fclose(fp);
-	fd = open("export.test", O_RDONLY);
-	for (int i = 0; i < NUM_OF_TESTS; i++)
-	{
-		get_next_line(fd, &line);
- 	    cr_expect_str_eq(output[i], line,  "Expect printed strings to be the same, expected [%s], got [%s]", output[i], line);
-	    cr_free(line);
-	}
-	close(fd);
-	destroy_globals();
-}
-
 #define NUM_OF_TESTS_2 4
 Test(builtin_export_suite, builtin_export_multiple_args_test) {
 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
@@ -111,5 +87,39 @@ Test(builtin_export_suite, builtin_export_multiple_args_test) {
 			"Expected builtin_export to return [%d], instead got [%d] (Arg: %s, Expected key: %s, Expected value: %s)",
 			0, ret, arguments[i], arguments_keys[i], arguments_values[i]);
 	}
+	destroy_globals();
+}
+
+Test(builtin_export_suite, builtin_export_multiple_args_fail_test) {
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *arguments[] = { "NOTEMPTY", "INVA//LID=", "PATH=test", "OOPS===loool" };
+	char *arguments_keys[] = { "NOTEMPTY", "PATH", "OOPS" };
+	char *arguments_values[] = { "bonjour", "test", "==loool" };
+	t_dict *dict; 
+	int ret;
+	char **array = malloc(5 * sizeof(char *));
+
+	for (int i = 0; i < 4; i++) {
+		array[i] = arguments[i];
+	}
+	array[4] = NULL;
+
+	init_globals(envp);
+	
+	ret = builtin_export(array);
+	for (int i = 0; i < 3; i++) {
+		dict = ft_getenv(arguments_keys[i]);
+		cr_expect_not_null(dict,
+			"Expected builtin_export to set [%s]",
+			arguments_keys[i]);
+		cr_expect_str_eq(dict->value, arguments_values[i],
+			"Expected builtin_export to set [%s] value to [%s], instead got [%s]",
+			arguments_keys[i],
+			arguments_values[i],
+			dict->value);
+	}
+	cr_expect_eq(ret, 1,
+		"Expected builtin_export to return [%d], instead got",
+		1, ret);
 	destroy_globals();
 }

@@ -12,54 +12,42 @@
 
 #include "../includes/token.h"
 
+/*
+**	protect the case \\0
+** Throw and error and stop execution, the quote removal fct will segv
+** for that case!
+*/
+
+int	get_word_size(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && !is_operator(line + i)
+		&& !is_space(line[i]))
+	{
+		if (line[i] == '\\')
+			i++;
+		i++;
+	}
+	return (i);
+}
+
 char	*cut_token_string(char *line)
 {
 	char	*trimmed_str;
-	size_t	i;
 
 	if (is_escape_character(*line))
 		trimmed_str = get_escaped_string(line);
-	else if (is_token_character(*line))
+	else if (is_operator(line) && (!ft_strncmp(">>", line, 2)))
+		trimmed_str = ft_strndup(line, 2);
+	else if (is_operator(line) && ft_strchr(";|<>", *line))
 		trimmed_str = ft_strndup(line, 1);
 	else
-	{
-		i = 0;
-		while (line[i] && !is_token_character(line[i])
-			   && !is_space(line[i]))
-		{
-			if (line[i] == '\\')
-				i++;
-			i++;
-		}
-		trimmed_str = ft_strndup(line, i);
-	}
+		trimmed_str = ft_strndup(line, get_word_size(line));
 	if (!trimmed_str)
 		ft_malloc_error();
 	return (trimmed_str);
-}
-
-bool	is_space(int c)
-{
-	if (c == ' ' || c == '\t')
-		return (1);
-	else
-		return (0);
-}
-
-bool	is_escape_character(char chr)
-{
-	if (chr == '"' || chr == '\'' || chr == '\\')
-		return (1);
-	else
-		return (0);
-}
-
-bool	is_token_character(char chr)
-{
-	if ((chr == ';') || (chr == '|') || (chr == '<') || (chr == '>'))
-		return (1);
-	else
-		return (0);
 }
 
 char	*get_escaped_string(char *str)
@@ -79,6 +67,8 @@ char	*get_escaped_string(char *str)
 			index++;
 		}
 		if (str[index] && str[index] == quote)
+			index++;
+		while (ft_isalnum(str[index]))
 			index++;
 	}
 	result = ft_strndup(str, index);

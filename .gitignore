@@ -9,3 +9,5 @@ Minishell
 .vscode/
 testing
 a.out
+srcs/main.c
+minishell_test
