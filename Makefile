@@ -38,7 +38,6 @@ NO_MAIN			= $(filter-out main.o,$(OBJS))
 
 TEST			= minishell_test
 TEST_RAW_SRCS	= test_helpers.c \
-builtin_cd_tests.c \
 				  builtin_cd_tests.c \
 				  builtin_export_tests.c \
 				  builtin_pwd_tests.c \
