@@ -51,7 +51,7 @@ ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, command_parse_test)
 }
 
 /************************************************************************************/
-
+/*
 typedef struct quotes_examples
 {
 	char	input[200];
@@ -76,3 +76,4 @@ ParameterizedTest(unit *test, validating_quotes_suite, valid_tests)
 	cr_assert_eq(res, test->result);
 }
 
+*/
