@@ -41,7 +41,6 @@ ParameterizedTest(unit *params, quotes_removal_suite, testing_valid_input)
 	ft_bzero(buffer, 4096);
 	remove_simple_and_double_quotes(buffer, params->input);
 
-	cr_log_warn("hello, %s\n", buffer);
 	cr_expect_str_eq(buffer, params->expected, , "hello\n");
 }
 
@@ -70,9 +69,9 @@ ParameterizedTest(unit *params, antislash_removal_suite, testing_valid_input)
 
 	ft_bzero(buffer_0, 4096);
 	ft_bzero(buffer_1, 4096);
-	remove_simple_and_double_quotes(buffer, params->input);
-	remove_backslash(buffer, params->input);
-	cr_expect_str_eq(buffer, params->expected);
+	remove_simple_and_double_quotes(buffer_0, params->input);
+	remove_backslash(buffer_1, buffer_0);
+	cr_expect_str_eq(buffer_1, params->expected);
 }
 /*
 
