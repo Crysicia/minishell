@@ -12,13 +12,12 @@
 
 #include "../includes/header.h"
 
-
-
+/*
 void	expansion_flagger(char *str)
 {
 	if ()
 }
-
+*/
 
 /*
   strcpy() before after $var
@@ -28,7 +27,6 @@ void	expansion_flagger(char *str)
 
   remove quotes
   remove antislash
- */
 
 void	expand_env_variable(char *str, char *buffer)
 {
@@ -46,8 +44,10 @@ void	expand_env_variable(char *str, char *buffer)
 		ft_strlcpy(buffer, env_var, ft_strlen(env_var));
 }
 
-int		copy_single_quoted_text(char *str, char *buffer,
-								int *str_index, int *buffer_index)
+ */
+
+int	copy_single_quoted_text(char *str, char *buffer,
+							int *str_index, int *buffer_index)
 {
 	char	start;
 
@@ -64,7 +64,7 @@ int		copy_single_quoted_text(char *str, char *buffer,
 	else
 		return (ft_strlcpy(buffer, start, str - start));
 }
-
+/*
 char *go_to_unescaped_char(char *str, char target)
 {
 	size_t index;
@@ -84,6 +84,7 @@ char *go_to_unescaped_char(char *str, char target)
 	}
 	return (NULL);
 }
+
 
 void	handle_quoting(char *str)
 {
@@ -130,3 +131,4 @@ void	handle_quoting(char *str)
 	// check tous les caracteres
 
 }
+*/

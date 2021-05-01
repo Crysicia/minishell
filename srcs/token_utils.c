@@ -43,6 +43,7 @@ bool	is_operator(char *str)
 *
 */
 
+/*
 int	is_quoted(char *str)
 {
 	size_t	i;
@@ -68,9 +69,19 @@ int	is_quoted(char *str)
 				quote = str[i];
 				quoted = true;
 			}
-			else if (quote == str[i] && quoted )
+			else if (quote == str[i] && quoted)
+			{
+				if (!str[i] || is_space(str[i]))
+					break ;
+				else
+				{
+					quote = 0;
+					quoted = false;
+				}
+			}
 		}
 		i++;
 	}
 	return (0);
 }
+*/

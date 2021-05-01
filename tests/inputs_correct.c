@@ -49,3 +49,30 @@ ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, command_parse_test)
 			 "expected [%d] and got [%d] instead, input: %s",
 			  tests->role, result->role, tests->input);
 }
+
+/************************************************************************************/
+
+typedef struct quotes_examples
+{
+	char	input[200];
+	int		result;
+}			unit;
+
+ParameterizedTestParameters(validating_quotes_suite, valid_tests)
+{
+	static unit test[] = {
+	{.input = "'bonjo\"ur'", .result = 1},
+	{.input = "bonjour", .result = 0},
+	{.input = "bon'jo'ur", .result = 1},
+	{.input = "\"'salut'\"", .result = 1},
+	{.input = "\"bon'jour\"", .result = 1},
+	};
+	return(cr_make_param_array(unit, test, sizeof(test)/sizeof(unit)));
+}
+
+ParameterizedTest(unit *test, validating_quotes_suite, valid_tests)
+{
+	int res = is_quoted(test->input);
+	cr_assert_eq(res, test->result);
+}
+

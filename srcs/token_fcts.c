@@ -72,8 +72,5 @@ char	*get_escaped_string(char *str)
 			index++;
 	}
 	result = ft_strndup(str, index);
-	
-
-	
 	return (result);
 }

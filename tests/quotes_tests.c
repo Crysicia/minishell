@@ -9,6 +9,14 @@
 **	It does not check if quotes comes by pair.
 **  We are also testing \
 */
+
+void	remove_backslash(char *buffer, char *to_trim)
+{
+	buffer = NULL;
+	to_trim = buffer;
+	(void)to_trim;
+}
+
 typedef struct quotes_tests
 {
 	char	input[50];
