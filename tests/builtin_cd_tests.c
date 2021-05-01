@@ -61,7 +61,7 @@ ParameterizedTestParameters(cd_builtin, valid_path_tests)
 
 ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests, .init=init_filesystem, .fini=destroy_filesystem)
 {
-	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=","PWD=/parent"};
+	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=","PWD=/parent", NULL };
 	init_globals(test_var);
 	t_dict *oldpwd = ft_getenv("OLDPWD");
 	t_dict *pwd = ft_getenv("PWD");
@@ -88,7 +88,7 @@ ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests, .init=init
 
 Test(cd_builtin, valid_path_mult_args_tests, .init=init_filesystem, .fini=destroy_filesystem)
 {
-	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=","PWD=/parent"};
+	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=","PWD=/parent", NULL };
 	init_globals(test_var);
 	t_dict *oldpwd = ft_getenv("OLDPWD");
 	t_dict *pwd = ft_getenv("PWD");
@@ -113,7 +113,7 @@ Test(cd_builtin, valid_path_mult_args_tests, .init=init_filesystem, .fini=destro
 
 Test(cd_builtin, new_path_null)
 {
-	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=","PWD=/parent"};
+	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=","PWD=/parent", NULL };
 	init_globals(test_var);
 	t_dict *oldpwd = ft_getenv("OLDPWD");
 	t_dict *pwd = ft_getenv("PWD");

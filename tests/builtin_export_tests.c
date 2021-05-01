@@ -31,7 +31,7 @@ ParameterizedTestParameters(builtin_export_suite, builtin_export_args_test) {
 }
 
 ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export_suite, builtin_export_args_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	t_dict *dict;
 	int ret;
 	char **array = malloc(2 * sizeof(char *));
@@ -57,7 +57,7 @@ ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export
 
 #define NUM_OF_TESTS 6
 Test(builtin_export_suite, builtin_export_no_args_test) {
-	char *envp[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall" };
+	char *envp[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall", NULL };
 	char *output[] = { "export ANOTHER=\"brickinthewall\"", "export BONJOUR=\"test\"", "export LOL=\"\"", "export NOPE", "export TEST=\"test\"", "export USER=\"pcharton\"" };
 	init_globals(envp);
 
@@ -81,7 +81,7 @@ Test(builtin_export_suite, builtin_export_no_args_test) {
 
 #define NUM_OF_TESTS_2 4
 Test(builtin_export_suite, builtin_export_multiple_args_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	char *arguments[] = { "NOTEMPTY", "EXISTING=", "PATH=test", "OOPS===loool" };
 	char *arguments_keys[] = { "NOTEMPTY", "EXISTING", "PATH", "OOPS" };
 	char *arguments_values[] = { "bonjour", "", "test", "==loool" };
@@ -115,7 +115,7 @@ Test(builtin_export_suite, builtin_export_multiple_args_test) {
 }
 
 Test(builtin_export_suite, builtin_export_multiple_args_fail_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	char *arguments[] = { "NOTEMPTY", "INVA//LID=", "PATH=test", "OOPS===loool" };
 	char *arguments_keys[] = { "NOTEMPTY", "PATH", "OOPS" };
 	char *arguments_values[] = { "bonjour", "test", "==loool" };
@@ -143,7 +143,7 @@ Test(builtin_export_suite, builtin_export_multiple_args_fail_test) {
 			dict->value);
 	}
 	cr_expect_eq(ret, 1,
-		"Expected builtin_export to return [%d], instead got",
+		"Expected builtin_export to return [%d], instead got [%d]",
 		1, ret);
 	destroy_globals();
 }

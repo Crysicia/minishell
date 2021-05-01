@@ -20,7 +20,7 @@ bool	destroy_globals(void)
 }
 
 bool	init_globals(char *envp[])
-{
+{	
 	g_globals = malloc(sizeof(t_globals));
 	if (!g_globals)
 		return (false);

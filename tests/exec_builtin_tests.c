@@ -80,20 +80,20 @@ Test(exec_builtin_suite, get_builtin_pwd_test) {
 	int	(*ret)(char **) = get_builtin("pwd");
 	int	(*expected)(char **) = builtin_pwd;
 
-	cr_expect_eq(ret, expected, "Expected get_builtin to return [%p], instead got [%p]", ret);
+	cr_expect_eq(ret, expected, "Expected get_builtin to return [%p], instead got [%p]", ret, expected);
 }
 
 Test(exec_builtin_suite, get_builtin_export_test) {
 	int	(*ret)(char **) = get_builtin("export");
 	int	(*expected)(char **) = builtin_export;
 
-	cr_expect_eq(ret, expected, "Expected get_builtin to return [%p], instead got [%p]", ret);
+	cr_expect_eq(ret, expected, "Expected get_builtin to return [%p], instead got [%p]", ret, expected);
 }
 
 Test(exec_builtin_suite, get_builtin_env_test) {
 	int	(*ret)(char **) = get_builtin("env");
 	int	(*expected)(char **) = builtin_env;
 
-	cr_expect_eq(ret, expected, "Expected get_builtin to return [%p], instead got [%p]", ret);
+	cr_expect_eq(ret, expected, "Expected get_builtin to return [%p], instead got [%p]", ret, expected);
 }
 

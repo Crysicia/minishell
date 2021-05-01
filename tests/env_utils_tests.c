@@ -28,7 +28,7 @@ ParameterizedTestParameters(env_utils_suite, ft_getenv_test) {
 }
 
 ParameterizedTest(t_ft_getenv_params *ft_getenv_params, env_utils_suite, ft_getenv_test) {
-	char *envp[] = { "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	
 	t_dict *ret = ft_getenv(ft_getenv_params->argument);
@@ -37,7 +37,7 @@ ParameterizedTest(t_ft_getenv_params *ft_getenv_params, env_utils_suite, ft_gete
 }
 	
 Test(env_utils_suite, ft_getenv_unknown_key_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	
 	t_dict *ret = ft_getenv("UNKNOWN");
@@ -46,7 +46,7 @@ Test(env_utils_suite, ft_getenv_unknown_key_test) {
 }
 	
 Test(env_utils_suite, ft_getenv_null_key_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	
 	t_dict *ret = ft_getenv(NULL);
@@ -63,7 +63,7 @@ Test(env_utils_suite, ft_getenv_null_key_test) {
 */
 
 Test(env_utils_suite, array_to_list_test) {
-	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera", "TOOMUCHEQ=a=b=c=d=e" };
+	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera", "TOOMUCHEQ=a=b=c=d=e", NULL };
 	t_dict expected[] = {
 							{ .key = "PATH", .value = "bonjour" },
 						   	{ .key = "AAAA", .value = "oooo" },
@@ -91,7 +91,7 @@ Test(env_utils_suite, array_to_list_test) {
 }
 
 Test(env_utils_suite, array_to_list_empty_test) {
-	char *argument[] = { "" };
+	char *argument[] = { "", NULL };
 	t_list *list = array_to_list(argument);
 
 	cr_expect_str_empty(((t_dict *)(list->content))->key,
@@ -104,7 +104,7 @@ Test(env_utils_suite, array_to_list_empty_test) {
 }
 
 Test(env_utils_suite, array_to_list_null_value_test) {
-	char *argument[] = { "PATH" };
+	char *argument[] = { "PATH", NULL };
 	t_list *list = array_to_list(argument);
 
 	cr_expect_str_eq(((t_dict *)(list->content))->key, "PATH",
@@ -132,7 +132,7 @@ Test(env_utils_suite, array_to_list_null_test) {
 
 #define NUM_OF_TESTS 4
 Test(env_utils_suite, list_to_array_test) {
-	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera" };
+	char *argument[] = { "PATH=bonjour", "AAAA=oooo", "OK=KO", "USER=lpassera", NULL };
 	t_list *list = array_to_list(argument);
 	t_list *head;
 	char **array;
@@ -147,11 +147,9 @@ Test(env_utils_suite, list_to_array_test) {
 				  "Expected list_to_array returned array to contain [%s], instead got [%s], at index [%d]",
 				  argument[i], array[i], i);
 		list = list->next;
-		free(array[i]);
 	}
 	cr_expect(!array[i] && !argument[i], "Returned array doesn't contain the same number of nodes as the input");
-	free(array[i]);
-	free(array);
+	ft_free_matrix((void **)array, NUM_OF_TESTS);
 	ft_lstclear(&head, free);
 }
 
@@ -173,7 +171,7 @@ Test(env_utils_suite, list_to_array_null_test) {
 */
 
 Test(env_utils_suite, ft_setenv_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_setenv("MINISHELL", "iscool");
 	t_dict *env = ft_getenv("MINISHELL");
@@ -189,7 +187,7 @@ Test(env_utils_suite, ft_setenv_test) {
 }
 
 Test(env_utils_suite, ft_setenv_empty_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_setenv("MINISHELL", NULL);
 	t_dict *env = ft_getenv("MINISHELL");
@@ -205,7 +203,7 @@ Test(env_utils_suite, ft_setenv_empty_test) {
 }
 
 Test(env_utils_suite, ft_setenv_existing_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_setenv("USER", "glados");
 	t_dict *env = ft_getenv("USER");
@@ -221,7 +219,7 @@ Test(env_utils_suite, ft_setenv_existing_test) {
 }
 
 Test(env_utils_suite, ft_setenv_existing_null_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_setenv("USER", NULL);
 	t_dict *env = ft_getenv("USER");
@@ -254,7 +252,7 @@ Test(env_utils_suite, ft_setenv_null_test) {
 */
 
 Test(env_utils_suite, ft_unsetenv_start_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_unsetenv("PATH");
 	t_dict *env = ft_getenv("PATH");
@@ -266,7 +264,7 @@ Test(env_utils_suite, ft_unsetenv_start_test) {
 }
 
 Test(env_utils_suite, ft_unsetenv_middle_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_unsetenv("USER");
 	t_dict *env = ft_getenv("USER");
@@ -278,7 +276,7 @@ Test(env_utils_suite, ft_unsetenv_middle_test) {
 }
 
 Test(env_utils_suite, ft_unsetenv_end_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_unsetenv("EMPTY");
 	t_dict *env = ft_getenv("EMPTY");
@@ -290,7 +288,7 @@ Test(env_utils_suite, ft_unsetenv_end_test) {
 }
 
 Test(env_utils_suite, ft_unsetenv_unknown_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=" };
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 	int ret = ft_unsetenv("UNKNOWN");
 	t_dict *env = ft_getenv("UNKNOWN");
