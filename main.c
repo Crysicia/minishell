@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/26 11:49:59 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/03 11:31:42 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	iterate_over_token_list(t_list *list)
 	t_list	*tmp;
 	int		ret;
 
+	ret = 0;
 	tmp = list;
 	while (tmp && (ret != -1))
 		ret = evaluate_token(&tmp);
