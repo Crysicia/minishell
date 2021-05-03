@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/28 13:47:14 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/03 16:04:27 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/param.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <sys/errno.h>
 # include <limits.h>
 # include <signal.h>
@@ -34,6 +35,10 @@
 # define ERR_MALLOC_FAILED 256
 # define ERR_ENV_NOT_FOUND 257
 # define ERR_COULD_NOT_SET_ENV 258
+
+/* Pipes */
+# define PIPE_READ 0
+# define PIPE_WRITE 1
 
 typedef struct s_globals
 {
@@ -109,4 +114,7 @@ void	print_token_list(t_list *list);
 /* Error managment */
 void	ft_malloc_error(void);
 void	syntax_error(void);
+
+
+int pipes_test(void);
 #endif
