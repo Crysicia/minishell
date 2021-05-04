@@ -29,7 +29,7 @@ ParameterizedTestParameters(builtin_unset_suite, builtin_unset_args_test) {
 }
 
 ParameterizedTest(t_builtin_unset_params *builtin_unset_params, builtin_unset_suite, builtin_unset_args_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	t_dict *dict;
 	int ret;
 	char **array = malloc(2 * sizeof(char *));
@@ -55,7 +55,7 @@ ParameterizedTest(t_builtin_unset_params *builtin_unset_params, builtin_unset_su
 
 #define NUM_OF_TESTS 3
 Test(builtin_unset_suite, builtin_unset_multiple_args_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	char *arguments[] = { "NOTEMPTY", "EXISTING", "UNKNOWN" };
 	t_dict *dict; 
 	int ret;
@@ -84,7 +84,7 @@ Test(builtin_unset_suite, builtin_unset_multiple_args_test) {
 }
 
 Test(builtin_unset_suite, builtin_unset_multiple_args_failt_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	char *arguments[] = { "NOTEMPTY", "EXIS//TING", "UNKNOWN" };
 	int ret;
 	char **array = malloc(4 * sizeof(char *));

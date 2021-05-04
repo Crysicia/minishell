@@ -50,7 +50,7 @@ ParameterizedTestParameters(exec_suite, set_status_code_test) {
 }
 
 ParameterizedTest(t_set_status_code_params *set_status_code_params, exec_suite, set_status_code_test) {
-    char *envp[] = { "SAMPLE=test" };
+    char *envp[] = { "SAMPLE=test", NULL };
     int ret;
 
     init_globals(envp);
