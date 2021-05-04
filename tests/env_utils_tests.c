@@ -116,6 +116,11 @@ Test(env_utils_suite, array_to_list_null_value_test) {
 	ft_lstclear(&list, free);
 }
 
+Test(env_utils_suite, array_to_list_null_test) {
+	t_list *list = array_to_list(NULL);
+
+	cr_expect_null(list, "Expected array_to_list returned list to be NULL");
+}
 
 /*
 **----------------------------------------------

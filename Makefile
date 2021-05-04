@@ -42,13 +42,11 @@ OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 
 TEST			= minishell_test
-FAILING_PIERRE	= failing_on_wsl2_tests.c \
-				  builtin_cd_tests.c \
-
 TEST_RAW_SRCS	= test_helpers.c \
+				  builtin_cd_tests.c \
 				  builtin_export_tests.c \
-				  builtin_unset_tests.c \
 				  builtin_pwd_tests.c \
+				  builtin_unset_tests.c \
 				  builtin_utils_tests.c \
 				  env_test.c \
 				  env_utils_tests.c \
