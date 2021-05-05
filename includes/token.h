@@ -13,6 +13,7 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 # include "header.h"
+# include "flag.h"
 
 typedef enum e_tok_type
 {

@@ -58,8 +58,8 @@ typedef struct flagger_tests
 ParameterizedTestParameters(quote_flagger_suite, flag_test)
 {	
 	static	flag_unit_test	test[] = {
-		{.input = "\'bonjour\'", .role = word, .expected = SINGLE_QUOTES},
-		{.input = "\'bonjour", .role = word, .expected = QUOTING_ERROR},
+		{.input = "'bonjour'", .role = word, .expected = SINGLE_QUOTES},
+		{.input = "'bonjour", .role = word, .expected = QUOTING_ERROR},
 		{.input = ";", .role = operator, .expected = 0},
 	};
 	return (cr_make_param_array(flag_unit_test, test, sizeof(test)/sizeof(flag_unit_test)));
@@ -71,7 +71,8 @@ ParameterizedTest(flag_unit_test *params, quote_flagger_suite, flag_test)
 
 	fake_token = new_token(params->input, params->role);
 	word_flagger(fake_token);
-	cr_assert_eq(fake_token->flag, params->expected);
+	cr_expect_eq(fake_token->flag, params->expected,
+	"error on %s use case, expected %x got %x\n", params->input, params->expected, fake_token->flag);
 }
 
 /****************************************************************************/

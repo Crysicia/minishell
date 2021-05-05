@@ -19,6 +19,6 @@
 # define DOUBLE_QUOTES 0x00000014
 # define QUOTING_ERROR 0x00000040
 
-int		has_single_quotes(char *str);
-
+int		check_quoting(char *word);
+char	*find_next_single_quote(char *word);
 #endif
