@@ -17,6 +17,8 @@
 # define BACKSLASH 0x00000011
 # define SINGLE_QUOTES 0x00000012
 # define DOUBLE_QUOTES 0x00000014
+# define QUOTING_ERROR 0x00000040
 
-int	has_single_quotes(char *str);
+int		has_single_quotes(char *str);
+
 # endif

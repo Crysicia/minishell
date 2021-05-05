@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "../includes/token.h"
 #include "../includes/flag.h"
 
 void	word_flagger(t_token *token)
 {
-
-	
+	token->flag = 0;
 }

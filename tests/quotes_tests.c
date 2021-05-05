@@ -2,7 +2,8 @@
 #include <criterion/parameterized.h>
 #include <string.h>
 #include <stdio.h>
-#include "../includes/token.h"
+#include "../includes/header.h"
+#include "../includes/flag.h"
 
 /*
 **	All the tests done here ASSUMES that invalid quote input has been removed.
@@ -44,12 +45,39 @@ ParameterizedTest(unit *params, quotes_removal_suite, testing_valid_input)
 	cr_expect_str_eq(buffer, params->expected, , "hello\n");
 }
 
-/****************************************************************************/
-typedef struct antislash_tests
+/* We will create a fake token to pass to word_flagger fct */
+/* This function is expected to check quoting validity and update the flag var */
+
+typedef struct flagger_tests
 {
-	char	input[50];
-	char	expected[50];
-}			antislash_unit_test;
+	char		input[50];
+	t_tok_type	role;
+	int			expected;
+}				flag_unit_test;
+
+ParameterizedTestParameters(quote_flagger_suite, flag_test)
+{	
+	static	flag_unit_test	test[] = {
+		{.input = "\'bonjour\'", .role = word, .expected = SINGLE_QUOTES},
+		{.input = "\'bonjour", .role = word, .expected = QUOTING_ERROR},
+		{.input = ";", .role = operator, .expected = 0},
+	};
+	return (cr_make_param_array(flag_unit_test, test, sizeof(test)/sizeof(flag_unit_test)));
+}
+
+ParameterizedTest(flag_unit_test *params, quote_flagger_suite, flag_test)
+{
+	t_token *fake_token;
+
+	fake_token = new_token(params->input, params->role);
+	word_flagger(fake_token);
+	cr_assert_eq(fake_token->flag, params->expected);
+}
+
+/****************************************************************************/
+/* Temporary Disabled */
+/* Other work needs to be done before this */
+/*
 
 ParameterizedTestParameters(antislash_removal_suite, testing_valid_input)
 {
@@ -73,6 +101,7 @@ ParameterizedTest(unit *params, antislash_removal_suite, testing_valid_input)
 	remove_backslash(buffer_1, buffer_0);
 	cr_expect_str_eq(buffer_1, params->expected);
 }
+*/
 /*
 
  echo 'bonjou\''

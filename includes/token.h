@@ -13,7 +13,6 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 # include "header.h"
-# include "flag.h"
 
 typedef enum e_tok_type
 {
@@ -46,5 +45,7 @@ int			get_word_size(char *line);
 char		*cut_token_string(char *line);
 void		quotes_removal(t_token *tok);
 void		remove_simple_and_double_quotes(char *buffer, char *str);
+
+void		word_flagger(t_token *token);
 
 #endif

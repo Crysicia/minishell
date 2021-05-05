@@ -27,17 +27,18 @@ RAW_SRCS		= builtin_cd.c \
 				  error.c \
 				  exec.c \
 				  exec_builtin.c \
+				  flagger.c \
 				  get_next_line.c \
 				  get_next_line_utils.c \
 				  globals.c \
 				  input.c \
 				  parse_command.c \
 				  path_utils.c \
+				  token.c \
 				  token_eval.c \
 				  token_fcts.c \
 				  token_quote_removal.c \
 				  token_utils.c \
-				  tokenizer.c \
 
 #				  env_expansion.c \
 
