@@ -34,13 +34,18 @@ int	check_quoting(char *word)
 		{
 			flag = SINGLE_QUOTES;
 			ptr = find_next_single_quote(++ptr);
-			if (!ptr)
-				return (QUOTING_ERROR);
+		}
+		else if (*ptr == '"')
+		{
+			flag = DOUBLE_QUOTES;
+			ptr = go_to_next_unescaped_char(++ptr, '"');
 		}
 		else if (*ptr == '\\')
 			ptr++;
 		if (ptr)
 			ptr++;
+		else
+			return (QUOTING_ERROR);
 	}
 	return (flag);
 }
@@ -56,4 +61,24 @@ char	*find_next_single_quote(char *word)
 		return (ptr);
 	else
 		return (NULL);
+}
+
+char *go_to_next_unescaped_char(char *str, char target)
+{
+	size_t index;
+	bool escaped;
+
+	index = 0;
+	escaped = false;
+	while (str[index])
+	{
+		if (str[index] == target && !escaped)
+			return (&str[index + 1]);
+		if (str[index] == '\\')
+			escaped = !escaped;
+		else
+			escaped = false;
+		index++;
+	}
+	return (NULL);
 }

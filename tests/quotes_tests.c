@@ -59,8 +59,14 @@ ParameterizedTestParameters(quote_flagger_suite, flag_test)
 {	
 	static	flag_unit_test	test[] = {
 		{.input = "'bonjour'", .role = word, .expected = SINGLE_QUOTES},
+		{.input = "'bon'jo'ur'", .role = word, .expected = SINGLE_QUOTES},
+		{.input = "'bon'jo\'ur'", .role = word, .expected = SINGLE_QUOTES},
 		{.input = "'bonjour", .role = word, .expected = QUOTING_ERROR},
-		{.input = ";", .role = operator, .expected = 0},
+		{.input = "'b'onjo'ur", .role = word, .expected = QUOTING_ERROR},
+		{.input = "\"bonjour", .role = word, .expected = QUOTING_ERROR},
+		{.input = "\"bonjo\"ur", .role = word, .expected = DOUBLE_QUOTES},
+		{.input = "\"bonjo\"ur $USER", .role = word, .expected = DOUBLE_QUOTES},
+		{.input = ";", .role = operator, .expected = 0}
 	};
 	return (cr_make_param_array(flag_unit_test, test, sizeof(test)/sizeof(flag_unit_test)));
 }

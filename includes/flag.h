@@ -21,4 +21,6 @@
 
 int		check_quoting(char *word);
 char	*find_next_single_quote(char *word);
+char 	*go_to_next_unescaped_char(char *str, char target);
+
 #endif
