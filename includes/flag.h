@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FLAG__H
+#ifndef FLAG_H
 # define FLAG_H
 
 # define IS_QUOTED	0x00000010
@@ -21,4 +21,4 @@
 
 int		has_single_quotes(char *str);
 
-# endif
+#endif
