@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+#include "../includes/flag.h"
 
 void	word_flagger(t_token *token)
 {

@@ -21,6 +21,7 @@ t_token	*new_token(char *str, t_tok_type type)
 	if (new)
 	{
 		new->cmd = str;
+		new->flag = 0;
 		new->role = type;
 	}
 	return (new);
