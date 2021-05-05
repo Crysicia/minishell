@@ -13,6 +13,7 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 # include "header.h"
+# include "flag.h"
 
 typedef enum e_tok_type
 {
@@ -23,6 +24,7 @@ typedef enum e_tok_type
 typedef struct s_token
 {
 	char			*cmd;
+	int				flag;
 	t_tok_type		role;
 }					t_token;
 
