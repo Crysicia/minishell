@@ -63,10 +63,10 @@ char	*find_next_single_quote(char *word)
 		return (NULL);
 }
 
-char *go_to_next_unescaped_char(char *str, char target)
+char	*go_to_next_unescaped_char(char *str, char target)
 {
-	size_t index;
-	bool escaped;
+	size_t	index;
+	bool	escaped;
 
 	index = 0;
 	escaped = false;
