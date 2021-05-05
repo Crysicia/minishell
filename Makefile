@@ -10,6 +10,10 @@ LIBS			= -Llibft -lft -lncurses
 LIBFT 			= libft/libft.a
 NAME			= Minishell
 
+RST				= "\e[0m"
+RED				= "\e[30m"
+GREEN			= "\e[32m"
+
 PATH_SRCS		= ./srcs/
 RAW_SRCS		= builtin_cd.c \
 				  builtin_env.c \
@@ -66,14 +70,17 @@ TEST_SRCS		= $(addprefix tests/,$(TEST_RAW_SRCS))
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
 .c.o:
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	@echo $(GREEN)"Compiling Minishell executable ..."$(RST)
+	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	@echo $(GREEN)"Minishell is ready !\nEnter \"./Minishell\" for execution."$(RST)
 
 $(LIBFT):
+	@echo $(GREEN)"Compiling libft ..."$(RST)
 	@$(MAKE) bonus -C libft
 
 test: $(TEST)
@@ -85,11 +92,13 @@ $(TEST): $(NO_MAIN) $(TEST_OBJS) $(LIBFT)
 	$(RM) $(TEST_OBJS)
 
 clean:
-	$(RM) $(OBJS)
+	@echo $(RED)"Removing objects and librairies ..."$(RST)
+	@$(RM) $(OBJS)
 	@$(MAKE) fclean -C libft
 
 fclean: clean
-	$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
+	@echo $(RED)"Removing minishell and tests ..."$(RST)
+	@$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
 
 re: fclean all
 
