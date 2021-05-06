@@ -25,45 +25,47 @@ int	check_quoting(char *word)
 {
 	char	*ptr;
 	int		flag;
+	int		quote_count;
 
 	ptr = word;
 	flag = 0;
-	while (*ptr)
+	quote_count	= 0;
+	while (ptr && *ptr)
 	{
 		if (*ptr == '\'')
-		{
-			flag = SINGLE_QUOTES;
-			ptr = find_next_single_quote(++ptr);
-		}
+			ptr = flag_next_single_quote(&flag, ++ptr);
 		else if (*ptr == '"')
-		{
-			flag = DOUBLE_QUOTES;
-			ptr = go_to_next_unescaped_char(++ptr, '"');
-		}
+			ptr = flag_next_unescaped_double_quote(&flag, ++ptr);
 		else if (*ptr == '\\')
 			ptr++;
+//		quote_count += update_flag(&flag);
 		if (ptr)
 			ptr++;
 		else
 			return (QUOTING_ERROR);
 	}
+	if (quote_count >= 2)
+		flag = MIXED_QUOTES;
 	return (flag);
 }
 
-char	*find_next_single_quote(char *word)
+char	*flag_next_single_quote(int	*flagged, char *word)
 {
 	char	*ptr;
-
+			
 	ptr = word;
 	while (*ptr && *ptr != '\'')
 		ptr++;
 	if (*ptr)
+	{
+		*flagged = SINGLE_QUOTES;
 		return (ptr);
+	}
 	else
 		return (NULL);
 }
 
-char	*go_to_next_unescaped_char(char *str, char target)
+char	*flag_next_unescaped_double_quote(int *flagged, char *str)
 {
 	size_t	index;
 	bool	escaped;
@@ -72,8 +74,11 @@ char	*go_to_next_unescaped_char(char *str, char target)
 	escaped = false;
 	while (str[index])
 	{
-		if (str[index] == target && !escaped)
-			return (&str[index + 1]);
+		if (str[index] == '"' && !escaped)
+		{
+			*flagged = DOUBLE_QUOTES;
+			return (&str[index]);
+		}
 		if (str[index] == '\\')
 			escaped = !escaped;
 		else
@@ -81,4 +86,15 @@ char	*go_to_next_unescaped_char(char *str, char target)
 		index++;
 	}
 	return (NULL);
+}
+
+int	update_flag(int *flag)
+{
+	if (!(*flag))
+		return (0);
+	else
+	{
+		*flag = 0;
+		return (1);
+	}
 }

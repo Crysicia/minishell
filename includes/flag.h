@@ -13,14 +13,16 @@
 #ifndef FLAG_H
 # define FLAG_H
 
-# define IS_QUOTED	0x00000010
-# define BACKSLASH 0x00000011
-# define SINGLE_QUOTES 0x00000012
-# define DOUBLE_QUOTES 0x00000014
-# define QUOTING_ERROR 0x00000040
+# define IS_QUOTED	0x10
+
+# define BACKSLASH 0x11
+# define SINGLE_QUOTES 0x12
+# define DOUBLE_QUOTES 0x14
+# define MIXED_QUOTES 0x16
+# define QUOTING_ERROR 0x40
 
 int		check_quoting(char *word);
-char	*find_next_single_quote(char *word);
-char	*go_to_next_unescaped_char(char *str, char target);
-
+char	*flag_next_single_quote(int *flagged, char *word);
+char	*flag_next_unescaped_double_quote(int *flagged, char *str);
+int		update_flag(int *flag);
 #endif
