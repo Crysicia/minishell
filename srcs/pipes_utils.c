@@ -6,11 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 14:56:16 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/06 11:11:01 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/06 16:10:20 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+
 # define IN_PIPELINE 0
 # define FIRST_IN_PIPELINE 1
 # define LAST_IN_PIPELINE 2
@@ -19,6 +20,7 @@ typedef struct	s_pipes {
 	int			previous[2];
 	int			current[2];
 }				t_pipes;
+void close_pipes(t_pipes *pipes);
 
 int pu_print_error(int code, char *message)
 {
@@ -28,41 +30,42 @@ int pu_print_error(int code, char *message)
 
 void dup_and_close_pipes(t_pipes *pipes, int command_flag)
 {
-	if (command_flag == FIRST_IN_PIPELINE)
+	if (command_flag == FIRST_IN_PIPELINE || command_flag == IN_PIPELINE)
 		dup2(pipes->current[PIPE_WRITE], STDOUT_FILENO);
-	else if (command_flag == LAST_IN_PIPELINE)
-		dup2(pipes->current[PIPE_READ], STDIN_FILENO);
-	else
-	{
-		dup2(pipes->previous[PIPE_READ], STDIN_FILENO);
-		dup2(pipes->current[PIPE_WRITE], STDOUT_FILENO);
-	}
-	// if (pipes[PIPE_READ] != STDIN_FILENO)
-	// 	close(pipes[PIPE_READ]);
-	// if (pipes[PIPE_WRITE] != STDOUT_FILENO)
-	// 	close(pipes[PIPE_WRITE]);
+	dup2(pipes->previous[PIPE_READ], STDIN_FILENO);
+	close_pipes(pipes);
 }
 
-void	attribute_pipe_ends(int pipes[2], int command_flag)
-{
-	// int swap;
+// void	attribute_pipe_ends(int pipes[2], int command_flag)
+// {
+// 	// int swap;
 
-	if (command_flag == FIRST_IN_PIPELINE)
-	{
-		close(pipes[PIPE_READ]);	
-		pipes[PIPE_READ] = STDIN_FILENO;
-	}
+// 	if (command_flag == FIRST_IN_PIPELINE)
+// 	{
+// 		close(pipes[PIPE_READ]);	
+// 		pipes[PIPE_READ] = STDIN_FILENO;
+// 	}
+// 	else if (command_flag == LAST_IN_PIPELINE)
+// 	{
+// 		close(pipes[PIPE_WRITE]);
+// 		pipes[PIPE_WRITE] = STDOUT_FILENO;
+// 	}
+// 	// else
+// 	// {
+// 	// 	swap = pipes[PIPE_WRITE];
+// 	// 	pipes[PIPE_WRITE] = pipes[PIPE_READ];
+// 	// 	pipes[PIPE_READ] = swap;
+// 	// }
+// }
+
+void close_relevant_pipes(t_pipes *pipes, int command_flag)
+{
+	if (command_flag == FIRST_IN_PIPELINE || command_flag == IN_PIPELINE)
+		close(pipes->current[PIPE_WRITE]);
 	else if (command_flag == LAST_IN_PIPELINE)
-	{
-		close(pipes[PIPE_WRITE]);
-		pipes[PIPE_WRITE] = STDOUT_FILENO;
-	}
-	// else
-	// {
-	// 	swap = pipes[PIPE_WRITE];
-	// 	pipes[PIPE_WRITE] = pipes[PIPE_READ];
-	// 	pipes[PIPE_READ] = swap;
-	// }
+		close(pipes->current[PIPE_READ]);
+	else
+		close(pipes->previous[PIPE_READ]);
 }
 
 int execute_pipe(char **command, t_pipes *pipes, int command_flag)
@@ -95,7 +98,7 @@ void swap_pipes(t_pipes *pipes)
 {
 	int swap[2];
 
-	print_pipes(pipes);
+	// print_pipes(pipes);
 	// ft_memcpy(swap, pipes->previous, 2);
 	// ft_memcpy(pipes->previous, pipes->current, 2);
 	// ft_memcpy(pipes->current, swap, 2);
@@ -159,18 +162,24 @@ int pipes_test(void)
 	char *args3[] = { "/usr/bin/head", "-n", "1", NULL };
 
 	int pid1 = execute_pipe(args, &pipes, FIRST_IN_PIPELINE);
-	close_pipes(&pipes);
+	close_relevant_pipes(&pipes, FIRST_IN_PIPELINE);
 	waitpid(pid1, NULL, 0);
 	swap_pipes(&pipes);
 	int pid2 = execute_pipe(args2, &pipes, IN_PIPELINE);
-	close_pipes(&pipes);
+	close_relevant_pipes(&pipes, IN_PIPELINE);
 	waitpid(pid2, NULL, 0);
 	swap_pipes(&pipes);
 	int pid3 = execute_pipe(args3, &pipes, LAST_IN_PIPELINE);
-	close_pipes(&pipes);
+	close_relevant_pipes(&pipes, LAST_IN_PIPELINE);
 	waitpid(pid3, NULL, 0);
-	swap_pipes(&pipes);
-	
+	// execute_pipe(NULL, &pipes, LAST_IN_PIPELINE);
+	// swap_pipes(&pipes);
+
+	(void)pid1;
+	(void)pid2;
+	(void)pid3;
+
+	close_pipes(&pipes);
 
 
 /*	waitpid(first_pid, NULL, 0);
