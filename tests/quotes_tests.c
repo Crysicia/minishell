@@ -58,20 +58,15 @@ typedef struct flagger_tests
 ParameterizedTestParameters(quote_flagger_suite, flag_test)
 {	
 	static	flag_unit_test	test[] = {
-		{.input = "\'bonjour", .role = word, .expected = 0},
+	
 
 		{.input = "'bonjour'", .role = word, .expected = SINGLE_QUOTES},
 		{.input = "'bo\"njou\"r'", .role = word, .expected = SINGLE_QUOTES},
 	
-		{.input = "'bon'jo\'ur'", .role = word, .expected = MIXED_QUOTES},
+		{.input = "'bon'jo'\nur'", .role = word, .expected = MIXED_QUOTES},
 		{.input = "'bon'jo'ur'", .role = word, .expected = MIXED_QUOTES},
 		{.input = "'bon'jo\"ur'\"", .role = word, .expected = MIXED_QUOTES},
 		{.input = "\"pont\"-'levis'", .role = word, .expected = MIXED_QUOTES},
-
-		{.input = "\"bonjo\"ur", .role = word, .expected = DOUBLE_QUOTES},
-		{.input = "\"bonjo\"ur $USER", .role = word, .expected = DOUBLE_QUOTES},
-		{.input = "\"bon'jour $USER\"", .role = word, .expected = DOUBLE_QUOTES},
-		{.input = "\"bon'jour '$USER\"", .role = word, .expected = DOUBLE_QUOTES},
 	
 		{.input = "'bonjour", .role = word, .expected = QUOTING_ERROR},
 		{.input = "'b'onjo'ur", .role = word, .expected = QUOTING_ERROR},
@@ -92,6 +87,40 @@ ParameterizedTest(flag_unit_test *params, quote_flagger_suite, flag_test)
 	"error on %s use case, expected %x got %x\n", params->input, params->expected, fake_token->flag);
 }
 
+ParameterizedTestParameters(quote_flagger_suite, flag_double_quotes)
+{	
+	static	flag_unit_test	test[] = {
+		{.input = "\'bonjour", .role = word, .expected = 0},
+		{.input = "\"bonjo\"ur", .role = word, .expected = DOUBLE_QUOTES},
+		{.input = "\"bonjo\"ur $USER", .role = word, .expected = DOUBLE_QUOTES},
+		{.input = "\"bon'jour $USER\"", .role = word, .expected = DOUBLE_QUOTES},
+		{.input = "\"bon'jour '$USER\"", .role = word, .expected = DOUBLE_QUOTES},
+	};
+	return (cr_make_param_array(flag_unit_test, test, sizeof(test)/sizeof(flag_unit_test)));
+}
+
+ParameterizedTest(flag_unit_test *params, quote_flagger_suite, flag_double_quotes)
+{
+	char buffer[100];
+	int fd;
+	
+	bzero(buffer, 100);
+	system("touch tmp");
+	fd = open("tmp", O_RDWR|O_TRUNC);
+	int len = strlen(params->input);
+	write(1, params->input, len);
+	read(1, buffer, len);
+	puts(buffer);
+	char *tmp = strdup(buffer);
+	t_token *fake = new_token(tmp, params->role);
+	puts(tmp);
+	word_flagger(fake);
+	cr_expect_eq(fake->flag, params->expected,
+	"error on %s use case, expected %x got %x\n",
+	params->input, params->expected, fake->flag);
+	close(fd);
+	system("rm -f tmp");
+}
 /****************************************************************************/
 /* Temporary Disabled */
 /* Other work needs to be done before this */

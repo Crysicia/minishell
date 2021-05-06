@@ -24,5 +24,5 @@
 int		check_quoting(char *word);
 char	*flag_next_single_quote(int *flagged, char *word);
 char	*flag_next_unescaped_double_quote(int *flagged, char *str);
-int		update_flag(int *flag);
+void	update_flag_count(int *flag, int *count);
 #endif

@@ -38,7 +38,7 @@ int	check_quoting(char *word)
 			ptr = flag_next_unescaped_double_quote(&flag, ++ptr);
 		else if (*ptr == '\\')
 			ptr++;
-//		quote_count += update_flag(&flag);
+		update_flag_count(&flag, &quote_count);
 		if (ptr)
 			ptr++;
 		else
@@ -88,13 +88,13 @@ char	*flag_next_unescaped_double_quote(int *flagged, char *str)
 	return (NULL);
 }
 
-int	update_flag(int *flag)
+void	update_flag_count(int *flag, int *count)
 {
-	if (!(*flag))
-		return (0);
-	else
+	if (!(*count) && (*flag))
+		*count += 1;
+	else if ((*count) && (*flag))
 	{
+		*count += 1;
 		*flag = 0;
-		return (1);
 	}
 }
