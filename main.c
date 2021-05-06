@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/03 16:01:30 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/05 10:16:49 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	iterate_over_token_list(t_list *list)
 	t_list	*tmp;
 	int		ret;
 
+	ret = 0;
 	tmp = list;
 	while (tmp && (ret != -1))
 		ret = evaluate_token(&tmp);
