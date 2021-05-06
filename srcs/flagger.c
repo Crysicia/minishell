@@ -29,12 +29,12 @@ int	check_quoting(char *word)
 
 	ptr = word;
 	flag = 0;
-	quote_count	= 0;
+	quote_count = 0;
 	while (ptr && *ptr)
 	{
 		if (*ptr == '\'')
 			ptr = flag_next_single_quote(&flag, ++ptr);
-		else if (*ptr == '"')
+		else if (*ptr == '\"')
 			ptr = flag_next_unescaped_double_quote(&flag, ++ptr);
 		else if (*ptr == '\\')
 			ptr++;
@@ -52,7 +52,7 @@ int	check_quoting(char *word)
 char	*flag_next_single_quote(int	*flagged, char *word)
 {
 	char	*ptr;
-			
+
 	ptr = word;
 	while (*ptr && *ptr != '\'')
 		ptr++;
@@ -74,7 +74,7 @@ char	*flag_next_unescaped_double_quote(int *flagged, char *str)
 	escaped = false;
 	while (str[index])
 	{
-		if (str[index] == '"' && !escaped)
+		if (str[index] == '\"' && !escaped)
 		{
 			*flagged = DOUBLE_QUOTES;
 			return (&str[index]);

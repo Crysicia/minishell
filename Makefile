@@ -11,7 +11,7 @@ LIBFT 			= libft/libft.a
 NAME			= Minishell
 
 RST				= "\e[0m"
-RED				= "\e[30m"
+RED				= "\e[31m"
 GREEN			= "\e[32m"
 
 PATH_SRCS		= ./srcs/
