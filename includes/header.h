@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/03 16:04:27 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/07 16:19:36 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "get_next_line.h"
 # include "scanner.h"
 # include "token.h"
+# include "pipes.h"
 # define BUILTINS_NB 7
 
 /* ERRORS */
@@ -35,10 +36,8 @@
 # define ERR_MALLOC_FAILED 256
 # define ERR_ENV_NOT_FOUND 257
 # define ERR_COULD_NOT_SET_ENV 258
-
-/* Pipes */
-# define PIPE_READ 0
-# define PIPE_WRITE 1
+# define ERR_PIPE_FAILED 259
+# define ERR_FORK_FAILED 260
 
 typedef struct s_globals
 {
