@@ -23,24 +23,25 @@ void	word_flagger(t_token *token)
 
 int	check_quoting(char *word)
 {
-	char	*ptr;
 	int		flag;
 	int		quote_count;
 
-	ptr = word;
 	flag = 0;
 	quote_count = 0;
-	while (ptr && *ptr)
+	while (word && *word)
 	{
-		if (*ptr == '\'')
-			ptr = flag_next_single_quote(&flag, ++ptr);
-		else if (*ptr == '\"')
-			ptr = flag_next_unescaped_double_quote(&flag, ++ptr);
-		else if (*ptr == '\\')
-			ptr++;
-		update_flag_count(&flag, &quote_count);
-		if (ptr)
-			ptr++;
+		if ((*word == '\'') || (*word == '\"'))
+		{
+			if (*word == '\'')
+				word = flag_next_single_quote(&flag, ++word);
+			else if (*word == '\"')
+				word = flag_next_unescaped_double_quote(&flag, ++word);
+			update_flag_count(&flag, &quote_count);
+		}
+		else if (*word == '\\')
+			word++;
+		if (word)
+			word++;
 		else
 			return (QUOTING_ERROR);
 	}
@@ -74,13 +75,13 @@ char	*flag_next_unescaped_double_quote(int *flagged, char *str)
 	escaped = false;
 	while (str[index])
 	{
-		if (str[index] == '\"' && !escaped)
+		if ((str[index] == '\"') && (escaped == false))
 		{
 			*flagged = DOUBLE_QUOTES;
 			return (&str[index]);
 		}
 		if (str[index] == '\\')
-			escaped = !escaped;
+			escaped = true;
 		else
 			escaped = false;
 		index++;
