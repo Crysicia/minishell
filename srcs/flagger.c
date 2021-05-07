@@ -75,13 +75,13 @@ char	*flag_next_unescaped_double_quote(int *flagged, char *str)
 	escaped = false;
 	while (str[index])
 	{
-		if ((str[index] == '\"') && (escaped == false))
+		if ((str[index] == '\"') && (!escaped))
 		{
 			*flagged = DOUBLE_QUOTES;
 			return (&str[index]);
 		}
 		if (str[index] == '\\')
-			escaped = true;
+			escaped = !escaped;
 		else
 			escaped = false;
 		index++;
