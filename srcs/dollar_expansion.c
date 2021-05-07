@@ -12,21 +12,25 @@
 
 #include "../includes/header.h"
 
-/*
-void	expansion_flagger(char *str)
-{
-	if ()
-}
+
+/* roadmap for quotes
+ flagger to know if word is quoted 
+ perform $expansion within double quotes and no quotes
+ perform complex expqnsion within mixed quotes
+ remove quotes
+ eventually add the new words to the linked list
 */
 
 /*
+	Performing $expansion
+	does it need to check if expansion can be done or is it already assumed ?
   strcpy() before after $var
-  check var (alphanumeric len, no \before)
+  check var name (alphanumeric len, no \before)
   getenv(var)
-  write in buffer while adding \ to \ and "
+  write in buffer (while adding \ to \ and "(why ?))
 
-  remove quotes
-  remove antislash
+  remove quotes (now ?)
+  remove antislash (now ?)
 
 void	expand_env_variable(char *str, char *buffer)
 {
@@ -46,6 +50,10 @@ void	expand_env_variable(char *str, char *buffer)
 
  */
 
+/*
+	Not sure i need this fct ..
+*/
+
 int	copy_single_quoted_text(char *str, char *buffer)
 {
 	char	*start;
@@ -53,11 +61,7 @@ int	copy_single_quoted_text(char *str, char *buffer)
 	start = str;
 	str++;
 	while (*str && (*str != '\''))
-	{
-		if (*str == '\\')
-			str++;
 		str++;
-	}
 	if ((str - start) == (unsigned int)ft_strlen(start))
 		return (-1);
 	else
