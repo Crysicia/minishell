@@ -48,5 +48,6 @@ void		quotes_removal(t_token *tok);
 void		remove_simple_and_double_quotes(char *buffer, char *str);
 
 void		word_flagger(t_token *token);
+void		dollar_expansion(t_token *tok);
 
 #endif

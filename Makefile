@@ -23,6 +23,7 @@ RAW_SRCS		= builtin_cd.c \
 				  builtin_unset.c \
 				  builtin_utils.c \
 				  dict_utils.c \
+				  dollar_expansion.c \
 				  env_utils.c \
 				  error.c \
 				  exec.c \
@@ -39,7 +40,6 @@ RAW_SRCS		= builtin_cd.c \
 				  token_fcts.c \
 				  token_quote_removal.c \
 				  token_utils.c \
-				  dollar_expansion.c \
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
 OBJS 			= $(SRCS:.c=.o)
@@ -57,6 +57,7 @@ TEST_RAW_SRCS	= test_helpers.c \
 				  dict_utils_tests.c \
 				  exec_builtin_tests.c \
 				  exec_tests.c \
+				  expansion_tests.c \
 				  inputs_correct.c \
 				  path_utils_tests.c \
 				  quotes_tests.c \

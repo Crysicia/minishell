@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/header.h"
-
+#include "../includes/flag.h"
 
 /* roadmap for quotes
  flagger to know if word is quoted 
@@ -24,13 +24,13 @@
 /*
 	Performing $expansion
 	does it need to check if expansion can be done or is it already assumed ?
-  strcpy() before after $var
-  check var name (alphanumeric len, no \before)
-  getenv(var)
-  write in buffer (while adding \ to \ and "(why ?))
+	strcpy() before after $var
+	check var name (alphanumeric len, no \before)
+	getenv(var)
+	write in buffer (while adding \ to \ and "(why ?))
 
-  remove quotes (now ?)
-  remove antislash (now ?)
+	remove quotes (now ?)
+	remove antislash (now ?)
 
 void	expand_env_variable(char *str, char *buffer)
 {
@@ -48,11 +48,17 @@ void	expand_env_variable(char *str, char *buffer)
 		ft_strlcpy(buffer, env_var, ft_strlen(env_var));
 }
 
- */
+*/
 
 /*
 	Not sure i need this fct ..
 */
+
+void	dollar_expansion(t_token *tok)
+{
+	if (tok->role == word && (!(tok->flag) || (tok->flag == DOUBLE_QUOTES)))
+		(void)tok;
+}
 
 int	copy_single_quoted_text(char *str, char *buffer)
 {
