@@ -31,33 +31,46 @@
 
 	remove quotes (now ?)
 	remove antislash (now ?)
-
-void	expand_env_variable(char *str, char *buffer)
-{
-	char	tmp;
-	char	*env_var;
-	size_t	index;
-
-	index = 0;
-	while (str[i] && ft_isalnum(str[i]))
-		i++;
-	tmp = str[i];
-	str[i] = 0;
-	env_var = ft_getenv(str);
-	if (env_var)
-		ft_strlcpy(buffer, env_var, ft_strlen(env_var));
-}
-
-*/
-
-/*
-	Not sure i need this fct ..
 */
 
 void	dollar_expansion(t_token *tok)
 {
+	char	buffer[1024];
+	char	*word_ptr;
+	char	*buffer_ptr;
+
 	if (tok->role == word && (!(tok->flag) || (tok->flag == DOUBLE_QUOTES)))
-		(void)tok;
+	{
+		word_ptr = tok->cmd;
+		ft_bzero(buffer, 1024);
+		buffer_ptr = &buffer[0];
+		while (*word_ptr && *word_ptr != '$')
+			*buffer_ptr++ = *word_ptr++;
+		expand_env_variable(&word_ptr, buffer_ptr);
+		while (*buffer_ptr)
+			buffer_ptr++;
+		while (*word_ptr && *word_ptr != '$')
+			*buffer_ptr++ = *word_ptr++;
+		tok->cmd = ft_strdup(&buffer[0]);
+	}
+}
+	/*	free(word_ptr); (makes cr segf)*/
+
+void	expand_env_variable(char **str, char *buffer)
+{
+	t_dict	*env_var;
+	char	*var_name;
+	size_t	index;
+
+	index = 1;
+	while (*(*str + index) && ft_isalnum(*(*str + index)))
+		index++;
+	var_name = ft_strndup(*str + 1, index - 1);
+	env_var = ft_getenv(var_name);
+	if (env_var)
+		ft_strlcpy(buffer, env_var->value, ft_strlen(env_var->value) + 1);
+	free(var_name);
+	*str += index;
 }
 
 int	copy_single_quoted_text(char *str, char *buffer)
