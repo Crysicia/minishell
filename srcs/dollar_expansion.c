@@ -44,19 +44,19 @@ void	dollar_expansion(t_token *tok)
 		word_ptr = tok->cmd;
 		ft_bzero(buffer, 1024);
 		buffer_ptr = &buffer[0];
-		while (*word_ptr && *word_ptr != '$')
-			*buffer_ptr++ = *word_ptr++;
-		expand_env_variable(&word_ptr, buffer_ptr);
-		while (*buffer_ptr)
-			buffer_ptr++;
-		while (*word_ptr && *word_ptr != '$')
-			*buffer_ptr++ = *word_ptr++;
+		while (*word_ptr)
+		{
+			if (*word_ptr == '$')
+				expand_env_variable(&word_ptr, &buffer_ptr);
+			else
+				*buffer_ptr++ = *word_ptr++;
+		}
 		tok->cmd = ft_strdup(&buffer[0]);
 	}
 }
 	/*	free(word_ptr); (makes cr segf)*/
 
-void	expand_env_variable(char **str, char *buffer)
+void	expand_env_variable(char **str, char **buffer)
 {
 	t_dict	*env_var;
 	char	*var_name;
@@ -68,7 +68,10 @@ void	expand_env_variable(char **str, char *buffer)
 	var_name = ft_strndup(*str + 1, index - 1);
 	env_var = ft_getenv(var_name);
 	if (env_var)
-		ft_strlcpy(buffer, env_var->value, ft_strlen(env_var->value) + 1);
+	{
+		ft_strlcpy(*buffer, env_var->value, ft_strlen(env_var->value) + 1);
+		*buffer += ft_strlen(env_var->value);
+	}
 	free(var_name);
 	*str += index;
 }
