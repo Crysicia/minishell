@@ -26,6 +26,7 @@
 # include "get_next_line.h"
 # include "scanner.h"
 # include "token.h"
+# include "parser.h"
 # define BUILTINS_NB 7
 
 /* ERRORS */

@@ -39,6 +39,20 @@ t_list	*parse_to_list(char *line)
 	}
 	return (tokens);
 }
+/*
+t_simple_command	*parse_simple_command(void)
+{}
+
+t_redirection	*parse_redirection(void)
+{
+
+}
+
+t_pipeline	*parse_pipeline(void)
+{
+
+}
+*/
 
 size_t	count_command_words(t_list *list)
 {
