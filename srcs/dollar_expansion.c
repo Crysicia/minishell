@@ -46,7 +46,9 @@ void	dollar_expansion(t_token *tok)
 		buffer_ptr = &buffer[0];
 		while (*word_ptr)
 		{
-			if (*word_ptr == '$')
+			if (*word_ptr == '\\')
+				copy_escaped_character(&word_ptr, &buffer_ptr);
+			else if (*word_ptr == '$')
 				expand_env_variable(&word_ptr, &buffer_ptr);
 			else
 				*buffer_ptr++ = *word_ptr++;
@@ -76,6 +78,14 @@ void	expand_env_variable(char **str, char **buffer)
 	*str += index;
 }
 
+void	copy_escaped_character(char **str, char **buffer)
+{
+	**buffer = *(*str + 1);
+	*buffer += 1;
+	*str += 2;
+}
+
+/*
 int	copy_single_quoted_text(char *str, char *buffer)
 {
 	char	*start;
@@ -89,3 +99,4 @@ int	copy_single_quoted_text(char *str, char *buffer)
 	else
 		return (ft_strlcpy(buffer, start, str - start));
 }
+*/
