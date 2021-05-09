@@ -84,19 +84,3 @@ void	copy_escaped_character(char **str, char **buffer)
 	*buffer += 1;
 	*str += 2;
 }
-
-/*
-int	copy_single_quoted_text(char *str, char *buffer)
-{
-	char	*start;
-
-	start = str;
-	str++;
-	while (*str && (*str != '\''))
-		str++;
-	if ((str - start) == (unsigned int)ft_strlen(start))
-		return (-1);
-	else
-		return (ft_strlcpy(buffer, start, str - start));
-}
-*/
