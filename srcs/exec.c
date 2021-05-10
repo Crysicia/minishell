@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/07 18:06:32 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/10 15:22:06 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ int	set_status_code(int code, bool from_builtin)
 
 int	execute_command(char **command)
 {
-	int		pid;
 	char	*path;
-	t_pipes	pipes;
 
 	if (is_builtin(command[0]))
 		return (set_status_code(execute_builtin(command[0], &command[1]),
@@ -86,17 +84,6 @@ int	execute_command(char **command)
 	path = find_exe_path(command[0]);
 	if (!path)
 		return (-1);
-	if (!create_pipes(&pipes))
-		return (ERR_PIPE_FAILED);
-	pid = execute_pipe(path, command, &pipes, NOT_IN_PIPELINE);
-	if (pid == -ERR_FORK_FAILED)
-		printf("ERROR: Could not create child process.\n");
-	else if (pid > 0)
-	{
-		g_globals->current_pid = pid;
-		wait(&g_globals->status);
-		set_status_code(g_globals->status, false);
-		g_globals->current_pid = 0;
-	}
-	return (0);
+	execve(path, command, list_to_array(g_globals->env));
+	return (-2);
 }

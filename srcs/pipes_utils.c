@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 14:56:16 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/07 18:24:53 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/10 15:21:42 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,6 @@ void	close_relevant_pipes(t_pipes *pipes, int command_flag)
 		close(pipes->current[PIPE_READ]);
 	else
 		close(pipes->previous[PIPE_READ]);
-}
-
-int	execute_pipe(char *path, char **command, t_pipes *pipes, int command_flag)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
-		return (-ERR_FORK_FAILED);
-	else if (pid == 0)
-	{
-		dup_pipes(pipes, command_flag);
-		close_pipes(pipes);
-		execve(path, command, list_to_array(g_globals->env));
-	}
-	close_relevant_pipes(pipes, command_flag);
-	return (pid);
 }
 
 void	swap_pipes(t_pipes *pipes)
