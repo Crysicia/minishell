@@ -25,11 +25,11 @@ void	handle_sigint(int signal)
 	print_prompt();
 }
 
-void	iterate_over_token_list(t_list *list)
+void	execute_all_the_commands(t_list *list)
 {
 	t_list				*tmp;
 	t_simple_command	*command;
-	int		ret;
+	int					ret;
 
 	ret = 0;
 	tmp = list;
@@ -59,8 +59,7 @@ int	main(int argc, char *argv[], char *envp[])
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
-//		print_command_list(input_list);
-		iterate_over_token_list(input_list);
+		execute_all_the_commands(input_list);
 	}
 	(void)argv;
 	return (0);
