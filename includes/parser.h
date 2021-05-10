@@ -46,7 +46,7 @@ t_redirection		*new_redirection(void);
 t_list				*parser_loop(char *line);
 t_simple_command	*parse_simple_command(char **line);
 void				parse_redirection(char **line,
-							t_simple_command *command,
-							struct s_token *token);
+						t_simple_command *command,
+						struct s_token *token);
 
 #endif

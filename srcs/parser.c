@@ -34,7 +34,6 @@ t_token	*get_next_token_rework(char **line)
 		return (NULL);
 }
 
-
 t_list	*parser_loop(char *line)
 {
 	char	*ptr;
@@ -46,7 +45,6 @@ t_list	*parser_loop(char *line)
 		ft_lstadd_back(&parsed_list, ft_lstnew(parse_simple_command(&ptr)));
 	return (parsed_list);
 }
-
 
 t_simple_command	*parse_simple_command(char **line)
 {
@@ -63,8 +61,6 @@ t_simple_command	*parse_simple_command(char **line)
 		{
 			if (is_redirection(token->cmd))
 				parse_redirection(line, save, token);
-			else if (!ft_strncmp("|", token->cmd, 2))
-			{;}
 			else if (!ft_strncmp(";", token->cmd, 2))
 			{
 				ft_lstadd_back(&(save->words), new_word);
@@ -76,8 +72,9 @@ t_simple_command	*parse_simple_command(char **line)
 	}
 	return (save);
 }
+/* 			else if (!ft_strncmp("|", token->cmd, 2)) {;}			*/
 
-void	parse_redirection(char **line, t_simple_command *command, t_token *token)
+void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 {
 	t_list			*new_node;
 	t_redirection	*new_redir;
@@ -87,7 +84,7 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *token)
 	if (file->role == word)
 	{
 		new_redir = new_redirection();
-		new_redir->operator = token;
+		new_redir->operator = tok;
 		new_redir->file = file;
 		new_node = ft_lstnew(new_redir);
 		ft_lstadd_back(&(command->redirections), new_node);
