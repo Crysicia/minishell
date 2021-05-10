@@ -15,7 +15,6 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
-# include "finite_state_machine.h"
 
 char	*ft_strndup(char *str, size_t n);
 bool	ft_is_lowercase(int c);
