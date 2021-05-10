@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/10 17:19:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:52:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_prompt(void)
 {
-	write(1, "Minishell>", 10);
+	write(1, "Minishell> ", 11);
 }
 
 void	handle_sigint(int signal)
@@ -27,13 +27,21 @@ void	handle_sigint(int signal)
 
 void	iterate_over_token_list(t_list *list)
 {
-	t_list	*tmp;
+	t_list				*tmp;
+	t_simple_command	*command;
 	int		ret;
 
 	ret = 0;
 	tmp = list;
 	while (tmp && (ret != -1))
-		ret = evaluate_token(&tmp);
+	{
+		command = tmp->content;
+		if (command->type == simple_command)
+			ret = evaluate_token(&command->words);
+		else
+			puts("pipeline is not implemented");
+		tmp = tmp->next;
+	}
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -52,11 +60,7 @@ int	main(int argc, char *argv[], char *envp[])
 		input_str = get_command();
 		input_list = parser_loop(input_str);
 		print_command_list(input_list);
-/*
-		input_list = parse_to_list(input_str);
-		print_token_list(input_list);
 		iterate_over_token_list(input_list);
-*/
 	}
 	(void)argv;
 	return (0);
