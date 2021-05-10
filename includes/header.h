@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/07 16:19:36 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:05:27 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "scanner.h"
 # include "token.h"
 # include "pipes.h"
+# include "flag.h"
 # define BUILTINS_NB 7
 
 /* ERRORS */
