@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 18:09:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 13:00:34 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:04:17 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_pipeline
 
 t_simple_command	*new_simple_command(void);
 t_redirection		*new_redirection(void);
+t_list				*parser_loop(char *line);
 t_simple_command	*parse_simple_command(char **line);
 void				parse_redirection(char **line,
 							t_simple_command *command,

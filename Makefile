@@ -25,6 +25,7 @@ RAW_SRCS		= builtin_cd.c \
 				  globals.c \
 				  input.c \
 				  parse_command.c \
+				  parser.c \
 				  parser_utils.c \
 				  path_utils.c \
 				  token_eval.c \

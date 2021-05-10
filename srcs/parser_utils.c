@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 07:41:15 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 12:59:33 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:06:55 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_simple_command	*new_simple_command(void)
 	new = malloc(sizeof(t_simple_command));
 	if (new)
 	{
-		new->type = 0;
+		new->type = simple_command;
 		new->words = NULL;
 		new->redirections = NULL;
 	}

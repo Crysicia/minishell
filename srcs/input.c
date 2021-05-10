@@ -6,27 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 14:55:35 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:19:41 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include <stdbool.h>
-
-void	print_token_list(t_list *list)
-{
-	t_token	*token;
-
-	while (list)
-	{
-		token = list->content;
-		printf("(cmd: [%s], Role: [%d])", token->cmd, token->role);
-		if (list->next)
-			printf(" -> ");
-		list = list->next;
-	}
-	printf("\n");
-}
 
 void	print_simple_command_node(t_list *list)
 {
@@ -44,8 +29,7 @@ void	print_simple_command_node(t_list *list)
 		printf("[%s]---", tmp->cmd);
 		node = node->next;
 	}
-	printf("\n");
-	puts("printing redirection list");
+	puts("\nprinting redirection list");
 	node = command->redirections;
 	while (node)
 	{
@@ -56,6 +40,23 @@ void	print_simple_command_node(t_list *list)
 	printf("\n");
 }
 
+void	print_command_list(t_list *list)
+{
+	t_list				*node;
+	t_simple_command	*command;
+	int					i;
+
+	node = list;
+	i = 0;
+	while (node)
+	{
+		printf("\nNODE [%d]\n", i++);
+		command = list->content;
+		if (command->type == simple_command)
+			print_simple_command_node(node);
+		node = node->next;
+	}
+}
 
 bool	gnl_loop_function(char *line)
 {
