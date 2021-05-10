@@ -27,6 +27,7 @@
 # include "scanner.h"
 # include "token.h"
 # include "parser.h"
+# include "flag.h"
 # define BUILTINS_NB 7
 
 /* ERRORS */
