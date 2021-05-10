@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 15:53:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:55:35 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,35 @@ void	print_token_list(t_list *list)
 	}
 	printf("\n");
 }
+
+void	print_simple_command_node(t_list *list)
+{
+	t_simple_command	*command;
+	t_list				*node;
+	t_token				*tmp;
+	t_redirection		*tmp2;
+
+	command = list->content;
+	puts("printing words list");
+	node = command->words;
+	while (node)
+	{
+		tmp = node->content;
+		printf("[%s]---", tmp->cmd);
+		node = node->next;
+	}
+	printf("\n");
+	puts("printing redirection list");
+	node = command->redirections;
+	while (node)
+	{
+		tmp2 = node->content;
+		printf("[%s] [%s]--", tmp2->operator->cmd, tmp2->file->cmd);
+		node = node->next;
+	}
+	printf("\n");
+}
+
 
 bool	gnl_loop_function(char *line)
 {

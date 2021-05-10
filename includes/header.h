@@ -6,7 +6,7 @@
 /*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/28 13:47:14 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/10 13:24:11 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ bool	is_absolute_path(char *path);
 int		set_status_code(int code, bool from_builtin);
 /* TMP UTILS */
 void	print_token_list(t_list *list);
-
+void	print_simple_command_node(t_list *list);
 /* Error managment */
 void	ft_malloc_error(void);
 void	syntax_error(void);

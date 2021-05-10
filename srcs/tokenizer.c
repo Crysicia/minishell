@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/21 15:20:49 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 14:39:18 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,6 @@ t_token	*get_next_token(char *line)
 	else
 		role = word;
 	cmd = cut_token_string(line);
-	if (cmd)
-		return (new_token(cmd, role));
-	else
-		return (NULL);
-}
-
-t_token	*get_next_token_rework(char **line)
-{
-	t_tok_type	role;
-	char		*cmd;
-
-	skip_spaces(line);
-	if (is_operator(*line))
-		role = operator;
-	else
-		role = word;
-	cmd = cut_token_string(*line);
 	if (cmd)
 		return (new_token(cmd, role));
 	else
