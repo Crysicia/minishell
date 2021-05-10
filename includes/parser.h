@@ -41,4 +41,6 @@ typedef struct s_pipeline
 	struct s_list	*commands;
 }				t_pipeline;
 
+t_simple_command	*new_simple_command(void);
+
 #endif

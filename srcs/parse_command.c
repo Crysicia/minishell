@@ -39,14 +39,51 @@ t_list	*parse_to_list(char *line)
 	}
 	return (tokens);
 }
-/*
-t_simple_command	*parse_simple_command(void)
-{}
 
-t_redirection	*parse_redirection(void)
+/*
+void	parser_loop(char *line)
 {
 
 }
+*/
+
+t_simple_command	*parse_simple_command(char **line)
+{
+	t_simple_command	*save;
+	t_token				*token;
+	t_list				*new_word;
+
+	save = new_simple_command();
+	token = get_next_token_rework(line);
+	while (**line && token->role == word)
+	{
+		new_word = ft_lstnew_safe(token, free_token);
+		ft_lstadd_back(&(save->words), new_word);
+		*line += ft_strlen(token->cmd);
+		token = get_next_token(*line);
+		if (token->role == operator)
+		{
+			if (is_redirection(token->cmd))
+			{;}
+			else if (!ft_strncmp("|", token->cmd, 2))
+			{;}
+			else if (!ft_strncmp(";", token->cmd, 2))
+			{;}
+			
+		}
+	}
+	return (save);
+}
+
+
+void	parse_redirection(char *line, t_simple_command *command, t_token *token)
+{
+	t_list	*cursor;
+
+	cursor = command->redirections;
+	while (cursor)
+}
+/*
 
 t_pipeline	*parse_pipeline(void)
 {

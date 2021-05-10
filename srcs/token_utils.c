@@ -36,3 +36,11 @@ bool	is_operator(char *str)
 	else
 		return (0);
 }
+
+bool	is_redirection(char *str)
+{
+	if ((*str == '<') || (*str == '>') || !ft_strncmp(str, ">>", 2))
+		return (1);
+	else
+		return (0);
+}
