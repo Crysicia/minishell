@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/10 17:52:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:52:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char *argv[], char *envp[])
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
-		print_command_list(input_list);
+//		print_command_list(input_list);
 		iterate_over_token_list(input_list);
 	}
 	(void)argv;
