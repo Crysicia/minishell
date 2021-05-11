@@ -40,7 +40,6 @@ RAW_SRCS		= builtin_cd.c \
 				  token_fcts.c \
 				  token_quote_removal.c \
 				  token_utils.c \
-				  tokenizer.c \
 				  pipes_utils.c \
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))

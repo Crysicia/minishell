@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 14:05:27 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/11 11:24:20 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ void	ft_malloc_error(void);
 void	syntax_error(void);
 
 
-int pipes_test(void);
+int execute_basic_command(t_list **commands);
 #endif
