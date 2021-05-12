@@ -44,6 +44,22 @@ t_redirection	*new_redirection(void)
 	return (new);
 }
 
+t_pipeline	*new_pipeline(t_simple_command *first)
+{
+	t_pipeline	*new;
+
+	new = malloc(sizeof(t_pipeline));
+	new->commands = ft_lstnew(first);
+	if (new && new->commands)
+	{
+		new->type = pipeline;
+		new->pipe_count = 1;
+	}
+	else
+		display_error("Malloc failed", "new_pipeline function");
+	return (new);
+}
+
 /*
 void	destroy_simple_command(t_simple_command *to_destroy)
 {
