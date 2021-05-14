@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/12 16:26:46 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:02:50 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,49 @@ int	execute_command(char **command)
 		return (-1);
 	execve(path, command, list_to_array(g_globals->env));
 	return (-2);
+}
+
+int execute_single_command(t_list **commands, t_pipes *pipes)
+{
+	char	**arguments;
+	int		pid;
+	int		command_flag;
+
+	command_flag = NOT_IN_PIPELINE;
+	arguments = command_format(commands);
+	if (!arguments)
+		display_error("malloc error", "could not allocate arguments array");
+	pid = fork();
+	if (pid < 0)
+		display_error("Error", "Could not fork child process");
+	else if (pid == 0)
+	{
+		dup_pipes(pipes, command_flag);
+		close_pipes(pipes);
+		// handle redirections
+		execute_command(arguments);
+	}
+	else
+	{
+		close_relevant_pipes(pipes, command_flag);
+		g_globals->current_pid = pid;
+		wait(&g_globals->status);
+		set_status_code(g_globals->status, false);
+		g_globals->current_pid = 0;
+	}
+	return 0;
+}
+
+int execute_commands(t_list **commands)
+{
+	t_pipes pipes;
+	int ret;
+
+	ret = SUCCESS;
+	if (!create_pipes(&pipes))
+		display_error("Broken pipe", NULL);
+	while (commands && *commands)
+		ret = execute_single_command(commands, &pipes);
+	close_pipes(&pipes);
+	return ret;
 }

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/11 11:24:20 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:00:29 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,9 @@ void	syntax_error(void);
 
 
 int execute_basic_command(t_list **commands);
+int execute_commands(t_list **commands);
+int execute_single_command(t_list **commands, t_pipes *pipes);
+
+
+
 #endif
