@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/14 12:15:47 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:14:56 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int create_file(char *path, char *redirection_type)
 	return (fd);
 }
 
-int apply_redirection(char *path, char *redirection_type)
+void apply_redirection(char *path, char *redirection_type)
 {
 	int fd;
 
@@ -41,7 +41,6 @@ int apply_redirection(char *path, char *redirection_type)
 	else
 		dup2(fd, STDOUT_FILENO);
 	close(fd);
-	return 0;
 }
 
 int test_redirections(void)

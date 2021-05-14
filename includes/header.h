@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/14 11:47:48 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:02:20 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/param.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
+# include <sys/wait.h>
 # include <limits.h>
 # include <signal.h>
 # include <string.h>
