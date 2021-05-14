@@ -21,6 +21,7 @@ ParameterizedTestParameters(env_utils_suite, ft_getenv_test) {
 	static  t_ft_getenv_params ft_getenv_params[] = {
 		{ .ret = "ok", .argument = "PATH" },
 		{ .ret = "lpassera", .argument = "USER" },
+		{ .ret = "something", .argument = "SPLITED_VAR" },
 		{ .ret = "", .argument = "EMPTY" },
 	};
 
@@ -28,7 +29,7 @@ ParameterizedTestParameters(env_utils_suite, ft_getenv_test) {
 }
 
 ParameterizedTest(t_ft_getenv_params *ft_getenv_params, env_utils_suite, ft_getenv_test) {
-	char *envp[] = { "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
+	char *envp[] = { "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", "SPLITED_VAR=something", NULL };
 	init_globals(envp);
 	
 	t_dict *ret = ft_getenv(ft_getenv_params->argument);
@@ -186,6 +187,22 @@ Test(env_utils_suite, ft_setenv_test) {
 	destroy_globals();
 }
 
+Test(env_utils_suite, ft_setenv_underscore_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
+	init_globals(envp);
+	int ret = ft_setenv("MINI_SHELL", "iscool");
+	t_dict *env = ft_getenv("MINI_SHELL");
+
+	cr_expect_str_eq(env->key, "MINI_SHELL",
+		"Expected ft_getenv returned key to be MINI_SHELL, instead got [%s]",
+		env->key);
+	cr_expect_str_eq(env->value, "iscool",
+		"Expected ft_getenv returned value to be iscool, instead got [%s]",
+		env->value);
+	cr_expect_eq(ret, 0, "Expected ft_setenv to return 0 on success");
+	destroy_globals();
+}
+
 Test(env_utils_suite, ft_setenv_empty_test) {
 	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
@@ -263,6 +280,7 @@ Test(env_utils_suite, ft_unsetenv_start_test) {
 	destroy_globals();
 }
 
+
 Test(env_utils_suite, ft_unsetenv_middle_test) {
 	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
@@ -282,6 +300,18 @@ Test(env_utils_suite, ft_unsetenv_end_test) {
 	t_dict *env = ft_getenv("EMPTY");
 
 	cr_expect_null(env, "Expected ft_unsetenv to remove EMPTY");
+	cr_expect_not_null(g_globals->env, "Expected env to still have members");
+	cr_expect_eq(ret, 0, "Expected ft_unsetenv to return 0 on success");
+	destroy_globals();
+}
+
+Test(env_utils_suite, ft_unsetenv_underscore_test) {
+	char *envp[] = { "PATH", "PATHA=ko", "USER=lpassera", "EMPTY=", "MINI_SHELL=something", NULL };
+	init_globals(envp);
+	int ret = ft_unsetenv("MINI_SHELL");
+	t_dict *env = ft_getenv("MINI_SHELL");
+
+	cr_expect_null(env, "Expected ft_unsetenv to remove MINI_SHELL");
 	cr_expect_not_null(g_globals->env, "Expected env to still have members");
 	cr_expect_eq(ret, 0, "Expected ft_unsetenv to return 0 on success");
 	destroy_globals();
