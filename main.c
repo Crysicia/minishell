@@ -37,7 +37,9 @@ void	execute_all_the_commands(t_list *list)
 	{
 		command = tmp->content;
 		if (command->type == simple_command)
+		{
 			ret = evaluate_token(&command->words);
+		}
 		else
 			puts("pipeline is not implemented");
 		tmp = tmp->next;

@@ -37,3 +37,23 @@ void	free_pipeline(void *to_free)
 	free(ptr);
 	ptr = NULL;
 }
+
+bool	check_if_pipeline(t_simple_command	*command)
+{
+	t_list	*node;
+	t_token	*token;
+
+	if (command->redirections)
+		return (0);
+	node = command->words;
+	while (node && node->next)
+		node = node->next;
+	token = node->content;
+	if (!ft_strncmp(token->cmd, "|", 2))
+	{
+		command->type = pipeline;
+		return (1);
+	}
+	else
+		return (0);
+}

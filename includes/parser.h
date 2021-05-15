@@ -54,5 +54,7 @@ t_simple_command	*parse_simple_command(char **line);
 void				parse_redirection(char **line,
 						t_simple_command *command,
 						struct s_token *token);
+t_pipeline			*parse_pipeline_command(char **line,
+						t_simple_command *first);
 
 #endif

@@ -45,7 +45,8 @@ t_list	*parser_loop(char *line)
 	while (*ptr)
 	{
 		last = ft_lstnew(parse_simple_command(&ptr));
-		check_if_pipeline(last->content);
+		if (check_if_pipeline(last->content))
+			last = (void *)parse_pipeline_command(&ptr, last->content);
 		ft_lstadd_back(&parsed_list, last);
 	}
 	return (parsed_list);
@@ -66,7 +67,7 @@ t_simple_command	*parse_simple_command(char **line)
 		{
 			if (is_redirection(token->cmd))
 				parse_redirection(line, save, token);
-			else if (ft_strchr("|;", *token->cmd))
+			else if (ft_strchr("|", *token->cmd))
 			{
 				ft_lstadd_back(&(save->words), new_word);
 				break ;
@@ -98,24 +99,6 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 		display_error("syntax error near unexpected token", NULL);
 }
 
-bool	check_if_pipeline(t_simple_command	*command)
-{
-	t_list	*node;
-	t_token	*token;
-
-	if (command->redirections)
-		return (0);
-	node = command->words;
-	while (node)
-	{
-		token = node->content;
-		if (!ft_strncmp(token->cmd, "|", 2))
-			return (1);
-		node = node->next;
-	}
-	return (0);
-}
-/*
 t_pipeline	*parse_pipeline_command(char **line, t_simple_command *first)
 {
 	t_pipeline			*new;
@@ -128,6 +111,6 @@ t_pipeline	*parse_pipeline_command(char **line, t_simple_command *first)
 		command = parse_simple_command(line);
 		ft_lstadd_back(&new->commands, ft_lstnew(command));
 	}
+	printf("hello\n");
 	return (new);
 }
-*/
