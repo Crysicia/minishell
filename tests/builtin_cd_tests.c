@@ -49,19 +49,20 @@ ParameterizedTestParameters(cd_builtin, valid_path_tests)
 	static t_cd_testing test[] =
 	{
 		{.path = "", .expected_oldpwd = "/parent", .expected_pwd = "/parent", .res = 0},
+		{.path = "-", .expected_oldpwd = "/parent", .expected_pwd = "/parent/child", .res = 0},
 		{.path = ".", .expected_oldpwd = "/parent", .expected_pwd = "/parent", .res = 0},
 		{.path = "../", .expected_oldpwd = "/parent", .expected_pwd = "/", .res = 0},
 		{.path = "./", .expected_oldpwd = "/parent", .expected_pwd = "/parent", .res = 0},
 		{.path = "./child", .expected_oldpwd = "/parent", .expected_pwd = "/parent/child", .res = 0},
 		{.path = "/etc", .expected_oldpwd = "/parent", .expected_pwd = "/etc", .res = 0},
-		{.path = "totally_invalid_path", .expected_oldpwd = "", .expected_pwd = "/parent", .res = 1},
+		{.path = "totally_invalid_path", .expected_oldpwd = "/parent/child", .expected_pwd = "/parent", .res = 1}
 	};
 	return cr_make_param_array(t_cd_testing, test, sizeof(test)/sizeof(t_cd_testing));
 }
 
 ParameterizedTest(t_cd_testing *params, cd_builtin, valid_path_tests, .init=init_filesystem, .fini=destroy_filesystem)
 {
-	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=","PWD=/parent", NULL };
+	char *test_var[] = {"HOME=/root","LANG=fr","NAME=pierre","OLDPWD=/parent/child","PWD=/parent", NULL };
 	init_globals(test_var);
 	t_dict *oldpwd = ft_getenv("OLDPWD");
 	t_dict *pwd = ft_getenv("PWD");
