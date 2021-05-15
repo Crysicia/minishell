@@ -13,48 +13,13 @@
 #include "../includes/header.h"
 #include "../includes/token.h"
 
-t_list	*parse_to_list(char *line)
-{
-	char	*ptr;
-	t_token	*token;
-	t_list	*tokens;
-	t_list	*node;
-
-	ptr = line;
-	tokens = NULL;
-	while (*ptr)
-	{
-		token = get_next_token(ptr);
-		node = ft_lstnew(token);
-		if (!token || !node)
-		{
-			if (token)
-				free_token(token);
-			ft_lstclear(&tokens, free_token);
-			return (NULL);
-		}
-		ft_lstadd_back(&tokens, node);
-		ptr = ft_strnstr(ptr, token->cmd, ft_strlen(ptr));
-		ptr += ft_strlen(token->cmd);
-	}
-	return (tokens);
-}
-
-/*
-
-t_pipeline	*parse_pipeline(void)
-{
-
-}
-*/
-
 size_t	count_command_words(t_list *list)
 {
 	size_t	index;
 	t_list	*tmp;
 	t_token	*tok;
 
-	index = 1;
+	index = 0;
 	tmp = list;
 	tok = tmp->content;
 	while (tmp && (tok->role == word))
@@ -77,7 +42,7 @@ char	**command_format(t_list **list)
 
 	count = 0;
 	index = count_command_words(*list);
-	tab = malloc(index *sizeof(char **));
+	tab = malloc((index + 1) * sizeof(char **));
 	if (!tab)
 		ft_malloc_error();
 	while (count < index)
@@ -88,9 +53,6 @@ char	**command_format(t_list **list)
 		count++;
 		*list = (*list)->next;
 	}
-//	if (*list && (((t_token *)(*list)->content)->role == operator)
-//			&& ft_strncmp(((t_token *)(*list)->content)->cmd, ";", 2))
-//		*list = (*list)->next;
 	tab[count] = NULL;
 	return (tab);
 }

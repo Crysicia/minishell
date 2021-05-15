@@ -44,6 +44,9 @@ typedef struct s_pipeline
 t_simple_command	*new_simple_command(void);
 t_redirection		*new_redirection(void);
 t_pipeline			*new_pipeline(t_simple_command *first);
+void				free_simple_command(void *to_free);
+void				free_redirection(void *to_free);
+
 bool				check_if_pipeline(t_simple_command *command);
 
 t_list				*parser_loop(char *line);

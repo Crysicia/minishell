@@ -22,10 +22,12 @@ RAW_SRCS		= builtin_cd.c \
 				  builtin_pwd.c \
 				  builtin_unset.c \
 				  builtin_utils.c \
+				  commands.c \
 				  dict_utils.c \
 				  dollar_expansion.c \
 				  env_utils.c \
 				  error.c \
+				  evaluation.c \
 				  exec.c \
 				  exec_builtin.c \
 				  flagger.c \
@@ -35,10 +37,9 @@ RAW_SRCS		= builtin_cd.c \
 				  input.c \
 				  parse_command.c \
 				  parser.c \
-				  parser_utils.c \
 				  path_utils.c \
+				  pipelines.c \
 				  token.c \
-				  token_eval.c \
 				  token_fcts.c \
 				  token_quote_removal.c \
 				  token_utils.c \
@@ -102,6 +103,10 @@ clean:
 fclean: clean
 	@echo $(RED)"Removing minishell and tests ..."$(RST)
 	@$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
+
+fsan: fclean $(LIBFT)
+	${CC} ${CFLAGS} -fsanitize=address ${HEADERS} ${LIBS} ${SRCS} libft/libft.a -o debug
+	./debug
 
 re: fclean all
 
