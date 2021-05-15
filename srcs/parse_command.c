@@ -54,7 +54,7 @@ size_t	count_command_words(t_list *list)
 	t_list	*tmp;
 	t_token	*tok;
 
-	index = 0;
+	index = 1;
 	tmp = list;
 	tok = tmp->content;
 	while (tmp && (tok->role == word))
@@ -77,7 +77,7 @@ char	**command_format(t_list **list)
 
 	count = 0;
 	index = count_command_words(*list);
-	tab = malloc(sizeof(char **) * (index + 1));
+	tab = malloc(index *sizeof(char **));
 	if (!tab)
 		ft_malloc_error();
 	while (count < index)
@@ -88,9 +88,9 @@ char	**command_format(t_list **list)
 		count++;
 		*list = (*list)->next;
 	}
-	if (*list && (((t_token *)(*list)->content)->role == operator)
-			&& ft_strncmp(((t_token *)(*list)->content)->cmd, ";", 2))
-		*list = (*list)->next;
+//	if (*list && (((t_token *)(*list)->content)->role == operator)
+//			&& ft_strncmp(((t_token *)(*list)->content)->cmd, ";", 2))
+//		*list = (*list)->next;
 	tab[count] = NULL;
 	return (tab);
 }
