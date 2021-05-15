@@ -39,16 +39,23 @@ t_list	*parser_loop(char *line)
 	char	*ptr;
 	t_list	*parsed_list;
 	t_list	*last;
+	t_block	*node;
 
 	ptr = line;
 	parsed_list = NULL;
+	puts("call in parser loop");
 	while (*ptr)
 	{
 		last = ft_lstnew(parse_simple_command(&ptr));
 		if (check_if_pipeline(last->content))
+		{
+			puts("pipeline pattern recognized");
 			last = (void *)parse_pipeline_command(&ptr, last->content);
+			printf("%p %p\n", last, &last->content);
+		}
 		ft_lstadd_back(&parsed_list, last);
 	}
+	puts("hello");
 	return (parsed_list);
 }
 
@@ -67,8 +74,10 @@ t_simple_command	*parse_simple_command(char **line)
 		{
 			if (is_redirection(token->cmd))
 				parse_redirection(line, save, token);
-			else if (ft_strchr("|", *token->cmd))
+			else if (ft_strchr(";|", *token->cmd))
 			{
+				if (ft_strchr("|", *token->cmd))
+					save->type = pipeline;
 				ft_lstadd_back(&(save->words), new_word);
 				break ;
 			}
@@ -103,14 +112,19 @@ t_pipeline	*parse_pipeline_command(char **line, t_simple_command *first)
 {
 	t_pipeline			*new;
 	t_simple_command	*command;
+	t_list 				*node;
 
 	new = new_pipeline(first);
 	command = first;
+	puts("call in parse pipeline");
+	puts(*line);
 	while (check_if_pipeline(command))
 	{
+		puts("test parse simple in pipeline");
 		command = parse_simple_command(line);
-		ft_lstadd_back(&new->commands, ft_lstnew(command));
+		puts("test parse simple in pipeline");
+		node = ft_lstnew(command);
+		ft_lstadd_back(&new->commands, node);
 	}
-	printf("hello\n");
 	return (new);
 }

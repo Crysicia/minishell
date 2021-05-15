@@ -46,14 +46,18 @@ bool	check_if_pipeline(t_simple_command	*command)
 	if (command->redirections)
 		return (0);
 	node = command->words;
+	token = node->content;
+	puts(token->cmd);
+	printf("lst len %d\n", ft_lstsize(node));
 	while (node && node->next)
 		node = node->next;
 	token = node->content;
-	if (!ft_strncmp(token->cmd, "|", 2))
+	if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
 	{
 		command->type = pipeline;
+		ft_lstdelone(node, free_token);
 		return (1);
 	}
-	else
-		return (0);
+	puts("not a pipeline");
+	return (0);
 }

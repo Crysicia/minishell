@@ -54,6 +54,8 @@ void	print_command_list(t_list *list)
 		command = list->content;
 		if (command->type == simple_command)
 			print_simple_command_node(node);
+		else if (command->type == pipeline)
+			puts("hello pipeline");
 		node = node->next;
 	}
 }
