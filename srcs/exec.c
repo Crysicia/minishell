@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/28 12:14:56 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/05/15 10:09:17 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*find_exe_path(char *command)
 
 int	set_status_code(int code, bool from_builtin)
 {
+	printf("ERRNO: %s\n", strerror(errno));
 	if (from_builtin)
 		return (g_globals->status = code);
 	g_globals->status = WEXITSTATUS(code);
