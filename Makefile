@@ -38,6 +38,7 @@ RAW_SRCS		= builtin_cd.c \
 				  parse_command.c \
 				  parser.c \
 				  parser_block.c \
+				  parser_utils.c \
 				  path_utils.c \
 				  pipelines.c \
 				  token.c \

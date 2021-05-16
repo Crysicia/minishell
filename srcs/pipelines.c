@@ -55,7 +55,6 @@ bool	check_if_pipeline(t_simple_command	*command)
 	if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
 	{
 		command->type = pipeline;
-		ft_lstdelone(node, free_token);
 		return (1);
 	}
 	puts("not a pipeline");

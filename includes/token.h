@@ -32,7 +32,6 @@ typedef struct s_token
 t_list		*command_parse(char *line);
 int			evaluate_token(t_list **list);
 t_tok_type	get_next_tok_type(char *str);
-t_tok_type	attribute_tok_type(char chr);
 t_token		*get_next_token(char *line);
 t_token		*get_next_token_rework(char **line);
 

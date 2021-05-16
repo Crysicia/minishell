@@ -35,32 +35,28 @@ t_list	*parser_loop(char *line)
 {
 	char	*ptr;
 	t_list	*parsed_list;
-	t_list	*last;
-//	t_block	*node;
+	t_block	*node;
 
 	ptr = line;
 	parsed_list = NULL;
-	puts("call in parser loop");
 	while (*ptr)
 	{
-		last = ft_lstnew(parse_simple_command(&ptr));
-		if (check_if_pipeline(last->content))
+		node = parse_simple_command(&ptr);
+		if (node->id == pipeline)
 		{
-			puts("pipeline pattern recognized");
-			last = (void *)parse_pipeline_command(&ptr, last->content);
-			printf("%p %p\n", last, &last->content);
+			parse_pipeline_command(&ptr, node);
 		}
-		ft_lstadd_back(&parsed_list, last);
+		ft_lstadd_back(&parsed_list, ft_lstnew(node));
 	}
-	puts("hello");
 	return (parsed_list);
 }
 
-t_simple_command	*parse_simple_command(char **line)
+t_block	*parse_simple_command(char **line)
 {
 	t_simple_command	*save;
 	t_token				*token;
 	t_list				*new_word;
+	t_block				*node;
 
 	save = new_simple_command();
 	while (**line)
@@ -74,7 +70,10 @@ t_simple_command	*parse_simple_command(char **line)
 		if (token->role == operator)
 			break ;
 	}
-	return (save);
+	node = new_block();
+	node->id = attribute_command_type(save->words);
+	node->kind.cmd = save;
+	return (node);
 }
 /* 			else if (!ft_strncmp("|", token->cmd, 2)) {;}			*/
 
@@ -97,23 +96,22 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 		display_error("syntax error near unexpected token", NULL);
 }
 
-t_pipeline	*parse_pipeline_command(char **line, t_simple_command *first)
+void	parse_pipeline_command(char **line, t_block *block)
 {
 	t_pipeline			*new;
 	t_simple_command	*command;
+	t_block				*tmp;
 	t_list 				*node;
 
-	new = new_pipeline(first);
-	command = first;
-	puts("call in parse pipeline");
-	puts(*line);
+	new = new_pipeline(block->kind.cmd);
+	command = (block->kind.cmd);
 	while (check_if_pipeline(command))
 	{
-		puts("test parse simple in pipeline");
-		command = parse_simple_command(line);
-		puts("test parse simple in pipeline");
-		node = ft_lstnew(command);
+		tmp = parse_simple_command(line);
+		command = tmp->kind.cmd;
+		node = ft_lstnew(tmp);
 		ft_lstadd_back(&new->commands, node);
+		new->pipe_count += 1;
 	}
-	return (new);
+	block->kind.pipe = new;
 }

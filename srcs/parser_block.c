@@ -30,3 +30,11 @@ t_block	*new_block(void)
 //	else if (ptr->id == pipeline)
 //		free_pipeline(ptr->kind.pipe);
  }
+
+void	set_block_ptr(t_block *block, void *ptr)
+{
+	if (block->id == simple_command)
+		block->kind.cmd = ptr;
+	else if (block->id == pipeline)
+		block->kind.pipe = ptr;
+}

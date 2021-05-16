@@ -54,20 +54,25 @@ typedef	struct s_block
 }				t_block;
 
 t_block				*new_block(void);
+void				set_block_ptr(t_block *block, void *ptr);
+void				free_block(void *to_free);
+
 t_simple_command	*new_simple_command(void);
 t_redirection		*new_redirection(void);
 t_pipeline			*new_pipeline(t_simple_command *first);
-void				free_block(void *to_free);
 void				free_simple_command(void *to_free);
 void				free_redirection(void *to_free);
 bool				check_if_pipeline(t_simple_command *command);
 
+t_command_type		attribute_command_type(t_list *words);
+
+
 t_list				*parser_loop(char *line);
-t_simple_command	*parse_simple_command(char **line);
+t_block				*parse_simple_command(char **line);
 void				parse_redirection(char **line,
 						t_simple_command *command,
 						struct s_token *token);
-t_pipeline			*parse_pipeline_command(char **line,
-						t_simple_command *first);
+void				parse_pipeline_command(char **line,
+						t_block *block);
 
 #endif
