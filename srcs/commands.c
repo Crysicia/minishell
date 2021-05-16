@@ -33,8 +33,8 @@ void	free_simple_command(void *to_free)
 	t_simple_command	*ptr;
 
 	ptr = to_free;
-	ft_lstclear(&ptr->words, free_token);
-	ft_lstclear(&ptr->redirections, free_redirection);
+	ft_lstclear(&(ptr->words), free_token);
+	ft_lstclear(&(ptr->redirections), free_redirection);
 	free(ptr);
 	ptr = NULL;
 }

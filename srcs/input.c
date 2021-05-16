@@ -13,15 +13,13 @@
 #include "../includes/header.h"
 #include <stdbool.h>
 
-/*
-void	print_simple_command_node(t_list *list)
+
+void	print_simple_command_node(t_simple_command *command)
 {
-	t_simple_command	*command;
 	t_list				*node;
 	t_token				*tmp;
 	t_redirection		*tmp2;
 
-	command = list->content;
 	puts("printing words list");
 	node = command->words;
 	while (node)
@@ -43,24 +41,23 @@ void	print_simple_command_node(t_list *list)
 
 void	print_command_list(t_list *list)
 {
-	t_list				*node;
-	t_simple_command	*command;
-	int					i;
+	t_list	*node;
+	t_block	*command;
+	int		i;
 
 	node = list;
 	i = 0;
 	while (node)
 	{
 		printf("\nNODE [%d]\n", i++);
-		command = list->content;
-		if (command->type == simple_command)
-			print_simple_command_node(node);
-		else if (command->type == pipeline)
+		command = node->content;
+		if (command->id == simple_command)
+			print_simple_command_node(command->kind.cmd);
+		else if (command->id == pipeline)
 			puts("hello pipeline");
 		node = node->next;
 	}
 }
-*/
 
 bool	gnl_loop_function(char *line)
 {

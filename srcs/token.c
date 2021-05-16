@@ -33,20 +33,3 @@ void	free_token(void *token)
 	free(token);
 	token = NULL;
 }
-
-t_token	*get_next_token(char *line)
-{
-	t_tok_type	role;
-	char		*cmd;
-
-	skip_spaces(&line);
-	if (is_operator(line))
-		role = operator;
-	else
-		role = word;
-	cmd = cut_token_string(line);
-	if (cmd)
-		return (new_token(cmd, role));
-	else
-		return (NULL);
-}

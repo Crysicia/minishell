@@ -12,19 +12,32 @@
 
 #include "../includes/header.h"
 
-t_command_type	attribute_command_type(t_list *words)
+t_token		*get_last_node_toktype(t_list	*list)
 {
 	t_list		*tmp;
 	t_token		*tok;
-	t_tok_type	type;
 
-	tmp = words;
+	tmp = list;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
 	tok = tmp->content;
-	type = get_token_role(tok->cmd);
-	if ((type == operator) && (!ft_strncmp("|", tok->cmd, 2)))
-		return (pipeline);
+	return (tok);
+}
+
+t_command_type	attribute_command_type(t_simple_command *command)
+{
+	t_token	*token;
+
+	if ((!command->words) && (!command->redirections))
+		return (error);
+	else if ((!command->words) && (command->redirections))
+		return (only_redirections);
 	else
-		return (simple_command);
+	{
+		token = get_last_node_toktype(command->words);
+		if ((token->role == operator) && (!ft_strncmp("|", token->cmd, 2)))
+			return (pipeline);
+		else
+			return (simple_command);
+	}
 }

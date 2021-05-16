@@ -61,10 +61,13 @@ int	main(int argc, char *argv[], char *envp[])
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
+		print_command_list(input_list);
 		execute_all_the_commands(input_list);
+		ft_lstclear(&input_list, free_block);
+		free(input_str);
 	}
 	(void)argv;
 	return (0);
 }
 
-/*	//		print_command_list(input_list); */
+/*	//		 */

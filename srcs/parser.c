@@ -13,19 +13,17 @@
 #include "../includes/header.h"
 #include "../includes/token.h"
 
-t_token	*get_next_token_rework(char **line)
+t_token	*get_next_token(char **line)
 {
-	t_tok_type	role;
 	char		*cmd;
 
 	skip_spaces(line);
-	role = get_token_role(*line);
 	cmd = cut_token_string(*line);
 	if (cmd)
 	{
 		*line = ft_strnstr(*line, cmd, ft_strlen(cmd));
 		*line += ft_strlen(cmd);
-		return (new_token(cmd, role));
+		return (new_token(cmd, get_token_role(cmd)));
 	}
 	else
 		return (NULL);
@@ -55,23 +53,21 @@ t_block	*parse_simple_command(char **line)
 {
 	t_simple_command	*save;
 	t_token				*token;
-	t_list				*new_word;
 	t_block				*node;
 
 	save = new_simple_command();
 	while (**line)
 	{
-		token = get_next_token_rework(line);
-		new_word = ft_lstnew_safe(token, free_token);
+		token = get_next_token(line);
 		if (token->role == redirection)
 			parse_redirection(line, save, token);
 		else
-			ft_lstadd_back(&(save->words), new_word);
+			ft_lstadd_back(&(save->words), ft_lstnew_safe(token, free_token));
 		if (token->role == operator)
 			break ;
 	}
 	node = new_block();
-	node->id = attribute_command_type(save->words);
+	node->id = attribute_command_type(save);
 	node->kind.cmd = save;
 	return (node);
 }
@@ -84,12 +80,14 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 	t_token			*file;
 
 	puts("hello");
-	file = get_next_token_rework(line);
+	file = get_next_token(line);
 	if (file->role == word)
 	{
 		new_redir = new_redirection();
 		new_redir->operator = tok;
+		puts(new_redir->operator->cmd);
 		new_redir->file = file;
+		puts(new_redir->file->cmd);
 		new_node = ft_lstnew(new_redir);
 		ft_lstadd_back(&(command->redirections), new_node);
 	}

@@ -108,7 +108,7 @@ int		set_status_code(int code, bool from_builtin);
 /* TMP UTILS */
 
 void	print_token_list(t_list *list);
-void	print_simple_command_node(t_list *list);
+void	print_simple_command_node(t_simple_command *command);
 void	print_command_list(t_list *list);
 /* Error managment */
 void	ft_malloc_error(void);

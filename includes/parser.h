@@ -18,7 +18,9 @@
 typedef enum e_command_type
 {
 	simple_command,
-	pipeline
+	pipeline,
+	only_redirections,
+	error
 }				t_command_type;
 
 typedef struct s_redirection
@@ -62,7 +64,7 @@ void				free_simple_command(void *to_free);
 void				free_redirection(void *to_free);
 bool				check_if_pipeline(t_simple_command *command);
 
-t_command_type		attribute_command_type(t_list *words);
+t_command_type		attribute_command_type(t_simple_command *command);
 
 t_list				*parser_loop(char *line);
 t_block				*parse_simple_command(char **line);
