@@ -6,12 +6,13 @@
 
 Test(parsing_suite, parsing_simple_cmd_test_1)
 {
-	char	line[50] = "ls -laaaa file;";
+	char	*line = "ls -laaaa file;";
 
-	t_block	*result;
+	t_list	*result;
+	t_block	*try;
+	result = parser_loop(line);
+	try = result->content;
+	cr_expect_eq(try->id, simple_command);
 
-	result = parser_loop(&line);
-	cr_expect_eq(result->id, simple_command);
-	
 
 }

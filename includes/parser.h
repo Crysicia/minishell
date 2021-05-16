@@ -29,14 +29,12 @@ typedef struct s_redirection
 
 typedef struct s_simple_command
 {
-	t_command_type	type;
 	struct s_list	*words;
 	struct s_list	*redirections;
 }				t_simple_command;
 
 typedef struct s_pipeline
 {
-	t_command_type	type;
 	int				pipe_count;
 	struct s_list	*commands;
 }				t_pipeline;

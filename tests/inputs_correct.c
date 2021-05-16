@@ -2,6 +2,7 @@
 #include <criterion/parameterized.h>
 #include "../includes/token.h"
 #include "../includes/header.h"
+#include "../includes/parser.h"
 #include <string.h>
 
 
@@ -23,7 +24,7 @@ ParameterizedTestParameters(parser_suite, redirection_parse_test) {
 
 		{ .expected = "<", .role = operator, .input = "<file"},
 		{ .expected = ">", .role = operator, .input = ">file" },
-		 { .expected = ">>", .role = operator, .input = ">>file" },
+		 { .expected = ">>", .role = operator, .input = ">>file;" },
 	//Testing with random spaces added
 
 		{ .expected = "<", .role = operator, .input = "< file"},
@@ -39,16 +40,28 @@ ParameterizedTestParameters(parser_suite, redirection_parse_test) {
 ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, redirection_parse_test)
 {
 	char *line = tests->input;
-	t_simple_command *llist;
-	llist = parse_simple_command(&line);
-	t_redirection *redir = llist->redirections->content;
+	t_block *raw_result;
+	raw_result = parse_simple_command(&line);
+	if (raw_result->id == simple_command)
+		cr_log_warn("simplecommand recognized\n");
+	t_simple_command	*testerino = raw_result->kind.cmd;
+	cr_log_warn("hello1\n");
+	t_redirection *redir =  testerino->redirections->content;
+	cr_log_warn("hello2\n");
 	t_token *token = redir->operator;
+		cr_log_warn("hello3\n");
+	if (token->cmd)
+		cr_log_warn("token %s\n", token->cmd);
+	else
+		cr_log_warn("hello4\n");
+
 	cr_expect(strcmp(token->cmd, tests->expected) == 0,
 			 "expected [%s] output for [%s] input, instead, fct returned [%s]",
 			  tests->expected, tests->input, token->cmd);
 	cr_expect(token->role == tests->role,
 			 "expected [%d] and got [%d] instead, input: [%s]",
 			  tests->role, token->role, tests->input);
+
 }
 
 // test echo bonjour, get two token echo and bonjour and on last eventual redir
@@ -104,14 +117,14 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 ParameterizedTest(scmd_test *tests, parser_suite, simple_command_parse_test)
 {
 	char *line = tests->input;
-	t_simple_command *llist;
+	t_block *llist;
 	llist = parse_simple_command(&line);
 
 	t_list *tmp;
 	t_token	*token;
 	int i;
 
-	tmp = llist->words;
+	tmp = llist->kind.cmd->words;
 	i = 0;
 	while (tmp)
 	{
@@ -130,7 +143,7 @@ if (tests->expected[20][0])
 		t_token	*token;
 		int word_index;
 		int	redir_index;
-		tmp = llist->redirections;
+		tmp = llist->kind.cmd->redirections;
 		word_index = 0;
 		redir_index = 20;
 		t_redirection *redir;

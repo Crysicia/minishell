@@ -20,7 +20,6 @@ t_simple_command	*new_simple_command(void)
 	new = malloc(sizeof(t_simple_command));
 	if (new)
 	{
-		new->type = simple_command;
 		new->words = NULL;
 		new->redirections = NULL;
 	}

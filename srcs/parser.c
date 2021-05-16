@@ -83,6 +83,7 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 	t_redirection	*new_redir;
 	t_token			*file;
 
+	puts("hello");
 	file = get_next_token_rework(line);
 	if (file->role == word)
 	{
@@ -94,6 +95,7 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 	}
 	else
 		display_error("syntax error near unexpected token", NULL);
+	puts("helloe");
 }
 
 void	parse_pipeline_command(char **line, t_block *block)

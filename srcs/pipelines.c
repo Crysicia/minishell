@@ -21,7 +21,6 @@ t_pipeline	*new_pipeline(t_simple_command *first)
 	new->commands = ft_lstnew(first);
 	if (new && new->commands)
 	{
-		new->type = pipeline;
 		new->pipe_count = 1;
 	}
 	else
@@ -54,7 +53,6 @@ bool	check_if_pipeline(t_simple_command	*command)
 	token = node->content;
 	if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
 	{
-		command->type = pipeline;
 		return (1);
 	}
 	puts("not a pipeline");

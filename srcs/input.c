@@ -13,6 +13,7 @@
 #include "../includes/header.h"
 #include <stdbool.h>
 
+/*
 void	print_simple_command_node(t_list *list)
 {
 	t_simple_command	*command;
@@ -59,6 +60,7 @@ void	print_command_list(t_list *list)
 		node = node->next;
 	}
 }
+*/
 
 bool	gnl_loop_function(char *line)
 {
