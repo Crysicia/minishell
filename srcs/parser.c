@@ -19,10 +19,7 @@ t_token	*get_next_token_rework(char **line)
 	char		*cmd;
 
 	skip_spaces(line);
-	if (is_operator(*line))
-		role = operator;
-	else
-		role = word;
+	role = get_token_role(*line);
 	cmd = cut_token_string(*line);
 	if (cmd)
 	{
@@ -39,7 +36,7 @@ t_list	*parser_loop(char *line)
 	char	*ptr;
 	t_list	*parsed_list;
 	t_list	*last;
-	t_block	*node;
+//	t_block	*node;
 
 	ptr = line;
 	parsed_list = NULL;
@@ -70,20 +67,12 @@ t_simple_command	*parse_simple_command(char **line)
 	{
 		token = get_next_token_rework(line);
 		new_word = ft_lstnew_safe(token, free_token);
-		if (token->role == operator)
-		{
-			if (is_redirection(token->cmd))
-				parse_redirection(line, save, token);
-			else if (ft_strchr(";|", *token->cmd))
-			{
-				if (ft_strchr("|", *token->cmd))
-					save->type = pipeline;
-				ft_lstadd_back(&(save->words), new_word);
-				break ;
-			}
-		}
+		if (token->role == redirection)
+			parse_redirection(line, save, token);
 		else
 			ft_lstadd_back(&(save->words), new_word);
+		if (token->role == operator)
+			break ;
 	}
 	return (save);
 }

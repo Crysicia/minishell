@@ -44,3 +44,16 @@ bool	is_redirection(char *str)
 	else
 		return (0);
 }
+
+t_tok_type	get_token_role(char *line)
+{
+	t_tok_type role;
+
+	if (is_operator(line))
+		role = operator;
+	else if (is_redirection(line))
+		role = redirection;
+	else
+		role = word;
+	return (role);
+}

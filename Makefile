@@ -37,6 +37,7 @@ RAW_SRCS		= builtin_cd.c \
 				  input.c \
 				  parse_command.c \
 				  parser.c \
+				  parser_block.c \
 				  path_utils.c \
 				  pipelines.c \
 				  token.c \
@@ -63,6 +64,7 @@ TEST_RAW_SRCS	= test_helpers.c \
 				  expansion_tests.c \
 				  inputs_correct.c \
 				  path_utils_tests.c \
+				  parser_tests.c \
 				  quotes_tests.c \
 				  token_eval_tests.c \
 				  tokenizer_ftests.c \

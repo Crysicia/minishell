@@ -1,13 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   parser_block.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/10 07:41:15 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 17:06:55 by pcharton         ###   ########.fr       */
+/*   Created: 2021/05/16 11:56:14 by pcharton          #+#    #+#             */
+/*   Updated: 2021/05/16 11:56:14 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+
+t_block	*new_block(void)
+ {
+	t_block	*new;
+
+	new = malloc(sizeof(t_block));
+	return (new);
+ }
+
+ void	free_block(void *to_free)
+ {
+	t_block	*ptr;
+
+	ptr = to_free;
+	if (ptr->id == simple_command)
+		free_simple_command(ptr->kind.cmd);
+//	else if (ptr->id == pipeline)
+//		free_pipeline(ptr->kind.pipe);
+ }
