@@ -41,16 +41,16 @@ typedef struct s_pipeline
 	struct s_list	*commands;
 }				t_pipeline;
 
-typedef	union u_kind
+typedef union u_kind
 {
 	struct s_simple_command	*cmd;
 	struct s_pipeline		*pipe;
 }			t_kind;
 
-typedef	struct s_block
+typedef struct s_block
 {
 	t_command_type	id;
-	t_kind	kind;
+	t_kind			kind;
 }				t_block;
 
 t_block				*new_block(void);
@@ -65,7 +65,6 @@ void				free_redirection(void *to_free);
 bool				check_if_pipeline(t_simple_command *command);
 
 t_command_type		attribute_command_type(t_list *words);
-
 
 t_list				*parser_loop(char *line);
 t_block				*parse_simple_command(char **line);

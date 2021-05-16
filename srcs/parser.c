@@ -101,7 +101,7 @@ void	parse_pipeline_command(char **line, t_block *block)
 	t_pipeline			*new;
 	t_simple_command	*command;
 	t_block				*tmp;
-	t_list 				*node;
+	t_list				*node;
 
 	new = new_pipeline(block->kind.cmd);
 	command = (block->kind.cmd);

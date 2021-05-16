@@ -27,18 +27,18 @@ void	handle_sigint(int signal)
 
 void	execute_all_the_commands(t_list *list)
 {
-	t_list				*tmp;
-	t_simple_command	*command;
-	int					ret;
+	t_list		*tmp;
+	t_block		*ptr;
+	int			ret;
 
 	ret = 0;
 	tmp = list;
 	while (tmp && (ret != -1))
 	{
-		command = tmp->content;
-		if (command->type == simple_command)
+		ptr = tmp->content;
+		if (ptr->id == simple_command)
 		{
-			ret = evaluate_token(&command->words);
+			ret = evaluate_token(&ptr->kind.cmd->words);
 		}
 		else
 			puts("pipeline is not implemented");
@@ -61,9 +61,10 @@ int	main(int argc, char *argv[], char *envp[])
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
-			print_command_list(input_list);
 		execute_all_the_commands(input_list);
 	}
 	(void)argv;
 	return (0);
 }
+
+/*	//		print_command_list(input_list); */

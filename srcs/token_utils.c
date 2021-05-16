@@ -47,7 +47,7 @@ bool	is_redirection(char *str)
 
 t_tok_type	get_token_role(char *line)
 {
-	t_tok_type role;
+	t_tok_type	role;
 
 	if (is_operator(line))
 		role = operator;
