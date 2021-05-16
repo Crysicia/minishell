@@ -79,21 +79,17 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 	t_redirection	*new_redir;
 	t_token			*file;
 
-	puts("hello");
 	file = get_next_token(line);
 	if (file->role == word)
 	{
 		new_redir = new_redirection();
 		new_redir->operator = tok;
-		puts(new_redir->operator->cmd);
 		new_redir->file = file;
-		puts(new_redir->file->cmd);
 		new_node = ft_lstnew(new_redir);
 		ft_lstadd_back(&(command->redirections), new_node);
 	}
 	else
 		display_error("syntax error near unexpected token", NULL);
-	puts("helloe");
 }
 
 void	parse_pipeline_command(char **line, t_block *block)

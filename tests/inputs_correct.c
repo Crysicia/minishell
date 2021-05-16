@@ -22,14 +22,14 @@ ParameterizedTestParameters(parser_suite, redirection_parse_test) {
 	static t_testing_cmd_parse tests[] = {
 	//Normal usage testing
 
-		{ .expected = "<", .role = operator, .input = "<file"},
-		{ .expected = ">", .role = operator, .input = ">file" },
-		 { .expected = ">>", .role = operator, .input = ">>file;" },
+		{ .expected = "<", .role = redirection, .input = "<file"},
+		{ .expected = ">", .role = redirection, .input = ">file" },
+		 { .expected = ">>", .role = redirection, .input = ">>file;" },
 	//Testing with random spaces added
 
-		{ .expected = "<", .role = operator, .input = "< file"},
-		{ .expected = ">", .role = operator, .input = ">file" },
-		 { .expected = ">>", .role = operator, .input = "    >>file" },
+		{ .expected = "<", .role = redirection, .input = "< file"},
+		{ .expected = ">", .role = redirection, .input = ">file" },
+		 { .expected = ">>", .role = redirection, .input = "    >>file" },
 	//Testing with double quotes added
 		// { .expected = "\">>\"", .role = tok_command, .input = "\">>\"" },
 	};
@@ -42,19 +42,9 @@ ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, redirection_parse_te
 	char *line = tests->input;
 	t_block *raw_result;
 	raw_result = parse_simple_command(&line);
-	if (raw_result->id == simple_command)
-		cr_log_warn("simplecommand recognized\n");
 	t_simple_command	*testerino = raw_result->kind.cmd;
-	cr_log_warn("hello1\n");
 	t_redirection *redir =  testerino->redirections->content;
-	cr_log_warn("hello2\n");
 	t_token *token = redir->operator;
-		cr_log_warn("hello3\n");
-	if (token->cmd)
-		cr_log_warn("token %s\n", token->cmd);
-	else
-		cr_log_warn("hello4\n");
-
 	cr_expect(strcmp(token->cmd, tests->expected) == 0,
 			 "expected [%s] output for [%s] input, instead, fct returned [%s]",
 			  tests->expected, tests->input, token->cmd);
@@ -99,7 +89,7 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
 		 .expected[20] = ">>", .expected[21] = "file",
 		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
-		 .expected_type[20] = operator, .expected_type[21] = word },
+		 .expected_type[20] = redirection, .expected_type[21] = word },
 	//Normal usage testing
 
 

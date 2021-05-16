@@ -14,9 +14,9 @@ ParameterizedTestParameters(token_evaluation_suite, is_operator_test)
 		static tokens tests[] = {
 		{.input = ";", .type = operator, .expected = 1},
 		{.input = "|", .type = operator, .expected = 1},
-		{.input = ">", .type = operator, .expected = 1},
-		{.input = ">>", .type = operator, .expected = 1},
-		{.input = "<", .type = operator, .expected = 1},
+		{.input = ">", .type = redirection, .expected = 1},
+		{.input = ">>", .type = redirection, .expected = 1},
+		{.input = "<", .type = redirection, .expected = 1},
 		{.input = " ;", .type = word, .expected = 0},
 		{.input = ";n", .type = operator, .expected = 1},
 		{.input = " ;  ", .type = word, .expected = 0},
@@ -30,5 +30,8 @@ ParameterizedTest(tokens *params, token_evaluation_suite, is_operator_test)
 	t_token *token;
 
 	token = new_token(params->input, params->type);
-	cr_assert_eq(params->expected, is_operator(token->cmd));
+	if (params->type == redirection)
+		cr_assert_eq(params->expected, is_redirection(token->cmd));
+	else
+		cr_assert_eq(params->expected, is_operator(token->cmd));
 }

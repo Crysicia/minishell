@@ -13,7 +13,6 @@
 #include "../includes/header.h"
 #include <stdbool.h>
 
-
 void	print_simple_command_node(t_simple_command *command)
 {
 	t_list				*node;

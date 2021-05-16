@@ -39,5 +39,4 @@ void	set_block_ptr(t_block *block, void *ptr)
 		block->kind.cmd = ptr;
 	else if (block->id == pipeline)
 		block->kind.pipe = ptr;
-
 }

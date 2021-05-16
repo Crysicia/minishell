@@ -17,9 +17,9 @@
 
 typedef enum e_tok_type
 {
-	word,
 	operator,
-	redirection
+	redirection,
+	word
 }				t_tok_type;
 
 typedef struct s_token
@@ -34,9 +34,8 @@ int			evaluate_token(t_list **list);
 t_tok_type	get_next_tok_type(char *str);
 t_token		*get_next_token(char **line);
 
-
-void		free_token(void *token);
 t_token		*new_token(char *str, t_tok_type type);
+void		free_token(void *token);
 
 bool		is_valid_token(t_token tok);
 bool		is_operator(char *str);

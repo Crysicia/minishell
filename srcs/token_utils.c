@@ -38,7 +38,12 @@ bool	is_operator(char *str)
 
 bool	is_redirection(char *str)
 {
-	if (!ft_strncmp(str, ">>", 2) || (*str == '<') || (*str == '>'))
+	char	*ptr;
+
+	ptr = str;
+	if (((ft_strlen(ptr) >= 2) && (!ft_strncmp(ptr, ">>", 2)))
+		|| (*ptr == '<')
+		|| (*ptr == '>'))
 		return (1);
 	else
 		return (0);
@@ -49,19 +54,10 @@ t_tok_type	get_token_role(char *line)
 	t_tok_type	role;
 
 	if (is_operator(line))
-	{
-		puts("i saw an operator");
 		role = operator;
-	}
 	else if (is_redirection(line))
-	{
-		puts("i saw a redir");
 		role = redirection;
-	}
 	else
-	{
-		puts("i saw a word");
 		role = word;
-	}
 	return (role);
 }

@@ -47,14 +47,10 @@ bool	check_if_pipeline(t_simple_command	*command)
 	node = command->words;
 	token = node->content;
 	puts(token->cmd);
-	printf("lst len %d\n", ft_lstsize(node));
 	while (node && node->next)
 		node = node->next;
 	token = node->content;
 	if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
-	{
 		return (1);
-	}
-	puts("not a pipeline");
 	return (0);
 }

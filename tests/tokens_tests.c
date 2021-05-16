@@ -30,14 +30,14 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 		{ .input = ";    ", .expected = ";", .result_tok = operator },
 		
 		//testing > isolation
-		{ .input = ">", .expected = ">", .result_tok = operator},
-		{ .input = ">    ", .expected = ">", .result_tok = operator},
-		{ .input = ">file ", .expected = ">", .result_tok = operator},
+		{ .input = ">", .expected = ">", .result_tok = redirection},
+		{ .input = ">    ", .expected = ">", .result_tok = redirection},
+		{ .input = ">file ", .expected = ">", .result_tok = redirection},
 
 		//testing < isolation
-		{ .input = "<", .expected = "<", .result_tok = operator},
-		{ .input = "<     ", .expected = "<", .result_tok = operator},
-		{ .input = "<file", .expected = "<", .result_tok = operator},
+		{ .input = "<", .expected = "<", .result_tok = redirection},
+		{ .input = "<     ", .expected = "<", .result_tok = redirection},
+		{ .input = "<file", .expected = "<", .result_tok = redirection},
 		
 				//testing | isolation
 		{ .input = "|", .expected = "|", .result_tok = operator},
@@ -45,9 +45,9 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 
 		//testing >> isolation
 
-		{ .input = ">>", .expected = ">>", .result_tok = operator},
-		{ .input = ">>     ", .expected = ">>", .result_tok = operator},
-		{ .input = ">>file", .expected = ">>", .result_tok = operator},
+		{ .input = ">>", .expected = ">>", .result_tok = redirection},
+		{ .input = ">>     ", .expected = ">>", .result_tok = redirection},
+		{ .input = ">>file", .expected = ">>", .result_tok = redirection},
 	};
 	return (cr_make_param_array(tokens, tests, sizeof(tests)/sizeof(tokens)));
 }
@@ -55,8 +55,10 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 ParameterizedTest(tokens *params, token_attribution_suite, token_attribution_test)
 {
 	t_token *minishell;
+	char	*ptr;
 
-	minishell = get_next_token(params->input);
+	ptr = strdup(params->input);
+	minishell = get_next_token(&ptr);
 	cr_expect_str_eq(minishell->cmd, params->expected,
 	"Test_get_next_token = \nFor input : [%s] expected [%s] instead function returned [%s] instead",
 			  params->input, params->expected, minishell->cmd);

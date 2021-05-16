@@ -12,7 +12,7 @@
 
 #include "../includes/header.h"
 
-t_token		*get_last_node_toktype(t_list	*list)
+t_token	*get_last_node_toktype(t_list	*list)
 {
 	t_list		*tmp;
 	t_token		*tok;
