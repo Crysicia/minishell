@@ -24,7 +24,7 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 		{ .input = "echo", .expected = "echo", .result_tok = word },
 		{ .input = "echo       ", .expected = "echo", .result_tok = word },
 		{ .input = "echo;", .expected = "echo", .result_tok = word },
-		
+
 		//testing ; isolation
 		{ .input = ";", .expected = ";", .result_tok = operator },
 		{ .input = ";    ", .expected = ";", .result_tok = operator },

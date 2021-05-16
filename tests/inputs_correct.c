@@ -67,38 +67,59 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 	
 		{.input = "echo bonjour",
 		 .expected[0] = "echo", .expected[1] = "bonjour",
-		 .expected[20] = "",
-		 .expected_type[0] = word, .expected_type[1] = word },
+		 .expected_type[0] = word, .expected_type[1] = word,
+		 .expected[20] = ""},
 
 		{.input = "echo   		           bonjour",
 		 .expected[0] = "echo", .expected[1] = "bonjour",
-		 .expected[20] = "",
-		 .expected_type[0] = word, .expected_type[1] = word},
+		 .expected_type[0] = word, .expected_type[1] = word,
+		 .expected[20] = ""},
 
 		{.input = "       echo   		           bonjour;",
 		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
-		 .expected[20] = "",
-		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator },
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
+		 .expected[20] = ""},
 
 		{.input = "echo   		           bonjour		; ls",
 		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
-		 .expected[20] = "",
-		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator },
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
+		 .expected[20] = ""},
 
 		{.input = "echo   		           bonjour	>>file	; ls",
 		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
-		 .expected[20] = ">>", .expected[21] = "file",
 		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
+		 .expected[20] = ">>", .expected[21] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word },
-	//Normal usage testing
 
+		{.input = "	>>file echo   		           bonjour	; ls",
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
+		 .expected[20] = ">>", .expected[21] = "file",
+		 .expected_type[20] = redirection, .expected_type[21] = word },
+		
+		{.input = "	>>file > file echo   		           bonjour	; ls",
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
+		 .expected[20] = ">>", .expected[21] = "file", .expected[22] = ">", .expected[23] = "file",
+		 .expected_type[20] = redirection, .expected_type[21] = word, .expected_type[22] = redirection, .expected_type[23] = word },
 
-		// { .expected = ">>", .role = tok_append_r, .input = ">>file" },
-	//Testing with random spaces added
+		 {.input = "	>>file  echo   		> file           bonjour	; ls",
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
+		 .expected[20] = ">>", .expected[21] = "file", .expected[22] = ">", .expected[23] = "file",
+		 .expected_type[20] = redirection, .expected_type[21] = word, .expected_type[22] = redirection, .expected_type[23] = word },
 
-		// { .expected = ">>", .role = tok_append_r, .input = "    >>file" },
-	//Testing with double quotes added
-		// { .expected = "\">>\"", .role = tok_command, .input = "\">>\"" },
+		  {.input = "	>>file  echo   		> file           bonjour < file	; ls",
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = operator,
+		 .expected[20] = ">>", .expected[21] = "file", .expected[22] = ">", .expected[23] = "file", .expected[24] = "<", .expected[25] = "file",
+		 .expected_type[20] = redirection, .expected_type[21] = word, .expected_type[22] = redirection, .expected_type[23] = word, .expected_type[24] = redirection, .expected_type[25] = word },
+
+		{.input = "	>>file > file < file",
+		 .expected[0] = "",
+		 .expected[20] = ">>", .expected[21] = "file", .expected[22] = ">", .expected[23] = "file", .expected[24] = "<", .expected[25] = "file",
+		 .expected_type[20] = redirection, .expected_type[21] = word, .expected_type[22] = redirection, .expected_type[23] = word, .expected_type[24] = redirection, .expected_type[25] = word },
+
 	};
 
 	return cr_make_param_array(scmd_test, tests, sizeof(tests) / sizeof(scmd_test));
@@ -116,15 +137,18 @@ ParameterizedTest(scmd_test *tests, parser_suite, simple_command_parse_test)
 
 	tmp = llist->kind.cmd->words;
 	i = 0;
-	while (tmp)
+	if (tests->expected[0][0])
 	{
-		token = tmp->content;
-		cr_expect_str_eq(token->cmd, tests->expected[i],
-		"expected [%s] output for [%s] input, instead, fct returned [%s]",
-		tests->expected[i], tests->input, token->cmd);
-		cr_assert_eq(token->role, tests->expected_type[i]);
-		i++;
-		tmp = tmp->next;
+		while (tmp)
+		{
+			token = tmp->content;
+			cr_expect_str_eq(token->cmd, tests->expected[i],
+			"expected [%s] output for [%s] input, instead, fct returned [%s]",
+			tests->expected[i], tests->input, token->cmd);
+			cr_assert_eq(token->role, tests->expected_type[i]);
+			i++;
+			tmp = tmp->next;
+		}
 	}
 
 if (tests->expected[20][0])
@@ -167,9 +191,7 @@ if (tests->expected[20][0])
 //		{ .expected = "echo", .role = word, .input = "echo bonjour;"},
 /************************************************************************************/
 /*
-		{ .expected = ";", .role = operator, .input = ";ls" },
-		{ .expected = "|", .role = operator, .input = "|pwd" },
-				{ .expected = ";", .role = operator, .input = "; ls" },
+
 
 typedef struct quotes_examples
 {
@@ -196,3 +218,37 @@ ParameterizedTest(unit *test, validating_quotes_suite, valid_tests)
 }
 
 */
+
+Test(parsing_suite, simple_pipe_input_test)
+{
+	char *str = "ls | ls";
+	char tab[5][10] = {"ls", "|", "ls", ""};
+
+	// get first list of commands and pipelines
+	t_list	*result = parser_loop(str);
+	t_block	*internal_check = result->content;
+	// isolate first lvl of abstraction (first node content)
+	cr_assert_eq(internal_check->id, pipeline);
+	int i = 0;
+
+	t_pipeline *internal_pipe = internal_check->kind.pipe;
+	t_list	*tmp = internal_pipe->commands;
+
+	t_token	*token = tmp->content;
+
+	cr_log_warn("token %s\n", token->cmd);
+	cr_expect_eq(internal_pipe->pipe_count, 2);
+	// isolate second lvl of abstraction (first command of first pipeline)
+	t_simple_command *command = tmp->content;
+	t_list	*tmp2 = command->words;
+	
+	
+	while (tmp2)
+	{
+		//at the third lvl of abstraction (iterating on the nodes of the first command)
+		token = tmp2->content;
+		cr_assert_str_eq(token->cmd, tab[i]);
+		i++;
+		tmp2 = tmp2->next;
+	}
+}
