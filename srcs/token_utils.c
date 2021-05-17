@@ -30,9 +30,34 @@ bool	is_escape_character(char chr)
 
 bool	is_operator(char *str)
 {
-	if ((*str == ';') || (*str == '|') || (*str == '<') || (*str == '>')
-		|| !ft_strncmp(str, ">>", 2))
+	if ((*str == ';') || (*str == '|'))
 		return (1);
 	else
 		return (0);
+}
+
+bool	is_redirection(char *str)
+{
+	char	*ptr;
+
+	ptr = str;
+	if (((ft_strlen(ptr) >= 2) && (!ft_strncmp(ptr, ">>", 2)))
+		|| (*ptr == '<')
+		|| (*ptr == '>'))
+		return (1);
+	else
+		return (0);
+}
+
+t_tok_type	get_token_role(char *line)
+{
+	t_tok_type	role;
+
+	if (is_operator(line))
+		role = operator;
+	else if (is_redirection(line))
+		role = redirection;
+	else
+		role = word;
+	return (role);
 }

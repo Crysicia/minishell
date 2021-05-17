@@ -4,6 +4,7 @@
 *.test
 criterion/
 Criterion
+debug
 trash/
 Minishell
 .vscode/
