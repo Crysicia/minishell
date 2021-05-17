@@ -6,16 +6,16 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/17 15:38:49 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:07:57 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int create_file(char *path, char *redirection_type)
+int	create_file(char *path, char *redirection_type)
 {
-	int fd;
-	int open_flags;
+	int	fd;
+	int	open_flags;
 
 	open_flags = O_RDWR;
 	if (ft_strcmp(redirection_type, "<"))
@@ -28,9 +28,9 @@ int create_file(char *path, char *redirection_type)
 	return (fd);
 }
 
-void apply_redirection(char *path, char *redirection_type)
+void	apply_redirection(char *path, char *redirection_type)
 {
-	int fd;
+	int	fd;
 
 	fd = create_file(path, redirection_type);
 	if (fd == -1)
@@ -45,10 +45,10 @@ void apply_redirection(char *path, char *redirection_type)
 	close(fd);
 }
 
-int test_redirections(void)
+int	test_redirections(void)
 {
-	int pid;
-	char *argv[] = { "/bin/cat", NULL };
+	int	pid;
+	char	*argv[] = { "/bin/cat", NULL };
 
 	pid = fork();
 	if (pid == 0)
@@ -68,6 +68,5 @@ int test_redirections(void)
 		g_globals->current_pid = 0;
 		printf("Status: %d\n", g_globals->status);
 	}
-
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/14 14:02:20 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:08:59 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,5 @@ void	print_token_list(t_list *list);
 /* Error managment */
 void	ft_malloc_error(void);
 void	syntax_error(void);
-int test_redirections(void);
+int		test_redirections(void);
 #endif
