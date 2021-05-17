@@ -39,9 +39,10 @@ char	*cut_token_string(char *line)
 
 	if (is_escape_character(*line))
 		trimmed_str = get_escaped_string(line);
-	else if (is_operator(line) && (!ft_strncmp(">>", line, 2)))
+	else if (is_redirection(line) && (!ft_strncmp(">>", line, 2)))
 		trimmed_str = ft_strndup(line, 2);
-	else if (is_operator(line) && ft_strchr(";|<>", *line))
+	else if ((is_operator(line) && ft_strchr(";|", *line))
+		|| (is_redirection(line) && ft_strchr("><", *line)))
 		trimmed_str = ft_strndup(line, 1);
 	else
 		trimmed_str = ft_strndup(line, get_word_size(line));

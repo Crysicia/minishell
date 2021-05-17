@@ -17,8 +17,9 @@
 
 typedef enum e_tok_type
 {
-	word,
-	operator
+	operator,
+	redirection,
+	word
 }				t_tok_type;
 
 typedef struct s_token
@@ -31,15 +32,16 @@ typedef struct s_token
 t_list		*command_parse(char *line);
 int			evaluate_token(t_list **list);
 t_tok_type	get_next_tok_type(char *str);
-t_tok_type	attribute_tok_type(char chr);
-t_token		*get_next_token(char *line);
-void		free_token(void *token);
+t_token		*get_next_token(char **line);
+
 t_token		*new_token(char *str, t_tok_type type);
+void		free_token(void *token);
 
 bool		is_valid_token(t_token tok);
 bool		is_operator(char *str);
-int			is_quoted(char *str);
+bool		is_redirection(char *str);
 bool		is_escape_character(char chr);
+t_tok_type	get_token_role(char *line);
 
 char		*get_escaped_string(char *str);
 int			get_word_size(char *line);

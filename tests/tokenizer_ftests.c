@@ -48,7 +48,7 @@ Test(tokenizer_loop_suite, testing_normal_command)
     char        *tmp = buffer;
     for (int i = 0; i < nb_of_tokens; i++)
     {
-        token[i] = get_next_token(tmp);
+        token[i] = get_next_token(&tmp);
         cr_expect_str_eq(expected_token_str[i], token[i]->cmd,
             "Test get_next_token on given command\n"
             "Input : [%s], Expected : [%s], Got : [%s]\n",

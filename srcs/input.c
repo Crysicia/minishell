@@ -6,26 +6,56 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 15:53:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:19:41 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include <stdbool.h>
 
-void	print_token_list(t_list *list)
+void	print_simple_command_node(t_simple_command *command)
 {
-	t_token	*token;
+	t_list				*node;
+	t_token				*tmp;
+	t_redirection		*tmp2;
 
-	while (list)
+	puts("printing words list");
+	node = command->words;
+	while (node)
 	{
-		token = list->content;
-		printf("(cmd: [%s], Role: [%d])", token->cmd, token->role);
-		if (list->next)
-			printf(" -> ");
-		list = list->next;
+		tmp = node->content;
+		printf("[%s]---", tmp->cmd);
+		node = node->next;
+	}
+	puts("\nprinting redirection list");
+	node = command->redirections;
+	while (node)
+	{
+		tmp2 = node->content;
+		printf("[%s] [%s]--", tmp2->operator->cmd, tmp2->file->cmd);
+		node = node->next;
 	}
 	printf("\n");
+}
+
+void	print_command_list(t_list *list)
+{
+	t_list	*node;
+	t_block	*command;
+	int		i;
+
+	node = list;
+	i = 0;
+	while (node)
+	{
+		printf("\nNODE [%d]\n", i++);
+		command = node->content;
+		if (command->id == simple_command)
+			print_simple_command_node(command->kind.cmd);
+		else if (command->id == pipeline)
+			puts("hello pipeline");
+		node = node->next;
+	}
 }
 
 bool	gnl_loop_function(char *line)

@@ -27,3 +27,11 @@ ParameterizedTest(unit *test, validating_quotes_suite, invalid_tests)
 
 	cr_assert_eq(res, -1);
 }
+
+/*
+export VAR='bon           jour' ; ls $VAR
+ls: impossible d'accéder à 'bon': Aucun fichier ou dossier de ce type
+ls: impossible d'accéder à 'jour': Aucun fichier ou dossier de ce type
+bash-4.4$ export VAR='bon           jour' ; ls "$VAR"
+ls: impossible d'accéder à 'bon           jour': Aucun fichier ou dossier de ce type
+*/

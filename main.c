@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/03 11:43:07 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:52:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_prompt(void)
 {
-	write(1, "Minishell>", 10);
+	write(1, "Minishell> ", 11);
 }
 
 void	handle_sigint(int signal)
@@ -25,15 +25,25 @@ void	handle_sigint(int signal)
 	print_prompt();
 }
 
-void	iterate_over_token_list(t_list *list)
+void	execute_all_the_commands(t_list *list)
 {
-	t_list	*tmp;
-	int		ret;
+	t_list		*tmp;
+	t_block		*ptr;
+	int			ret;
 
 	ret = 0;
 	tmp = list;
 	while (tmp && (ret != -1))
-		ret = evaluate_token(&tmp);
+	{
+		ptr = tmp->content;
+		if (ptr->id == simple_command)
+		{
+			ret = evaluate_token(&ptr->kind.cmd->words);
+		}
+		else
+			puts("pipeline is not implemented");
+		tmp = tmp->next;
+	}
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -50,10 +60,14 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		print_prompt();
 		input_str = get_command();
-		input_list = parse_to_list(input_str);
-		print_token_list(input_list);
-		iterate_over_token_list(input_list);
+		input_list = parser_loop(input_str);
+		print_command_list(input_list);
+		execute_all_the_commands(input_list);
+		ft_lstclear(&input_list, free_block);
+		free(input_str);
 	}
 	(void)argv;
 	return (0);
 }
+
+/*	//		 */
