@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/14 14:14:56 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/17 15:38:49 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int create_file(char *path, char *redirection_type)
 		open_flags |= O_CREAT;
 	if (!ft_strcmp(redirection_type, ">>"))
 		open_flags |= O_APPEND;
+	if (ft_strcmp(redirection_type, ">>") && ft_strcmp(redirection_type, "<"))
+		open_flags |= O_TRUNC;
 	fd = open(path, open_flags, 0644);
 	return (fd);
 }
