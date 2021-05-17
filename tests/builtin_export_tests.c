@@ -17,6 +17,8 @@ ParameterizedTestParameters(builtin_export_suite, builtin_export_args_test) {
 		{ .ret = 0, .argument = "PATH=", .contain_key = "PATH", .contain_value = "" },
 		{ .ret = 0, .argument = "PATH2=", .contain_key = "PATH2", .contain_value = "" },
 		{ .ret = 0, .argument = "PATH=bonjour", .contain_key = "PATH", .contain_value = "bonjour" },
+		{ .ret = 0, .argument = "MINI_SHELL=bonjour", .contain_key = "MINI_SHELL", .contain_value = "bonjour" },
+		{ .ret = 0, .argument = "_MINISHELL=bonjour", .contain_key = "_MINISHELL", .contain_value = "bonjour" },
 		{ .ret = 0, .argument = "NOTEMPTY", .contain_key = "NOTEMPTY", .contain_value = "bonjour" },
 		{ .ret = 0, .argument = "EMPTY=101", .contain_key = "EMPTY", .contain_value = "101" },
 		{ .ret = 0, .argument = "EMPTYSTRING=heyImAString", .contain_key = "EMPTYSTRING", .contain_value = "heyImAString" },

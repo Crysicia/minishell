@@ -16,6 +16,7 @@ ParameterizedTestParameters(builtin_unset_suite, builtin_unset_args_test) {
 		{ .ret = SUCCESS, .argument = "UNKNOWN" },
 		{ .ret = SUCCESS, .argument = "EMPTY" },
 		{ .ret = SUCCESS, .argument = "NOTEMPTY" },
+		{ .ret = SUCCESS, .argument = "MINI_SHELL" },
 		{ .ret = ERR_BUILTIN_FAILED, .argument = "EXISTING=" },
 		{ .ret = ERR_BUILTIN_FAILED, .argument = "EXI=STING" },
 		{ .ret = ERR_BUILTIN_FAILED, .argument = "=EXISTING" },
@@ -29,7 +30,7 @@ ParameterizedTestParameters(builtin_unset_suite, builtin_unset_args_test) {
 }
 
 ParameterizedTest(t_builtin_unset_params *builtin_unset_params, builtin_unset_suite, builtin_unset_args_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", "MINI_SHELL=something", NULL };
 	t_dict *dict;
 	int ret;
 	char **array = malloc(2 * sizeof(char *));
@@ -83,7 +84,7 @@ Test(builtin_unset_suite, builtin_unset_multiple_args_test) {
 	destroy_globals();
 }
 
-Test(builtin_unset_suite, builtin_unset_multiple_args_failt_test) {
+Test(builtin_unset_suite, builtin_unset_multiple_args_fail_test) {
 	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	char *arguments[] = { "NOTEMPTY", "EXIS//TING", "UNKNOWN" };
 	int ret;
