@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/17 16:07:57 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/18 17:06:47 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,21 @@ void	apply_redirection(char *path, char *redirection_type)
 	else
 		dup2(fd, STDOUT_FILENO);
 	close(fd);
+}
+
+void	handle_redirections(t_list *command)
+{
+	printf("%s\n", "Before while");
+	fflush(stdout);
+	t_redirection		*redirection;
+
+	while (command)
+	{
+		printf("%s\n", "inside while");
+		redirection = command->content;
+		apply_redirection(redirection->file->cmd, redirection->operator->cmd);
+		command = command->next;
+	}
 }
 
 int	test_redirections(void)

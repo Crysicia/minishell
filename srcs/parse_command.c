@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 16:55:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/18 17:03:08 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t	count_command_words(t_list *list)
 	return (index);
 }
 
-char	**command_format(t_list **list)
+char	**command_format(t_list *list)
 {
 	t_list	*tmp;
 	t_token	*tok;
@@ -41,17 +41,17 @@ char	**command_format(t_list **list)
 	char	**tab;
 
 	count = 0;
-	index = count_command_words(*list);
+	index = count_command_words(list);
 	tab = malloc((index + 1) * sizeof(char **));
 	if (!tab)
 		ft_malloc_error();
 	while (count < index)
 	{
-		tmp = *list;
+		tmp = list;
 		tok = tmp->content;
 		tab[count] = ft_strdup(tok->cmd);
 		count++;
-		*list = (*list)->next;
+		tmp = tmp->next;
 	}
 	tab[count] = NULL;
 	return (tab);

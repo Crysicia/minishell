@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/17 16:22:18 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/18 17:09:38 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_dict
 
 void	print_prompt(void);
 t_list	*parse_to_list(char *line);
-char	**command_format(t_list **list);
+char	**command_format(t_list *list);
 char	*get_command(void);
 
 char	*get_word(char **line);
@@ -118,4 +118,6 @@ int		test_redirections(void);
 
 int execute_commands(t_list **commands);
 int execute_single_command(t_list **commands);
+void	handle_redirections(t_list *command);
+int execute_single_command_wip(t_simple_command *commands);
 #endif

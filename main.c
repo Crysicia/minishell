@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/17 16:16:11 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/18 17:07:54 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	execute_all_the_commands(t_list *list)
 		ptr = tmp->content;
 		if (ptr->id == simple_command)
 		{
-			ret = evaluate_token(&ptr->kind.cmd->words);
+			ret = execute_single_command_wip(ptr->kind.cmd);
 		}
 		else
 			puts("pipeline is not implemented");
@@ -59,7 +59,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		print_prompt();
-		test_redirections();
+		// test_redirections();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
 		print_command_list(input_list);
