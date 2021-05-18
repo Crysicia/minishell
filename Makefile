@@ -27,7 +27,6 @@ RAW_SRCS		= builtin_cd.c \
 				  dollar_expansion.c \
 				  env_utils.c \
 				  error.c \
-				  evaluation.c \
 				  exec.c \
 				  exec_builtin.c \
 				  flagger.c \

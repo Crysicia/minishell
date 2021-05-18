@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/18 17:03:08 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/18 17:24:02 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ char	**command_format(t_list *list)
 	tab = malloc((index + 1) * sizeof(char **));
 	if (!tab)
 		ft_malloc_error();
+	tmp = list;
 	while (count < index)
 	{
-		tmp = list;
 		tok = tmp->content;
 		tab[count] = ft_strdup(tok->cmd);
+		puts(tab[count]);
 		count++;
 		tmp = tmp->next;
 	}
