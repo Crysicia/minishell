@@ -70,5 +70,3 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	return (0);
 }
-
-/*	//		 */

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/18 17:06:47 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/18 23:25:11 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,41 +47,12 @@ void	apply_redirection(char *path, char *redirection_type)
 
 void	handle_redirections(t_list *command)
 {
-	printf("%s\n", "Before while");
-	fflush(stdout);
-	t_redirection		*redirection;
+	t_redirection	*redirection;
 
 	while (command)
 	{
-		printf("%s\n", "inside while");
 		redirection = command->content;
 		apply_redirection(redirection->file->cmd, redirection->operator->cmd);
 		command = command->next;
 	}
-}
-
-int	test_redirections(void)
-{
-	int	pid;
-	char	*argv[] = { "/bin/cat", NULL };
-
-	pid = fork();
-	if (pid == 0)
-	{
-		apply_redirection("Makefile", "<");
-		apply_redirection("main.c", "<");
-		apply_redirection("out", ">");
-		apply_redirection("out2", ">");
-		apply_redirection("out3", ">>");
-		execve(argv[0], argv, list_to_array(g_globals->env));
-	}
-	else
-	{
-		g_globals->current_pid = pid;
-		wait(&g_globals->status);
-		set_status_code(g_globals->status, false);
-		g_globals->current_pid = 0;
-		printf("Status: %d\n", g_globals->status);
-	}
-	return 0;
 }

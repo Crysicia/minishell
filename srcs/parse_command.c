@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/18 17:24:02 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/18 23:25:50 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	**command_format(t_list *list)
 	{
 		tok = tmp->content;
 		tab[count] = ft_strdup(tok->cmd);
-		puts(tab[count]);
 		count++;
 		tmp = tmp->next;
 	}
