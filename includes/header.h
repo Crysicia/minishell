@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/19 15:49:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:57:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/param.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <sys/errno.h>
 # include <sys/wait.h>
 # include <limits.h>
@@ -28,6 +29,7 @@
 # include "scanner.h"
 # include "token.h"
 # include "parser.h"
+# include "pipes.h"
 # include "flag.h"
 # define BUILTINS_NB 7
 
@@ -37,6 +39,8 @@
 # define ERR_MALLOC_FAILED 256
 # define ERR_ENV_NOT_FOUND 257
 # define ERR_COULD_NOT_SET_ENV 258
+# define ERR_PIPE_FAILED 259
+# define ERR_FORK_FAILED 260
 
 typedef struct s_globals
 {
@@ -120,5 +124,11 @@ int		test_redirections(void);
 
 void	handle_redirections(t_list *command);
 int		 execute_single_command(t_simple_command *commands);
+
+
+// int execute_basic_command(t_list **commands);
+// int execute_commands(t_list **commands);
+// int execute_single_command(t_list **commands, t_pipes *pipes);
+
 
 #endif

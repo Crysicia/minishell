@@ -29,6 +29,7 @@ RAW_SRCS		= builtin_cd.c \
 				  error.c \
 				  exec.c \
 				  exec_builtin.c \
+				  exec_simple_command.c \
 				  flagger.c \
 				  get_next_line.c \
 				  get_next_line_utils.c \
@@ -40,11 +41,13 @@ RAW_SRCS		= builtin_cd.c \
 				  parser_utils.c \
 				  path_utils.c \
 				  redirections.c \
+				  pipeline.c \
 				  pipelines.c \
 				  token.c \
 				  token_fcts.c \
 				  token_quote_removal.c \
 				  token_utils.c \
+				  pipes_utils.c \
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
 OBJS 			= $(SRCS:.c=.o)

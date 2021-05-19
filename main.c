@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/19 16:06:32 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:54:20 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execute_all_the_commands(t_list *list)
 			ret = execute_single_command(ptr->kind.cmd);
 		}
 		else if (ptr->id == pipeline)
-			puts("pipeline is not implemented");
+			ret = execute_pipeline(ptr->kind.pipe);
 		else
 			puts("Shitty case (Nothing personal :3)");
 		tmp = tmp->next;

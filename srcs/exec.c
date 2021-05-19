@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/19 16:06:22 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:55:41 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	set_status_code(int code, bool from_builtin)
 
 int	execute_command(char **command)
 {
-	int		pid;
+	int pid;
 	char	*path;
 
 	pid = fork();
@@ -84,8 +84,6 @@ int	execute_command(char **command)
 		display_error("Error", "Could not fork child process");
 	else if (pid == 0)
 	{
-		// dup_pipes(pipes, command_flag);
-		// close_pipes(pipes);
 		path = find_exe_path(command[0]);
 		if (!path)
 			return (-1);
@@ -93,7 +91,6 @@ int	execute_command(char **command)
 	}
 	else
 	{
-		// close_relevant_pipes(pipes, command_flag);
 		g_globals->current_pid = pid;
 		wait(&g_globals->status);
 		set_status_code(g_globals->status, false);
