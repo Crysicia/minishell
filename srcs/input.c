@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 17:19:41 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:50:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ void	print_simple_command_node(t_simple_command *command)
 	printf("\n");
 }
 
+void	print_pipeline(t_pipeline *pipeline)
+{
+	t_list				*node;
+	t_simple_command	*tmp;
+
+	node = pipeline->commands;
+	printf("PIPE COUNT == [%d]\n", pipeline->pipe_count);
+	while (node)
+	{
+		tmp = node->content;
+		print_simple_command_node(tmp);
+		node = node->next;
+	}
+}
+
 void	print_command_list(t_list *list)
 {
 	t_list	*node;
@@ -53,7 +68,7 @@ void	print_command_list(t_list *list)
 		if (command->id == simple_command)
 			print_simple_command_node(command->kind.cmd);
 		else if (command->id == pipeline)
-			puts("hello pipeline");
+			print_pipeline(command->kind.pipe);
 		node = node->next;
 	}
 }

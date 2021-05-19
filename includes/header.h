@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/19 15:28:06 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:49:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int		set_status_code(int code, bool from_builtin);
 
 void	print_token_list(t_list *list);
 void	print_simple_command_node(t_simple_command *command);
+void	print_pipeline(t_pipeline *pipeline);
 void	print_command_list(t_list *list);
 /* Error managment */
 void	ft_malloc_error(void);
