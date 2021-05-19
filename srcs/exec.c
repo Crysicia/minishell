@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/19 15:25:09 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:31:11 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ bool restore_in_and_out(int (*saved)[])
 	return (ret);
 }
 
+// TODO: Fd error management
 int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
 {
 	char	**arguments;
