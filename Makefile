@@ -108,7 +108,7 @@ fclean: clean
 	@$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
 
 fsan: fclean $(LIBFT)
-	${CC} ${CFLAGS} -fsanitize=address ${HEADERS} ${LIBS} ${SRCS} libft/libft.a -o debug
+	${CC} ${CFLAGS} -g -fsanitize=address ${HEADERS} ${LIBS} ${SRCS} libft/libft.a -o debug
 	./debug
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/15 14:40:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:22:44 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ bool	check_if_pipeline(t_simple_command	*command)
 		return (0);
 	node = command->words;
 	token = node->content;
-	puts(token->cmd);
 	while (node && node->next)
 		node = node->next;
 	token = node->content;

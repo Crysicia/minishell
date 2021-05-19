@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/24 14:36:53 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:13:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,11 @@ void	ft_malloc_error(void)
 void	syntax_error(void)
 {
 	printf("Minishell invalid token detected\n");
+}
+
+void	parser_error(ret)
+{
+	if (ret == ERR_MALLOC_FAILED)
+		display_error("Malloc failed", "parse_simple_command function");
+	
 }

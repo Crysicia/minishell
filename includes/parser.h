@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 18:09:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 17:04:17 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:24:09 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ bool				check_if_pipeline(t_simple_command *command);
 t_command_type		attribute_command_type(t_simple_command *command);
 
 t_list				*parser_loop(char *line);
-t_block				*parse_simple_command(char **line);
+int					parse_simple_command(t_block *dst, char **line);
 void				parse_redirection(char **line,
 						t_simple_command *command,
 						struct s_token *token);
-void				parse_pipeline_command(char **line,
-						t_block *block);
+int					parse_pipeline_command(t_block *first, char **line);
+
 
 #endif
