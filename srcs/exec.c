@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/19 14:48:46 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:25:09 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,29 +76,9 @@ int	set_status_code(int code, bool from_builtin)
 
 int	execute_command(char **command)
 {
+	int		pid;
 	char	*path;
 
-	if (is_builtin(command[0]))
-		exit(execute_builtin(command[0], &command[1]));
-	path = find_exe_path(command[0]);
-	if (!path)
-		return (-1);
-	execve(path, command, list_to_array(g_globals->env));
-	return (-2);
-}
-
-int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
-{
-	char	**arguments;
-	int		pid;
-	t_list	words;
-	// int		command_flag;
-
-	// command_flag = NOT_IN_PIPELINE;
-	words = *commands->words;
-	arguments = command_format(&words);
-	if (!arguments)
-		display_error("malloc error", "could not allocate arguments array");
 	pid = fork();
 	if (pid < 0)
 		display_error("Error", "Could not fork child process");
@@ -106,15 +86,10 @@ int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
 	{
 		// dup_pipes(pipes, command_flag);
 		// close_pipes(pipes);
-		int saved_stdin;
-		int saved_stdout;
-	
-		saved_stdout = dup(STDOUT_FILENO);
-		saved_stdin = dup(STDIN_FILENO);
-		handle_redirections(commands->redirections);
-		execute_command(arguments);
-		dup2(saved_stdin, STDIN_FILENO);
-		dup2(saved_stdout, STDOUT_FILENO);
+		path = find_exe_path(command[0]);
+		if (!path)
+			return (-1);
+		execve(path, command, list_to_array(g_globals->env));
 	}
 	else
 	{
@@ -124,5 +99,55 @@ int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
 		set_status_code(g_globals->status, false);
 		g_globals->current_pid = 0;
 	}
+	return (-2);
+}
+
+bool save_in_and_out(int (*saved)[])
+{
+	ft_bzero(*saved, 2 * sizeof(int));
+	(*saved)[0] = dup(STDOUT_FILENO);
+	if ((*saved)[0] == -1)
+		return (false);
+	(*saved)[1] = dup(STDIN_FILENO);
+	if ((*saved)[1] == -1)
+	{
+		close((*saved)[0]);
+		return (false);
+	}
+	return (true);
+}
+
+bool restore_in_and_out(int (*saved)[])
+{
+	bool ret;
+
+	ret = true;
+	if (dup2((*saved)[0], STDOUT_FILENO) == -1
+			|| dup2((*saved)[1], STDIN_FILENO) == -1)
+		ret = false;
+	close((*saved)[0]);
+	close((*saved)[1]);
+	return (ret);
+}
+
+int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
+{
+	char	**arguments;
+	t_list	words;
+	int in_and_out[2];
+	// int		command_flag;
+
+	// command_flag = NOT_IN_PIPELINE;
+	words = *commands->words;
+	arguments = command_format(&words);
+	if (!arguments)
+		display_error("malloc error", "could not allocate arguments array");
+	save_in_and_out(&in_and_out);
+	handle_redirections(commands->redirections);
+	if (is_builtin(arguments[0]))
+		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
+	else
+		execute_command(arguments);
+	restore_in_and_out(&in_and_out);
 	return (0);
 }
