@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/19 11:54:32 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:28:06 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,10 @@ void	print_command_list(t_list *list);
 /* Error managment */
 void	ft_malloc_error(void);
 void	syntax_error(void);
+void	parser_error(int ret);
 int		test_redirections(void);
 
 void	handle_redirections(t_list *command);
-int execute_single_command(t_simple_command *commands);
+int		 execute_single_command(t_simple_command *commands);
+
 #endif

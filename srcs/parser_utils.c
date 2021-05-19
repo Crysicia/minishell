@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 07:41:15 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 17:06:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:29:40 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_command_type	attribute_command_type(t_simple_command *command)
 {
 	t_token	*token;
 
-	if ((!command->words) && (!command->redirections))
+	if ((!command) || ((!command->words) && (!command->redirections)))
 		return (error);
 	else if ((!command->words) && (command->redirections))
 		return (only_redirections);
