@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/18 17:07:54 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 11:54:31 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	execute_all_the_commands(t_list *list)
 		ptr = tmp->content;
 		if (ptr->id == simple_command)
 		{
-			ret = execute_single_command_wip(ptr->kind.cmd);
+			ret = execute_single_command(ptr->kind.cmd);
 		}
 		else
 			puts("pipeline is not implemented");

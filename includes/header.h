@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/18 23:23:16 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 11:54:32 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,5 @@ void	syntax_error(void);
 int		test_redirections(void);
 
 void	handle_redirections(t_list *command);
-int execute_single_command_wip(t_simple_command *commands);
+int execute_single_command(t_simple_command *commands);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/18 23:23:49 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 14:48:46 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	execute_command(char **command)
 	return (-2);
 }
 
-int execute_single_command_wip(t_simple_command *commands) //t_pipes *pipes)
+int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
 {
 	char	**arguments;
 	int		pid;
@@ -106,8 +106,15 @@ int execute_single_command_wip(t_simple_command *commands) //t_pipes *pipes)
 	{
 		// dup_pipes(pipes, command_flag);
 		// close_pipes(pipes);
+		int saved_stdin;
+		int saved_stdout;
+	
+		saved_stdout = dup(STDOUT_FILENO);
+		saved_stdin = dup(STDIN_FILENO);
 		handle_redirections(commands->redirections);
 		execute_command(arguments);
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
 	}
 	else
 	{

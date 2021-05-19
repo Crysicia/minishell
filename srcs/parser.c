@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 17:22:47 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 14:44:38 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_list	*parser_loop(char *line)
 	while (*ptr)
 	{
 		node = parse_simple_command(&ptr);
+		//ptr
 		if (node->id == pipeline)
 		{
 			parse_pipeline_command(&ptr, node);
@@ -51,24 +52,24 @@ t_list	*parser_loop(char *line)
 
 t_block	*parse_simple_command(char **line)
 {
-	t_simple_command	*save;
+	t_simple_command	*new;
 	t_token				*token;
 	t_block				*node;
 
-	save = new_simple_command();
+	new = new_simple_command();
 	while (**line)
 	{
 		token = get_next_token(line);
 		if (token->role == redirection)
-			parse_redirection(line, save, token);
+			parse_redirection(line, new, token);
 		else
-			ft_lstadd_back(&(save->words), ft_lstnew_safe(token, free_token));
+			ft_lstadd_back(&(new->words), ft_lstnew_safe(token, free_token));
 		if (token->role == operator)
 			break ;
 	}
 	node = new_block();
-	node->id = attribute_command_type(save);
-	node->kind.cmd = save;
+	node->id = attribute_command_type(new);
+	node->kind.cmd = new;
 	return (node);
 }
 /* 			else if (!ft_strncmp("|", token->cmd, 2)) {;}			*/
