@@ -27,6 +27,8 @@ void	free_block(void *to_free)
 	ptr = to_free;
 	if (ptr->id == simple_command)
 		free_simple_command(ptr->kind.cmd);
+	else if (ptr->id == pipeline)
+		free_pipeline(ptr->kind.pipe);
 }
 
 /*

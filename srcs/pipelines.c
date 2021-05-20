@@ -31,8 +31,11 @@ t_pipeline	*new_pipeline(t_simple_command *first)
 void	free_pipeline(void *to_free)
 {
 	t_pipeline	*ptr;
+	t_list		*list;
 
 	ptr = to_free;
+	list = ptr->commands;
+	ft_lstclear(&list, free_simple_command);
 	free(ptr);
 	ptr = NULL;
 }
