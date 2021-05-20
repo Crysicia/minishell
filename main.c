@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/19 16:54:20 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/20 21:34:32 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void run_minishell(void)
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
 	}
+	(void)ret;
 }
 
 int	main(int argc, char *argv[], char *envp[])

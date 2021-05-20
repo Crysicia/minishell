@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/20 16:50:28 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/20 21:35:15 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ bool	create_pipes(t_pipes *pipes);
 int get_pipeline_placement(int current, int total);
 int execute_pipeline(t_pipeline *pipeline);
 int execute_pipeline_loop(t_pipes *pipes, t_list *commands, int pipe_count);
-int	execute_pipe(char **command, t_pipes *pipes, int command_flag);
+int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag);
 
 #endif
