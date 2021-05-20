@@ -25,7 +25,7 @@ void	handle_sigint(int signal)
 	print_prompt();
 }
 
-void	execute_all_the_commands(t_list *list)
+int	execute_all_the_commands(t_list *list)
 {
 	t_list		*tmp;
 	t_block		*ptr;
@@ -44,17 +44,15 @@ void	execute_all_the_commands(t_list *list)
 			puts("pipeline is not implemented");
 		tmp = tmp->next;
 	}
+	return (0);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+void run_minishell(void)
 {
 	t_list	*input_list;
 	char	*input_str;
+	int		ret;
 
-	if (argc != 1)
-		return (-1);
-	if (!init_globals(envp))
-		return (1);
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
@@ -63,10 +61,19 @@ int	main(int argc, char *argv[], char *envp[])
 		input_str = get_command();
 		input_list = parser_loop(input_str);
 		print_command_list(input_list);
-		execute_all_the_commands(input_list);
+		ret = execute_all_the_commands(input_list);
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
 	}
-	(void)argv;
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	if (argc != 1)
+		return (-1);
+	if (!init_globals(envp))
+		return (1);
+	run_minishell();
+		(void)argv;
 	return (0);
 }
