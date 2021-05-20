@@ -123,7 +123,7 @@ void	parser_error(int ret);
 int		test_redirections(void);
 
 void	handle_redirections(t_list *command);
-int		 execute_single_command(t_simple_command *commands);
+int		execute_single_command(t_simple_command *commands);
 
 
 // int execute_basic_command(t_list **commands);

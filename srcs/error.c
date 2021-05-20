@@ -31,9 +31,8 @@ void	syntax_error(void)
 	printf("Minishell invalid token detected\n");
 }
 
-void	parser_error(ret)
+void	parser_error(int ret)
 {
 	if (ret == ERR_MALLOC_FAILED)
-		display_error("Malloc failed", "parse_simple_command function");
-	
+		display_error("Malloc failed", "while parsing user input");
 }

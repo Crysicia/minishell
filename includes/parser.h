@@ -58,11 +58,15 @@ void				set_block_ptr(t_block *block, void *ptr);
 void				free_block(void *to_free);
 
 t_simple_command	*new_simple_command(void);
-t_redirection		*new_redirection(void);
-t_pipeline			*new_pipeline(t_simple_command *first);
 void				free_simple_command(void *to_free);
-void				free_redirection(void *to_free);
+
+t_pipeline			*new_pipeline(t_simple_command *first);
+void				free_pipeline(void *to_free);
 bool				check_if_pipeline(t_simple_command *command);
+
+t_redirection		*new_redirection(void);
+void				free_redirection(void *to_free);
+
 
 t_command_type		attribute_command_type(t_simple_command *command);
 
@@ -72,6 +76,5 @@ void				parse_redirection(char **line,
 						t_simple_command *command,
 						struct s_token *token);
 int					parse_pipeline_command(t_block *first, char **line);
-
 
 #endif
