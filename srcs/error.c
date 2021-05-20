@@ -35,5 +35,4 @@ void	parser_error(int ret)
 {
 	if (ret == ERR_MALLOC_FAILED)
 		display_error("Malloc failed", "while parsing user input");
-	
 }

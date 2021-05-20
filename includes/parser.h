@@ -77,5 +77,4 @@ void				parse_redirection(char **line,
 						struct s_token *token);
 int					parse_pipeline_command(t_block *first, char **line);
 
-
 #endif

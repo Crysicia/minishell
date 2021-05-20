@@ -41,6 +41,7 @@ RAW_SRCS		= builtin_cd.c \
 				  path_utils.c \
 				  redirections.c \
 				  pipelines.c \
+				  print_debug.c \
 				  token.c \
 				  token_fcts.c \
 				  token_quote_removal.c \
