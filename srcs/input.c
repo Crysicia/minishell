@@ -96,7 +96,6 @@ char	*get_command(void)
 	char	*line;
 	int		ret;
 
-	line = ft_calloc(512, 1);
 	ret = get_next_line(0, &line);
 	if (ret == -1 || line == NULL)
 	{

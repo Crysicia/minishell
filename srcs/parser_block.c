@@ -29,12 +29,10 @@ void	free_block(void *to_free)
 		free_simple_command(ptr->kind.cmd);
 	else if (ptr->id == pipeline)
 		free_pipeline(ptr->kind.pipe);
+	free(ptr);
+	ptr = NULL;
 }
 
-/*
-//	else if (ptr->id == pipeline)
-//		free_pipeline(ptr->kind.pipe);
-*/
 void	set_block_ptr(t_block *block, void *ptr)
 {
 	if (block->id == simple_command)
