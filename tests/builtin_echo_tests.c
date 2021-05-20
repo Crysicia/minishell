@@ -50,3 +50,26 @@ ParameterizedTest(t_echo_params *echo_params, builtin_echo_suite, echo_valid_arg
 
 	cr_free(line);
 }
+#include "helpers.h"
+#include <fcntl.h>
+
+Test(builtin_echo_suite, test1)
+{
+	char *arg[] = { "bonjour\n", NULL};
+
+	FILE *fp = NULL;
+
+	fp = freopen("echo.test", "w", stdout);
+	int ret = builtin_echo(arg);
+	fclose(fp);
+
+	int fd = open("echo.test", O_RDONLY);
+	cr_assert_eq(ret, 0);
+	
+	char buffer[20];
+	memset(buffer, 0, strlen(arg[0]));
+	ret = read(fd, &buffer, strlen(arg[0]));
+	buffer[ret] = 0;
+	cr_assert_str_eq(arg[0], buffer);
+	close(fd);
+}

@@ -9,3 +9,4 @@ Minishell
 .vscode/
 testing
 a.out
+libft/libft.a

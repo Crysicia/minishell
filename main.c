@@ -25,7 +25,16 @@ int	main(int argc, char *argv[], char *envp[])
 		get_command(envp);
 		sleep(0);
 	}
-	(void)argc;
+	(void)ret;
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	if (argc != 1)
+		return (-1);
+	if (!init_globals(envp))
+		return (1);
+	run_minishell();
 	(void)argv;
 	(void)envp;
 	return (0);

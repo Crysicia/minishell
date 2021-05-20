@@ -7,29 +7,67 @@ LIBS			= -Llibft -lft
 LIBFT 			= libft/libft.a
 NAME			= Minishell
 PATH_SRCS		= ./srcs/
-SRCS			= main.c \
-				  srcs/lexer.c \
-				  srcs/get_next_line.c \
-				  srcs/get_next_line_utils.c \
-				  srcs/exec.c \
-				  srcs/env.c \
-				  srcs/builtin_echo.c \
-				  srcs/scanner.c \
-				  srcs/scanner_discard.c \
-				  srcs/scanner_len_fcts.c \
-				  srcs/scanner_states.c \
-				  srcs/scanner_utils.c
+RAW_SRCS		= builtin_cd.c \
+				  builtin_echo.c \
+				  builtin_env.c \
+				  builtin_export.c \
+				  builtin_exit.c \
+				  builtin_pwd.c \
+				  builtin_unset.c \
+				  builtin_utils.c \
+				  commands.c \
+				  dict_utils.c \
+				  dollar_expansion.c \
+				  env_utils.c \
+				  error.c \
+				  exec.c \
+				  exec_builtin.c \
+				  exec_simple_command.c \
+				  flagger.c \
+				  get_next_line.c \
+				  get_next_line_utils.c \
+				  globals.c \
+				  input.c \
+				  parse_command.c \
+				  parser.c \
+				  parser_block.c \
+				  parser_utils.c \
+				  path_utils.c \
+				  redirections.c \
+				  pipeline.c \
+				  pipelines.c \
+				  print_debug.c \
+				  token.c \
+				  token_fcts.c \
+				  token_quote_removal.c \
+				  token_utils.c \
+				  pipes_utils.c \
 
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
-TEST_SRCS		= tests/fct_lexer_test.c \
-				  tests/env_test.c \
-				  tests/builtin_echo_tests.c \
-				  tests/scanner_t.c \
-				  tests/scanner_states_t.c \
-				  tests/utils_tests.c \
-				  tests/exec_tests.c
+TEST_RAW_SRCS	= test_helpers.c \
+				  builtin_cd_tests.c \
+				  builtin_echo_tests.c \
+				  builtin_export_tests.c \
+				  builtin_pwd_tests.c \
+				  builtin_unset_tests.c \
+				  builtin_utils_tests.c \
+				  env_test.c \
+				  env_utils_tests.c \
+				  dict_utils_tests.c \
+				  exec_builtin_tests.c \
+				  exec_tests.c \
+				  expansion_tests.c \
+				  inputs_correct.c \
+				  path_utils_tests.c \
+				  parser_tests.c \
+				  quotes_tests.c \
+				  token_eval_tests.c \
+				  tokenizer_ftests.c \
+				  tokenizer_tests.c \
+				  tokens_tests.c \
+				  utils_tests.c \
 
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
