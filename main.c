@@ -74,6 +74,6 @@ int	main(int argc, char *argv[], char *envp[])
 	if (!init_globals(envp))
 		return (1);
 	run_minishell();
-		(void)argv;
+	(void)argv;
 	return (0);
 }

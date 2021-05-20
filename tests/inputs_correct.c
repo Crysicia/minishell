@@ -238,7 +238,6 @@ Test(parsing_suite, simple_pipe_input_test)
 
 	t_token	*token = tmp->content;
 
-	cr_log_warn("token %s\n", token->cmd);
 	cr_expect_eq(internal_pipe->pipe_count, 2);
 	// isolate second lvl of abstraction (first command of first pipeline)
 	t_simple_command *command = tmp->content;
