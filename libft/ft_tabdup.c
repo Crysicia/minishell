@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_tabdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/12 18:21:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/10 13:04:28 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/17 19:14:13 by pcharton          #+#    #+#             */
+/*   Updated: 2021/04/17 19:14:13 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
+char	**ft_tabdup(char *tab[])
 {
-	if (!new)
-		return ;
-	if (!*alst)
+	char	**dup;
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = 0;
+	while (*(tab + len))
+		len++;
+	dup = malloc(sizeof(char **) * (len + 1));
+	while (i < len)
 	{
-		(*alst) = new;
-		return ;
+		dup[i] = ft_strdup(tab[i]);
+		i++;
 	}
-	if (!(*alst)->next)
-	{
-		(*alst)->next = new;
-		return ;
-	}
-	ft_lstadd_back(&((*alst)->next), new);
+	dup[len] = NULL;
+	return (dup);
 }

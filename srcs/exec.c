@@ -6,62 +6,146 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/08 14:06:28 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:55:41 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
-#include <sys/wait.h>
 
 char	*get_full_path(char *path, char *executable)
 {
 	char	current_path[PATH_MAX];
 
-	ft_bzero(current_path, PATH_MAX);
 	ft_strlcpy(current_path, path, ft_strlen(path) + 1);
 	ft_strlcat(current_path, "/", PATH_MAX);
 	ft_strlcat(current_path, executable, PATH_MAX);
 	return (ft_strdup(current_path));
 }
 
-int	find_exe_path(t_command *command)
+char	**list_exe_paths(void)
 {
-	struct stat	st;
-	char		*path;
-	char		**path_arr;
-	char		*current_path;
+	t_dict		*path;
+	char		**result;
 
-	path = getenv("PATH");
-	if (!path)
-		return (-1);
-	path_arr = ft_split(path, ':');
-	if (!path_arr)
-		return (-1);
-	current_path = NULL;
-	while (*path_arr && !command->executable)
-	{
-		free(current_path);
-		current_path = get_full_path(*path_arr, command->args[0]);
-		stat(current_path, &st);
-		if (st.st_mode & S_IXUSR)
-			command->executable = current_path;
-		path_arr++;
-	}
-	return (0);
+	path = ft_getenv("PATH");
+	if (!path || !path->value)
+		return (NULL);
+	result = ft_split(path->value, ':');
+	if (!result)
+		return (NULL);
+	else
+		return (result);
 }
 
-int	execute_command(t_command *command)
+char	*find_exe_path(char *command)
 {
-	int	pid;
+	struct stat	st;
+	char		**path_arr;
+	char		*current_path;
+	char		*result;
+	int			index;
 
-	find_exe_path(command);
-	pid = fork();
-	if (pid == 0)
+	if (is_path(command))
+		return (command);
+	index = 0;
+	result = NULL;
+	path_arr = list_exe_paths();
+	while (path_arr[index])
 	{
-		execve(command->executable, command->args, command->envp);
-		exit(0);
+		current_path = get_full_path(path_arr[index], command);
+		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))
+			result = current_path;
+		else
+		{
+			free(current_path);
+			current_path = NULL;
+		}
+		index++;
+	}
+	ft_free_matrix((void **)path_arr, index);
+	return (result);
+}
+
+int	set_status_code(int code, bool from_builtin)
+{
+	if (from_builtin)
+		return (g_globals->status = code);
+	g_globals->status = WEXITSTATUS(code);
+	return (g_globals->status);
+}
+
+int	execute_command(char **command)
+{
+	int pid;
+	char	*path;
+
+	pid = fork();
+	if (pid < 0)
+		display_error("Error", "Could not fork child process");
+	else if (pid == 0)
+	{
+		path = find_exe_path(command[0]);
+		if (!path)
+			return (-1);
+		execve(path, command, list_to_array(g_globals->env));
 	}
 	else
-		wait(NULL);
+	{
+		g_globals->current_pid = pid;
+		wait(&g_globals->status);
+		set_status_code(g_globals->status, false);
+		g_globals->current_pid = 0;
+	}
+	return (-2);
+}
+
+bool save_in_and_out(int (*saved)[])
+{
+	ft_bzero(*saved, 2 * sizeof(int));
+	(*saved)[0] = dup(STDOUT_FILENO);
+	if ((*saved)[0] == -1)
+		return (false);
+	(*saved)[1] = dup(STDIN_FILENO);
+	if ((*saved)[1] == -1)
+	{
+		close((*saved)[0]);
+		return (false);
+	}
+	return (true);
+}
+
+bool restore_in_and_out(int (*saved)[])
+{
+	bool ret;
+
+	ret = true;
+	if (dup2((*saved)[0], STDOUT_FILENO) == -1
+			|| dup2((*saved)[1], STDIN_FILENO) == -1)
+		ret = false;
+	close((*saved)[0]);
+	close((*saved)[1]);
+	return (ret);
+}
+
+// TODO: Fd error management
+int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
+{
+	char	**arguments;
+	t_list	words;
+	int in_and_out[2];
+	// int		command_flag;
+
+	// command_flag = NOT_IN_PIPELINE;
+	words = *commands->words;
+	arguments = command_format(&words);
+	if (!arguments)
+		display_error("malloc error", "could not allocate arguments array");
+	save_in_and_out(&in_and_out);
+	handle_redirections(commands->redirections);
+	if (is_builtin(arguments[0]))
+		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
+	else
+		execute_command(arguments);
+	restore_in_and_out(&in_and_out);
 	return (0);
 }

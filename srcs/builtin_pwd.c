@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/12 18:21:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/10 13:04:28 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/21 10:54:01 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/27 14:40:22 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/header.h"
+#include <limits.h>
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
+int	builtin_pwd(char **arguments)
 {
-	if (!new)
-		return ;
-	if (!*alst)
+	char	*path;
+
+	(void)arguments;
+	path = getcwd(NULL, PATH_MAX);
+	if (path)
 	{
-		(*alst) = new;
-		return ;
+		printf("%s\n", path);
+		free(path);
+		return (SUCCESS);
 	}
-	if (!(*alst)->next)
-	{
-		(*alst)->next = new;
-		return ;
-	}
-	ft_lstadd_back(&((*alst)->next), new);
+	return (ERR_BUILTIN_FAILED);
 }

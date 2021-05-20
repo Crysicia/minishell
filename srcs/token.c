@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/12 18:21:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/10 13:04:28 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/13 13:58:35 by pcharton          #+#    #+#             */
+/*   Updated: 2021/05/10 14:39:18 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/header.h"
+#include "../includes/token.h"
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
+t_token	*new_token(char *str, t_tok_type type)
 {
-	if (!new)
-		return ;
-	if (!*alst)
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	if (new)
 	{
-		(*alst) = new;
-		return ;
+		new->cmd = str;
+		new->flag = 0;
+		new->role = type;
 	}
-	if (!(*alst)->next)
-	{
-		(*alst)->next = new;
-		return ;
-	}
-	ft_lstadd_back(&((*alst)->next), new);
+	return (new);
+}
+
+void	free_token(void *token)
+{
+	free(((t_token *)token)->cmd);
+	free(token);
+	token = NULL;
 }

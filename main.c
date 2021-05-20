@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/06 17:20:22 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:54:20 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,58 @@
 
 void	print_prompt(void)
 {
-	write(1, "Minishell>", 10);
+	write(1, "Minishell> ", 11);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+void	handle_sigint(int signal)
 {
+	printf("\n");
+	if (g_globals->current_pid)
+		kill(g_globals->current_pid, signal);
+	print_prompt();
+}
+
+int	execute_all_the_commands(t_list *list)
+{
+	t_list		*tmp;
+	t_block		*ptr;
+	int			ret;
+
+	ret = 0;
+	tmp = list;
+	while (tmp && (ret != -1))
+	{
+		ptr = tmp->content;
+		if (ptr->id == simple_command || ptr->id == only_redirections)
+		{
+			ret = execute_single_command(ptr->kind.cmd);
+		}
+		else if (ptr->id == pipeline)
+			ret = execute_pipeline(ptr->kind.pipe);
+		else
+			puts("Shitty case (Nothing personal :3)");
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void run_minishell(void)
+{
+	t_list	*input_list;
+	char	*input_str;
+	int		ret;
+
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		print_prompt();
-		get_command(envp);
-		sleep(0);
+		// test_redirections();
+		input_str = get_command();
+		input_list = parser_loop(input_str);
+		print_command_list(input_list);
+		ret = execute_all_the_commands(input_list);
+		ft_lstclear(&input_list, free_block);
+		free(input_str);
 	}
 	(void)ret;
 }
@@ -36,6 +78,5 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	run_minishell();
 	(void)argv;
-	(void)envp;
 	return (0);
 }

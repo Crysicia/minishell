@@ -6,11 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 18:54:11 by lpassera          #+#    #+#             */
-/*   Updated: 2020/08/12 18:54:12 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/22 11:58:40 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {

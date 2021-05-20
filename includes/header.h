@@ -6,20 +6,51 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/09 11:35:08 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/19 16:57:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/param.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
+# include <sys/errno.h>
+# include <sys/wait.h>
 # include <limits.h>
-# include "get_next_line.h"
+# include <signal.h>
+# include <string.h>
 # include "../libft/libft.h"
+# include "get_next_line.h"
 # include "scanner.h"
+# include "token.h"
+# include "parser.h"
+# include "pipes.h"
+# include "flag.h"
+# define BUILTINS_NB 7
+
+/* ERRORS */
+# define SUCCESS 0
+# define ERR_BUILTIN_FAILED 1
+# define ERR_MALLOC_FAILED 256
+# define ERR_ENV_NOT_FOUND 257
+# define ERR_COULD_NOT_SET_ENV 258
+# define ERR_PIPE_FAILED 259
+# define ERR_FORK_FAILED 260
+
+typedef struct s_globals
+{
+	int		current_pid;
+	int		status;
+	char	*error_msg;
+	t_list	*env;
+}			t_globals;
+
+t_globals	*g_globals;
 
 typedef struct s_command
 {
@@ -28,12 +59,19 @@ typedef struct s_command
 	char	**envp;
 }				t_command;
 
+typedef struct s_dict
+{
+	char	*key;
+	char	*value;
+}				t_dict;
+
 void	print_prompt(void);
-void	get_command(char *envp[]);
-int		lexer(char *line, char *envp[]);
+t_list	*parse_to_list(char *line);
+char	**command_format(t_list *list);
+char	*get_command(void);
+
 char	*get_word(char **line);
 void	skip_spaces(char **line);
-int		builtin_env(char *envp[]);
 
 int		change_directory(t_list **env_list, char *new_path);
 int		is_valid_path(char *path);

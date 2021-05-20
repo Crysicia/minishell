@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/12 18:21:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/10 13:04:28 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/26 10:09:55 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/26 14:30:42 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/header.h"
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
+bool	is_absolute_path(char *path)
 {
-	if (!new)
-		return ;
-	if (!*alst)
-	{
-		(*alst) = new;
-		return ;
-	}
-	if (!(*alst)->next)
-	{
-		(*alst)->next = new;
-		return ;
-	}
-	ft_lstadd_back(&((*alst)->next), new);
+	if (!path)
+		return (false);
+	return (*path == '/');
+}
+
+bool	is_path(char *path)
+{
+	if (!path)
+		return (false);
+	return (!!ft_strchr(path, '/'));
 }

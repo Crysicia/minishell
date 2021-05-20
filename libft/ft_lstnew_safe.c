@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner_utils.c                                    :+:      :+:    :+:   */
+/*   ft_lstnew_safe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 01:02:07 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/08 01:02:07 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/23 13:35:03 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/23 13:35:21 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/scanner.h"
+#include "libft.h"
 
-bool	ft_is_lowercase(int c)
+t_list	*ft_lstnew_safe(void *content, void (*del)(void *))
 {
-	if ((c >= 'a') && (c <= 'z'))
-		return (true);
-	else
-		return (false);
-}
+	t_list	*list;
 
-bool	is_space(int c)
-{
-	if ((c == ' ') || (c == '\t'))
-		return (true);
-	else
-		return (false);
+	list = ft_lstnew(content);
+	if (!list)
+		del(content);
+	return (list);
 }

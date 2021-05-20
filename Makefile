@@ -1,11 +1,19 @@
+SHELL			= /bin/sh
+.SUFFIXES:
+.SUFFIXES:		.c .o .a
 CC				= gcc
 CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
-LIBS			= -Llibft -lft
+LIBS			= -Llibft -lft -lncurses
 LIBFT 			= libft/libft.a
 NAME			= Minishell
+
+RST				= "\e[0m"
+RED				= "\e[31m"
+GREEN			= "\e[32m"
+
 PATH_SRCS		= ./srcs/
 RAW_SRCS		= builtin_cd.c \
 				  builtin_echo.c \
@@ -43,8 +51,10 @@ RAW_SRCS		= builtin_cd.c \
 				  token_utils.c \
 				  pipes_utils.c \
 
+SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
 OBJS 			= $(SRCS:.c=.o)
 NO_MAIN			= $(filter-out main.o,$(OBJS))
+
 TEST			= minishell_test
 TEST_RAW_SRCS	= test_helpers.c \
 				  builtin_cd_tests.c \
@@ -69,21 +79,25 @@ TEST_RAW_SRCS	= test_helpers.c \
 				  tokens_tests.c \
 				  utils_tests.c \
 
+TEST_SRCS		= $(addprefix tests/,$(TEST_RAW_SRCS))
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
+
+.c.o:
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 all: $(NAME)
 
-.c.o:
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
-
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	@echo $(GREEN)"Compiling Minishell executable ..."$(RST)
+	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	@echo $(GREEN)"Minishell is ready !\nEnter \"./Minishell\" for execution."$(RST)
 
 $(LIBFT):
+	@echo $(GREEN)"Compiling libft ..."$(RST)
 	@$(MAKE) bonus -C libft
 
 test: $(TEST)
-	./$(TEST)
+	./$(TEST) --jobs 1
 	$(RM) *.test
 
 $(TEST): $(NO_MAIN) $(TEST_OBJS) $(LIBFT)
@@ -91,11 +105,17 @@ $(TEST): $(NO_MAIN) $(TEST_OBJS) $(LIBFT)
 	$(RM) $(TEST_OBJS)
 
 clean:
-	$(RM) $(OBJS)
-	@$(MAKE) clean -C libft
+	@echo $(RED)"Removing objects and librairies ..."$(RST)
+	@$(RM) $(OBJS)
+	@$(MAKE) fclean -C libft
 
 fclean: clean
-	$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
+	@echo $(RED)"Removing minishell and tests ..."$(RST)
+	@$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
+
+fsan: fclean $(LIBFT)
+	${CC} ${CFLAGS} -g -fsanitize=address ${HEADERS} ${LIBS} ${SRCS} libft/libft.a -o debug
+	./debug
 
 re: fclean all
 
