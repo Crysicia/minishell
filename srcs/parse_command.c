@@ -42,6 +42,8 @@ char	**command_format(t_list *list)
 
 	count = 0;
 	index = count_command_words(list);
+	if (!index)
+		return (NULL);
 	tab = malloc((index + 1) * sizeof(char **));
 	if (!tab)
 		ft_malloc_error();

@@ -23,7 +23,7 @@ int	get_word_size(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] && !is_operator(line + i)
+	while (line[i] && !is_operator(&line[i]) && !is_redirection(&line[i])
 		&& !is_space(line[i]))
 	{
 		if (line[i] == '\\')
