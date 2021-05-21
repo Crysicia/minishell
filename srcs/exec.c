@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/19 16:55:41 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/20 16:58:08 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,7 @@ int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
 	char	**arguments;
 	t_list	words;
 	int in_and_out[2];
-	// int		command_flag;
 
-	// command_flag = NOT_IN_PIPELINE;
 	words = *commands->words;
 	arguments = command_format(&words);
 	if (!arguments)
