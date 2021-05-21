@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/20 21:34:32 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/21 11:46:08 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void run_minishell(void)
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
+		printf("-------------------------------\n---------- MAIN LOOP ----------\n-------------------------------\n");
 		print_prompt();
 		// test_redirections();
 		input_str = get_command();
