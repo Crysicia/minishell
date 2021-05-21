@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 13:18:19 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/20 21:56:40 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/21 07:53:14 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int get_pipeline_placement(int current, int total)
 {
 	if (current == 0)
 		return (FIRST_IN_PIPELINE);
-	if (current == (total - 1))
+	if (current == (total))
 		return (LAST_IN_PIPELINE);
 	return (IN_PIPELINE);
 }
@@ -26,6 +26,7 @@ int execute_pipeline(t_pipeline *pipeline)
 	t_pipes	pipes;
 	int count;
 
+	printf("EXECUTE PIPELINE PIPES\n");
 	count = pipeline->pipe_count;
 	if (!create_pipes(&pipes))
 		return (ERR_PIPE_FAILED);
@@ -68,11 +69,12 @@ int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 	if (pid < 0)
 		return (-ERR_FORK_FAILED);
 	arguments = command_format(command->words);
+	swap_pipes(pipes);
 	if (!arguments)
 		return (ERR_MALLOC_FAILED);
 	else if (pid == 0)
 	{
-		handle_redirections(command->redirections);
+		// handle_redirections(command->redirections);
 		dup_pipes(pipes, command_flag);
 		close_pipes(pipes);
 		if (is_builtin(arguments[0]))
@@ -83,5 +85,6 @@ int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 		execve(path, arguments, list_to_array(g_globals->env));
 	}
 	close_relevant_pipes(pipes, command_flag);
+	printf("PARENT CLOSD PIPES\n");
 	return (pid);
 }
