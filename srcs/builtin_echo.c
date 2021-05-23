@@ -46,18 +46,23 @@ int	builtin_echo(char **arguments)
 	if (arguments)
 	{
 		ptr = arguments;
-		if (check_echo_option(*ptr))
+		while (*ptr)
 		{
-			n_option = true;
-			ptr++;
-		}
+			if (check_echo_option(*ptr))
+			{
+				n_option = true;
+				ptr++;
+			}
+			else
+				break ;
+		}	
 		while (*ptr)
 		{
 			ft_putstr_fd(*ptr, 1);
 			if (*(ptr + 1))
 				write(1, " ", 1);
+			ptr++;
 		}
-		ptr++;
 	}
 	if (!n_option)
 		printf("\n");
