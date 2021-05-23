@@ -41,7 +41,10 @@ int	execute_all_the_commands(t_list *list)
 		else if (ptr->id == pipeline)
 			ret = execute_pipeline(ptr->kind.pipe);
 		else
-			puts("Shitty case (Nothing personal :3)");
+		{
+			printf("Shitty case (Nothing personal :3)\n");
+			break ;
+		}
 		tmp = tmp->next;
 	}
 	return (0);
@@ -57,7 +60,6 @@ void run_minishell(void)
 	while (1)
 	{
 		print_prompt();
-		// test_redirections();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
 		ret = execute_all_the_commands(input_list);
@@ -68,9 +70,7 @@ void run_minishell(void)
 		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
-
 	}
-	(void)ret;
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -81,5 +81,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	run_minishell();
 	(void)argv;
+	destroy_globals();
 	return (0);
 }

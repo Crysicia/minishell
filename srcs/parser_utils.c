@@ -28,7 +28,8 @@ t_command_type	attribute_command_type(t_simple_command *command)
 {
 	t_token	*token;
 
-	if ((!command) || ((!command->words) && (!command->redirections)))
+	if ((!command) || ((!command->words) && (!command->redirections))
+		|| (((t_token *)command->words)->role == operator))
 		return (error);
 	else if ((!command->words) && (command->redirections))
 		return (only_redirections);
