@@ -46,19 +46,18 @@ int	builtin_echo(char **arguments)
 	if (arguments)
 	{
 		ptr = arguments;
-		while (*ptr)
+		if (check_echo_option(*ptr))
 		{
-			if (check_echo_option(*ptr))
-				n_option = true;
-			else
-			{
-				char *tmp = ft_strtrim(*ptr, " \t");
-				ft_putstr_fd(tmp, 1);
-				if (*(ptr + 1))
-					write(1, " ", 1);
-			}
+			n_option = true;
 			ptr++;
 		}
+		while (*ptr)
+		{
+			ft_putstr_fd(*ptr, 1);
+			if (*(ptr + 1))
+				write(1, " ", 1);
+		}
+		ptr++;
 	}
 	if (!n_option)
 		printf("\n");
