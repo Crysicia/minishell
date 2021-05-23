@@ -12,6 +12,7 @@
 
 #include "../includes/header.h"
 
+/*
 int execute_basic_command(t_list **commands)
 {
 	char **command;
@@ -34,3 +35,4 @@ int execute_basic_command(t_list **commands)
 	}
 	return (SUCCESS);
 }
+*/

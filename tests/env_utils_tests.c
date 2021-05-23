@@ -252,7 +252,8 @@ Test(env_utils_suite, ft_setenv_existing_null_test) {
 }
 
 Test(env_utils_suite, ft_setenv_null_test) {
-	init_globals(NULL);
+	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
+	init_globals(envp);
 	int ret = ft_setenv(NULL, NULL);
 
 	cr_expect_null(g_globals->env, "Expected ft_setenv to not add NULL variable");

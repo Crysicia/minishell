@@ -30,7 +30,9 @@ int execute_pipeline(t_pipeline *pipeline)
 	if (!create_pipes(&pipes))
 		return (ERR_PIPE_FAILED);
 	execute_pipeline_loop(&pipes, pipeline->commands, count);
+	puts("loop is done");
 	close_pipes(&pipes);
+	puts("pipes are closed");
 	return (0);
 }
 
@@ -54,6 +56,7 @@ int execute_pipeline_loop(t_pipes *pipes, t_list *commands, int pipe_count)
 		}
 		commands = commands->next;
 		current++;
+		puts("hello");
 	}
 	return (0);
 }
@@ -67,11 +70,12 @@ int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 	pid = fork();
 	if (pid < 0)
 		return (-ERR_FORK_FAILED);
-	arguments = command_format(command->words);
-	if (!arguments)
-		return (ERR_MALLOC_FAILED);
 	else if (pid == 0)
 	{
+		print_simple_command_node(command);
+		arguments = command_format(command->words);
+		if (arguments)
+			puts("arguments exist");
 		handle_redirections(command->redirections);
 		dup_pipes(pipes, command_flag);
 		close_pipes(pipes);
@@ -80,6 +84,8 @@ int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 		path = find_exe_path(arguments[0]);
 		if (!path)
 			return (-1);
+		puts(path);
+		puts("before execve");
 		execve(path, arguments, list_to_array(g_globals->env));
 	}
 	close_relevant_pipes(pipes, command_flag);

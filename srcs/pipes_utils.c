@@ -53,7 +53,6 @@ void	close_pipes(t_pipes *pipes)
 
 bool	create_pipes(t_pipes *pipes)
 {
-
 	if (pipe(pipes->previous))
 		return (false);
 	if (pipe(pipes->current))

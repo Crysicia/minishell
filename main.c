@@ -37,9 +37,7 @@ int	execute_all_the_commands(t_list *list)
 	{
 		ptr = tmp->content;
 		if (ptr->id == simple_command || ptr->id == only_redirections)
-		{
 			ret = execute_single_command(ptr->kind.cmd);
-		}
 		else if (ptr->id == pipeline)
 			ret = execute_pipeline(ptr->kind.pipe);
 		else
@@ -62,10 +60,15 @@ void run_minishell(void)
 		// test_redirections();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
-		print_command_list(input_list);
 		ret = execute_all_the_commands(input_list);
+		if (ret == -1)
+		{
+			puts("one command failed during execution");
+			break ;
+		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
+
 	}
 	(void)ret;
 }
