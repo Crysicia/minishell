@@ -36,6 +36,7 @@
 /* ERRORS */
 # define SUCCESS 0
 # define ERR_BUILTIN_FAILED 1
+# define ERR_UNEXPECTED_TOKEN 12
 # define ERR_MALLOC_FAILED 256
 # define ERR_ENV_NOT_FOUND 257
 # define ERR_COULD_NOT_SET_ENV 258
@@ -66,8 +67,11 @@ typedef struct s_dict
 }				t_dict;
 
 void	print_prompt(void);
-t_list	*parse_to_list(char *line);
+
+bool	check_command_syntax(t_list *list);
+size_t	count_command_words(t_list *list);
 char	**command_format(t_list *list);
+
 char	*get_command(void);
 
 char	*get_word(char **line);

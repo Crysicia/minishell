@@ -13,6 +13,21 @@
 #include "../includes/header.h"
 #include "../includes/token.h"
 
+bool	check_command_syntax(t_list *list)
+{
+	size_t	index;
+
+	index = count_command_words(list);
+	if (!index)
+	{
+		printf("Minishell, syntax error near unexpected `%s` token\n",
+			((t_token *)list->content)->cmd);
+		return (false);
+	}
+	else
+		return (true);
+}
+
 size_t	count_command_words(t_list *list)
 {
 	size_t	index;
@@ -41,20 +56,22 @@ char	**command_format(t_list *list)
 	char	**tab;
 
 	count = 0;
-	index = count_command_words(list);
-	if (!index)
-		return (NULL);
-	tab = malloc((index + 1) * sizeof(char **));
-	if (!tab)
-		ft_malloc_error();
-	tmp = list;
-	while (count < index)
+	tab = NULL;
+	if (check_command_syntax(list))
 	{
-		tok = tmp->content;
-		tab[count] = ft_strdup(tok->cmd);
-		count++;
-		tmp = tmp->next;
+		index = count_command_words(list);
+		tab = malloc((index + 1) * sizeof(char **));
+		if (!tab)
+			ft_malloc_error();
+		tmp = list;
+		while (count < index)
+		{
+			tok = tmp->content;
+			tab[count] = ft_strdup(tok->cmd);
+			count++;
+			tmp = tmp->next;
+		}
+		tab[count] = NULL;
 	}
-	tab[count] = NULL;
 	return (tab);
 }
