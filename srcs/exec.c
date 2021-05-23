@@ -142,8 +142,10 @@ int execute_single_command(t_simple_command *commands) //t_pipes *pipes)
 		handle_redirections(commands->redirections);
 		if (is_builtin(arguments[0]))
 			set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
-		else
+		else if (find_exe_path(arguments[0]))
 			execute_command(arguments);
+		else
+			printf("-Minishell : `%s` : command not found\n", arguments[0]);
 		restore_in_and_out(&in_and_out);
 	}
 	return (0);

@@ -16,12 +16,19 @@
 bool	check_command_syntax(t_list *list)
 {
 	size_t	index;
+	char	*tmp;
 
 	index = count_command_words(list);
 	if (!index)
 	{
-		printf("Minishell, syntax error near unexpected `%s` token\n",
-			((t_token *)list->content)->cmd);
+		if (!ft_strncmp(((t_token *)list->content)->cmd, "|", 1))
+			tmp = "pipe";
+		else if (!ft_strncmp(((t_token *)list->content)->cmd, ";", 1))
+			tmp = "semi-colon";
+		else
+			tmp = "newline";
+		printf("-Minishell: syntax error near unexpected `%s` token\n",
+			tmp);
 		return (false);
 	}
 	else
