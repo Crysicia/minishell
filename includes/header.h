@@ -97,6 +97,9 @@ void	free_dict(void *elem);
 void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
 
+/* Evaluate tokens */
+int		flag_simple_command(t_simple_command *list);
+
 /* Builtins */
 void	display_error(char *command, char *custom);
 bool	is_env_valid(char *env, bool can_contain_eq);

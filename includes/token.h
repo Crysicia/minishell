@@ -50,6 +50,7 @@ void		quotes_removal(t_token *tok);
 void		remove_simple_and_double_quotes(char *buffer, char *str);
 
 void		word_flagger(t_token *token);
+
 void		expand_env_variable(char **str, char **buffer);
 void		dollar_expansion(t_token *tok);
 void		copy_escaped_character(char **str, char **buffer);
