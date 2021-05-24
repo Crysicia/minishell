@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/24 12:01:44 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/24 18:31:09 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,6 @@ void	handle_sigint(int signal)
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);
 	print_prompt();
-}
-
-int	evaluation_pass(t_list *list)
-{
-	t_list	*tmp;
-	t_block	*ptr;
-
-	tmp = list;
-	while (tmp)
-	{
-		ptr = list->content;
-		if (ptr->id == simple_command)
-			flag_simple_command(ptr->kind.cmd);
-		tmp = tmp->next;
-	}
-	return (0);
 }
 
 int	execute_all_the_commands(t_list *list)
@@ -76,16 +60,13 @@ void	run_minishell(void)
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
-		printf("-------------------------------\n---------- MAIN LOOP ----------\n-------------------------------\n");
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
-		ret = evaluation_pass(input_list);
-		ret = execute_all_the_commands(input_list);
-		if (ret == -1)
+		if (!check_syntax_error(input_list))
 		{
-			puts("one command failed during execution");
-			break ;
+			ret = evaluation_pass(input_list);
+			ret = execute_all_the_commands(input_list);
 		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);

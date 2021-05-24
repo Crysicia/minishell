@@ -6,11 +6,27 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 08:54:52 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/24 08:54:52 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/24 17:46:56 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+
+int	evaluation_pass(t_list *list)
+{
+	t_list	*tmp;
+	t_block	*ptr;
+
+	tmp = list;
+	while (tmp)
+	{
+		ptr = list->content;
+		if (ptr->id == simple_command)
+			flag_simple_command(ptr->kind.cmd);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	flag_simple_command(t_simple_command *list)
 {
