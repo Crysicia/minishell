@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/20 21:34:32 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:01:44 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,17 @@ int	execute_all_the_commands(t_list *list)
 	return (0);
 }
 
-void run_minishell(void)
+void	run_minishell(void)
 {
 	t_list	*input_list;
 	char	*input_str;
 	int		ret;
 
+	(void)ret;
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
+		printf("-------------------------------\n---------- MAIN LOOP ----------\n-------------------------------\n");
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);

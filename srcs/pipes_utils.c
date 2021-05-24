@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 14:56:16 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/10 15:21:42 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:44:40 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	close_relevant_pipes(t_pipes *pipes, int command_flag)
 
 void	swap_pipes(t_pipes *pipes)
 {
-	int swap[2];
+	int	swap[2];
 
 	ft_memcpy(swap, pipes->previous, 2 * sizeof(int));
 	ft_memcpy(pipes->previous, pipes->current, 2 * sizeof(int));

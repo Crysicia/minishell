@@ -252,7 +252,7 @@ Test(env_utils_suite, ft_setenv_existing_null_test) {
 }
 
 Test(env_utils_suite, ft_setenv_null_test) {
-	char *envp[] = { "PATH", "PATHA=ko", "PATH=ok", "USER=lpassera", "EMPTY=", NULL };
+	char *envp[] = { NULL };
 	init_globals(envp);
 	int ret = ft_setenv(NULL, NULL);
 
