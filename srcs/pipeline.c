@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 13:18:19 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/24 12:22:48 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/24 15:48:55 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 	char	*path;
 	char	**arguments;
 
-	pid = fork();
 	arguments = command_format(command->words);
 	if (!arguments)
 		return (ERR_MALLOC_FAILED);
+	pid = fork();
 	if (pid < 0)
 		return (ERR_FORK_FAILED);
 	else if (pid == 0)

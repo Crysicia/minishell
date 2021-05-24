@@ -25,6 +25,22 @@ void	handle_sigint(int signal)
 	print_prompt();
 }
 
+int	evaluation_pass(t_list *list)
+{
+	t_list	*tmp;
+	t_block	*ptr;
+
+	tmp = list;
+	while (tmp)
+	{
+		ptr = list->content;
+		if (ptr->id == simple_command)
+			flag_simple_command(ptr->kind.cmd);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int	execute_all_the_commands(t_list *list)
 {
 	t_list		*tmp;
@@ -37,13 +53,14 @@ int	execute_all_the_commands(t_list *list)
 	{
 		ptr = tmp->content;
 		if (ptr->id == simple_command || ptr->id == only_redirections)
-		{
 			ret = execute_single_command(ptr->kind.cmd);
-		}
 		else if (ptr->id == pipeline)
 			ret = execute_pipeline(ptr->kind.pipe);
 		else
-			puts("Shitty case (Nothing personal :3)");
+		{
+			printf("Shitty case (Nothing personal :3)\n");
+			break ;
+		}
 		tmp = tmp->next;
 	}
 	return (0);
@@ -63,8 +80,13 @@ void	run_minishell(void)
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
-		print_command_list(input_list);
+		ret = evaluation_pass(input_list);
 		ret = execute_all_the_commands(input_list);
+		if (ret == -1)
+		{
+			puts("one command failed during execution");
+			break ;
+		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
 	}
@@ -78,5 +100,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	run_minishell();
 	(void)argv;
+	destroy_globals();
 	return (0);
 }

@@ -16,6 +16,7 @@ GREEN			= "\e[32m"
 
 PATH_SRCS		= ./srcs/
 RAW_SRCS		= builtin_cd.c \
+				  builtin_echo.c \
 				  builtin_env.c \
 				  builtin_export.c \
 				  builtin_exit.c \
@@ -27,6 +28,7 @@ RAW_SRCS		= builtin_cd.c \
 				  dollar_expansion.c \
 				  env_utils.c \
 				  error.c \
+				  evaluation.c \
 				  exec.c \
 				  exec_builtin.c \
 				  flagger.c \
@@ -56,6 +58,7 @@ NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
 TEST_RAW_SRCS	= test_helpers.c \
 				  builtin_cd_tests.c \
+				  builtin_echo_tests.c \
 				  builtin_export_tests.c \
 				  builtin_pwd_tests.c \
 				  builtin_unset_tests.c \

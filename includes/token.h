@@ -48,8 +48,10 @@ int			get_word_size(char *line);
 char		*cut_token_string(char *line);
 void		quotes_removal(t_token *tok);
 void		remove_simple_and_double_quotes(char *buffer, char *str);
+void		apply_expansion_and_remove_quotes(t_token *token);
 
 void		word_flagger(t_token *token);
+
 void		expand_env_variable(char **str, char **buffer);
 void		dollar_expansion(t_token *tok);
 void		copy_escaped_character(char **str, char **buffer);

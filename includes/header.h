@@ -36,6 +36,7 @@
 /* ERRORS */
 # define SUCCESS 0
 # define ERR_BUILTIN_FAILED 1
+# define ERR_UNEXPECTED_TOKEN 12
 # define ERR_MALLOC_FAILED 256
 # define ERR_ENV_NOT_FOUND 257
 # define ERR_COULD_NOT_SET_ENV 258
@@ -66,8 +67,11 @@ typedef struct s_dict
 }				t_dict;
 
 void	print_prompt(void);
-t_list	*parse_to_list(char *line);
+
+bool	check_command_syntax(t_list *list);
+size_t	count_command_words(t_list *list);
 char	**command_format(t_list *list);
+
 char	*get_command(void);
 
 char	*get_word(char **line);
@@ -93,18 +97,22 @@ void	free_dict(void *elem);
 void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
 
+/* Evaluate tokens */
+int		flag_simple_command(t_simple_command *list);
+
 /* Builtins */
 void	display_error(char *command, char *custom);
 bool	is_env_valid(char *env, bool can_contain_eq);
 
 int		(*get_builtin(char *str))(char **arguments);
 int		builtin_cd(char **arguments);
-int		builtin_pwd(char **arguments);
-int		builtin_export(char **arguments);
-int		builtin_exit(char **arguments);
+int		builtin_echo(char **arguments);
 int		builtin_env(char **arguments);
-int		execute_builtin(char *str, char **arguments);
+int		builtin_exit(char **arguments);
+int		builtin_export(char **arguments);
+int		builtin_pwd(char **arguments);
 int		builtin_unset(char **arguments);
+int		execute_builtin(char *str, char **arguments);
 
 bool	is_path(char *path);
 bool	is_absolute_path(char *path);

@@ -14,19 +14,6 @@
 #include "../includes/flag.h"
 #include "../libft/libft.h"
 
-void	word_flagger(t_token *token)
-{
-	if (token->role == word)
-	{
-		token->flag = check_quoting(token->cmd);
-		if (token->flag == QUOTING_ERROR)
-		{
-			ft_putendl_fd("Minishell: error: quotes were not closed properly",
-				2);
-		}
-	}
-}
-
 int	check_quoting(char *word)
 {
 	int		flag;

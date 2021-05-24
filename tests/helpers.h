@@ -4,4 +4,5 @@
 # include <string.h>
 
 char *bool_to_str(char *buffer, bool boolean);
+char **tabndup(char tab[10][40], int size);
 #endif
