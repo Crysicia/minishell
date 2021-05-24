@@ -6,13 +6,13 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 13:18:19 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/21 12:06:43 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:22:48 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
-int get_pipeline_placement(int current, int total)
+int	get_pipeline_placement(int current, int total)
 {
 	if (current == 0)
 		return (FIRST_IN_PIPELINE);
@@ -21,11 +21,11 @@ int get_pipeline_placement(int current, int total)
 	return (IN_PIPELINE);
 }
 
-int execute_pipeline(t_pipeline *pipeline)
+int	execute_pipeline(t_pipeline *pipeline)
 {
 	t_pipes	pipes;
-	int in_and_out[2];
-	int count;
+	int		in_and_out[2];
+	int		count;
 
 	save_in_and_out(&in_and_out);
 	count = pipeline->pipe_count;
@@ -37,11 +37,11 @@ int execute_pipeline(t_pipeline *pipeline)
 	return (0);
 }
 
-int execute_pipeline_loop(t_pipes *pipes, t_list *commands, int pipe_count)
+int	execute_pipeline_loop(t_pipes *pipes, t_list *commands, int pipe_count)
 {
-	int error;
-	int current;
-	int placement;
+	int	error;
+	int	current;
+	int	placement;
 
 	current = 0;
 	while (commands)
@@ -60,16 +60,16 @@ int execute_pipeline_loop(t_pipes *pipes, t_list *commands, int pipe_count)
 
 int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 {
-	int	pid;
-	char *path;
-	char **arguments;
+	int		pid;
+	char	*path;
+	char	**arguments;
 
 	pid = fork();
-	if (pid < 0)
-		return (ERR_FORK_FAILED);
 	arguments = command_format(command->words);
 	if (!arguments)
 		return (ERR_MALLOC_FAILED);
+	if (pid < 0)
+		return (ERR_FORK_FAILED);
 	else if (pid == 0)
 	{
 		dup_pipes(pipes, command_flag);

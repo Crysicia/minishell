@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 18:09:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/19 15:24:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:16:13 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ bool				check_if_pipeline(t_simple_command *command);
 
 t_redirection		*new_redirection(void);
 void				free_redirection(void *to_free);
-
 
 t_command_type		attribute_command_type(t_simple_command *command);
 

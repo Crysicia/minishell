@@ -29,7 +29,6 @@ RAW_SRCS		= builtin_cd.c \
 				  error.c \
 				  exec.c \
 				  exec_builtin.c \
-				  exec_simple_command.c \
 				  flagger.c \
 				  get_next_line.c \
 				  get_next_line_utils.c \

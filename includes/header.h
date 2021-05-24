@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/21 11:52:43 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/24 12:32:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,12 +124,11 @@ int		test_redirections(void);
 
 void	handle_redirections(t_list *command);
 int		execute_single_command(t_simple_command *commands);
-bool save_in_and_out(int (*saved)[]);
-bool restore_in_and_out(int (*saved)[]);
+bool	save_in_and_out(int (*saved)[]);
+bool	restore_in_and_out(int (*saved)[]);
 
 // int execute_basic_command(t_list **commands);
 // int execute_commands(t_list **commands);
 // int execute_single_command(t_list **commands, t_pipes *pipes);
-
 
 #endif
