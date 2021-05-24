@@ -13,8 +13,7 @@
 #include "../includes/header.h"
 bool	is_an_option(char *str)
 {
-	if (str && (((!ft_strncmp(str, "-", 1)) || (!ft_strncmp(str, "--", 2)))
-			&& ft_strncmp(str, "---", 3)))
+	if (str && (!ft_strncmp(str, "-", 1)))
 		return (true);
 	else
 		return (false);
@@ -24,7 +23,7 @@ bool	check_echo_option(char *str)
 {
 	if (is_an_option(str))
 	{
-		while (*str && (*str == '-'))
+		if (*str && (*str == '-'))
 			str++;
 		while (*str && (*str == 'n'))
 			str++;

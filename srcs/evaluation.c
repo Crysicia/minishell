@@ -21,6 +21,7 @@ int	flag_simple_command(t_simple_command *list)
 	while (tmp)
 	{
 		word_flagger(tmp->content);
+		apply_expansion_and_remove_quotes(tmp->content);
 		tmp = tmp->next;
 	}
 	tmp = list->redirections;
@@ -35,7 +36,6 @@ int	flag_simple_command(t_simple_command *list)
 
 void	word_flagger(t_token *token)
 {
-	puts("call to word flagger");
 	if (token->role == word)
 	{
 		token->flag = check_quoting(token->cmd);
@@ -44,9 +44,15 @@ void	word_flagger(t_token *token)
 			ft_putendl_fd("Minishell: error: quotes were not closed properly",
 				2);
 		}
-		else
-			dollar_expansion(token);
 	}
+}
+
+void	apply_expansion_and_remove_quotes(t_token *token)
+{
+	if (!(token->flag)
+		|| (token->flag == DOUBLE_QUOTES))
+		dollar_expansion(token);
+	quotes_removal(token);
 }
 
 /*
