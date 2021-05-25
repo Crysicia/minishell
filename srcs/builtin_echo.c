@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 11:17:18 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/24 17:43:34 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 09:37:49 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ int	builtin_echo(char **arguments)
 		ptr = arguments;
 		while (*ptr)
 		{
-			if (check_echo_option(*ptr++))
+			if (check_echo_option(*ptr))
+			{
+				ptr++;
 				n_option = true;
+			}
 			else
 				break ;
 		}
