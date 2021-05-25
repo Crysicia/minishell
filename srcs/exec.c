@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/24 12:33:52 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/25 17:01:49 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	execute_single_command(t_simple_command *commands)
 		else if (find_exe_path(arguments[0]))
 			execute_command(arguments);
 		else
-			printf("-Minishell : `%s` : command not found\n", arguments[0]);
+			printf("-Minishell: %s: command not found\n", arguments[0]);
 		restore_in_and_out(&in_and_out);
 	}
 	return (0);

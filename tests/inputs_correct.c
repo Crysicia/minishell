@@ -159,6 +159,7 @@ if (tests->expected[20][0])
 		t_token	*token;
 		int word_index;
 		int	redir_index;
+
 		tmp = llist.kind.cmd->redirections;
 		word_index = 0;
 		redir_index = 20;

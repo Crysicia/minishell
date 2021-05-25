@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/25 14:54:20 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 17:00:53 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,6 @@ void	handle_sigint(int signal)
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);
 	print_prompt();
-}
-
-int	execute_all_the_commands(t_list *list)
-{
-	t_list		*tmp;
-	t_block		*ptr;
-	int			ret;
-
-	ret = 0;
-	tmp = list;
-	while (tmp && (ret != -1))
-	{
-		ptr = tmp->content;
-		if (ptr->id == simple_command || ptr->id == only_redirections)
-			ret = execute_single_command(ptr->kind.cmd);
-		else if (ptr->id == pipeline)
-			ret = execute_pipeline(ptr->kind.pipe);
-		tmp = tmp->next;
-	}
-	return (0);
 }
 
 void	run_minishell(void)
@@ -88,3 +68,5 @@ int	main(int argc, char *argv[], char *envp[])
 	destroy_globals();
 	return (0);
 }
+
+/*	//		 */

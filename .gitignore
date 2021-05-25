@@ -12,4 +12,5 @@ Minishell
 testing
 a.out
 libft/libft.a
+srcs/main.c
 minishell_test

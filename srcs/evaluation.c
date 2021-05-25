@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   evaluation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/24 08:54:52 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 13:11:45 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
+/*   Updated: 2021/05/25 16:43:51 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,12 @@ void	apply_expansion_and_remove_quotes(t_token *token)
 }
 
 /*
-
 int	flag_pipeline(t_pipeline *list)
 {
 	return (0);
 }
-
 int	flag_redirection(t_list *list)
 {
-
 	return (0);
 }
 */

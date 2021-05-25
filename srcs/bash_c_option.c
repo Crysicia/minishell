@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   bash_c_option.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:44:22 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 14:52:50 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 17:00:53 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+
+int	execute_all_the_commands(t_list *list)
+{
+	t_list		*tmp;
+	t_block		*ptr;
+	int			ret;
+
+	ret = 0;
+	tmp = list;
+	while (tmp && (ret != -1))
+	{
+		ptr = tmp->content;
+		if (ptr->id == simple_command || ptr->id == only_redirections)
+			ret = execute_single_command(ptr->kind.cmd);
+		else if (ptr->id == pipeline)
+			ret = execute_pipeline(ptr->kind.pipe);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 bool	check_bash_c_option(char *argv)
 {

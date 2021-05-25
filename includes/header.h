@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 14:53:11 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:30:48 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int		builtin_export(char **arguments);
 int		builtin_pwd(char **arguments);
 int		builtin_unset(char **arguments);
 int		execute_builtin(char *str, char **arguments);
+int		builtin_unset(char **arguments);
 
 bool	is_path(char *path);
 bool	is_absolute_path(char *path);
@@ -135,7 +136,6 @@ int		bash_c_option(char *argv);
 
 /* TMP UTILS */
 
-void	print_token_list(t_list *list);
 void	print_simple_command_node(t_simple_command *command);
 void	print_pipeline(t_pipeline *pipeline);
 void	print_command_list(t_list *list);
