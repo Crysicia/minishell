@@ -6,7 +6,7 @@
 /*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 12:55:43 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 14:53:11 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	print_prompt(void);
 
 int		evaluation_pass(t_list *list);
 bool	check_command_syntax(t_list *list);
+int		execute_all_the_commands(t_list *list);
+void	run_minishell(void);
+
 size_t	count_command_words(t_list *list);
 char	**command_format(t_list *list);
 char	*get_command(void);
@@ -122,7 +125,13 @@ bool	is_absolute_path(char *path);
 int		set_status_code(int code, bool from_builtin);
 
 /* History utils */
+
 int		add_to_history(char *line);
+
+/* Miscellaneous */
+
+bool	check_bash_c_option(char *argv);
+int		bash_c_option(char *argv);
 
 /* TMP UTILS */
 
