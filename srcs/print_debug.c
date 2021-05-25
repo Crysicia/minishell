@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 11:12:16 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/20 11:12:16 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:53:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,18 @@ void	print_command_list(t_list *list)
 		else if (command->id == pipeline)
 			print_pipeline(command->kind.pipe);
 		node = node->next;
+	}
+}
+
+void	print_command_history(t_dlist *history)
+{
+	t_dlist	*tmp;
+
+	tmp = history;
+	puts("Printing commands history");
+	while (tmp)
+	{
+		puts(tmp->content);
+		tmp = tmp->next;
 	}
 }

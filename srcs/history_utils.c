@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:01:00 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/30 17:15:26 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:50:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	add_to_history(char *line)
 	dup = ft_strdup(line);
 	if (!dup)
 		return (ERR_MALLOC_FAILED);
-	node = ft_dlistnew(dup);
+	node = ft_dlstnew(dup);
 	if (!node)
 	{
 		free(dup);

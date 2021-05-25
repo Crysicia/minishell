@@ -6,7 +6,7 @@
 /*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/28 16:02:10 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:55:43 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,18 @@ bool	is_path(char *path);
 bool	is_absolute_path(char *path);
 
 int		set_status_code(int code, bool from_builtin);
+
+/* History utils */
+int		add_to_history(char *line);
+
 /* TMP UTILS */
 
 void	print_token_list(t_list *list);
 void	print_simple_command_node(t_simple_command *command);
 void	print_pipeline(t_pipeline *pipeline);
 void	print_command_list(t_list *list);
+void	print_command_history(t_dlist *history);
+
 /* Error managment */
 void	ft_malloc_error(void);
 void	syntax_error(void);

@@ -35,6 +35,7 @@ RAW_SRCS		= builtin_cd.c \
 				  get_next_line.c \
 				  get_next_line_utils.c \
 				  globals.c \
+				  history_utils.c \
 				  input.c \
 				  parse_command.c \
 				  parser.c \

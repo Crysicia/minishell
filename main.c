@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/25 12:11:04 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:54:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ void	run_minishell(void)
 		{
 			ret = evaluation_pass(input_list);
 			ret = execute_all_the_commands(input_list);
+			add_to_history(input_str);
 		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
+		print_command_history(g_globals->history);
 	}
 }
 

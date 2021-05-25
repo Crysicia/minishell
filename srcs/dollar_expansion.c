@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 12:42:40 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:54:50 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,4 @@ void	copy_escaped_character(char **str, char **buffer)
 	**buffer = *(*str + 1);
 	*buffer += 1;
 	*str += 2;
-
 }
