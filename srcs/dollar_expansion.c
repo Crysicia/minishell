@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 09:40:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:18:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	dollar_expansion(t_token *tok)
 		buffer_ptr = &buffer[0];
 		while (*word_ptr)
 		{
-			if (*word_ptr == '\\')
+			if ((*word_ptr == '\\') && (!tok->flag))
 				copy_escaped_character(&word_ptr, &buffer_ptr);
 			else if (*word_ptr == '$')
 				expand_env_variable(&word_ptr, &buffer_ptr);

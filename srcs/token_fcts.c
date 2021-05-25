@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/29 11:31:59 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:09:49 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ char	*get_escaped_string(char *str)
 		quote = str[index++];
 		while (str[index] && (str[index] != quote))
 		{
-			if (str[index] == '\\')
-				index++;
 			index++;
 		}
 		if (str[index] && str[index] == quote)

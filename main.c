@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/24 18:31:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:11:04 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ int	execute_all_the_commands(t_list *list)
 			ret = execute_single_command(ptr->kind.cmd);
 		else if (ptr->id == pipeline)
 			ret = execute_pipeline(ptr->kind.pipe);
-		else
-		{
-			printf("Shitty case (Nothing personal :3)\n");
-			break ;
-		}
 		tmp = tmp->next;
 	}
 	return (0);
@@ -63,6 +58,7 @@ void	run_minishell(void)
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
+		print_command_list(input_list);
 		if (!check_syntax_error(input_list))
 		{
 			ret = evaluation_pass(input_list);
