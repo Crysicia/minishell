@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flagger.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/05 11:48:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:35:17 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 #include "../includes/flag.h"
 #include "../libft/libft.h"
 
-void	word_flagger(t_token *token)
+char	*flag_next_quote(char quote, int *flagged, char *word)
 {
-	if (token->role == word)
+	char	*ptr;
+
+	ptr = word;
+	while (*ptr && *ptr != quote)
+		ptr++;
+	if (*ptr)
 	{
-		token->flag = check_quoting(token->cmd);
-		if (token->flag == QUOTING_ERROR)
-		{
-			ft_putendl_fd("Minishell: error: quotes were not closed properly",
-				2);
-		}
+		if (quote == '\'')
+			*flagged = SINGLE_QUOTES;
+		else if (quote == '"')
+			*flagged = DOUBLE_QUOTES;
+		return (ptr);
 	}
+	else
+		return (NULL);
 }
 
 int	check_quoting(char *word)
@@ -38,8 +44,8 @@ int	check_quoting(char *word)
 	{
 		if ((*word == '\'') || (*word == '\"'))
 		{
-			if (*word == '\'')
-				word = flag_next_single_quote(&flag, ++word);
+			if ((*word == '\'') || (*word == '"'))
+				word = flag_next_quote(*word, &flag, word + 1);
 			else if (*word == '\"')
 				word = flag_next_unescaped_double_quote(&flag, ++word);
 			update_flag_count(&flag, &quote_count);
@@ -54,22 +60,6 @@ int	check_quoting(char *word)
 	if (quote_count >= 2)
 		flag = MIXED_QUOTES;
 	return (flag);
-}
-
-char	*flag_next_single_quote(int	*flagged, char *word)
-{
-	char	*ptr;
-
-	ptr = word;
-	while (*ptr && *ptr != '\'')
-		ptr++;
-	if (*ptr)
-	{
-		*flagged = SINGLE_QUOTES;
-		return (ptr);
-	}
-	else
-		return (NULL);
 }
 
 char	*flag_next_unescaped_double_quote(int *flagged, char *str)

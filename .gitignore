@@ -2,6 +2,7 @@
 *.o
 *.a
 *.test
+vgcore*
 criterion/
 Criterion
 debug
@@ -10,5 +11,6 @@ Minishell
 .vscode/
 testing
 a.out
+libft/libft.a
 srcs/main.c
 minishell_test

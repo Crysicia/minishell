@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 18:09:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 17:04:17 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:31:50 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,22 @@ void				set_block_ptr(t_block *block, void *ptr);
 void				free_block(void *to_free);
 
 t_simple_command	*new_simple_command(void);
-t_redirection		*new_redirection(void);
-t_pipeline			*new_pipeline(t_simple_command *first);
 void				free_simple_command(void *to_free);
-void				free_redirection(void *to_free);
+
+t_pipeline			*new_pipeline(t_simple_command *first);
+void				free_pipeline(void *to_free);
 bool				check_if_pipeline(t_simple_command *command);
+
+t_redirection		*new_redirection(void);
+void				free_redirection(void *to_free);
 
 t_command_type		attribute_command_type(t_simple_command *command);
 
 t_list				*parser_loop(char *line);
-t_block				*parse_simple_command(char **line);
+int					parse_simple_command(t_block *dst, char **line);
 void				parse_redirection(char **line,
 						t_simple_command *command,
 						struct s_token *token);
-void				parse_pipeline_command(char **line,
-						t_block *block);
+int					parse_pipeline_command(t_block *first, char **line);
 
 #endif

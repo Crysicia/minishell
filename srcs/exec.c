@@ -6,12 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/15 10:09:17 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/25 17:01:49 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
-#include <sys/wait.h>
 
 char	*get_full_path(char *path, char *executable)
 {
@@ -69,7 +68,6 @@ char	*find_exe_path(char *command)
 
 int	set_status_code(int code, bool from_builtin)
 {
-	printf("ERRNO: %s\n", strerror(errno));
 	if (from_builtin)
 		return (g_globals->status = code);
 	g_globals->status = WEXITSTATUS(code);
@@ -81,26 +79,46 @@ int	execute_command(char **command)
 	int		pid;
 	char	*path;
 
-	if (is_builtin(command[0]))
-		return (set_status_code(execute_builtin(command[0], &command[1]),
-				true));
-	path = find_exe_path(command[0]);
-	if (!path)
-		return (-1);
 	pid = fork();
-	if (pid == 0)
+	if (pid < 0)
+		display_error("Error", "Could not fork child process");
+	else if (pid == 0)
 	{
+		path = find_exe_path(command[0]);
+		if (!path)
+			return (-1);
 		execve(path, command, list_to_array(g_globals->env));
-		exit(0);
 	}
-	else if (pid > 0)
+	else
 	{
 		g_globals->current_pid = pid;
 		wait(&g_globals->status);
 		set_status_code(g_globals->status, false);
 		g_globals->current_pid = 0;
 	}
-	else
-		printf("ERROR: Could not create child process.\n");
+	return (-2);
+}
+
+// TODO: Fd error management
+int	execute_single_command(t_simple_command *commands)
+{
+	char	**arguments;
+	t_list	words;
+	int		in_and_out[2];
+
+	words = *commands->words;
+	arguments = command_format(&words);
+	if (arguments)
+	{
+		save_in_and_out(&in_and_out);
+		handle_redirections(commands->redirections);
+		if (is_builtin(arguments[0]))
+			set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
+		else if (find_exe_path(arguments[0]))
+			execute_command(arguments);
+		else
+			printf("-Minishell: %s: command not found\n", arguments[0]);
+		restore_in_and_out(&in_and_out);
+	}
 	return (0);
 }

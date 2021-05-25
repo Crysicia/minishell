@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/10 17:22:47 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:37:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,37 +39,38 @@ t_list	*parser_loop(char *line)
 	parsed_list = NULL;
 	while (*ptr)
 	{
-		node = parse_simple_command(&ptr);
+		node = new_block();
+		parse_simple_command(node, &ptr);
 		if (node->id == pipeline)
-		{
-			parse_pipeline_command(&ptr, node);
-		}
+			parse_pipeline_command(node, &ptr);
 		ft_lstadd_back(&parsed_list, ft_lstnew(node));
 	}
 	return (parsed_list);
 }
 
-t_block	*parse_simple_command(char **line)
+int	parse_simple_command(t_block *dst, char **line)
 {
-	t_simple_command	*save;
+	t_simple_command	*new;
 	t_token				*token;
-	t_block				*node;
 
-	save = new_simple_command();
+	new = new_simple_command();
+	if (!new)
+		return (ERR_MALLOC_FAILED);
 	while (**line)
 	{
 		token = get_next_token(line);
-		if (token->role == redirection)
-			parse_redirection(line, save, token);
+		if (!token)
+			return (ERR_MALLOC_FAILED);
+		else if (token->role == redirection)
+			parse_redirection(line, new, token);
 		else
-			ft_lstadd_back(&(save->words), ft_lstnew_safe(token, free_token));
+			ft_lstadd_back(&(new->words), ft_lstnew_safe(token, free_token));
 		if (token->role == operator)
 			break ;
 	}
-	node = new_block();
-	node->id = attribute_command_type(save);
-	node->kind.cmd = save;
-	return (node);
+	dst->id = attribute_command_type(new);
+	dst->kind.cmd = new;
+	return (0);
 }
 /* 			else if (!ft_strncmp("|", token->cmd, 2)) {;}			*/
 
@@ -92,22 +93,27 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 		display_error("syntax error near unexpected token", NULL);
 }
 
-void	parse_pipeline_command(char **line, t_block *block)
+int	parse_pipeline_command(t_block *block, char **line)
 {
 	t_pipeline			*new;
 	t_simple_command	*command;
-	t_block				*tmp;
+	t_block				tmp;
 	t_list				*node;
 
 	new = new_pipeline(block->kind.cmd);
-	command = (block->kind.cmd);
+	if (!new)
+		return (ERR_MALLOC_FAILED);
+	command = block->kind.cmd;
 	while (check_if_pipeline(command))
 	{
-		tmp = parse_simple_command(line);
-		command = tmp->kind.cmd;
-		node = ft_lstnew(tmp);
+		parse_simple_command(&tmp, line);
+		command = tmp.kind.cmd;
+		node = ft_lstnew(command);
+		if (!node)
+			return (ERR_MALLOC_FAILED);
 		ft_lstadd_back(&new->commands, node);
 		new->pipe_count += 1;
 	}
 	block->kind.pipe = new;
+	return (0);
 }

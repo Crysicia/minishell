@@ -15,7 +15,9 @@ RED				= "\e[31m"
 GREEN			= "\e[32m"
 
 PATH_SRCS		= ./srcs/
-RAW_SRCS		= builtin_cd.c \
+RAW_SRCS		= bash_c_option.c \
+				  builtin_cd.c \
+				  builtin_echo.c \
 				  builtin_env.c \
 				  builtin_export.c \
 				  builtin_exit.c \
@@ -34,17 +36,22 @@ RAW_SRCS		= builtin_cd.c \
 				  get_next_line.c \
 				  get_next_line_utils.c \
 				  globals.c \
+				  history_utils.c \
 				  input.c \
 				  parse_command.c \
 				  parser.c \
 				  parser_block.c \
 				  parser_utils.c \
 				  path_utils.c \
+				  redirections.c \
+				  pipeline.c \
 				  pipelines.c \
+				  print_debug.c \
 				  token.c \
 				  token_fcts.c \
 				  token_quote_removal.c \
 				  token_utils.c \
+				  pipes_utils.c \
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
 OBJS 			= $(SRCS:.c=.o)
@@ -53,6 +60,7 @@ NO_MAIN			= $(filter-out main.o,$(OBJS))
 TEST			= minishell_test
 TEST_RAW_SRCS	= test_helpers.c \
 				  builtin_cd_tests.c \
+				  builtin_echo_tests.c \
 				  builtin_export_tests.c \
 				  builtin_pwd_tests.c \
 				  builtin_unset_tests.c \
@@ -108,7 +116,7 @@ fclean: clean
 	@$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
 
 fsan: fclean $(LIBFT)
-	${CC} ${CFLAGS} -fsanitize=address ${HEADERS} ${LIBS} ${SRCS} libft/libft.a -o debug
+	${CC} ${CFLAGS} -g -fsanitize=address ${HEADERS} ${LIBS} ${SRCS} libft/libft.a -o debug
 	./debug
 
 re: fclean all

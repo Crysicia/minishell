@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_block.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 11:56:14 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/16 11:56:14 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:37:56 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	free_block(void *to_free)
 	ptr = to_free;
 	if (ptr->id == simple_command)
 		free_simple_command(ptr->kind.cmd);
+	else if (ptr->id == pipeline)
+		free_pipeline(ptr->kind.pipe);
+	free(ptr);
+	ptr = NULL;
 }
 
-/*
-//	else if (ptr->id == pipeline)
-//		free_pipeline(ptr->kind.pipe);
-*/
 void	set_block_ptr(t_block *block, void *ptr)
 {
 	if (block->id == simple_command)

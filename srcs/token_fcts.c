@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_fcts.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/29 11:31:59 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:39:00 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_word_size(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i] && !is_operator(line + i)
+	while (line[i] && !is_operator(&line[i]) && !is_redirection(&line[i])
 		&& !is_space(line[i]))
 	{
 		if (line[i] == '\\')
@@ -63,8 +63,6 @@ char	*get_escaped_string(char *str)
 		quote = str[index++];
 		while (str[index] && (str[index] != quote))
 		{
-			if (str[index] == '\\')
-				index++;
 			index++;
 		}
 		if (str[index] && str[index] == quote)

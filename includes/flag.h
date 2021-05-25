@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 12:48:51 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/05 12:48:51 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:29:55 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ int		check_quoting(char *word);
 char	*flag_next_single_quote(int *flagged, char *word);
 char	*flag_next_unescaped_double_quote(int *flagged, char *str);
 void	update_flag_count(int *flag, int *count);
+
 #endif

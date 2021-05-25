@@ -40,11 +40,12 @@ ParameterizedTestParameters(parser_suite, redirection_parse_test) {
 ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, redirection_parse_test)
 {
 	char *line = tests->input;
-	t_block *raw_result;
-	raw_result = parse_simple_command(&line);
-	t_simple_command	*testerino = raw_result->kind.cmd;
+	t_block raw_result;
+	int fct_ret = parse_simple_command(&raw_result, &line);
+	t_simple_command	*testerino = raw_result.kind.cmd;
 	t_redirection *redir =  testerino->redirections->content;
 	t_token *token = redir->operator;
+	cr_assert_eq(fct_ret, 0);
 	cr_expect(strcmp(token->cmd, tests->expected) == 0,
 			 "expected [%s] output for [%s] input, instead, fct returned [%s]",
 			  tests->expected, tests->input, token->cmd);
@@ -128,14 +129,15 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 ParameterizedTest(scmd_test *tests, parser_suite, simple_command_parse_test)
 {
 	char *line = tests->input;
-	t_block *llist;
-	llist = parse_simple_command(&line);
+	t_block llist;
+	int fct_ret = parse_simple_command(&llist, &line);
 
+	cr_assert_eq(fct_ret, 0);
 	t_list *tmp;
 	t_token	*token;
 	int i;
 
-	tmp = llist->kind.cmd->words;
+	tmp = llist.kind.cmd->words;
 	i = 0;
 	if (tests->expected[0][0])
 	{
@@ -157,7 +159,8 @@ if (tests->expected[20][0])
 		t_token	*token;
 		int word_index;
 		int	redir_index;
-		tmp = llist->kind.cmd->redirections;
+
+		tmp = llist.kind.cmd->redirections;
 		word_index = 0;
 		redir_index = 20;
 		t_redirection *redir;
@@ -236,7 +239,6 @@ Test(parsing_suite, simple_pipe_input_test)
 
 	t_token	*token = tmp->content;
 
-	cr_log_warn("token %s\n", token->cmd);
 	cr_expect_eq(internal_pipe->pipe_count, 2);
 	// isolate second lvl of abstraction (first command of first pipeline)
 	t_simple_command *command = tmp->content;

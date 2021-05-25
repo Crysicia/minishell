@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipelines.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/15 14:40:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:38:43 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ t_pipeline	*new_pipeline(t_simple_command *first)
 void	free_pipeline(void *to_free)
 {
 	t_pipeline	*ptr;
+	t_list		*list;
 
 	ptr = to_free;
+	list = ptr->commands;
+	ft_lstclear(&list, free_simple_command);
 	free(ptr);
 	ptr = NULL;
 }
@@ -46,7 +49,6 @@ bool	check_if_pipeline(t_simple_command	*command)
 		return (0);
 	node = command->words;
 	token = node->content;
-	puts(token->cmd);
 	while (node && node->next)
 		node = node->next;
 	token = node->content;
