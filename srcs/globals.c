@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/30 17:15:41 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:33:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	destroy_globals(void)
 {
 	ft_lstclear(&g_globals->env, free);
-	ft_dlstclear(&g_globals->history, free);
+//	ft_dlstclear(&g_globals->history, free);
 	free(g_globals);
 	return (false);
 }
