@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/24 18:27:30 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/04/28 16:02:10 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_globals
 {
 	int		current_pid;
 	int		status;
-	char	*error_msg;
 	t_list	*env;
+	t_dlist	*history;
 }			t_globals;
 
 t_globals	*g_globals;

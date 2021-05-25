@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_dlstlast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/12 18:54:11 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/30 09:30:41 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/28 17:49:03 by crysicia          #+#    #+#             */
+/*   Updated: 2021/04/28 18:28:08 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+t_dlist	*ft_dlstlast(t_dlist *lst)
 {
-	if (!lst || !*lst)
-		return ;
-	if ((*lst)->next)
-		ft_lstclear(&(*lst)->next, del);
-	del((*lst)->content);
-	free(*lst);
-	*lst = NULL;
+	if (!lst || !lst->next)
+		return (lst);
+	return (ft_dlstlast(lst->next));
 }

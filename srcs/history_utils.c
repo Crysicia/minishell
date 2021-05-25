@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   history_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/12 18:54:11 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/30 09:30:41 by lpassera         ###   ########.fr       */
+/*   Created: 2021/04/30 11:01:00 by lpassera          #+#    #+#             */
+/*   Updated: 2021/04/30 17:15:26 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/header.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+int	add_to_history(char *line)
 {
-	if (!lst || !*lst)
-		return ;
-	if ((*lst)->next)
-		ft_lstclear(&(*lst)->next, del);
-	del((*lst)->content);
-	free(*lst);
-	*lst = NULL;
+	char	*dup;
+	t_dlist	*node;
+
+	dup = ft_strdup(line);
+	if (!dup)
+		return (ERR_MALLOC_FAILED);
+	node = ft_dlistnew(dup);
+	if (!node)
+	{
+		free(dup);
+		return (ERR_MALLOC_FAILED);
+	}
+	ft_dlstadd_back(&g_globals->history, node);
+	return (SUCCESS);
 }
