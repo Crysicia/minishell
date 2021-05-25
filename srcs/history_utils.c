@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:01:00 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/25 12:50:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:58:24 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int	add_to_history(char *line)
 		return (ERR_MALLOC_FAILED);
 	}
 	ft_dlstadd_back(&g_globals->history, node);
+	g_globals->history = node;
 	return (SUCCESS);
 }

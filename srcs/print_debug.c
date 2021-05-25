@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 11:12:16 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 12:53:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:58:11 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void	print_command_history(t_dlist *history)
 	while (tmp)
 	{
 		puts(tmp->content);
-		tmp = tmp->next;
+		tmp = tmp->previous;
 	}
 }
