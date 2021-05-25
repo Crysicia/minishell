@@ -29,7 +29,7 @@ bool	init_globals(char *envp[])
 	g_globals->status = 0;
 	g_globals->history = NULL;
 	g_globals->env = array_to_list(envp);
-	if (!g_globals->env && envp)
+	if (!g_globals->env && *envp)
 		return (destroy_globals());
 	return (true);
 }

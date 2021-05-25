@@ -3,41 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 11:51:15 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/18 23:25:50 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include "../includes/token.h"
 
-t_list	*parse_to_list(char *line)
+bool	check_command_syntax(t_list *list)
 {
-	char	*ptr;
-	t_token	*token;
-	t_list	*tokens;
-	t_list	*node;
+	size_t	index;
+	char	*tmp;
 
-	ptr = line;
-	tokens = NULL;
-	while (*ptr)
+	index = count_command_words(list);
+	if (!index)
 	{
-		token = get_next_token(ptr);
-		node = ft_lstnew(token);
-		if (!token || !node)
-		{
-			if (token)
-				free_token(token);
-			ft_lstclear(&tokens, free_token);
-			return (NULL);
-		}
-		ft_lstadd_back(&tokens, node);
-		ptr = ft_strnstr(ptr, token->cmd, ft_strlen(ptr));
-		ptr += ft_strlen(token->cmd);
+		if (!ft_strncmp(((t_token *)list->content)->cmd, "|", 1))
+			tmp = "pipe";
+		else if (!ft_strncmp(((t_token *)list->content)->cmd, ";", 1))
+			tmp = "semi-colon";
+		else
+			tmp = "newline";
+		printf("-Minishell: syntax error near unexpected `%s` token\n",
+			tmp);
+		return (false);
 	}
-	return (tokens);
+	else
+		return (true);
 }
 
 size_t	count_command_words(t_list *list)
@@ -49,7 +44,7 @@ size_t	count_command_words(t_list *list)
 	index = 0;
 	tmp = list;
 	tok = tmp->content;
-	while (tmp && (tok->role == tok_word))
+	while (tmp && (tok->role == word))
 	{
 		index++;
 		tmp = tmp->next;
@@ -59,7 +54,7 @@ size_t	count_command_words(t_list *list)
 	return (index);
 }
 
-char	**command_format(t_list **list)
+char	**command_format(t_list *list)
 {
 	t_list	*tmp;
 	t_token	*tok;
@@ -68,22 +63,22 @@ char	**command_format(t_list **list)
 	char	**tab;
 
 	count = 0;
-	index = count_command_words(*list);
-	tab = malloc(sizeof(char **) * (index + 1));
-	if (!tab)
-		ft_malloc_error();
-	while (count < index)
+	tab = NULL;
+	if (check_command_syntax(list))
 	{
-		tmp = *list;
-		tok = tmp->content;
-		tab[count] = ft_strdup(tok->cmd);
-		if (!tab[count])
+		index = count_command_words(list);
+		tab = malloc((index + 1) * sizeof(char **));
+		if (!tab)
 			ft_malloc_error();
-		count++;
-		*list = (*list)->next;
+		tmp = list;
+		while (count < index)
+		{
+			tok = tmp->content;
+			tab[count] = ft_strdup(tok->cmd);
+			count++;
+			tmp = tmp->next;
+		}
+		tab[count] = NULL;
 	}
-	if (*list && (((t_token *)(*list)->content)->role == tok_end_of_cmd))
-		*list = (*list)->next;
-	tab[count] = NULL;
 	return (tab);
 }

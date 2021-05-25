@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 10:53:54 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/20 15:19:09 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/03 11:43:15 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**list_to_array(t_list *list)
 
 	i = 0;
 	size = ft_lstsize(list);
-	array = malloc(size * sizeof(char *));
+	array = malloc((size + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
 	while (list)

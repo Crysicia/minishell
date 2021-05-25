@@ -2,10 +2,14 @@
 *.o
 *.a
 *.test
+vgcore*
 criterion/
 Criterion
+debug
 trash/
 Minishell
 .vscode/
 testing
 a.out
+libft/libft.a
+minishell_test

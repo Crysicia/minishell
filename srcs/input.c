@@ -6,27 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/19 15:53:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/19 15:50:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 #include <stdbool.h>
-
-void	print_token_list(t_list *list)
-{
-	t_token	*token;
-
-	while (list)
-	{
-		token = list->content;
-		printf("(cmd: [%s], Role: [%d])", token->cmd, token->role);
-		if (list->next)
-			printf(" -> ");
-		list = list->next;
-	}
-	printf("\n");
-}
 
 bool	gnl_loop_function(char *line)
 {
@@ -51,7 +36,6 @@ char	*get_command(void)
 	char	*line;
 	int		ret;
 
-	line = ft_calloc(512, 1);
 	ret = get_next_line(0, &line);
 	if (ret == -1 || line == NULL)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 11:02:14 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/26 15:39:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/28 13:33:04 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	(*get_builtin(char *str))(char **arguments)
 	static char	*builtins[BUILTINS_NB] = {"cd", "echo",
 		"env", "exit", "export", "pwd", "unset"};
 	static	int	(*builtins_array[BUILTINS_NB])(char **) = {builtin_cd,
-		NULL, builtin_env, NULL, builtin_export, builtin_pwd, NULL};
+		builtin_echo, builtin_env, builtin_exit, builtin_export, builtin_pwd,
+		builtin_unset};
 	int			index;
 
 	index = 0;

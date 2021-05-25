@@ -17,6 +17,8 @@ ParameterizedTestParameters(builtin_export_suite, builtin_export_args_test) {
 		{ .ret = 0, .argument = "PATH=", .contain_key = "PATH", .contain_value = "" },
 		{ .ret = 0, .argument = "PATH2=", .contain_key = "PATH2", .contain_value = "" },
 		{ .ret = 0, .argument = "PATH=bonjour", .contain_key = "PATH", .contain_value = "bonjour" },
+		{ .ret = 0, .argument = "MINI_SHELL=bonjour", .contain_key = "MINI_SHELL", .contain_value = "bonjour" },
+		{ .ret = 0, .argument = "_MINISHELL=bonjour", .contain_key = "_MINISHELL", .contain_value = "bonjour" },
 		{ .ret = 0, .argument = "NOTEMPTY", .contain_key = "NOTEMPTY", .contain_value = "bonjour" },
 		{ .ret = 0, .argument = "EMPTY=101", .contain_key = "EMPTY", .contain_value = "101" },
 		{ .ret = 0, .argument = "EMPTYSTRING=heyImAString", .contain_key = "EMPTYSTRING", .contain_value = "heyImAString" },
@@ -31,7 +33,7 @@ ParameterizedTestParameters(builtin_export_suite, builtin_export_args_test) {
 }
 
 ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export_suite, builtin_export_args_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	t_dict *dict;
 	int ret;
 	char **array = malloc(2 * sizeof(char *));
@@ -57,7 +59,7 @@ ParameterizedTest(t_builtin_export_params *builtin_export_params, builtin_export
 
 #define NUM_OF_TESTS 6
 Test(builtin_export_suite, builtin_export_no_args_test) {
-	char *envp[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall" };
+	char *envp[] = { "BONJOUR=test", "LOL=", "USER=pcharton", "TEST=test", "NOPE", "ANOTHER=brickinthewall", NULL };
 	char *output[] = { "export ANOTHER=\"brickinthewall\"", "export BONJOUR=\"test\"", "export LOL=\"\"", "export NOPE", "export TEST=\"test\"", "export USER=\"pcharton\"" };
 	init_globals(envp);
 
@@ -81,7 +83,7 @@ Test(builtin_export_suite, builtin_export_no_args_test) {
 
 #define NUM_OF_TESTS_2 4
 Test(builtin_export_suite, builtin_export_multiple_args_test) {
-	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY" };
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
 	char *arguments[] = { "NOTEMPTY", "EXISTING=", "PATH=test", "OOPS===loool" };
 	char *arguments_keys[] = { "NOTEMPTY", "EXISTING", "PATH", "OOPS" };
 	char *arguments_values[] = { "bonjour", "", "test", "==loool" };
@@ -111,5 +113,39 @@ Test(builtin_export_suite, builtin_export_multiple_args_test) {
 			"Expected builtin_export to return [%d], instead got [%d] (Arg: %s, Expected key: %s, Expected value: %s)",
 			0, ret, arguments[i], arguments_keys[i], arguments_values[i]);
 	}
+	destroy_globals();
+}
+
+Test(builtin_export_suite, builtin_export_multiple_args_fail_test) {
+	char *envp[] = { "EMPTY", "NOTEMPTY=bonjour", "EMPTYSTRING=", "EXISTING=iexist", "EXISTINGEMPTY", NULL };
+	char *arguments[] = { "NOTEMPTY", "INVA//LID=", "PATH=test", "OOPS===loool" };
+	char *arguments_keys[] = { "NOTEMPTY", "PATH", "OOPS" };
+	char *arguments_values[] = { "bonjour", "test", "==loool" };
+	t_dict *dict; 
+	int ret;
+	char **array = malloc(5 * sizeof(char *));
+
+	for (int i = 0; i < 4; i++) {
+		array[i] = arguments[i];
+	}
+	array[4] = NULL;
+
+	init_globals(envp);
+	
+	ret = builtin_export(array);
+	for (int i = 0; i < 3; i++) {
+		dict = ft_getenv(arguments_keys[i]);
+		cr_expect_not_null(dict,
+			"Expected builtin_export to set [%s]",
+			arguments_keys[i]);
+		cr_expect_str_eq(dict->value, arguments_values[i],
+			"Expected builtin_export to set [%s] value to [%s], instead got [%s]",
+			arguments_keys[i],
+			arguments_values[i],
+			dict->value);
+	}
+	cr_expect_eq(ret, 1,
+		"Expected builtin_export to return [%d], instead got [%d]",
+		1, ret);
 	destroy_globals();
 }
