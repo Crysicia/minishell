@@ -37,7 +37,8 @@ ParameterizedTest(unit *params, expansion_suite, dollar_expansion_test)
 	char *envp[] = { "OLDPWD=/home/bonjour", "PATH=/etc", "PWD=/home", "USER=lpassera", "EMPTY=", NULL };
 	init_globals(envp);
 
-	t_token *fake_token = new_token(params->word, word);
+	char	*alloc_param = strdup(params->word);
+	t_token *fake_token = new_token(alloc_param, word);
 	fake_token->flag = params->flag;
 
 	dollar_expansion(fake_token);

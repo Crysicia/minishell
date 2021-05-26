@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 01:17:22 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/23 13:35:38 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/04/28 16:34:33 by crysicia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,13 @@ t_list				*ft_lstmap(t_list *lst,
 /*
 ** Custom functions
 */
+typedef struct s_dlist
+{
+	void			*content;
+	struct s_dlist	*previous;
+	struct s_dlist	*next;
+}	t_dlist;
+
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
 char				*ft_strjoin_free(char const *s1, char const *s2);
@@ -97,5 +104,13 @@ int					ft_strcmp(const char *s1, const char *s2);
 void				ft_lstsort(t_list **head, int (*cmp)());
 t_list				*ft_lstnew_safe(void *content, void (*del)(void *));
 int					ft_isspace(int c);
+
+t_dlist				*ft_dlstnew(void *content);
+void				ft_dlstadd_front(t_dlist **alst, t_dlist *new);
+int					ft_dlstsize(t_dlist *lst);
+t_dlist				*ft_dlstlast(t_dlist *lst);
+void				ft_dlstadd_back(t_dlist **alst, t_dlist *new);
+void				ft_dlstdelone(t_dlist *lst, void (*del)(void *));
+void				ft_dlstclear(t_dlist **lst, void (*del)(void *));
 
 #endif

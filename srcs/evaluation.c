@@ -5,23 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/24 08:54:52 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/24 08:54:52 by pcharton         ###   ########.fr       */
+/*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
+/*   Updated: 2021/05/25 16:43:51 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
 
+int	evaluation_pass(t_list *list)
+{
+	t_list	*tmp;
+	t_block	*ptr;
+	int		ret;
+
+	tmp = list;
+	while (tmp)
+	{
+		ptr = list->content;
+		if (ptr->id == simple_command)
+			ret = flag_simple_command(ptr->kind.cmd);
+		if (!ret)
+			tmp = tmp->next;
+		else
+			return (-1);
+	}
+	return (0);
+}
+
 int	flag_simple_command(t_simple_command *list)
 {
+	t_token			*token;
 	t_list			*tmp;
 	t_redirection	*redir;
 
 	tmp = list->words;
 	while (tmp)
 	{
-		word_flagger(tmp->content);
-		apply_expansion_and_remove_quotes(tmp->content);
+		token = tmp->content;
+		word_flagger(token);
+		if (token->flag != QUOTING_ERROR)
+			apply_expansion_and_remove_quotes(tmp->content);
+		else
+			return (-1);
 		tmp = tmp->next;
 	}
 	tmp = list->redirections;
@@ -52,19 +77,18 @@ void	apply_expansion_and_remove_quotes(t_token *token)
 	if (!(token->flag)
 		|| (token->flag == DOUBLE_QUOTES))
 		dollar_expansion(token);
-	quotes_removal(token);
+	if ((token->flag != QUOTING_ERROR)
+		&& (token->flag))
+		quotes_removal(token);
 }
 
 /*
-
 int	flag_pipeline(t_pipeline *list)
 {
 	return (0);
 }
-
 int	flag_redirection(t_list *list)
 {
-
 	return (0);
 }
 */

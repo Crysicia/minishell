@@ -15,7 +15,8 @@ RED				= "\e[31m"
 GREEN			= "\e[32m"
 
 PATH_SRCS		= ./srcs/
-RAW_SRCS		= builtin_cd.c \
+RAW_SRCS		= bash_c_option.c \
+				  builtin_cd.c \
 				  builtin_echo.c \
 				  builtin_env.c \
 				  builtin_export.c \
@@ -35,6 +36,7 @@ RAW_SRCS		= builtin_cd.c \
 				  get_next_line.c \
 				  get_next_line_utils.c \
 				  globals.c \
+				  history_utils.c \
 				  input.c \
 				  parse_command.c \
 				  parser.c \

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/19 15:51:21 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:37:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,9 @@ t_list	*parser_loop(char *line)
 	while (*ptr)
 	{
 		node = new_block();
-		ret = parse_simple_command(node, &ptr);
-		parser_error(ret);
+		parse_simple_command(node, &ptr);
 		if (node->id == pipeline)
-		{
-			ret = parse_pipeline_command(node, &ptr);
-			parser_error(ret);
-		}
+			parse_pipeline_command(node, &ptr);
 		ft_lstadd_back(&parsed_list, ft_lstnew(node));
 	}
 	return (parsed_list);
@@ -112,8 +108,7 @@ int	parse_pipeline_command(t_block *block, char **line)
 	command = block->kind.cmd;
 	while (check_if_pipeline(command))
 	{
-		ret = parse_simple_command(&tmp, line);
-		parser_error(ret);
+		parse_simple_command(&tmp, line);
 		command = tmp.kind.cmd;
 		node = ft_lstnew(command);
 		if (!node)

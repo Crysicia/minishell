@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/26 10:15:35 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:32:04 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void		expand_env_variable(char **str, char **buffer);
 void		dollar_expansion(t_token *tok);
 void		copy_escaped_character(char **str, char **buffer);
 
+int			parser_error(t_token *tok);
 #endif

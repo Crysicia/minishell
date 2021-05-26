@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/24 12:32:23 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:30:48 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_globals
 {
 	int		current_pid;
 	int		status;
-	char	*error_msg;
 	t_list	*env;
+	t_dlist	*history;
 }			t_globals;
 
 t_globals	*g_globals;
@@ -68,10 +68,15 @@ typedef struct s_dict
 
 void	print_prompt(void);
 
+/* Minishell working */
+
+int		evaluation_pass(t_list *list);
 bool	check_command_syntax(t_list *list);
+int		execute_all_the_commands(t_list *list);
+void	run_minishell(void);
+
 size_t	count_command_words(t_list *list);
 char	**command_format(t_list *list);
-
 char	*get_command(void);
 
 char	*get_word(char **line);
@@ -118,17 +123,28 @@ bool	is_path(char *path);
 bool	is_absolute_path(char *path);
 
 int		set_status_code(int code, bool from_builtin);
+
+/* History utils */
+
+int		add_to_history(char *line);
+
+/* Miscellaneous */
+
+bool	check_bash_c_option(char *argv);
+int		bash_c_option(char *argv);
+
 /* TMP UTILS */
 
-void	print_token_list(t_list *list);
 void	print_simple_command_node(t_simple_command *command);
 void	print_pipeline(t_pipeline *pipeline);
 void	print_command_list(t_list *list);
+void	print_command_history(t_dlist *history);
+
 /* Error managment */
 void	ft_malloc_error(void);
 void	syntax_error(void);
-void	parser_error(int ret);
 int		test_redirections(void);
+bool	check_syntax_error(t_list *list);
 
 void	handle_redirections(t_list *command);
 int		execute_single_command(t_simple_command *commands);

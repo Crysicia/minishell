@@ -6,11 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 11:17:18 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/20 12:43:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 09:37:49 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.h"
+
 bool	is_an_option(char *str)
 {
 	if (str && (!ft_strncmp(str, "-", 1)))
@@ -36,6 +37,20 @@ bool	check_echo_option(char *str)
 		return (false);
 }
 
+void	print_arguments(char **arguments)
+{
+	char	**ptr;
+
+	ptr = arguments;
+	while (*ptr)
+	{
+		ft_putstr_fd(*ptr, 1);
+		if (*(ptr + 1))
+			write(1, " ", 1);
+		ptr++;
+	}
+}
+
 int	builtin_echo(char **arguments)
 {
 	char	**ptr;
@@ -49,19 +64,13 @@ int	builtin_echo(char **arguments)
 		{
 			if (check_echo_option(*ptr))
 			{
-				n_option = true;
 				ptr++;
+				n_option = true;
 			}
 			else
 				break ;
-		}	
-		while (*ptr)
-		{
-			ft_putstr_fd(*ptr, 1);
-			if (*(ptr + 1))
-				write(1, " ", 1);
-			ptr++;
 		}
+		print_arguments(ptr);
 	}
 	if (!n_option)
 		printf("\n");

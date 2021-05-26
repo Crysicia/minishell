@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_quote_removal.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:57:20 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/30 11:57:20 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/25 16:39:57 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,23 @@ void	quotes_removal(t_token *tok)
 	}
 }
 
+int	copy_quoted_string(char quote, char *str, char *buffer)
+{
+	size_t	index;
+
+	index = 1;
+	while (str[index] != quote)
+	{
+		buffer[index - 1] = str[index];
+		index++;
+	}
+	return (index);
+}
+
 void	remove_simple_and_double_quotes(char *buffer, char *str)
 {
 	size_t	index;
+	size_t	tmp;
 	char	*writer;
 
 	index = 0;
@@ -51,7 +65,11 @@ void	remove_simple_and_double_quotes(char *buffer, char *str)
 			*writer++ = str[index++];
 		}
 		else if (str[index] == '\'' || str[index] == '"')
-			index++;
+		{
+			tmp = copy_quoted_string(str[index], str + index, writer);
+			index += tmp + 1;
+			writer += tmp - 1;
+		}
 		else
 			*writer++ = str[index++];
 	}

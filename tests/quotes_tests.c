@@ -30,7 +30,7 @@ ParameterizedTestParameters(quotes_removal_suite, testing_valid_input)
 		{ .input = "''echo" , .expected = "echo"},
 		{ .input = "'ech''o'" , .expected = "echo"},
 		{ .input = "'ech''o'bonjour" , .expected = "echobonjour"},
-		{ .input = "'ech'o'bonjour" , .expected = "echobonjour"},
+		{ .input = "ech'o'bonjour" , .expected = "echobonjour"},
 	};
 	return(cr_make_param_array(unit, test, sizeof(test)/sizeof(unit)));
 }
