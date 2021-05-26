@@ -36,11 +36,12 @@ char	*get_command(void)
 	char	*line;
 	int		ret;
 
+	signal(SIGINT, handle_sigint);
 	ret = get_next_line(0, &line);
 	if (ret == -1 || line == NULL)
 	{
 		puts("gnl error");
-		exit(-1);
+		ft_exit_with_error_msg("Get_next_line returned -1.");
 	}
 	else if (!ft_strlen(line))
 	{
@@ -49,6 +50,7 @@ char	*get_command(void)
 	}
 	else if (ret == 0)
 		gnl_loop_function(line);
+	signal(SIGINT, SIG_DFL);
 	return (line);
 }
 

@@ -49,6 +49,7 @@ typedef struct s_globals
 {
 	int		current_pid;
 	int		status;
+	t_list	*current_cmd;
 	t_list	*env;
 	t_dlist	*history;
 }			t_globals;
@@ -133,6 +134,9 @@ int		set_status_code(int code, bool from_builtin);
 int		add_to_history(char *line);
 
 /* Miscellaneous */
+
+void	handle_sigint(int signal);
+
 
 bool	check_bash_c_option(char *argv);
 int		bash_c_option(char *argv);

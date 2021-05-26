@@ -33,7 +33,6 @@ void	run_minishell(void)
 	int		ret;
 
 	(void)ret;
-	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		print_prompt();
@@ -63,7 +62,6 @@ int	main(int argc, char *argv[], char *envp[])
 		bash_c_option(argv[2]);
 	else
 		return (-1);
-	
 	destroy_globals();
 	return (0);
 }

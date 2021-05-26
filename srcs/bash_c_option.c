@@ -20,7 +20,7 @@ bool	check_bash_c_option(char *argv)
 		return (false);
 }
 
-int		bash_c_option(char *argv)
+int	bash_c_option(char *argv)
 {
 	t_list	*input_list;
 	int		ret;
@@ -33,7 +33,8 @@ int		bash_c_option(char *argv)
 			execute_all_the_commands(input_list);
 		ft_lstclear(&input_list, free_block);
 	}
-	return (0);}
+	return (0);
+}
 
 void	execute_all_the_commands(t_list *list)
 {
