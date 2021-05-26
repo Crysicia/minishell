@@ -43,6 +43,8 @@
 # define ERR_PIPE_FAILED 259
 # define ERR_FORK_FAILED 260
 
+# define MSG_MALLOC_FAILED "Malloc has failed during program run. Exiting now."
+
 typedef struct s_globals
 {
 	int		current_pid;
@@ -135,7 +137,11 @@ int		add_to_history(char *line);
 bool	check_bash_c_option(char *argv);
 int		bash_c_option(char *argv);
 
-/* TMP UTILS */
+void	ft_exit_with_error_msg(char *msg);
+void	ft_exit(void);
+
+
+/* Debug utils */
 
 void	print_simple_command_node(t_simple_command *command);
 void	print_pipeline(t_pipeline *pipeline);

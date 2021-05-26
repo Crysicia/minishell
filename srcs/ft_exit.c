@@ -12,6 +12,12 @@
 
 #include "header.h"
 
+void	ft_exit_with_error_msg(char *msg)
+{
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_exit();
+}
+
 void	ft_exit(void)
 {
 	ft_putstr_fd("Minishell exit", STDERR_FILENO);

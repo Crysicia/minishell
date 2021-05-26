@@ -12,25 +12,6 @@
 
 #include "header.h"
 
-void	execute_all_the_commands(t_list *list)
-{
-	t_list		*tmp;
-	t_block		*ptr;
-	int			ret;
-
-	ret = 0;
-	tmp = list;
-	while (tmp && (ret != -1))
-	{
-		ptr = tmp->content;
-		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
-			ret = execute_single_command(ptr->kind.cmd);
-		else if (ptr->id == pipeline)
-			ret = execute_pipeline(ptr->kind.pipe);
-		tmp = tmp->next;
-	}
-}
-
 bool	check_bash_c_option(char *argv)
 {
 	if (!ft_strncmp(argv, "-c", 3))
@@ -53,3 +34,22 @@ int		bash_c_option(char *argv)
 		ft_lstclear(&input_list, free_block);
 	}
 	return (0);}
+
+void	execute_all_the_commands(t_list *list)
+{
+	t_list		*tmp;
+	t_block		*ptr;
+	int			ret;
+
+	ret = 0;
+	tmp = list;
+	while (tmp && (ret != -1))
+	{
+		ptr = tmp->content;
+		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
+			ret = execute_single_command(ptr->kind.cmd);
+		else if (ptr->id == pipeline)
+			ret = execute_pipeline(ptr->kind.pipe);
+		tmp = tmp->next;
+	}
+}
