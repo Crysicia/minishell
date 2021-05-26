@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:35:51 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/26 12:33:45 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	*get_command(void)
 	}
 	else if (ret == 0)
 		gnl_loop_function(line);
-	signal(SIGINT, SIG_DFL);
 	return (line);
 }
 
