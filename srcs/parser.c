@@ -34,7 +34,6 @@ t_list	*parser_loop(char *line)
 	char	*ptr;
 	t_list	*parsed_list;
 	t_block	*node;
-	int		ret;
 
 	ptr = line;
 	parsed_list = NULL;
@@ -100,7 +99,6 @@ int	parse_pipeline_command(t_block *block, char **line)
 	t_simple_command	*command;
 	t_block				tmp;
 	t_list				*node;
-	int					ret;
 
 	new = new_pipeline(block->kind.cmd);
 	if (!new)
