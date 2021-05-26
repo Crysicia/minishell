@@ -33,6 +33,7 @@ RAW_SRCS		= bash_c_option.c \
 				  exec.c \
 				  exec_builtin.c \
 				  flagger.c \
+				  ft_exit.c \
 				  get_next_line.c \
 				  get_next_line_utils.c \
 				  globals.c \

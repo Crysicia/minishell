@@ -12,19 +12,6 @@
 
 #include "header.h"
 
-void	print_prompt(void)
-{
-	write(1, "Minishell> ", 11);
-}
-
-void	handle_sigint(int signal)
-{
-	printf("\n");
-	if (g_globals->current_pid)
-		kill(g_globals->current_pid, signal);
-	print_prompt();
-}
-
 void	run_minishell(void)
 {
 	t_list	*input_list;
@@ -32,25 +19,22 @@ void	run_minishell(void)
 	int		ret;
 
 	(void)ret;
-	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
-		print_command_list(input_list);
 		if (!check_syntax_error(input_list))
 		{
 			ret = evaluation_pass(input_list);
 			if (!ret)
 			{
-				ret = execute_all_the_commands(input_list);
+				execute_all_the_commands(input_list);
 				add_to_history(input_str);
 			}
 		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
-		print_command_history(g_globals->history);
 	}
 }
 
@@ -64,9 +48,6 @@ int	main(int argc, char *argv[], char *envp[])
 		bash_c_option(argv[2]);
 	else
 		return (-1);
-	
 	destroy_globals();
 	return (0);
 }
-
-/*	//		 */

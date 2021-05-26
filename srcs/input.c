@@ -6,12 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:35:51 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/26 12:33:45 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-#include <stdbool.h>
+#include "header.h"
 
 bool	gnl_loop_function(char *line)
 {
@@ -36,11 +35,12 @@ char	*get_command(void)
 	char	*line;
 	int		ret;
 
+	signal(SIGINT, handle_sigint);
 	ret = get_next_line(0, &line);
 	if (ret == -1 || line == NULL)
 	{
 		puts("gnl error");
-		exit(-1);
+		ft_exit_with_error_msg("Get_next_line returned -1.");
 	}
 	else if (!ft_strlen(line))
 	{
@@ -50,6 +50,20 @@ char	*get_command(void)
 	else if (ret == 0)
 		gnl_loop_function(line);
 	return (line);
+}
+
+void	handle_sigint(int signal)
+{
+	printf("\n");
+	if (g_globals->current_pid)
+		kill(g_globals->current_pid, signal);
+	print_prompt();
+}
+
+void	print_prompt(void)
+{
+	if (isatty(STDIN_FILENO))
+		write(1, "Minishell> ", 11);
 }
 
 void	skip_spaces(char **line)

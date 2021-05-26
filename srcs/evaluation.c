@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   evaluation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
 /*   Updated: 2021/05/25 16:43:51 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "header.h"
 
 int	evaluation_pass(t_list *list)
 {

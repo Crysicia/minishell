@@ -43,10 +43,13 @@
 # define ERR_PIPE_FAILED 259
 # define ERR_FORK_FAILED 260
 
+# define MSG_MALLOC_FAILED "Malloc has failed during program run. Exiting now."
+
 typedef struct s_globals
 {
 	int		current_pid;
 	int		status;
+	t_list	*current_cmd;
 	t_list	*env;
 	t_dlist	*history;
 }			t_globals;
@@ -66,13 +69,13 @@ typedef struct s_dict
 	char	*value;
 }				t_dict;
 
-void	print_prompt(void);
-
 /* Minishell working */
+void	print_prompt(void);
+void	handle_sigint(int signal);
 
 int		evaluation_pass(t_list *list);
 bool	check_command_syntax(t_list *list);
-int		execute_all_the_commands(t_list *list);
+void	execute_all_the_commands(t_list *list);
 void	run_minishell(void);
 
 size_t	count_command_words(t_list *list);
@@ -85,6 +88,8 @@ void	skip_spaces(char **line);
 int		change_directory(t_list **env_list, char *new_path);
 int		is_valid_path(char *path);
 int		execute_command(char **command);
+int		execve_argument(char **arguments);
+
 char	*find_exe_path(char *command);
 bool	is_builtin(char *str);
 
@@ -105,9 +110,10 @@ int		ft_unsetenv(char *name);
 /* Evaluate tokens */
 int		flag_simple_command(t_simple_command *list);
 
+void	remove_simple_and_double_quotes(char *buffer, char *str);
+int		copy_quoted_string(char quote, char *str, char *buffer);
+
 /* Builtins */
-void	display_error(char *command, char *custom);
-bool	is_env_valid(char *env, bool can_contain_eq);
 
 int		(*get_builtin(char *str))(char **arguments);
 int		builtin_cd(char **arguments);
@@ -118,11 +124,11 @@ int		builtin_export(char **arguments);
 int		builtin_pwd(char **arguments);
 int		builtin_unset(char **arguments);
 int		execute_builtin(char *str, char **arguments);
-int		builtin_unset(char **arguments);
 
+bool	is_env_valid(char *env, bool can_contain_eq);
 bool	is_path(char *path);
 bool	is_absolute_path(char *path);
-
+char	*get_full_path(char *path, char *executable);
 int		set_status_code(int code, bool from_builtin);
 
 /* History utils */
@@ -133,8 +139,12 @@ int		add_to_history(char *line);
 
 bool	check_bash_c_option(char *argv);
 int		bash_c_option(char *argv);
+void	do_parent_process_stuff(int pid);
 
-/* TMP UTILS */
+void	ft_exit_with_error_msg(char *msg);
+void	ft_exit(void);
+
+/* Debug utils */
 
 void	print_simple_command_node(t_simple_command *command);
 void	print_pipeline(t_pipeline *pipeline);
@@ -142,6 +152,8 @@ void	print_command_list(t_list *list);
 void	print_command_history(t_dlist *history);
 
 /* Error managment */
+
+void	display_error(char *command, char *custom);
 void	ft_malloc_error(void);
 void	syntax_error(void);
 int		test_redirections(void);

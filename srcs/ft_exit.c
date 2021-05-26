@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/21 10:54:01 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/27 14:40:22 by lpassera         ###   ########.fr       */
+/*   Created: 2021/05/26 08:06:01 by pcharton          #+#    #+#             */
+/*   Updated: 2021/05/26 08:06:01 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-#include <limits.h>
 
-int	builtin_pwd(char **arguments)
+void	ft_exit_with_error_msg(char *msg)
 {
-	char	*path;
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_exit();
+}
 
-	(void)arguments;
-	path = getcwd(NULL, PATH_MAX);
-	if (path)
-	{
-		printf("%s\n", path);
-		free(path);
-		return (SUCCESS);
-	}
-	return (ERR_BUILTIN_FAILED);
+void	ft_exit(void)
+{
+	ft_putstr_fd("Minishell exit", STDERR_FILENO);
+	destroy_globals();
+	exit(errno);
 }

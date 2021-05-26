@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-#include "../includes/parser.h"
+#include "header.h"
+#include "parser.h"
 
 t_simple_command	*new_simple_command(void)
 {

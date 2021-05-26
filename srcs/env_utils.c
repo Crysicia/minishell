@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "header.h"
 
 t_list	*array_to_list(char **array)
 {

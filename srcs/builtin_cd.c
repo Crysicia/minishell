@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "header.h"
 
 char	*join_buffer(char *buffer, size_t buffer_size, char *s1, char *s2)
 {

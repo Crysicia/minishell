@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-#include "../includes/parser.h"
+#include "header.h"
+#include "parser.h"
 
 t_pipeline	*new_pipeline(t_simple_command *first)
 {
@@ -55,4 +55,13 @@ bool	check_if_pipeline(t_simple_command	*command)
 	if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
 		return (1);
 	return (0);
+}
+
+int	get_pipeline_placement(int current, int total)
+{
+	if (current == 0)
+		return (FIRST_IN_PIPELINE);
+	if (current == (total - 1))
+		return (LAST_IN_PIPELINE);
+	return (IN_PIPELINE);
 }

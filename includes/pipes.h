@@ -31,8 +31,10 @@ void	close_relevant_pipes(t_pipes *pipes, int command_flag);
 void	swap_pipes(t_pipes *pipes);
 bool	create_pipes(t_pipes *pipes);
 int		get_pipeline_placement(int current, int total);
+int		get_pipeline_placement(int current, int total);
 int		execute_pipeline(t_pipeline *pipeline);
 int		execute_pipeline_loop(t_pipes *pipes, t_list *commands, int pipe_count);
 int		execute_pipe(t_simple_command *command,
 			t_pipes *pipes, int command_flag);
+
 #endif

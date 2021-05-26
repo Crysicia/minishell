@@ -10,16 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-
-int	get_pipeline_placement(int current, int total)
-{
-	if (current == 0)
-		return (FIRST_IN_PIPELINE);
-	if (current == (total - 1))
-		return (LAST_IN_PIPELINE);
-	return (IN_PIPELINE);
-}
+#include "header.h"
 
 int	execute_pipeline(t_pipeline *pipeline)
 {
@@ -61,7 +52,6 @@ int	execute_pipeline_loop(t_pipes *pipes, t_list *commands, int pipe_count)
 int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 {
 	int		pid;
-	char	*path;
 	char	**arguments;
 
 	arguments = command_format(command->words);
@@ -77,19 +67,29 @@ int	execute_pipe(t_simple_command *command, t_pipes *pipes, int command_flag)
 		handle_redirections(command->redirections);
 		if (is_builtin(arguments[0]))
 			exit(execute_builtin(arguments[0], &arguments[1]));
-		path = find_exe_path(arguments[0]);
-		if (!path)
-			return (-1);
-		execve(path, arguments, list_to_array(g_globals->env));
-		exit(0);
+		return (execve_argument(arguments));
 	}
 	else
-	{
-		g_globals->current_pid = pid;
-		wait(&g_globals->status);
-		set_status_code(g_globals->status, false);
-		g_globals->current_pid = 0;
-	}
+		do_parent_process_stuff(pid);
 	close_relevant_pipes(pipes, command_flag);
 	return (pid);
+}
+
+int	execve_argument(char **arguments)
+{
+	char	*path;
+
+	path = find_exe_path(arguments[0]);
+	if (!path)
+		return (-1);
+	execve(path, arguments, list_to_array(g_globals->env));
+	exit(0);
+}
+
+void	do_parent_process_stuff(int pid)
+{
+	g_globals->current_pid = pid;
+	wait(&g_globals->status);
+	set_status_code(g_globals->status, false);
+	g_globals->current_pid = 0;
 }

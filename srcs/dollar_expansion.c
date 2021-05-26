@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-#include "../includes/flag.h"
+#include "header.h"
+#include "flag.h"
 
 /* roadmap for quotes
  flagger to know if word is quoted 
@@ -55,9 +55,10 @@ void	dollar_expansion(t_token *tok)
 		}
 		free(tok->cmd);
 		tok->cmd = ft_strdup(&buffer[0]);
+		if (!tok->cmd)
+			ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	}
 }
-	/*	free(word_ptr); (makes cr segf)*/
 
 char	*get_variable_name(char **str)
 {
