@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_utils.c                                       :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/26 10:09:55 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/26 14:30:42 by lpassera         ###   ########.fr       */
+/*   Created: 2021/05/26 08:06:01 by pcharton          #+#    #+#             */
+/*   Updated: 2021/05/26 08:06:01 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-bool	is_absolute_path(char *path)
+void	ft_exit(void)
 {
-	if (!path)
-		return (false);
-	return (*path == '/');
-}
-
-bool	is_path(char *path)
-{
-	if (!path)
-		return (false);
-	return (!!ft_strchr(path, '/'));
+	ft_putstr_fd("Minishell exit", STDERR_FILENO);
+	destroy_globals();
+	exit(errno);
 }

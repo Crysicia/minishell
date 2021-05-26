@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/token.h"
+#include "token.h"
 
 void	quotes_removal(t_token *tok)
 {
@@ -27,26 +27,10 @@ void	quotes_removal(t_token *tok)
 		exit(-1);
 	}
 	remove_simple_and_double_quotes(buffer, str);
-	if (ft_strlen(&buffer[0]) < ft_strlen(str))
-	{
-		free(tok->cmd);
-		tok->cmd = ft_strdup(&buffer[0]);
-		if (!tok->cmd)
-			ft_malloc_error();
-	}
-}
-
-int	copy_quoted_string(char quote, char *str, char *buffer)
-{
-	size_t	index;
-
-	index = 1;
-	while (str[index] != quote)
-	{
-		buffer[index - 1] = str[index];
-		index++;
-	}
-	return (index);
+	free(tok->cmd);
+	tok->cmd = ft_strdup(&buffer[0]);
+	if (!tok->cmd)
+		ft_malloc_error();
 }
 
 void	remove_simple_and_double_quotes(char *buffer, char *str)
@@ -73,4 +57,17 @@ void	remove_simple_and_double_quotes(char *buffer, char *str)
 		else
 			*writer++ = str[index++];
 	}
+}
+
+int	copy_quoted_string(char quote, char *str, char *buffer)
+{
+	size_t	index;
+
+	index = 1;
+	while (str[index] != quote)
+	{
+		buffer[index - 1] = str[index];
+		index++;
+	}
+	return (index);
 }

@@ -14,7 +14,8 @@
 
 void	print_prompt(void)
 {
-	write(1, "Minishell> ", 11);
+	if (isatty(STDIN_FILENO))
+		write(1, "Minishell> ", 11);
 }
 
 void	handle_sigint(int signal)
@@ -35,7 +36,6 @@ void	run_minishell(void)
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
-		printf("-------------------------------\n---------- MAIN LOOP ----------\n-------------------------------\n");
 		print_prompt();
 		input_str = get_command();
 		input_list = parser_loop(input_str);
@@ -44,7 +44,7 @@ void	run_minishell(void)
 			ret = evaluation_pass(input_list);
 			if (!ret)
 			{
-				ret = execute_all_the_commands(input_list);
+				execute_all_the_commands(input_list);
 				add_to_history(input_str);
 			}
 		}

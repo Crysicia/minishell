@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-#include "../includes/token.h"
+#include "header.h"
+#include "token.h"
 
 t_token	*get_next_token(char **line)
 {

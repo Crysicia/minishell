@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/token.h"
-#include "../includes/flag.h"
+#include "token.h"
+#include "flag.h"
 #include "../libft/libft.h"
 
 char	*flag_next_quote(char quote, int *flagged, char *word)

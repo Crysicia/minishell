@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-#include "../includes/flag.h"
+#include "header.h"
+#include "flag.h"
 
 /* roadmap for quotes
  flagger to know if word is quoted 

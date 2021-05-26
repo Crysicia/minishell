@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "header.h"
 #include <limits.h>
 
 int	builtin_pwd(char **arguments)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "header.h"
 #include <stdbool.h>
 
 bool	gnl_loop_function(char *line)

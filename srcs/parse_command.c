@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
-#include "../includes/token.h"
+#include "header.h"
+#include "token.h"
 
 bool	check_command_syntax(t_list *list)
 {
