@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   evaluation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:43:51 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/05/26 15:54:55 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	evaluation_pass(t_list *list)
 	t_block	*ptr;
 	int		ret;
 
+	ret = 0;
 	tmp = list;
 	while (tmp)
 	{
