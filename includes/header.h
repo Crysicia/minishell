@@ -69,13 +69,13 @@ typedef struct s_dict
 	char	*value;
 }				t_dict;
 
-void	print_prompt(void);
-
 /* Minishell working */
+void	print_prompt(void);
+void	handle_sigint(int signal);
 
 int		evaluation_pass(t_list *list);
 bool	check_command_syntax(t_list *list);
-void		execute_all_the_commands(t_list *list);
+void	execute_all_the_commands(t_list *list);
 void	run_minishell(void);
 
 size_t	count_command_words(t_list *list);
@@ -135,15 +135,11 @@ int		add_to_history(char *line);
 
 /* Miscellaneous */
 
-void	handle_sigint(int signal);
-
-
 bool	check_bash_c_option(char *argv);
 int		bash_c_option(char *argv);
 
 void	ft_exit_with_error_msg(char *msg);
 void	ft_exit(void);
-
 
 /* Debug utils */
 

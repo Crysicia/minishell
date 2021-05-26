@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "header.h"
-#include <stdbool.h>
 
 bool	gnl_loop_function(char *line)
 {
@@ -52,6 +51,20 @@ char	*get_command(void)
 		gnl_loop_function(line);
 	signal(SIGINT, SIG_DFL);
 	return (line);
+}
+
+void	handle_sigint(int signal)
+{
+	printf("\n");
+	if (g_globals->current_pid)
+		kill(g_globals->current_pid, signal);
+	print_prompt();
+}
+
+void	print_prompt(void)
+{
+	if (isatty(STDIN_FILENO))
+		write(1, "Minishell> ", 11);
 }
 
 void	skip_spaces(char **line)

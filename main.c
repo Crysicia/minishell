@@ -12,20 +12,6 @@
 
 #include "header.h"
 
-void	print_prompt(void)
-{
-	if (isatty(STDIN_FILENO))
-		write(1, "Minishell> ", 11);
-}
-
-void	handle_sigint(int signal)
-{
-	printf("\n");
-	if (g_globals->current_pid)
-		kill(g_globals->current_pid, signal);
-	print_prompt();
-}
-
 void	run_minishell(void)
 {
 	t_list	*input_list;
