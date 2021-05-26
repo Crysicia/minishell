@@ -12,16 +12,6 @@
 
 #include "header.h"
 
-char	*get_full_path(char *path, char *executable)
-{
-	char	current_path[PATH_MAX];
-
-	ft_strlcpy(current_path, path, ft_strlen(path) + 1);
-	ft_strlcat(current_path, "/", PATH_MAX);
-	ft_strlcat(current_path, executable, PATH_MAX);
-	return (ft_strdup(current_path));
-}
-
 char	**list_exe_paths(void)
 {
 	t_dict		*path;

@@ -90,19 +90,20 @@ BONUS_OBJS 	= $(BONUS_SRCS:.c=.o)
 all: $(NAME)
 
 .c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: $(NAME) $(BONUS_OBJS)
-	$(AR) $(NAME) $(BONUS_OBJS)
+	@$(AR) $(NAME) $(BONUS_OBJS)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
+	@echo "Libft is ready !"
 
 clean:
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 norme:
 	$(NORMINETTE) $(SRCS) $(BONUS_SRCS) $(HEADER)

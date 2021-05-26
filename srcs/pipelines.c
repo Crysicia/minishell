@@ -56,3 +56,12 @@ bool	check_if_pipeline(t_simple_command	*command)
 		return (1);
 	return (0);
 }
+
+int	get_pipeline_placement(int current, int total)
+{
+	if (current == 0)
+		return (FIRST_IN_PIPELINE);
+	if (current == (total - 1))
+		return (LAST_IN_PIPELINE);
+	return (IN_PIPELINE);
+}

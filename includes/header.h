@@ -88,6 +88,8 @@ void	skip_spaces(char **line);
 int		change_directory(t_list **env_list, char *new_path);
 int		is_valid_path(char *path);
 int		execute_command(char **command);
+int		execve_argument(char **arguments);
+
 char	*find_exe_path(char *command);
 bool	is_builtin(char *str);
 
@@ -126,7 +128,7 @@ int		execute_builtin(char *str, char **arguments);
 bool	is_env_valid(char *env, bool can_contain_eq);
 bool	is_path(char *path);
 bool	is_absolute_path(char *path);
-
+char	*get_full_path(char *path, char *executable);
 int		set_status_code(int code, bool from_builtin);
 
 /* History utils */
@@ -137,6 +139,7 @@ int		add_to_history(char *line);
 
 bool	check_bash_c_option(char *argv);
 int		bash_c_option(char *argv);
+void	do_parent_process_stuff(int pid);
 
 void	ft_exit_with_error_msg(char *msg);
 void	ft_exit(void);
@@ -149,6 +152,7 @@ void	print_command_list(t_list *list);
 void	print_command_history(t_dlist *history);
 
 /* Error managment */
+
 void	display_error(char *command, char *custom);
 void	ft_malloc_error(void);
 void	syntax_error(void);
