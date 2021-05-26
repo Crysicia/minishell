@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/24 18:31:56 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/05/26 15:55:51 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ bool	check_syntax_error(t_list *list)
 					return (true);
 				pipeline_tmp = pipeline_tmp->next;
 			}
-			return (true);
+			return (false);
 		}
 		tmp = tmp->next;
 	}
