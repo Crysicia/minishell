@@ -18,11 +18,11 @@ void	run_minishell(void)
 	char	*input_str;
 	int		ret;
 
-	(void)ret;
 	while (1)
 	{
-		print_prompt();
-		input_str = get_command();
+		signal(SIGINT, handle_sigint);
+		input_str = readline("minishell: ");
+		add_history(input_str);
 		input_list = parser_loop(input_str);
 		if (!check_syntax_error(input_list))
 		{

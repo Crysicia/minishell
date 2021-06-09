@@ -57,7 +57,10 @@ void	handle_sigint(int signal)
 	printf("\n");
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);
-	print_prompt();
+	// print_prompt();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	write(1, "minishell: ", 11);
 }
 
 void	print_prompt(void)

@@ -24,6 +24,8 @@
 # include <limits.h>
 # include <signal.h>
 # include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 # include "get_next_line.h"
 # include "scanner.h"

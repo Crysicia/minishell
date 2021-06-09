@@ -6,7 +6,7 @@ CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
-LIBS			= -Llibft -lft -lncurses
+LIBS			= -Llibft -lft -lncurses -L/usr/include -lreadline
 LIBFT 			= libft/libft.a
 NAME			= Minishell
 
