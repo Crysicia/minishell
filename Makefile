@@ -6,7 +6,7 @@ CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
-LIBS			= -Llibft -lft -lncurses -L/usr/include -lreadline
+LIBS			= -Llibft -lft -lreadline
 LIBFT 			= libft/libft.a
 NAME			= Minishell
 
@@ -34,8 +34,6 @@ RAW_SRCS		= bash_c_option.c \
 				  exec_builtin.c \
 				  flagger.c \
 				  ft_exit.c \
-				  get_next_line.c \
-				  get_next_line_utils.c \
 				  globals.c \
 				  history_utils.c \
 				  input.c \
