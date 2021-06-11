@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:39:00 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:32:04 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ int	get_word_size(char *line)
 	i = 0;
 	while (line[i] && !is_operator(&line[i]) && !is_redirection(&line[i])
 		&& !is_space(line[i]))
-	{
-		if (line[i] == '\\')
-			i++;
 		i++;
-	}
 	return (i);
 }
 
@@ -39,9 +35,10 @@ char	*cut_token_string(char *line)
 
 	if (is_escape_character(*line))
 		trimmed_str = get_escaped_string(line);
-	else if (is_redirection(line) && (!ft_strncmp(">>", line, 2)))
+	else if (is_redirection(line) && (!ft_strncmp(">>", line, 2)
+									  || !ft_strncmp("<<", line, 2)))
 		trimmed_str = ft_strndup(line, 2);
-	else if ((is_operator(line) && ft_strchr(";|", *line))
+	else if ((is_operator(line) && ft_strchr("|", *line))
 		|| (is_redirection(line) && ft_strchr("><", *line)))
 		trimmed_str = ft_strndup(line, 1);
 	else
@@ -62,9 +59,7 @@ char	*get_escaped_string(char *str)
 	{
 		quote = str[index++];
 		while (str[index] && (str[index] != quote))
-		{
 			index++;
-		}
 		if (str[index] && str[index] == quote)
 			index++;
 		while (ft_isalnum(str[index]))

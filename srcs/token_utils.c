@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:16:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:40:14 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:31:42 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_space(int c)
 
 bool	is_escape_character(char chr)
 {
-	if (chr == '"' || chr == '\'' || chr == '\\')
+	if (chr == '"' || chr == '\'')
 		return (1);
 	else
 		return (0);
@@ -30,7 +30,7 @@ bool	is_escape_character(char chr)
 
 bool	is_operator(char *str)
 {
-	if ((!*str) || (*str == ';') || (*str == '|'))
+	if ((!*str) || (*str == '|'))
 		return (1);
 	else
 		return (0);
@@ -41,9 +41,9 @@ bool	is_redirection(char *str)
 	char	*ptr;
 
 	ptr = str;
-	if (((ft_strlen(ptr) >= 2) && (!ft_strncmp(ptr, ">>", 2)))
-		|| (*ptr == '<')
-		|| (*ptr == '>'))
+	if ((ft_strlen(ptr) >= 2) && (!(ft_strncmp(ptr, ">>", 2)) || !(ft_strncmp(ptr, "<<", 2))))
+		return (1);
+	else if ((*ptr == '<') || (*ptr == '>'))
 		return (1);
 	else
 		return (0);
