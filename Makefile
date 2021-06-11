@@ -51,6 +51,8 @@ RAW_SRCS		= bash_c_option.c \
 				  token_quote_removal.c \
 				  token_utils.c \
 				  pipes_utils.c \
+				  get_next_line.c \
+				  get_next_line_utils.c
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
 OBJS 			= $(SRCS:.c=.o)
