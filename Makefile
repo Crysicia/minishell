@@ -45,9 +45,9 @@ RAW_SRCS		= bash_c_option.c \
 				  pipeline.c \
 				  pipelines.c \
 				  print_debug.c \
+				  quoting.c \
 				  token.c \
 				  token_fcts.c \
-				  token_quote_removal.c \
 				  token_utils.c \
 				  pipes_utils.c \
 				  get_next_line.c \

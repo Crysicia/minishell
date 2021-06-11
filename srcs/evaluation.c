@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/26 15:54:55 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:41:10 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	flag_simple_command(t_simple_command *list)
 		token = tmp->content;
 		word_flagger(token);
 		if (token->flag != QUOTING_ERROR)
-			apply_expansion_and_remove_quotes(tmp->content);
+			remove_mixed_quotes(token);
 		else
 			return (-1);
 		tmp = tmp->next;
@@ -71,16 +71,6 @@ void	word_flagger(t_token *token)
 				2);
 		}
 	}
-}
-
-void	apply_expansion_and_remove_quotes(t_token *token)
-{
-	if (!(token->flag)
-		|| (token->flag == DOUBLE_QUOTES))
-		dollar_expansion(token);
-	if ((token->flag != QUOTING_ERROR)
-		&& (token->flag))
-		quotes_removal(token);
 }
 
 /*

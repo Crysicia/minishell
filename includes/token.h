@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:32:04 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:41:46 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ t_tok_type	get_token_role(char *line);
 char		*get_escaped_string(char *str);
 int			get_word_size(char *line);
 char		*cut_token_string(char *line);
-void		quotes_removal(t_token *tok);
-void		remove_simple_and_double_quotes(char *buffer, char *str);
-void		apply_expansion_and_remove_quotes(t_token *token);
 
 void		word_flagger(t_token *token);
 
@@ -57,4 +54,10 @@ void		dollar_expansion(t_token *tok);
 void		copy_escaped_character(char **str, char **buffer);
 
 int			parser_error(t_token *tok);
+
+void	remove_mixed_quotes(t_token *token);
+void	expand_text(char *buffer, char *str);
+void	copy_simple_quoted_text(char **str, char **buffer);
+void	copy_double_quoted_text(char **str, char **buffer);
+
 #endif

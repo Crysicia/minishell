@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:35:17 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/06/11 19:42:55 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,9 @@ int	check_quoting(char *word)
 	{
 		if ((*word == '\'') || (*word == '\"'))
 		{
-			if ((*word == '\'') || (*word == '"'))
-				word = flag_next_quote(*word, &flag, word + 1);
-			else if (*word == '\"')
-				word = flag_next_unescaped_double_quote(&flag, ++word);
+			word = flag_next_quote(*word, &flag, word + 1);
 			update_flag_count(&flag, &quote_count);
 		}
-		else if (*word == '\\')
-			word++;
 		if (word)
 			word++;
 		else
@@ -60,29 +55,6 @@ int	check_quoting(char *word)
 	if (quote_count >= 2)
 		flag = MIXED_QUOTES;
 	return (flag);
-}
-
-char	*flag_next_unescaped_double_quote(int *flagged, char *str)
-{
-	size_t	index;
-	bool	escaped;
-
-	index = 0;
-	escaped = false;
-	while (str[index])
-	{
-		if ((str[index] == '\"') && (!escaped))
-		{
-			*flagged = DOUBLE_QUOTES;
-			return (&str[index]);
-		}
-		if (str[index] == '\\')
-			escaped = !escaped;
-		else
-			escaped = false;
-		index++;
-	}
-	return (NULL);
 }
 
 void	update_flag_count(int *flag, int *count)
