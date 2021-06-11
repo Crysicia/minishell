@@ -6,12 +6,11 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 19:35:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 19:40:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/06/11 20:28:26 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
 
 void	remove_mixed_quotes(t_token *token)
 {

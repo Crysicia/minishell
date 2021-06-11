@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:16:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 19:31:42 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/06/11 20:29:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ bool	is_redirection(char *str)
 	char	*ptr;
 
 	ptr = str;
-	if ((ft_strlen(ptr) >= 2) && (!(ft_strncmp(ptr, ">>", 2)) || !(ft_strncmp(ptr, "<<", 2))))
+	if ((ft_strlen(ptr) >= 2) && (!(ft_strncmp(ptr, ">>", 2))
+			|| !(ft_strncmp(ptr, "<<", 2))))
 		return (1);
 	else if ((*ptr == '<') || (*ptr == '>'))
 		return (1);
