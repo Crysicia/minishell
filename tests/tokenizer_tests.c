@@ -35,7 +35,6 @@ ParameterizedTestParameters(tokenizer_suite, token_test)
 		{ .input = "'bo\"njou\"r' \"toi\"", .result = "'bo\"njou\"r'"},
 		/* Antislash use */
 		{ .input = "\\$TEST", .result = "\\$TEST"},
-		{ .input = "\\ hello", .result = "\\ hello" },
 	};
 	return (cr_make_param_array(t_tok_input_test, tests,
 								sizeof(tests)/sizeof(t_tok_input_test)));

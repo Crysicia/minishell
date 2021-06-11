@@ -27,7 +27,7 @@ ParameterizedTestParameters(token_attribution_suite, token_attribution_test)
 
 		//testing ; isolation
 		{ .input = ";", .expected = ";", .result_tok = word },
-		{ .input = ";    ", .expected = ";    ", .result_tok = word },
+		{ .input = ";    ", .expected = ";", .result_tok = word },
 		
 		//testing > isolation
 		{ .input = ">", .expected = ">", .result_tok = redirection},
