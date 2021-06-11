@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/26 15:25:25 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/06/10 15:58:07 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	run_minishell(void)
 	char	*input_str;
 	int		ret;
 
-	(void)ret;
 	while (1)
 	{
-		print_prompt();
-		input_str = get_command();
+		signal(SIGINT, handle_sigint);
+		input_str = readline("minishell: ");
+		add_history(input_str);
 		input_list = parser_loop(input_str);
 		if (!check_syntax_error(input_list))
 		{
