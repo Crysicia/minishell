@@ -82,13 +82,13 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 		 .expected[20] = ""},
 
 		{.input = "echo   		           bonjour	>>file	; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", expected[3] = "ls",
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", .expected[3] = "ls",
 		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ">>", .expected[21] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word },
 
 		{.input = "	>>file echo   		           bonjour	; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", expected[3] = "ls",
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", .expected[3] = "ls",
 		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ">>", .expected[21] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word },
