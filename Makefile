@@ -76,7 +76,6 @@ TEST_RAW_SRCS	= test_helpers.c \
 				  parser_tests.c \
 				  quotes_tests.c \
 				  token_eval_tests.c \
-				  tokenizer_ftests.c \
 				  tokenizer_tests.c \
 				  tokens_tests.c \
 				  utils_tests.c \
