@@ -71,48 +71,43 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 		 .expected_type[0] = word, .expected_type[1] = word,
 		 .expected[20] = ""},
 
-		{.input = "echo   		           bonjour",
-		 .expected[0] = "echo", .expected[1] = "bonjour",
-		 .expected_type[0] = word, .expected_type[1] = word,
-		 .expected[20] = ""},
-
 		{.input = "       echo   		           bonjour;",
 		 .expected[0] = "echo", .expected[1] = "bonjour;",
 		 .expected_type[0] = word, .expected_type[1] = word,
 		 .expected[20] = ""},
 
 		{.input = "echo   		           bonjour		; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour		; ls",
-		 .expected_type[0] = word, .expected_type[1] = word,
+		 .expected[0] = "echo", .expected[1] = "bonjour", expected[2] = ";", expected[3] = "ls",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ""},
 
 		{.input = "echo   		           bonjour	>>file	; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = "; ls",
-		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word,
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", expected[3] = "ls",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ">>", .expected[21] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word },
 
 		{.input = "	>>file echo   		           bonjour	; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = "; ls",
-		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word,
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", expected[3] = "ls",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ">>", .expected[21] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word },
 		
 		{.input = "	>>file > file echo   		           bonjour	; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = "; ls",
-		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word,
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", .expected[3] = "ls",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ">>", .expected[21] = "file", .expected[22] = ">", .expected[23] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word, .expected_type[22] = redirection, .expected_type[23] = word },
 
 		 {.input = "	>>file  echo   		> file           bonjour	; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = "; ls",
-		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word,
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", .expected[3] = "ls",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ">>", .expected[21] = "file", .expected[22] = ">", .expected[23] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word, .expected_type[22] = redirection, .expected_type[23] = word },
 
 		  {.input = "	>>file  echo   		> file           bonjour < file	; ls",
-		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = "; ls",
-		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word,
+		 .expected[0] = "echo", .expected[1] = "bonjour", .expected[2] = ";", .expected[3] = "ls",
+		 .expected_type[0] = word, .expected_type[1] = word, .expected_type[2] = word, .expected_type[3] = word,
 		 .expected[20] = ">>", .expected[21] = "file", .expected[22] = ">", .expected[23] = "file", .expected[24] = "<", .expected[25] = "file",
 		 .expected_type[20] = redirection, .expected_type[21] = word, .expected_type[22] = redirection, .expected_type[23] = word, .expected_type[24] = redirection, .expected_type[25] = word },
 
@@ -189,37 +184,6 @@ if (tests->expected[20][0])
 		}
 	}
 }
-
-//		{ .expected = "echo", .role = word, .input = "echo bonjour;"},
-/************************************************************************************/
-/*
-
-
-typedef struct quotes_examples
-{
-	char	input[200];
-	int		result;
-}			unit;
-
-ParameterizedTestParameters(validating_quotes_suite, valid_tests)
-{
-	static unit test[] = {
-	{.input = "'bonjo\"ur'", .result = 1},
-	{.input = "bonjour", .result = 0},
-	{.input = "bon'jo'ur", .result = 1},
-	{.input = "\"'salut'\"", .result = 1},
-	{.input = "\"bon'jour\"", .result = 1},
-	};
-	return(cr_make_param_array(unit, test, sizeof(test)/sizeof(unit)));
-}
-
-ParameterizedTest(unit *test, validating_quotes_suite, valid_tests)
-{
-	int res = is_quoted(test->input);
-	cr_assert_eq(res, test->result);
-}
-
-*/
 
 Test(parsing_suite, simple_pipe_input_test)
 {

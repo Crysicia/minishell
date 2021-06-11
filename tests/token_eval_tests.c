@@ -12,15 +12,15 @@ typedef struct token_examples
 ParameterizedTestParameters(token_evaluation_suite, is_operator_test)
 {
 		static tokens tests[] = {
-		{.input = ";", .type = operator, .expected = 1},
+		{.input = ";", .type = word, .expected = 0},
 		{.input = "|", .type = operator, .expected = 1},
 		{.input = ">", .type = redirection, .expected = 1},
 		{.input = ">>", .type = redirection, .expected = 1},
 		{.input = "<", .type = redirection, .expected = 1},
 		{.input = " ;", .type = word, .expected = 0},
-		{.input = ";n", .type = operator, .expected = 1},
+		{.input = ";n", .type = word, .expected = 0},
 		{.input = " ;  ", .type = word, .expected = 0},
-		{.input = ";   ", .type = operator, .expected = 1},
+		{.input = ";   ", .type = word, .expected = 0},
 	};
 	return (cr_make_param_array(tokens, tests, sizeof(tests)/sizeof(tokens)));
 }
