@@ -20,7 +20,7 @@ void	ft_exit_with_error_msg(char *msg)
 
 void	ft_exit(void)
 {
-	ft_putstr_fd("Minishell exit", STDERR_FILENO);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	destroy_globals();
 	exit(errno);
 }

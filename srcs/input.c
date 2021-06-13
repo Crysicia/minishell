@@ -18,10 +18,11 @@ void	handle_sigint(int signal)
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);
 	rl_redisplay();
+	rl_replace_line("", 0);
 	print_prompt();
 }
 
-/*	rl_replace_line("", 0); */
+
 
 void	print_prompt(void)
 {
