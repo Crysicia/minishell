@@ -2,7 +2,7 @@ SHELL			= /bin/sh
 .SUFFIXES:
 .SUFFIXES:		.c .o .a
 CC				= gcc
-CFLAGS 			= -Wall -Wextra -Werror
+CFLAGS 			= -Wall -Wextra -Werror -g
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
@@ -55,6 +55,7 @@ RAW_SRCS		= bash_c_option.c \
 
 SRCS			= main.c $(addprefix srcs/, $(RAW_SRCS))
 OBJS 			= $(SRCS:.c=.o)
+DEBUG			= $(addprefix debug/, $(OBJS))
 NO_MAIN			= $(filter-out main.o,$(OBJS))
 
 TEST			= minishell_test
@@ -83,7 +84,7 @@ TEST_SRCS		= $(addprefix tests/,$(TEST_RAW_SRCS))
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
 .c.o:
-	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADERS) $(LIBS) -g -c $< -o $@
 
 all: $(NAME)
 
@@ -112,10 +113,6 @@ clean:
 fclean: clean
 	@echo $(RED)"Removing minishell and tests ..."$(RST)
 	@$(RM) $(NAME) $(TEST) ${TEST_OBJS} $(LIBFT)
-
-fsan: fclean $(LIBFT)
-	${CC} ${CFLAGS} -g -fsanitize=address ${HEADERS} ${LIBS} ${SRCS} libft/libft.a -o debug
-	./debug
 
 re: fclean all
 
