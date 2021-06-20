@@ -137,8 +137,6 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 	int					in_and_out[2];
 
 	save_in_and_out(&in_and_out);
-//	dprintf(2, "saved stdin"KRED " %d "KWHT " saved stdout"KGRN" %d"KWHT"\n", in_and_out[1],in_and_out[0]);
-//	dprintf(2, "STDIN %d STDOUT %d\n", STDIN_FILENO, STDOUT_FILENO);
 	index = 0;
 	pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
 	if (!pipe_tab)
@@ -146,15 +144,12 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 	scmd_list = pipeline->commands;
 	while (scmd_list && scmd_list->next)
 	{
-		dprintf(2, "looping in pipes\n");
 		pipe(pipe_tab[index]);
-//		dprintf(2, "pipe in "KRED"%d"KWHT"and pipe out "KGRN"%d"KWHT"\n", pipe_tab[index][0],pipe_tab[index][1]);
 		execute_pipe_command(pipe_tab[index], scmd_list->content);
 		dup2(pipe_tab[index][0], STDIN_FILENO);
 		scmd_list = scmd_list->next;
 		index++;
 	}
-
 	dup2(in_and_out[0], STDOUT_FILENO);
 	execute_single_command(scmd_list->content);
 	wait_pipeline_end(pipeline->pipe_count - 1);

@@ -43,29 +43,24 @@ int	handle_redirections(t_list *command)
 {
 	t_redirection	*redirection;
 	t_list			*node;
-	int				error;
 
 	node = command;
-	error = 0;
 	while (node)
 	{
 		redirection = node->content;
 		redirection->fd = create_file(redirection->file->cmd, redirection->operator->cmd);
 		if (redirection->fd == -1)
-			error = 1;
+			return (1);
 		node = node->next;
 	}
-	if (!error)
+	node = command;
+	while (node)
 	{
-		node = command;
-		while (node)
-		{
-			redirection = node->content;
-			apply_redirection(redirection->fd, redirection->operator->cmd);
-			node = node->next;
-		}
+		redirection = node->content;
+		apply_redirection(redirection->fd, redirection->operator->cmd);
+		node = node->next;
 	}
-	return (error);
+	return (0);
 }
 
 bool	save_in_and_out(int (*saved)[])
