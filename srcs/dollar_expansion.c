@@ -21,45 +21,6 @@
  eventually add the new words to the linked list
 */
 
-/*
-	Performing $expansion
-	does it need to check if expansion can be done or is it already assumed ?
-	strcpy() before after $var
-	check var name (alphanumeric len, no \before)
-	getenv(var)
-	write in buffer (while adding \ to \ and "(why ?))
-
-	remove quotes (now ?)
-	remove antislash (now ?)
-*/
-
-void	dollar_expansion(t_token *tok)
-{
-	char	buffer[1024];
-	char	*word_ptr;
-	char	*buffer_ptr;
-
-	if (tok->role == word && (!(tok->flag) || (tok->flag == DOUBLE_QUOTES)))
-	{
-		word_ptr = tok->cmd;
-		ft_bzero(buffer, 1024);
-		buffer_ptr = &buffer[0];
-		while (*word_ptr)
-		{
-			if (*word_ptr == '\\')
-				copy_escaped_character(&word_ptr, &buffer_ptr);
-			else if (*word_ptr == '$')
-				expand_env_variable(&word_ptr, &buffer_ptr);
-			else
-				*buffer_ptr++ = *word_ptr++;
-		}
-		free(tok->cmd);
-		tok->cmd = ft_strdup(&buffer[0]);
-		if (!tok->cmd)
-			ft_exit_with_error_msg(MSG_MALLOC_FAILED);
-	}
-}
-
 char	*get_variable_name(char **str)
 {
 	char	*var_name;
@@ -103,6 +64,8 @@ void	expand_env_variable(char **str, char **buffer)
 	}
 	else if (**str == '?')
 		expand_exit_status(str, buffer);
+	else
+		*buffer += 1;
 }
 
 void	copy_escaped_character(char **str, char **buffer)

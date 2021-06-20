@@ -82,6 +82,7 @@ int	flag_redirection(t_list *list)
 	{
 		redir = node->content;
 		word_flagger(redir->file);
+		remove_mixed_quotes(redir->file);
 		dprintf(2, "%s\n", redir->file->cmd);
 		if (!redir->file->cmd)
 		{

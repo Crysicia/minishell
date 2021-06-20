@@ -50,13 +50,12 @@ char		*cut_token_string(char *line);
 void		word_flagger(t_token *token);
 
 void		expand_env_variable(char **str, char **buffer);
-void		dollar_expansion(t_token *tok);
 void		copy_escaped_character(char **str, char **buffer);
 
 int			parser_error(t_token *tok);
 
-void		remove_mixed_quotes(t_token *token);
-void		expand_text(char *buffer, char *str);
+int			remove_mixed_quotes(t_token *token);
+int			expand_text(char *buffer, char *str);
 void		copy_simple_quoted_text(char **str, char **buffer);
 void		copy_double_quoted_text(char **str, char **buffer);
 
