@@ -37,7 +37,6 @@ int	flag_simple_command(t_simple_command *list)
 {
 	t_token			*token;
 	t_list			*tmp;
-	t_redirection	*redir;
 
 	tmp = list->words;
 	while (tmp)
@@ -48,13 +47,6 @@ int	flag_simple_command(t_simple_command *list)
 			remove_mixed_quotes(token);
 		else
 			return (-1);
-		tmp = tmp->next;
-	}
-	tmp = list->redirections;
-	while (tmp)
-	{
-		redir = tmp->content;
-		word_flagger(redir->file);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -78,8 +70,25 @@ int	flag_pipeline(t_pipeline *list)
 {
 	return (0);
 }
+*/
+
 int	flag_redirection(t_list *list)
 {
+	t_redirection	*redir;
+	t_list			*node;
+
+	node = list;
+	while (node)
+	{
+		redir = node->content;
+		word_flagger(redir->file);
+		dprintf(2, "%s\n", redir->file->cmd);
+		if (!redir->file->cmd)
+		{
+			display_error(redir->file->cmd, "Ambiguous redirect");
+			return (1);
+		}
+		node = node->next;
+	}
 	return (0);
 }
-*/

@@ -44,6 +44,8 @@ int	handle_redirections(t_list *command)
 	t_redirection	*redirection;
 	t_list			*node;
 
+	if (flag_redirection(command))
+		return (1);
 	node = command;
 	while (node)
 	{

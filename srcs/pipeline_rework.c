@@ -12,13 +12,6 @@
 
 #include "header.h"
 
-int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
-void	*deallocate_pipe_tab(int **tab, int nb);
-int	**allocate_pipe_tab(int	nb);
-int	pipeline_big_loop(t_pipeline *pipeline);
-int	wait_pipeline_end(int pipe_count);
-
-
 int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 {
 	char	**arguments;

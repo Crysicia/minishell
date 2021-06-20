@@ -176,6 +176,7 @@ int	**allocate_pipe_tab(int	nb);
 int	pipeline_big_loop(t_pipeline *pipeline);
 int	wait_pipeline_end(int pipe_count);
 
+int	flag_redirection(t_list *list);
 
 
 #endif
