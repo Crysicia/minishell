@@ -43,6 +43,7 @@ RAW_SRCS		= bash_c_option.c \
 				  path_utils.c \
 				  redirections.c \
 				  pipeline.c \
+				  pipeline_rework.c \
 				  pipelines.c \
 				  print_debug.c \
 				  quoting.c \

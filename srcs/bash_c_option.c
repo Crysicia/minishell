@@ -50,7 +50,7 @@ void	execute_all_the_commands(t_list *list)
 		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
 			ret = execute_single_command(ptr->kind.cmd);
 		else if (ptr->id == pipeline)
-			ret = execute_pipeline(ptr->kind.pipe);
+			ret = pipeline_big_loop(ptr->kind.pipe);
 		tmp = tmp->next;
 	}
 }

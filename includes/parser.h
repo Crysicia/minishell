@@ -25,6 +25,7 @@ typedef enum e_command_type
 
 typedef struct s_redirection
 {
+	int				fd;
 	struct s_token	*operator;
 	struct s_token	*file;
 }				t_redirection;

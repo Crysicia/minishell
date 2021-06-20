@@ -25,19 +25,13 @@ int	create_file(char *path, char *redirection_type)
 	if (ft_strcmp(redirection_type, ">>") && ft_strcmp(redirection_type, "<"))
 		open_flags |= O_TRUNC;
 	fd = open(path, open_flags, 0644);
+	if (fd == -1)
+		display_error(path, strerror(errno));
 	return (fd);
 }
 
-void	apply_redirection(char *path, char *redirection_type)
+void	apply_redirection(int fd, char *redirection_type)
 {
-	int	fd;
-
-	fd = create_file(path, redirection_type);
-	if (fd == -1)
-	{
-		display_error(path, strerror(errno));
-		exit(1);
-	}
 	if (!ft_strcmp(redirection_type, "<"))
 		dup2(fd, STDIN_FILENO);
 	else
@@ -45,16 +39,33 @@ void	apply_redirection(char *path, char *redirection_type)
 	close(fd);
 }
 
-void	handle_redirections(t_list *command)
+int	handle_redirections(t_list *command)
 {
 	t_redirection	*redirection;
+	t_list			*node;
+	int				error;
 
-	while (command)
+	node = command;
+	error = 0;
+	while (node)
 	{
-		redirection = command->content;
-		apply_redirection(redirection->file->cmd, redirection->operator->cmd);
-		command = command->next;
+		redirection = node->content;
+		redirection->fd = create_file(redirection->file->cmd, redirection->operator->cmd);
+		if (redirection->fd == -1)
+			error = 1;
+		node = node->next;
 	}
+	if (!error)
+	{
+		node = command;
+		while (node)
+		{
+			redirection = node->content;
+			apply_redirection(redirection->fd, redirection->operator->cmd);
+			node = node->next;
+		}
+	}
+	return (error);
 }
 
 bool	save_in_and_out(int (*saved)[])
