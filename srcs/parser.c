@@ -38,18 +38,18 @@ t_list	*parser_loop(char *line)
 	ptr = line;
 	parsed_list = NULL;
 	if (ptr)
-	  {
-	    while (*ptr)
-	      {
-		node = new_block();
-		parse_simple_command(node, &ptr);
-		if (node->id == pipeline)
-			parse_pipeline_command(node, &ptr);
-		ft_lstadd_back(&parsed_list, ft_lstnew(node));
-	      }
-	  }
+	{
+		while (*ptr)
+		{
+			node = new_block();
+			parse_simple_command(node, &ptr);
+			if (node->id == pipeline)
+				parse_pipeline_command(node, &ptr);
+			ft_lstadd_back(&parsed_list, ft_lstnew(node));
+		}
+	}
 	else
-	  ft_exit();
+		ft_exit();
 	return (parsed_list);
 }
 

@@ -51,6 +51,7 @@ RAW_SRCS		= bash_c_option.c \
 				  token_fcts.c \
 				  token_utils.c \
 				  pipes_utils.c \
+				  pipes_utils2.c \
 				  get_next_line.c \
 				  get_next_line_utils.c
 

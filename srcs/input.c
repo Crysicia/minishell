@@ -22,8 +22,6 @@ void	handle_sigint(int signal)
 	print_prompt();
 }
 
-
-
 void	print_prompt(void)
 {
 	if (isatty(STDIN_FILENO))

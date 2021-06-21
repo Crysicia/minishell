@@ -166,17 +166,12 @@ int		execute_single_command(t_simple_command *commands);
 bool	save_in_and_out(int (*saved)[]);
 bool	restore_in_and_out(int (*saved)[]);
 
-// int execute_basic_command(t_list **commands);
-// int execute_commands(t_list **commands);
-// int execute_single_command(t_list **commands, t_pipes *pipes);
-
-int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
+int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
 void	*deallocate_pipe_tab(int **tab, int nb);
-int	**allocate_pipe_tab(int	nb);
-int	pipeline_big_loop(t_pipeline *pipeline);
-int	wait_pipeline_end(int pipe_count);
+int		**allocate_pipe_tab(int	nb);
+int		pipeline_big_loop(t_pipeline *pipeline);
+int		wait_pipeline_end(int pipe_count);
 
-int	flag_redirection(t_list *list);
-
+int		flag_redirection(t_list *list);
 
 #endif

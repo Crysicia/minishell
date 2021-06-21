@@ -50,7 +50,8 @@ int	handle_redirections(t_list *command)
 	while (node)
 	{
 		redirection = node->content;
-		redirection->fd = create_file(redirection->file->cmd, redirection->operator->cmd);
+		redirection->fd = create_file(redirection->file->cmd,
+				redirection->operator->cmd);
 		if (redirection->fd == -1)
 			return (1);
 		node = node->next;
