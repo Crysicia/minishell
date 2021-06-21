@@ -19,7 +19,7 @@ ParameterizedTestParameters(expansion_suite, dollar_expansion_test)
 		{.word = "$USER $PATH", .flag = 0, .expected = "lpassera /etc"},
 
 		{.word = "'bonjour'", .flag = SINGLE_QUOTES, .expected = "bonjour"},
-		{.word = "'$USER'", .flag = SINGLE_QUOTES, .expected = "'$USER'"},
+		{.word = "'$USER'", .flag = SINGLE_QUOTES, .expected = "$USER"},
 	
 		{.word = "bonjour", .flag = DOUBLE_QUOTES, .expected = "bonjour"},
 		{.word = "\"$USER\"", .flag = DOUBLE_QUOTES, .expected = "lpassera"},
