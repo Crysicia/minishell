@@ -59,7 +59,6 @@ int	handle_redirections(t_list *command)
 				redirection->operator->cmd);
 		if (redirection->fd == -1)
 			return (1);
-
 		node = node->next;
 	}
 	node = command;
