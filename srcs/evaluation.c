@@ -67,8 +67,8 @@ void	word_flagger(t_token *token)
 	}
 }
 
-{int	flag_pipeline(t_pipeline *list)
-
+int	flag_pipeline(t_pipeline *list)
+{
 	t_list				*node;
 	t_simple_command	*to_flag;
 

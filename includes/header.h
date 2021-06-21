@@ -111,8 +111,8 @@ int		ft_unsetenv(char *name);
 
 /* Evaluate tokens */
 int		flag_simple_command(t_simple_command *list);
-
-void	remove_simple_and_double_quotes(char *buffer, char *str);
+int		flag_pipeline(t_pipeline *list);
+int		flag_redirection(t_list *list);
 int		copy_quoted_string(char quote, char *str, char *buffer);
 
 /* Builtins */
@@ -172,10 +172,6 @@ int		**allocate_pipe_tab(int	nb);
 int		pipeline_big_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
 
-int		flag_pipeline(t_pipeline *list);
-int		flag_redirection(t_list *list);
-char	*ft_strndup(char *str, size_t n);
-bool	ft_is_lowercase(int c);
 bool	is_space(int c);
 
 #endif
