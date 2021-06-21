@@ -172,6 +172,7 @@ int		**allocate_pipe_tab(int	nb);
 int		pipeline_big_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
 
+int		flag_pipeline(t_pipeline *list);
 int		flag_redirection(t_list *list);
 char	*ft_strndup(char *str, size_t n);
 bool	ft_is_lowercase(int c);

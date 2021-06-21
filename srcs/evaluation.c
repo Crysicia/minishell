@@ -25,6 +25,8 @@ int	evaluation_pass(t_list *list)
 		ptr = list->content;
 		if (ptr->id == simple_command)
 			ret = flag_simple_command(ptr->kind.cmd);
+		else if (ptr->id == pipeline)
+			ret = flag_pipeline(ptr->kind.pipe);
 		if (!ret)
 			tmp = tmp->next;
 		else
@@ -65,12 +67,21 @@ void	word_flagger(t_token *token)
 	}
 }
 
-/*
-int	flag_pipeline(t_pipeline *list)
-{
+{int	flag_pipeline(t_pipeline *list)
+
+	t_list				*node;
+	t_simple_command	*to_flag;
+
+	node = list->commands;
+	while (node)
+	{
+		to_flag = node->content;
+		if (flag_simple_command(to_flag))
+			ft_exit_with_error_msg("error while flagging pipeline");
+		node = node->next;
+	}
 	return (0);
 }
-*/
 
 int	flag_redirection(t_list *list)
 {
