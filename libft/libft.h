@@ -97,6 +97,7 @@ typedef struct s_dlist
 int					ft_max(int a, int b);
 int					ft_min(int a, int b);
 char				*ft_strjoin_free(char const *s1, char const *s2);
+int					ft_matrix_size(void **matrix);
 void				*ft_free_matrix(void **matrix, size_t size);
 char				*ft_strcchr(const char *s, int c);
 char				**ft_split_set(const char *s, char *set);

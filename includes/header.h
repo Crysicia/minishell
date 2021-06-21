@@ -53,7 +53,6 @@ typedef struct s_globals
 	int		status;
 	t_list	*current_cmd;
 	t_list	*env;
-	t_dlist	*history;
 }			t_globals;
 
 t_globals	*g_globals;

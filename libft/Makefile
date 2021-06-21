@@ -59,6 +59,7 @@ SRCS 		= ft_memset.c \
 			  ft_putnbr_fd.c \
 			  ft_max.c \
 			  ft_min.c \
+			  ft_matrix_size.c \
 			  ft_free_matrix.c \
 			  ft_split_set.c \
 			  ft_in_range.c \

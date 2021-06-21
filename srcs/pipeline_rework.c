@@ -55,11 +55,13 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	t_list	*words;
 	int		fork_ret;
 	int		in_and_out[2];
+	char	*path;
 
 	words = commands->words;
 	arguments = command_format(words);
 	save_in_and_out(&in_and_out);
-	if (find_exe_path(arguments[0]))
+	path = find_exe_path(arguments[0]);
+	if (path)
 	{		
 		fork_ret = fork();
 		if (fork_ret == -1)
@@ -72,6 +74,8 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	}
 	else
 		printf("-Minishell: %s: command not found\n", arguments[0]);
+	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
+	free(path);	
 	return (0);
 }
 

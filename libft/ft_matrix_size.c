@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
+/*   ft_matrix_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 08:53:01 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/07 13:31:38 by lpassera         ###   ########.fr       */
+/*   Created: 2021/06/21 16:08:59 by pcharton          #+#    #+#             */
+/*   Updated: 2021/06/21 16:08:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	*ft_free_matrix(void **matrix, size_t size)
+int	ft_matrix_size(void **matrix)
 {
-	size_t	index;
+	int	size;
 
-	index = 0;
-	while (index < size)
-	{
-		free(matrix[index]);
-		matrix[index] = NULL;
-		index++;
-	}
-	free(matrix);
-	return (NULL);
+	size = 0;
+	while ((matrix + size) && *(matrix + size))
+		size++;
+	return (size);
+
 }
