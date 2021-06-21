@@ -13,14 +13,6 @@
 #include "header.h"
 #include "flag.h"
 
-/* roadmap for quotes
- flagger to know if word is quoted 
- perform $expansion within double quotes and no quotes
- perform complex expqnsion within mixed quotes
- remove quotes
- eventually add the new words to the linked list
-*/
-
 char	*get_variable_name(char **str)
 {
 	char	*var_name;
@@ -68,9 +60,3 @@ void	expand_env_variable(char **str, char **buffer)
 		*buffer += 1;
 }
 
-void	copy_escaped_character(char **str, char **buffer)
-{
-	**buffer = *(*str + 1);
-	*buffer += 1;
-	*str += 2;
-}

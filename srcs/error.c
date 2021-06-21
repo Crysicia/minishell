@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "header.h"
-#include <errno.h>
-#include <string.h>
-#include "../libft/libft.h"
-#include "token.h"
+#include "header.h"
 
 void	ft_malloc_error(void)
 {

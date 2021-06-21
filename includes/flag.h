@@ -14,7 +14,6 @@
 # define FLAG_H
 
 # define IS_QUOTED	0x10
-
 # define BACKSLASH 0x11
 # define SINGLE_QUOTES 0x12
 # define DOUBLE_QUOTES 0x14
@@ -22,8 +21,6 @@
 # define QUOTING_ERROR 0x40
 
 int		check_quoting(char *word);
-char	*flag_next_single_quote(int *flagged, char *word);
-char	*flag_next_unescaped_double_quote(int *flagged, char *str);
 void	update_flag_count(int *flag, int *count);
 
 #endif

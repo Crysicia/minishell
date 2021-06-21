@@ -14,6 +14,7 @@
 # define HEADER_H
 # include <unistd.h>
 # include <fcntl.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/param.h>
@@ -28,7 +29,6 @@
 # include <readline/history.h>
 # include "get_next_line.h"
 # include "../libft/libft.h" 
-# include "scanner.h"
 # include "token.h"
 # include "parser.h"
 # include "pipes.h"
@@ -173,5 +173,9 @@ int		pipeline_big_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
 
 int		flag_redirection(t_list *list);
+char	*ft_strndup(char *str, size_t n);
+bool	ft_is_lowercase(int c);
+bool	is_space(int c);
+
 
 #endif
