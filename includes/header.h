@@ -174,4 +174,7 @@ int		wait_pipeline_end(int pipe_count);
 
 bool	is_space(int c);
 
+void	load_heredoc(int fd, char *heredoc_end);
+int		heredoc_routine(int fd, char *heredoc_end);
+
 #endif

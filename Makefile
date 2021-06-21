@@ -35,6 +35,7 @@ RAW_SRCS		= bash_c_option.c \
 				  flagger.c \
 				  ft_exit.c \
 				  globals.c \
+				  heredoc.c \
 				  input.c \
 				  parse_command.c \
 				  parser.c \

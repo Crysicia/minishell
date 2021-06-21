@@ -24,15 +24,20 @@ int	create_file(char *path, char *redirection_type)
 		open_flags |= O_APPEND;
 	if (ft_strcmp(redirection_type, ">>") && ft_strcmp(redirection_type, "<"))
 		open_flags |= O_TRUNC;
-	fd = open(path, open_flags, 0644);
+	if (!ft_strcmp(redirection_type, "<<"))
+		fd = open("/tmp/heredoc", open_flags, 0644);
+	else
+		fd = open(path, open_flags, 0644);
 	if (fd == -1)
 		display_error(path, strerror(errno));
+	if (!ft_strcmp(redirection_type, "<<"))
+		fd = heredoc_routine(fd, path);
 	return (fd);
 }
 
 void	apply_redirection(int fd, char *redirection_type)
 {
-	if (!ft_strcmp(redirection_type, "<"))
+	if (!ft_strcmp(redirection_type, "<") || !ft_strcmp(redirection_type, "<<"))
 		dup2(fd, STDIN_FILENO);
 	else
 		dup2(fd, STDOUT_FILENO);
@@ -54,6 +59,7 @@ int	handle_redirections(t_list *command)
 				redirection->operator->cmd);
 		if (redirection->fd == -1)
 			return (1);
+
 		node = node->next;
 	}
 	node = command;
