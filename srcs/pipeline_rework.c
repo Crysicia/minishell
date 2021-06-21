@@ -42,7 +42,10 @@ void	pipe_parent_process_exec(int pipe_fd[2], int (*in_and_out)[],
 		int fork_ret)
 {
 	if (pipe_fd)
+	{
+		dprintf(2, "closing writing end of pipe in parent\n");
 		close(pipe_fd[1]);
+	}
 	g_globals->current_pid = fork_ret;
 	set_status_code(g_globals->status, false);
 	g_globals->current_pid = 0;
@@ -78,6 +81,17 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	free(path);
 	return (0);
 }
+
+/*
+**	(cat > out) | cat 
+**
+**	It should be rewritten as it has a few bugs 
+**	what i want is
+**	allocate a range of pipe tab
+**	connect each pipe to the subprocess
+**	perform each needed redirection
+**	run all the subprocesses
+*/
 
 int	pipeline_big_loop(t_pipeline *pipeline)
 {
