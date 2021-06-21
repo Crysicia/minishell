@@ -177,5 +177,4 @@ char	*ft_strndup(char *str, size_t n);
 bool	ft_is_lowercase(int c);
 bool	is_space(int c);
 
-
 #endif

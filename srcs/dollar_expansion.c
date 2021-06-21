@@ -59,4 +59,3 @@ void	expand_env_variable(char **str, char **buffer)
 	else
 		*buffer += 1;
 }
-
