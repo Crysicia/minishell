@@ -36,10 +36,7 @@ int	expand_text(char *buffer, char *str)
 	while (*str)
 	{
 		if (*str == '$')
-		{
 			expand_env_variable(&str, &buffer);
-			str++;
-		}
 		else if (*str == '\'')
 			copy_simple_quoted_text(&str, &buffer);
 		else if (*str == '"')

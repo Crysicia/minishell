@@ -76,18 +76,24 @@ int	flag_redirection(t_list *list)
 {
 	t_redirection	*redir;
 	t_list			*node;
+	char			buffer[1024];
 
 	node = list;
 	while (node)
 	{
+		ft_bzero(buffer, 1024);
 		redir = node->content;
 		word_flagger(redir->file);
-		remove_mixed_quotes(redir->file);
-		dprintf(2, "%s\n", redir->file->cmd);
-		if (!redir->file->cmd)
+		expand_text(buffer, redir->file->cmd);
+		if (!*buffer)
 		{
 			display_error(redir->file->cmd, "Ambiguous redirect");
 			return (1);
+		}
+		else
+		{
+			free(redir->file->cmd);
+			redir->file->cmd = ft_strdup(buffer);
 		}
 		node = node->next;
 	}
