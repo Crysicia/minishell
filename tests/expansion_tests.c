@@ -18,13 +18,13 @@ ParameterizedTestParameters(expansion_suite, dollar_expansion_test)
 		{.word = "$USER", .flag = 0, .expected = "lpassera"},
 		{.word = "$USER $PATH", .flag = 0, .expected = "lpassera /etc"},
 
-		{.word = "'bonjour'", .flag = SINGLE_QUOTES, .expected = "'bonjour'"},
+		{.word = "'bonjour'", .flag = SINGLE_QUOTES, .expected = "bonjour"},
 		{.word = "'$USER'", .flag = SINGLE_QUOTES, .expected = "'$USER'"},
 	
 		{.word = "bonjour", .flag = DOUBLE_QUOTES, .expected = "bonjour"},
-		{.word = "\"$USER\"", .flag = DOUBLE_QUOTES, .expected = "\"lpassera\""},
-		{.word = "\"$USE\"", .flag = DOUBLE_QUOTES, .expected = "\"\""},
-		{.word = "\"$USER $PATH\"", .flag = DOUBLE_QUOTES, .expected = "\"lpassera /etc\""},
+		{.word = "\"$USER\"", .flag = DOUBLE_QUOTES, .expected = "lpassera"},
+		{.word = "\"$USE\"", .flag = DOUBLE_QUOTES, .expected = ""},
+		{.word = "\"$USER $PATH\"", .flag = DOUBLE_QUOTES, .expected = "lpassera /etc"},
 
 	};
 	return (cr_make_param_array(unit, test, sizeof(test)/sizeof(unit)));
