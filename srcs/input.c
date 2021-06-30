@@ -23,6 +23,13 @@ void	handle_sigint(int signal)
 		print_prompt();
 }
 
+void handle_sigquit(int signal)
+{
+	if (g_globals->current_pid)
+		kill(g_globals->current_pid, signal);
+	// TODO: Hide ctrl-\ chars from screen
+}
+
 void	print_prompt(void)
 {
 	if (isatty(STDIN_FILENO))

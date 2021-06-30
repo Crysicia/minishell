@@ -73,6 +73,7 @@ typedef struct s_dict
 /* Minishell working */
 void	print_prompt(void);
 void	handle_sigint(int signal);
+void	handle_sigquit(int signal);
 
 int		evaluation_pass(t_list *list);
 bool	check_command_syntax(t_list *list);
