@@ -40,7 +40,7 @@ char	*find_exe_path(char *command)
 	index = -1;
 	result = NULL;
 	path_arr = list_exe_paths();
-	while (path_arr[++index] && !result)
+	while (path_arr && path_arr[++index] && !result)
 	{
 		current_path = get_full_path(path_arr[index], command);
 		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))

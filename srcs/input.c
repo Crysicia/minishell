@@ -17,9 +17,10 @@ void	handle_sigint(int signal)
 	printf("\n");
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);
-	rl_redisplay();
 	rl_replace_line("", 0);
-	print_prompt();
+	rl_redisplay();
+	if (!g_globals->current_pid)
+		print_prompt();
 }
 
 void	print_prompt(void)

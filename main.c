@@ -22,6 +22,8 @@ void	run_minishell(void)
 	{
 		signal(SIGINT, handle_sigint);
 		input_str = readline("minishell: ");
+		if (!input_str)
+			ft_exit();
 		add_history(input_str);
 		input_list = parser_loop(input_str);
 		if (!check_syntax_error(input_list))
