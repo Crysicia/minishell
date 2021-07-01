@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 14:39:16 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/01 17:03:38 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_globals
 {
 	int		current_pid;
 	int		status;
-	t_list	*current_cmd;
 	t_list	*env;
 }			t_globals;
 
