@@ -6,11 +6,22 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/06/11 19:32:35 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/01 15:58:59 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+bool	ft_is_blank(char *str)
+{
+	while (*str)
+	{
+		if (!ft_strchr("\t\n\r\v\f", *str))
+			return (false);
+		str++;
+	}
+	return (true);
+}
 
 void	run_minishell(void)
 {
@@ -25,7 +36,8 @@ void	run_minishell(void)
 		input_str = readline("minishell: ");
 		if (!input_str)
 			ft_exit();
-		add_history(input_str);
+		if (!ft_is_blank(input_str))
+			add_history(input_str);
 		input_list = parser_loop(input_str);
 		if (!check_syntax_error(input_list))
 		{

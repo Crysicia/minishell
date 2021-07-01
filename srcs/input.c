@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 20:28:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/01 15:58:25 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void handle_sigquit(int signal)
 {
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);
-	// TODO: Hide ctrl-\ chars from screen
+	if (!g_globals->current_pid)
+		write(1, "\b\b  \b\b", 6);
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	print_prompt(void)
