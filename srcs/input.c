@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/01 15:58:25 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/01 16:16:58 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	handle_sigint(int signal)
 void handle_sigquit(int signal)
 {
 	if (g_globals->current_pid)
+	{
 		kill(g_globals->current_pid, signal);
+		printf("Quit (core dumped)\n");
+	}
 	if (!g_globals->current_pid)
 		write(1, "\b\b  \b\b", 6);
 	rl_replace_line("", 0);
