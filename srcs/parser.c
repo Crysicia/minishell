@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/01 18:50:21 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/01 19:14:07 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,6 @@ int	parse_pipeline_command(t_block *block, char **line)
 		ft_lstadd_back(&new->commands, node);
 		new->pipe_count += 1;
 	}
-	block->kind.pipe = new;
+xc	block->kind.pipe = new;
 	return (0);
 }
