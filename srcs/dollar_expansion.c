@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:33:58 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/01 16:39:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,14 @@ void	expand_env_variable(char **str, char **buffer)
 			ft_strlcpy(*buffer, env_var->value, ft_strlen(env_var->value) + 1);
 			*buffer += ft_strlen(env_var->value);
 		}
-		free(name);
-		name = NULL;
 	}
 	else if (**str == '?')
 		expand_exit_status(str, buffer);
 	else
+	{
+		**buffer = '$';
 		*buffer += 1;
+	}
+	free(name);
+	name = NULL;
 }

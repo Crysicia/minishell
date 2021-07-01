@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/20 09:25:29 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/01 16:48:37 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 								char **arguments)
 {
+	dprintf(1,  "mange tes maures\n");
 	char	*path;
 
 	if (pipe_fd)
@@ -54,12 +55,14 @@ void	pipe_parent_process_exec(int pipe_fd[2], int (*in_and_out)[],
 
 int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 {
+	dprintf(2, "welcome to execute pipe commands mate\n");
 	char	**arguments;
 	t_list	*words;
 	int		fork_ret;
 	int		in_and_out[2];
 	char	*path;
 
+	dprintf(2, "redir [%p]\n", commands->redirections);
 	words = commands->words;
 	arguments = command_format(words);
 	save_in_and_out(&in_and_out);

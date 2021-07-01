@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/01 15:58:59 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/01 18:41:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,31 @@ void	run_minishell(void)
 		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
+	}
+}
+
+void	execute_all_the_commands(t_list *list)
+{
+	t_list		*tmp;
+	t_block		*ptr;
+	int			ret;
+
+	ret = 0;
+	tmp = list;
+	while (tmp && (ret != -1))
+	{
+		ptr = tmp->content;
+		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
+		{
+			print_simple_command_node(ptr->kind.cmd);
+			ret = execute_single_command(ptr->kind.cmd);
+		}
+		else if (ptr->id == pipeline)
+		{
+			print_pipeline(ptr->kind.pipe);
+			ret = piping_loop(ptr->kind.pipe);
+		}
+		tmp = tmp->next;
 	}
 }
 

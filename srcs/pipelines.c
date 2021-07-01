@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:38:43 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/01 18:49:51 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ t_pipeline	*new_pipeline(t_simple_command *first)
 	new = malloc(sizeof(t_pipeline));
 	new->commands = ft_lstnew(first);
 	if (new && new->commands)
-	{
 		new->pipe_count = 1;
-	}
 	else
 		display_error("Malloc failed", "new_pipeline function");
 	return (new);
@@ -45,8 +43,6 @@ bool	check_if_pipeline(t_simple_command	*command)
 	t_list	*node;
 	t_token	*token;
 
-	if (command->redirections)
-		return (0);
 	node = command->words;
 	token = node->content;
 	while (node && node->next)
@@ -56,7 +52,7 @@ bool	check_if_pipeline(t_simple_command	*command)
 		return (1);
 	return (0);
 }
-
+/*
 int	get_pipeline_placement(int current, int total)
 {
 	if (current == 0)
@@ -65,3 +61,4 @@ int	get_pipeline_placement(int current, int total)
 		return (LAST_IN_PIPELINE);
 	return (IN_PIPELINE);
 }
+*/

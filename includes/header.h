@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 14:39:16 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/01 18:28:18 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
 void	*deallocate_pipe_tab(int **tab, int nb);
 int		**allocate_pipe_tab(int	nb);
 int		pipeline_big_loop(t_pipeline *pipeline);
+int		piping_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
 
 bool	is_space(int c);
