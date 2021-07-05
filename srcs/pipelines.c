@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 18:35:25 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 18:49:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ t_pipeline	*new_pipeline(t_simple_command *first)
 	t_pipeline	*new;
 
 	new = malloc(sizeof(t_pipeline));
-	new->commands = ft_lstnew(first);
-	if (new && new->commands)
-		new->pipe_count = 1;
+	if (new)
+	{
+		new->commands = ft_lstnew(first);
+		if (new->commands)
+			new->pipe_count = 1;
+		else
+			ft_exit_with_error_msg(MSG_MALLOC_FAILED);
+	}
 	else
-		display_error("Malloc failed", "new_pipeline function");
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	return (new);
 }
 
@@ -63,20 +68,22 @@ int	**allocate_pipe_tab(int	nb)
 	tab = malloc(sizeof(int *) * (nb + 1));
 	if (tab)
 	{
-		i = 0;
-		while (i < nb)
+		i = -1;
+		while (++i < nb)
 		{
 			tab[i] = malloc(sizeof(int) * 2);
 			if (!tab[i])
-				return (deallocate_pipe_tab(tab, i));
-			i++;
+			{
+				deallocate_pipe_tab(tab, i);
+				return (NULL);
+			}
 		}
 		tab[i] = NULL;
 	}
 	return (tab);
 }
 
-void	*deallocate_pipe_tab(int **tab, int nb)
+void	deallocate_pipe_tab(int **tab, int nb)
 {
 	int	i;
 
@@ -91,5 +98,4 @@ void	*deallocate_pipe_tab(int **tab, int nb)
 	}
 	free(tab);
 	tab = NULL;
-	return (NULL);
 }

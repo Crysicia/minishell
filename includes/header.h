@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 18:33:13 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:01:04 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,8 @@ bool	restore_in_and_out(int (*saved)[]);
 
 int		execute_single_command(t_simple_command *commands);
 int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
-void	*deallocate_pipe_tab(int **tab, int nb);
 int		**allocate_pipe_tab(int	nb);
+void	deallocate_pipe_tab(int **tab, int nb);
 int		pipeline_big_loop(t_pipeline *pipeline);
 int		piping_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
@@ -182,7 +182,7 @@ int		test_redirections(void);
 bool	check_syntax_error(t_list *list);
 
 bool	is_space(int c);
-
+bool	ft_is_blank(char *str);
 void	load_heredoc(int fd, char *heredoc_end);
 int		heredoc_routine(int fd, char *heredoc_end);
 
