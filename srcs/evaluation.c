@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 19:41:10 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:43:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ int	evaluation_pass(t_list *list)
 			tmp = tmp->next;
 		else
 			return (-1);
+	}
+	return (0);
+}
+
+int	flag_pipeline(t_pipeline *list)
+{
+	t_list				*node;
+	t_simple_command	*to_flag;
+
+	node = list->commands;
+	while (node)
+	{
+		to_flag = node->content;
+		if (flag_simple_command(to_flag))
+			ft_exit_with_error_msg("error while flagging pipeline");
+		node = node->next;
 	}
 	return (0);
 }
@@ -65,22 +81,6 @@ void	word_flagger(t_token *token)
 				2);
 		}
 	}
-}
-
-int	flag_pipeline(t_pipeline *list)
-{
-	t_list				*node;
-	t_simple_command	*to_flag;
-
-	node = list->commands;
-	while (node)
-	{
-		to_flag = node->content;
-		if (flag_simple_command(to_flag))
-			ft_exit_with_error_msg("error while flagging pipeline");
-		node = node->next;
-	}
-	return (0);
 }
 
 int	flag_redirection(t_list *list)

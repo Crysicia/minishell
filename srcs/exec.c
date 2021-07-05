@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/05 19:11:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:44:58 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,6 @@ void	execute_all_the_commands(t_list *list)
 	}
 }
 
-int	execute_command(char **command)
-{
-	int		pid;
-	char	*path;
-
-	pid = fork();
-	if (pid < 0)
-		display_error("Error", "Could not fork child process");
-	else if (pid == 0)
-	{
-		path = find_exe_path(command[0]);
-		if (!path)
-			return (-1);
-		execve(path, command, list_to_array(g_globals->env));
-	}
-	else
-	{
-		g_globals->current_pid = pid;
-		wait(&g_globals->status);
-		set_status_code(g_globals->status, false);
-		g_globals->current_pid = 0;
-	}
-	return (-2);
-}
-
-// TODO: Fd error management
 int	execute_single_command(t_simple_command *commands)
 {
 	char	**arguments;
@@ -94,3 +68,29 @@ int	execute_single_command(t_simple_command *commands)
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (0);
 }
+
+int	execute_command(char **command)
+{
+	int		pid;
+	char	*path;
+
+	pid = fork();
+	if (pid < 0)
+		display_error("Error", "Could not fork child process");
+	else if (pid == 0)
+	{
+		path = find_exe_path(command[0]);
+		if (!path)
+			return (-1);
+		execve(path, command, list_to_array(g_globals->env));
+	}
+	else
+	{
+		g_globals->current_pid = pid;
+		wait(&g_globals->status);
+		set_status_code(g_globals->status, false);
+		g_globals->current_pid = 0;
+	}
+	return (-2);
+}
+

@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 18:29:58 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:47:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,10 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	t_list	*words;
 	int		fork_ret;
 	int		in_and_out[2];
-//	char	*path;
 
 	words = commands->words;
 	arguments = command_format(words);
 	save_in_and_out(&in_and_out);
-/*
-	path = find_exe_path(arguments[0]);
-	if (!path)
-		display_error(arguments[0], "command not found");
-*/
 	fork_ret = fork();
 	if (fork_ret == -1)
 		display_error("while attempting to fork for pipeline",
@@ -65,23 +59,7 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	else
 		pipe_parent_process_exec(pipe_fd, &in_and_out, fork_ret);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
-//	free(path);
 	return (0);
-}
-
-void	another_error_display(char *argument, char *message)
-{
-	int		i;
-	char	buffer[256];
-	char	*first;
-	
-	ft_bzero(&buffer[0], 256);
-	first = "-Minishell : ";
-	i = ft_strlcpy(&buffer[0], first, ft_strlen(first) + 1);
-	i += ft_strlcpy(&buffer[i - 1], argument, ft_strlen(argument) + 1);
-	i += ft_strlcpy(&buffer[i - 1], " : ", 4);
-	i += ft_strlcpy(& buffer[i - 1], message, ft_strlen(message) + 1);
-	write(2, buffer, ft_strlen(buffer));
 }
 
 void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
