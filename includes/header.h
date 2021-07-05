@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/01 18:28:18 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 18:33:13 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_dict
 }				t_dict;
 
 /* Minishell working */
+
 void	print_prompt(void);
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
@@ -110,6 +111,7 @@ void	*dup_dict(void *dict_ptr);
 int		ft_unsetenv(char *name);
 
 /* Evaluate tokens */
+
 int		flag_simple_command(t_simple_command *list);
 int		flag_pipeline(t_pipeline *list);
 int		flag_redirection(t_list *list);
@@ -133,9 +135,27 @@ bool	is_absolute_path(char *path);
 char	*get_full_path(char *path, char *executable);
 int		set_status_code(int code, bool from_builtin);
 
-/* History utils */
+/* Redirections */
 
-int		add_to_history(char *line);
+int		handle_redirections(t_list *command);
+int		create_file(char *path, char *redirection_type);
+void	apply_redirection(int fd, char *redirection_type);
+bool	save_in_and_out(int (*saved)[]);
+bool	restore_in_and_out(int (*saved)[]);
+
+/* Pipelines */
+
+int		execute_single_command(t_simple_command *commands);
+int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
+void	*deallocate_pipe_tab(int **tab, int nb);
+int		**allocate_pipe_tab(int	nb);
+int		pipeline_big_loop(t_pipeline *pipeline);
+int		piping_loop(t_pipeline *pipeline);
+int		wait_pipeline_end(int pipe_count);
+void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
+								char **arguments);
+void	pipe_parent_process_exec(int pipe_fd[2], int (*in_and_out)[],
+								int fork_ret);
 
 /* Miscellaneous */
 
@@ -160,18 +180,6 @@ void	ft_malloc_error(void);
 void	syntax_error(void);
 int		test_redirections(void);
 bool	check_syntax_error(t_list *list);
-
-int		handle_redirections(t_list *command);
-int		execute_single_command(t_simple_command *commands);
-bool	save_in_and_out(int (*saved)[]);
-bool	restore_in_and_out(int (*saved)[]);
-
-int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
-void	*deallocate_pipe_tab(int **tab, int nb);
-int		**allocate_pipe_tab(int	nb);
-int		pipeline_big_loop(t_pipeline *pipeline);
-int		piping_loop(t_pipeline *pipeline);
-int		wait_pipeline_end(int pipe_count);
 
 bool	is_space(int c);
 

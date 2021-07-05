@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/01 18:49:51 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 16:27:41 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,3 @@ bool	check_if_pipeline(t_simple_command	*command)
 		return (1);
 	return (0);
 }
-/*
-int	get_pipeline_placement(int current, int total)
-{
-	if (current == 0)
-		return (FIRST_IN_PIPELINE);
-	if (current == (total - 1))
-		return (LAST_IN_PIPELINE);
-	return (IN_PIPELINE);
-}
-*/
