@@ -6,54 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/25 17:01:49 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:11:44 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-char	**list_exe_paths(void)
-{
-	t_dict		*path;
-	char		**result;
-
-	path = ft_getenv("PATH");
-	if (!path || !path->value)
-		return (NULL);
-	result = ft_split(path->value, ':');
-	if (!result)
-		return (NULL);
-	else
-		return (result);
-}
-
-char	*find_exe_path(char *command)
-{
-	struct stat	st;
-	char		**path_arr;
-	char		*current_path;
-	char		*result;
-	int			index;
-
-	if (is_path(command))
-		return (command);
-	index = -1;
-	result = NULL;
-	path_arr = list_exe_paths();
-	while (path_arr && path_arr[++index] && !result)
-	{
-		current_path = get_full_path(path_arr[index], command);
-		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))
-			result = current_path;
-		else
-		{
-			free(current_path);
-			current_path = NULL;
-		}
-	}
-	ft_free_matrix((void **)path_arr, ft_matrix_size((void **)path_arr));
-	return (result);
-}
 
 int	set_status_code(int code, bool from_builtin)
 {
@@ -61,6 +18,25 @@ int	set_status_code(int code, bool from_builtin)
 		return (g_globals->status = code);
 	g_globals->status = WEXITSTATUS(code);
 	return (g_globals->status);
+}
+
+void	execute_all_the_commands(t_list *list)
+{
+	t_list		*tmp;
+	t_block		*ptr;
+	int			ret;
+
+	ret = 0;
+	tmp = list;
+	while (tmp && (ret != -1))
+	{
+		ptr = tmp->content;
+		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
+			ret = execute_single_command(ptr->kind.cmd);
+		else if (ptr->id == pipeline)
+			ret = pipeline_big_loop(ptr->kind.pipe);
+		tmp = tmp->next;
+	}
 }
 
 int	execute_command(char **command)

@@ -6,22 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/05 18:59:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:10:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-bool	ft_is_blank(char *str)
-{
-	while (*str)
-	{
-		if (!ft_strchr("\t\n\r\v\f", *str))
-			return (false);
-		str++;
-	}
-	return (true);
-}
 
 void	run_minishell(void)
 {
@@ -47,25 +36,6 @@ void	run_minishell(void)
 		}
 		ft_lstclear(&input_list, free_block);
 		free(input_str);
-	}
-}
-
-void	execute_all_the_commands(t_list *list)
-{
-	t_list		*tmp;
-	t_block		*ptr;
-	int			ret;
-
-	ret = 0;
-	tmp = list;
-	while (tmp && (ret != -1))
-	{
-		ptr = tmp->content;
-		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
-			ret = execute_single_command(ptr->kind.cmd);
-		else if (ptr->id == pipeline)
-			ret = pipeline_big_loop(ptr->kind.pipe);
-		tmp = tmp->next;
 	}
 }
 

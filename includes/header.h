@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 19:01:04 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:18:29 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,45 +70,34 @@ typedef struct s_dict
 	char	*value;
 }				t_dict;
 
-/* Minishell working */
-
 void	print_prompt(void);
+void	run_minishell(void);
+bool	destroy_globals(void);
+bool	init_globals(char *envp[]);
+
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
 
-int		evaluation_pass(t_list *list);
-bool	check_command_syntax(t_list *list);
-void	execute_all_the_commands(t_list *list);
-void	run_minishell(void);
+/* Parsing */
 
-size_t	count_command_words(t_list *list);
-char	**command_format(t_list *list);
 char	*get_command(void);
-
+bool	is_space(int c);
+bool	ft_is_blank(char *str);
 char	*get_word(char **line);
 void	skip_spaces(char **line);
 
-int		change_directory(t_list **env_list, char *new_path);
-int		is_valid_path(char *path);
+/* Execution */
+
+int		evaluation_pass(t_list *list);
+bool	check_command_syntax(t_list *list);
 int		execute_command(char **command);
 int		execve_argument(char **arguments);
+void	execute_all_the_commands(t_list *list);
+size_t	count_command_words(t_list *list);
+char	**command_format(t_list *list);
 
 char	*find_exe_path(char *command);
-bool	is_builtin(char *str);
-
-t_list	*ft_lstnew_safe(void *content, void (*del)(void *));
-t_list	*array_to_list(char **array);
-char	**list_to_array(t_list *list);
-t_dict	*ft_getenv(const char *name);
-bool	destroy_globals(void);
-bool	init_globals(char *envp[]);
-t_dict	*new_dict(char *key, char *value);
-t_dict	*env_to_dict(char *env);
-char	*dict_to_env(t_dict *dict);
-int		ft_setenv(char *name, char *value);
-void	free_dict(void *elem);
-void	*dup_dict(void *dict_ptr);
-int		ft_unsetenv(char *name);
+char	**list_exe_paths(void);
 
 /* Evaluate tokens */
 
@@ -129,17 +118,28 @@ int		builtin_pwd(char **arguments);
 int		builtin_unset(char **arguments);
 int		execute_builtin(char *str, char **arguments);
 
+bool	is_builtin(char *str);
 bool	is_env_valid(char *env, bool can_contain_eq);
 bool	is_path(char *path);
+int		is_valid_path(char *path);
 bool	is_absolute_path(char *path);
 char	*get_full_path(char *path, char *executable);
 int		set_status_code(int code, bool from_builtin);
+
+int		change_directory(t_list **env_list, char *new_path);
+t_dict	*env_to_dict(char *env);
+char	*dict_to_env(t_dict *dict);
+t_dict	*ft_getenv(const char *name);
+int		ft_setenv(char *name, char *value);
+int		ft_unsetenv(char *name);
 
 /* Redirections */
 
 int		handle_redirections(t_list *command);
 int		create_file(char *path, char *redirection_type);
 void	apply_redirection(int fd, char *redirection_type);
+void	load_heredoc(int fd, char *heredoc_end);
+int		heredoc_routine(int fd, char *heredoc_end);
 bool	save_in_and_out(int (*saved)[]);
 bool	restore_in_and_out(int (*saved)[]);
 
@@ -161,7 +161,13 @@ void	pipe_parent_process_exec(int pipe_fd[2], int (*in_and_out)[],
 
 bool	check_bash_c_option(char *argv);
 int		bash_c_option(char *argv);
-void	do_parent_process_stuff(int pid);
+
+t_list	*ft_lstnew_safe(void *content, void (*del)(void *));
+t_list	*array_to_list(char **array);
+char	**list_to_array(t_list *list);
+t_dict	*new_dict(char *key, char *value);
+void	free_dict(void *elem);
+void	*dup_dict(void *dict_ptr);
 
 void	ft_exit_with_error_msg(char *msg);
 void	ft_exit(void);
@@ -180,10 +186,5 @@ void	ft_malloc_error(void);
 void	syntax_error(void);
 int		test_redirections(void);
 bool	check_syntax_error(t_list *list);
-
-bool	is_space(int c);
-bool	ft_is_blank(char *str);
-void	load_heredoc(int fd, char *heredoc_end);
-int		heredoc_routine(int fd, char *heredoc_end);
 
 #endif
