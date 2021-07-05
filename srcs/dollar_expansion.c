@@ -6,12 +6,28 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/01 16:39:16 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/05 11:24:07 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include "flag.h"
+
+int	expand_text(char *buffer, char *str)
+{
+	while (*str)
+	{
+		if (*str == '$')
+			expand_env_variable(&str, &buffer);
+		else if (*str == '\'')
+			copy_simple_quoted_text(&str, &buffer);
+		else if (*str == '"')
+			copy_double_quoted_text(&str, &buffer);
+		else
+			*buffer++ = *str++;
+	}
+	return (0);
+}
 
 char	*get_variable_name(char **str)
 {

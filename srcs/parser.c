@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/01 19:14:07 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/02 09:12:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	parse_simple_command(t_block *dst, char **line)
 	t_simple_command	*new;
 	t_token				*token;
 
-	dprintf(2, "simple command parsing\n");
 	new = new_simple_command();
 	if (!new)
 		return (ERR_MALLOC_FAILED);
@@ -105,14 +104,12 @@ int	parse_pipeline_command(t_block *block, char **line)
 	t_block				tmp;
 	t_list				*node;
 
-	dprintf(2, "call to pipeline parse\n");
 	new = new_pipeline(block->kind.cmd);
 	if (!new)
 		return (ERR_MALLOC_FAILED);
 	command = block->kind.cmd;
 	while (check_if_pipeline(command))
 	{
-		dprintf(2, "pipeline found\n");
 		parse_simple_command(&tmp, line);
 		command = tmp.kind.cmd;
 		node = ft_lstnew(command);
@@ -121,6 +118,6 @@ int	parse_pipeline_command(t_block *block, char **line)
 		ft_lstadd_back(&new->commands, node);
 		new->pipe_count += 1;
 	}
-xc	block->kind.pipe = new;
+	block->kind.pipe = new;
 	return (0);
 }

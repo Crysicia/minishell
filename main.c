@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/01 18:41:27 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/02 09:13:02 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	run_minishell(void)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, handle_sigquit);
-		input_str = readline("minishell: ");
+		input_str = readline("Minishell: ");
 		if (!input_str)
 			ft_exit();
 		if (!ft_is_blank(input_str))
@@ -62,15 +62,9 @@ void	execute_all_the_commands(t_list *list)
 	{
 		ptr = tmp->content;
 		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
-		{
-			print_simple_command_node(ptr->kind.cmd);
 			ret = execute_single_command(ptr->kind.cmd);
-		}
 		else if (ptr->id == pipeline)
-		{
-			print_pipeline(ptr->kind.pipe);
-			ret = piping_loop(ptr->kind.pipe);
-		}
+			ret = pipeline_big_loop(ptr->kind.pipe);
 		tmp = tmp->next;
 	}
 }
