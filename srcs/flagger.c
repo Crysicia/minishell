@@ -6,13 +6,33 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 19:42:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:52:31 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include "flag.h"
 #include "../libft/libft.h"
+
+int	check_quoting(char *word)
+{
+	int		flag;
+
+	flag = 0;
+	while (word && *word)
+	{
+		if ((*word == '\'') || (*word == '\"'))
+		{
+			word = flag_next_quote(*word, &flag, word + 1);
+//			update_flag_count(&flag)
+		}
+		if (word)
+			word++;
+		else
+			return (0);
+	}
+	return (flag);
+}
 
 char	*flag_next_quote(char quote, int *flagged, char *word)
 {
@@ -31,30 +51,6 @@ char	*flag_next_quote(char quote, int *flagged, char *word)
 	}
 	else
 		return (NULL);
-}
-
-int	check_quoting(char *word)
-{
-	int		flag;
-	int		quote_count;
-
-	flag = 0;
-	quote_count = 0;
-	while (word && *word)
-	{
-		if ((*word == '\'') || (*word == '\"'))
-		{
-			word = flag_next_quote(*word, &flag, word + 1);
-			update_flag_count(&flag, &quote_count);
-		}
-		if (word)
-			word++;
-		else
-			return (QUOTING_ERROR);
-	}
-	if (quote_count >= 2)
-		flag = MIXED_QUOTES;
-	return (flag);
 }
 
 void	update_flag_count(int *flag, int *count)

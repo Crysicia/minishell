@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 12:48:51 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:29:55 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:37:04 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@
 
 int		check_quoting(char *word);
 void	update_flag_count(int *flag, int *count);
-
+char	*flag_next_quote(char quote, int *flagged, char *word);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 19:43:19 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:52:41 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ int	flag_simple_command(t_simple_command *list)
 	{
 		token = tmp->content;
 		word_flagger(token);
-		if (token->flag != QUOTING_ERROR)
+		if (token->flag)
 			remove_mixed_quotes(token);
-		else
-			return (-1);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -73,14 +71,7 @@ int	flag_simple_command(t_simple_command *list)
 void	word_flagger(t_token *token)
 {
 	if (token->role == word)
-	{
 		token->flag = check_quoting(token->cmd);
-		if (token->flag == QUOTING_ERROR)
-		{
-			ft_putendl_fd("Minishell: error: quotes were not closed properly",
-				2);
-		}
-	}
 }
 
 int	flag_redirection(t_list *list)
