@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 19:47:16 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:23:02 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	char	**arguments;
 	t_list	*words;
 	int		fork_ret;
-	int		in_and_out[2];
 
 	words = commands->words;
 	arguments = command_format(words);
-	save_in_and_out(&in_and_out);
 	fork_ret = fork();
 	if (fork_ret == -1)
 		display_error("while attempting to fork for pipeline",
@@ -57,7 +55,7 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	else if (!fork_ret)
 		pipe_child_process_exec(pipe_fd, commands, arguments);
 	else
-		pipe_parent_process_exec(pipe_fd, &in_and_out, fork_ret);
+		pipe_parent_process_exec(pipe_fd, fork_ret);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (0);
 }
@@ -89,15 +87,13 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 	}
 }
 
-void	pipe_parent_process_exec(int pipe_fd[2], int (*in_and_out)[],
-		int fork_ret)
+void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
 {
 	if (pipe_fd)
 		close(pipe_fd[1]);
 	g_globals->current_pid = fork_ret;
 	set_status_code(g_globals->status, false);
 	g_globals->current_pid = 0;
-	restore_in_and_out(in_and_out);
 }
 
 int	wait_pipeline_end(int pipe_count)
