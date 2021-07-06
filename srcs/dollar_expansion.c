@@ -6,27 +6,32 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 11:24:07 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/06 19:16:09 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include "flag.h"
 
-int	expand_text(char *buffer, char *str)
+char	*expand_text(char *str)
 {
+	char	*buffer;
+
+	buffer = ft_strdup("");
+	if (!buffer)
+		display_error(MSG_MALLOC_FAILED, NULL);
 	while (*str)
 	{
 		if (*str == '$')
 			expand_env_variable(&str, &buffer);
 		else if (*str == '\'')
 			copy_simple_quoted_text(&str, &buffer);
-		else if (*str == '"')
-			copy_double_quoted_text(&str, &buffer);
+//		else if (*str == '"')
+//			copy_double_quoted_text(&str, &buffer);
 		else
-			*buffer++ = *str++;
+			copy_unquoted_text(&str, &buffer);
 	}
-	return (0);
+	return (buffer);
 }
 
 char	*get_variable_name(char **str)
@@ -57,15 +62,17 @@ void	expand_env_variable(char **str, char **buffer)
 {
 	t_dict	*env_var;
 	char	*name;
+	char	*tmp;
 
 	name = get_variable_name(str);
 	if (name && *name)
 	{
 		env_var = ft_getenv(name);
-		if (env_var)
+		if (env_var && *buffer)
 		{
-			ft_strlcpy(*buffer, env_var->value, ft_strlen(env_var->value) + 1);
-			*buffer += ft_strlen(env_var->value);
+			tmp = ft_strjoin(*buffer, env_var->value);
+			free(*buffer);
+			*buffer = tmp;
 		}
 	}
 	else if (**str == '?')

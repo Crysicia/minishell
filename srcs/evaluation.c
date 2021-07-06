@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 16:52:41 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/06 19:31:54 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,31 +63,25 @@ int	flag_simple_command(t_simple_command *list)
 		word_flagger(token);
 		if (token->flag)
 			remove_mixed_quotes(token);
+		puts("flag simple command ok");
 		tmp = tmp->next;
 	}
 	return (0);
-}
-
-void	word_flagger(t_token *token)
-{
-	if (token->role == word)
-		token->flag = check_quoting(token->cmd);
 }
 
 int	flag_redirection(t_list *list)
 {
 	t_redirection	*redir;
 	t_list			*node;
-	char			buffer[1024];
-
+	char			*expanded_str;
+	
 	node = list;
 	while (node)
 	{
-		ft_bzero(buffer, 1024);
 		redir = node->content;
 		word_flagger(redir->file);
-		expand_text(buffer, redir->file->cmd);
-		if (!*buffer)
+		expanded_str = expand_text(redir->file->cmd);
+		if (!*expanded_str)
 		{
 			display_error(redir->file->cmd, "Ambiguous redirect");
 			return (1);
@@ -95,7 +89,7 @@ int	flag_redirection(t_list *list)
 		else
 		{
 			free(redir->file->cmd);
-			redir->file->cmd = ft_strdup(buffer);
+			redir->file->cmd = ft_strdup(expanded_str);
 		}
 		node = node->next;
 	}

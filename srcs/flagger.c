@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 16:52:31 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/06 19:40:23 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,28 @@
 #include "flag.h"
 #include "../libft/libft.h"
 
-int	check_quoting(char *word)
+
+void	word_flagger(t_token *token)
 {
+	if (token->role == word)
+		token->flag = check_quoting(token->cmd);
+	if (!token->flag)
+		token->flag = flag_expansion(token->cmd);
+}
+
+int	check_quoting(char *token_str)
+{
+	char	*word;
 	int		flag;
 
 	flag = 0;
+	word = token_str;
 	while (word && *word)
 	{
 		if ((*word == '\'') || (*word == '\"'))
-		{
 			word = flag_next_quote(*word, &flag, word + 1);
-//			update_flag_count(&flag)
-		}
+		else
+			word++;
 		if (word)
 			word++;
 		else
@@ -53,13 +63,17 @@ char	*flag_next_quote(char quote, int *flagged, char *word)
 		return (NULL);
 }
 
-void	update_flag_count(int *flag, int *count)
+int	flag_expansion(char *token_str)
 {
-	if (!(*count) && (*flag))
-		*count += 1;
-	else if ((*count) && (*flag))
+	char	*word;
+
+	word = token_str;
+	while (word && *word)
 	{
-		*count += 1;
-		*flag = 0;
+		if (*word == '$')
+			return (TO_EXPAND);
+		else
+			word++;
 	}
+	return (0);
 }

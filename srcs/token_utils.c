@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:16:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 20:29:16 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/06 19:43:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	is_escape_character(char chr)
 
 bool	is_operator(char *str)
 {
-	if ((!*str) || (*str == '|'))
+	if (*str == '|')
 		return (1);
 	else
 		return (0);
