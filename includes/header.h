@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/07 11:37:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/07 14:47:32 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ char	*dict_to_env(t_dict *dict);
 t_dict	*ft_getenv(const char *name);
 int		ft_setenv(char *name, char *value);
 int		ft_unsetenv(char *name);
+void	copy_env_var_to_buffer(char **str, char *buffer);
 
 /* Redirections */
 

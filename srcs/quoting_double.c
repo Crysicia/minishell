@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 11:10:21 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/07 12:17:22 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/07 14:43:36 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,35 @@
 
 void	copy_double_quoted_text(char **str, char **buffer)
 {
-	int		i;
-
-	*str += 1; //moving over opening quote
-	i = count_expanded_len(*str);
-	printf("len in double quoted is [%d]\n", i);
+	char	*expanded;
+	char	*swap;
+	char	*start;
+	
+	*str += 1; //moving over opening quot
+	expanded = ft_calloc(count_expanded_len(*str) + 1, sizeof(char));
+	if (!expanded)
+		display_error(MSG_MALLOC_FAILED, NULL);
+	start = expanded;
 	while (**str && **str != '"')
-		*str += 1;
+	{
+		if (**str == '$')
+		{
+			copy_env_var_to_buffer(str, expanded);
+			while (*expanded)
+				expanded++;
+		}
+		else
+		{
+			*expanded = **str;
+			*str += 1;
+			expanded++;
+		}
+	}
+	swap = ft_strjoin(*buffer, start);
+	free(*buffer);
+	free(start);
+	*buffer = swap;
 	*str += 1;
-	(void)buffer;
 }
 
 char	*get_variable_name2(char *str)
@@ -61,9 +81,36 @@ int	count_expanded_len(char *str)
 				}
 				free(name);
 			}
+			else
+				display_error(MSG_MALLOC_FAILED, NULL);
 		}
 		i++;
 		len++;
 	}
 	return (len);
+}
+
+void	copy_env_var_to_buffer(char **str, char *buffer)
+{
+	char	*var_name;
+	t_dict	*env_var;
+	char	*to_copy;
+
+	var_name = get_variable_name(str);
+	if (var_name)
+	{
+		env_var = ft_getenv(var_name);
+		if (env_var)
+		{
+			to_copy = env_var->value;
+			while (*to_copy)
+			{
+				*buffer = *to_copy;
+				to_copy++;
+				buffer++;
+			}
+			*buffer = 0;
+		}
+		free(var_name);
+	}
 }
