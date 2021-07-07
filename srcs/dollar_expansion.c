@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 19:16:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/07 11:59:29 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,22 @@ char	*expand_text(char *str)
 {
 	char	*buffer;
 
+	puts("test");
 	buffer = ft_strdup("");
 	if (!buffer)
 		display_error(MSG_MALLOC_FAILED, NULL);
 	while (*str)
 	{
+		puts(str);
 		if (*str == '$')
 			expand_env_variable(&str, &buffer);
 		else if (*str == '\'')
 			copy_simple_quoted_text(&str, &buffer);
-//		else if (*str == '"')
-//			copy_double_quoted_text(&str, &buffer);
+		else if (*str == '"')
+		{
+			puts("before copy dq");
+			copy_double_quoted_text(&str, &buffer);
+		}
 		else
 			copy_unquoted_text(&str, &buffer);
 	}
@@ -40,6 +45,7 @@ char	*get_variable_name(char **str)
 	size_t	index;
 
 	index = 1;
+
 	while (*(*str + index) && ft_isalnum(*(*str + index)))
 		index++;
 	var_name = ft_strndup(*str + 1, index - 1);

@@ -6,14 +6,13 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 19:40:23 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/07 10:57:46 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include "flag.h"
 #include "../libft/libft.h"
-
 
 void	word_flagger(t_token *token)
 {
