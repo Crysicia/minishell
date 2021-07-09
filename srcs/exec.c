@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/05 19:44:58 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/09 14:36:49 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	execute_single_command(t_simple_command *commands)
 		execute_command(arguments);
 	}
 	else
-		printf("-Minishell: %s: command not found\n", arguments[0]);
+		display_error(arguments[0], "command not found");
 	restore_in_and_out(&in_and_out);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (0);
@@ -93,4 +93,3 @@ int	execute_command(char **command)
 	}
 	return (-2);
 }
-
