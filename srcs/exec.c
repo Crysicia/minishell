@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/09 14:36:49 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:03:38 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int	execute_single_command(t_simple_command *commands)
 	if (handle_redirections(commands->redirections))
 		return (1);
 	if (is_builtin(arguments[0]))
-		set_status_code(execute_builtin(arguments[0], &arguments[1]),
-			true);
+		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
 	else if (path)
 	{
 		free(path);

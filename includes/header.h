@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/07 14:47:32 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:06:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int		flag_redirection(t_list *list);
 int		copy_quoted_string(char quote, char *str, char *buffer);
 void	copy_double_quoted_text(char **str, char **buffer);
 int		count_expanded_len(char *str);
+void	copying_loop(char **str, char *expanded);
+char	*get_variable_name_and_add_len(char *str, int *i, int *len);
 
 /* Variable expansion */
 
@@ -161,7 +163,7 @@ int		pipeline_big_loop(t_pipeline *pipeline);
 int		piping_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
 void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
-								char **arguments);
+			char **arguments);
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret);
 
 /* Miscellaneous */

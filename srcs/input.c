@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 19:10:49 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:05:40 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_sigint(int signal)
 		print_prompt();
 }
 
-void handle_sigquit(int signal)
+void	handle_sigquit(int signal)
 {
 	if (g_globals->current_pid)
 		kill(g_globals->current_pid, signal);

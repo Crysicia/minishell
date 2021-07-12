@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/07 10:49:47 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:05:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	flag_redirection(t_list *list)
 	t_redirection	*redir;
 	t_list			*node;
 	char			*expanded_str;
-	
+
 	node = list;
 	while (node)
 	{

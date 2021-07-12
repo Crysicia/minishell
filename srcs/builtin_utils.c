@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 12:31:24 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/05 19:25:51 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 12:38:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	display_error(char *command, char *custom)
 	int		i;
 	char	buffer[256];
 	char	*first;
-	
+
 	ft_bzero(&buffer[0], 256);
 	first = "minishell:  ";
 	i = ft_strlcpy(&buffer[0], first, ft_strlen(first) + 1);

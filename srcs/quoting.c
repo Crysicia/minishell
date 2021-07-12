@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 19:35:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/07 11:10:35 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 12:36:32 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	copy_unquoted_text(char **str, char **buffer)
 
 	i = 0;
 	while (*(*str + i) && (*(*str + i) != '\'')
-			&& (*(*str + i) != '"') && (*(*str + i) != '$'))
+		&& (*(*str + i) != '"') && (*(*str + i) != '$'))
 		i++;
 	quote = *(*str + i);
 	*(*str + i) = 0;

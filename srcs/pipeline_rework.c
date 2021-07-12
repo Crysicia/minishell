@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 16:23:02 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:04:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	fork_ret = fork();
 	if (fork_ret == -1)
 		display_error("while attempting to fork for pipeline",
-						strerror(errno));
+			strerror(errno));
 	else if (!fork_ret)
 		pipe_child_process_exec(pipe_fd, commands, arguments);
 	else
