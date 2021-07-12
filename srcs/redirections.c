@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/05 18:33:15 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:55:54 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ int	handle_redirections(t_list *command)
 				redirection->operator->cmd);
 		if (redirection->fd == -1)
 			return (1);
-		node = node->next;
-	}
-	node = command;
-	while (node)
-	{
-		redirection = node->content;
-		apply_redirection(redirection->fd, redirection->operator->cmd);
 		node = node->next;
 	}
 	return (0);
@@ -64,8 +57,15 @@ int	create_file(char *path, char *redirection_type)
 
 void	apply_redirection(int fd, char *redirection_type)
 {
+	int tmp;
+	
 	if (!ft_strcmp(redirection_type, "<") || !ft_strcmp(redirection_type, "<<"))
-		dup2(fd, STDIN_FILENO);
+	{
+		tmp  = dup2(fd, STDIN_FILENO);
+		if (tmp < 0)
+			dprintf(2, "dup2 error\n");
+		dprintf(2, "new fd value = [%d]\n", tmp);
+	}
 	else
 		dup2(fd, STDOUT_FILENO);
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/12 13:04:53 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:50:51 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 		close(pipe_fd[0]);
 	}
 	if (commands->redirections)
+	{
 		handle_redirections(commands->redirections);
+		apply_all_redirections(commands->redirections);
+	}
 	if (is_builtin(arguments[0]))
 	{
 		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);

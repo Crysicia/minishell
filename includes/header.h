@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/12 13:06:19 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:51:44 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	copy_env_var_to_buffer(char **str, char *buffer);
 /* Redirections */
 
 int		handle_redirections(t_list *command);
+int		apply_all_redirections(t_list *command);
 int		create_file(char *path, char *redirection_type);
 void	apply_redirection(int fd, char *redirection_type);
 void	load_heredoc(int fd, char *heredoc_end);

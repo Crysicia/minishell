@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 17:54:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:59:15 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,32 @@ void	execute_all_the_commands(t_list *list)
 	while (tmp && (ret != -1))
 	{
 		ptr = tmp->content;
-		if ((ptr->id == simple_command) || (ptr->id == only_redirections))
+		if (ptr->id == simple_command)
 			ret = execute_single_command(ptr->kind.cmd);
+		else if (ptr->id == only_redirections)
+		{
+			dprintf(2, "i saw only redir\n");
+			ret = execute_single_command(ptr->kind.cmd);
+		}
 		else if (ptr->id == pipeline)
 			ret = pipeline_big_loop(ptr->kind.pipe);
 		tmp = tmp->next;
 	}
+}
+
+int	apply_all_redirections(t_list *command)
+{
+	t_redirection	*redirection;
+	t_list			*node;
+
+	node = command;
+	while (node)
+	{
+		redirection = node->content;
+		apply_redirection(redirection->fd, redirection->operator->cmd);
+		node = node->next;
+	}
+	return (0);
 }
 
 int	execute_single_command(t_simple_command *commands)
@@ -46,15 +66,18 @@ int	execute_single_command(t_simple_command *commands)
 	int		in_and_out[2];
 	char	*path;
 
+	save_in_and_out(&in_and_out);
+	if (handle_redirections(commands->redirections))
+		return (1);
 	words = commands->words;
 	if (words)
 		arguments = command_format(words);
+	else
+		return (2);
 	if (!arguments)
 		return (2);
-	save_in_and_out(&in_and_out);
+	apply_all_redirections(commands->redirections);
 	path = find_exe_path(arguments[0]);
-	if (handle_redirections(commands->redirections))
-		return (1);
 	if (is_builtin(arguments[0]))
 		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
 	else if (path)
