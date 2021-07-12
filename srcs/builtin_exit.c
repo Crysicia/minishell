@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crysicia <crysicia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:47:07 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/28 12:38:08 by crysicia         ###   ########.fr       */
+/*   Updated: 2021/07/01 16:59:12 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,19 @@ int	exit_error(char *argument, char *message, int code)
 	return (ERR_BUILTIN_FAILED);
 }
 
+void clean_exit(void)
+{
+	int status;
+
+	status = g_globals->status;
+	destroy_globals();
+	exit(status);
+}
+
 int	builtin_exit(char **arguments)
 {
 	if (!arguments || !*arguments)
-		exit(g_globals->status);
+		clean_exit();
 	else
 	{
 		if (!ft_are_all_numeric(*arguments))
@@ -54,6 +63,6 @@ int	builtin_exit(char **arguments)
 		else
 			g_globals->status = ft_atoi(*arguments);
 	}
-	exit(g_globals->status);
+	clean_exit();
 	return (g_globals->status);
 }
