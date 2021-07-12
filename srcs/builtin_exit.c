@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:47:07 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/01 16:59:12 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:25:32 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	exit_error(char *argument, char *message, int code)
 	return (ERR_BUILTIN_FAILED);
 }
 
-void clean_exit(void)
+void	clean_exit(void)
 {
-	int status;
+	int	status;
 
 	status = g_globals->status;
 	destroy_globals();
