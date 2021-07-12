@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/26 15:55:51 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/12 19:09:25 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 	t_token	*tok;
 
 	tok = cmd->words->content;
-	if (tok->role == operator)
+	if (tok && tok->role == operator)
 	{
 		parser_error(tok);
 		return (true);
