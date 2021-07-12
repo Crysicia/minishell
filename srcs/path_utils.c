@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 10:09:55 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 18:03:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 19:58:25 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ char	*find_exe_path(char *command)
 	if (is_path(command))
 	{
 		if ((stat(command, &st) == 0) && (st.st_mode & S_IXUSR & S_IFREG))
-		{
 			return (command);
-		}
 		return (NULL);
 	}
 	index = -1;
@@ -37,10 +35,7 @@ char	*find_exe_path(char *command)
 		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))
 			result = current_path;
 		else
-		{
 			free(current_path);
-			current_path = NULL;
-		}
 	}
 	ft_free_matrix((void **)path_arr, ft_matrix_size((void **)path_arr));
 	return (result);

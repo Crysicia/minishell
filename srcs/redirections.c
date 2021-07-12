@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 18:55:54 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 20:05:43 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,44 +57,34 @@ int	create_file(char *path, char *redirection_type)
 
 void	apply_redirection(int fd, char *redirection_type)
 {
-	int tmp;
-	
+	int	tmp;
+
 	if (!ft_strcmp(redirection_type, "<") || !ft_strcmp(redirection_type, "<<"))
 	{
-		tmp  = dup2(fd, STDIN_FILENO);
+		tmp = dup2(fd, STDIN_FILENO);
 		if (tmp < 0)
-			dprintf(2, "dup2 error\n");
-		dprintf(2, "new fd value = [%d]\n", tmp);
+			display_error(strerror(errno), NULL);
 	}
 	else
-		dup2(fd, STDOUT_FILENO);
+	{
+		tmp = dup2(fd, STDOUT_FILENO);
+		if (tmp < 0)
+			display_error(strerror(errno), NULL);
+	}
 	close(fd);
 }
 
-bool	save_in_and_out(int (*saved)[])
+int	apply_all_redirections(t_list *command)
 {
-	ft_bzero(*saved, 2 * sizeof(int));
-	(*saved)[0] = dup(STDOUT_FILENO);
-	if ((*saved)[0] == -1)
-		return (false);
-	(*saved)[1] = dup(STDIN_FILENO);
-	if ((*saved)[1] == -1)
+	t_redirection	*redirection;
+	t_list			*node;
+
+	node = command;
+	while (node)
 	{
-		close((*saved)[0]);
-		return (false);
+		redirection = node->content;
+		apply_redirection(redirection->fd, redirection->operator->cmd);
+		node = node->next;
 	}
-	return (true);
-}
-
-bool	restore_in_and_out(int (*saved)[])
-{
-	bool	ret;
-
-	ret = true;
-	if (dup2((*saved)[0], STDOUT_FILENO) == -1
-			|| dup2((*saved)[1], STDIN_FILENO) == -1)
-		ret = false;
-	close((*saved)[0]);
-	close((*saved)[1]);
-	return (ret);
+	return (0);
 }

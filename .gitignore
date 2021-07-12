@@ -7,7 +7,7 @@ criterion/
 Criterion
 debug
 trash/
-Minishell
+minishell
 .vscode/
 testing
 a.out

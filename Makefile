@@ -8,7 +8,7 @@ HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
 LIBS			= -Llibft -lft -lreadline
 LIBFT 			= libft/libft.a
-NAME			= Minishell
+NAME			= minishell
 
 RST				= "\e[0m"
 RED				= "\e[31m"
@@ -31,6 +31,7 @@ RAW_SRCS		= bash_c_option.c \
 				  error.c \
 				  evaluation.c \
 				  exec.c \
+				  exec_utils.c \
 				  exec_builtin.c \
 				  flagger.c \
 				  ft_exit.c \
@@ -90,9 +91,9 @@ TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@echo $(GREEN)"Compiling Minishell executable ..."$(RST)
+	@echo $(GREEN)"Compiling minishell executable ..."$(RST)
 	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
-	@echo $(GREEN)"Minishell is ready !\nEnter \"./Minishell\" for execution."$(RST)
+	@echo $(GREEN)"Minishell is ready !\nEnter \"./minishell\" for execution."$(RST)
 
 $(LIBFT):
 	@echo $(GREEN)"Compiling libft ..."$(RST)
