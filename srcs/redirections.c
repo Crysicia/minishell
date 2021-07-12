@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 20:05:43 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 20:08:22 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ int	create_file(char *path, char *redirection_type)
 	return (fd);
 }
 
+int	apply_all_redirections(t_list *command)
+{
+	t_redirection	*redirection;
+	t_list			*node;
+
+	node = command;
+	while (node)
+	{
+		redirection = node->content;
+		apply_redirection(redirection->fd, redirection->operator->cmd);
+		node = node->next;
+	}
+	return (0);
+}
+
 void	apply_redirection(int fd, char *redirection_type)
 {
 	int	tmp;
@@ -72,19 +87,4 @@ void	apply_redirection(int fd, char *redirection_type)
 			display_error(strerror(errno), NULL);
 	}
 	close(fd);
-}
-
-int	apply_all_redirections(t_list *command)
-{
-	t_redirection	*redirection;
-	t_list			*node;
-
-	node = command;
-	while (node)
-	{
-		redirection = node->content;
-		apply_redirection(redirection->fd, redirection->operator->cmd);
-		node = node->next;
-	}
-	return (0);
 }
