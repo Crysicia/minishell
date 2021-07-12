@@ -1,1 +1,1 @@
-export USER=lpassera | echo $USER
+echo $USER
