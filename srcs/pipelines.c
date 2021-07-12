@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/05 18:49:16 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:16:25 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ int	**allocate_pipe_tab(int	nb)
 	int	i;
 	int	**tab;
 
-	if (nb > 255)
-		return (NULL);
 	tab = malloc(sizeof(int *) * (nb + 1));
 	if (tab)
 	{

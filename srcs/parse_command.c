@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/12 17:41:53 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:12:51 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	**command_format(t_list *list)
 	if (check_command_syntax(list))
 	{
 		index = count_command_words(list);
-		dprintf(2, "index = %ld\n", index);
 		tab = malloc((index + 1) * sizeof(char **));
 		if (!tab)
 			ft_malloc_error();
