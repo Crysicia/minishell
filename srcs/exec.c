@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 20:04:41 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 20:14:44 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ char	**prepare_command_and_do_redirections(t_simple_command *commands)
 	t_list	*words;
 	char **arguments;
 
-	if (handle_redirections(commands->redirections))
-		return (NULL);
+	handle_redirections(commands->redirections);
 	words = commands->words;
 	if (words)
 		arguments = command_format(words);
@@ -65,6 +64,8 @@ int	execute_single_command(t_simple_command *commands)
 
 	save_in_and_out(&in_and_out);
 	arguments = prepare_command_and_do_redirections(commands);
+	if (!arguments)
+		return (1);
 	path = find_exe_path(arguments[0]);
 	if (is_builtin(arguments[0]))
 		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
