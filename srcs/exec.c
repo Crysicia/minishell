@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 13:03:38 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 17:54:55 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ void	execute_all_the_commands(t_list *list)
 int	execute_single_command(t_simple_command *commands)
 {
 	char	**arguments;
-	t_list	words;
+	t_list	*words;
 	int		in_and_out[2];
 	char	*path;
 
-	words = *commands->words;
-	arguments = command_format(&words);
+	words = commands->words;
+	if (words)
+		arguments = command_format(words);
 	if (!arguments)
 		return (2);
 	save_in_and_out(&in_and_out);
@@ -82,6 +83,7 @@ int	execute_command(char **command)
 		if (!path)
 			return (-1);
 		execve(path, command, list_to_array(g_globals->env));
+		exit(1);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/29 16:21:18 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/12 17:35:56 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	builtin_export(char **arguments)
 		return (display_export());
 	while (*arguments && (ret == SUCCESS || ret == ERR_BUILTIN_FAILED))
 	{
+		dprintf(2, "[%s]\n", *arguments);
 		if (is_env_valid(*arguments, true))
 		{
 			dict = env_to_dict(*arguments);

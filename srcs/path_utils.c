@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 10:09:55 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/05 19:26:41 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:03:08 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ char	*find_exe_path(char *command)
 	int			index;
 
 	if (is_path(command))
-		return (command);
+	{
+		if ((stat(command, &st) == 0) && (st.st_mode & S_IXUSR & S_IFREG))
+		{
+			return (command);
+		}
+		return (NULL);
+	}
 	index = -1;
 	result = NULL;
 	path_arr = list_exe_paths();
