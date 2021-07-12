@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/01 16:16:58 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:05:40 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_sigint(int signal)
 		print_prompt();
 }
 
-void handle_sigquit(int signal)
+void	handle_sigquit(int signal)
 {
 	if (g_globals->current_pid)
 	{
@@ -46,4 +46,15 @@ void	skip_spaces(char **line)
 {
 	while (line && *line && (**line == ' ' || **line == '\t'))
 		*line += 1;
+}
+
+bool	ft_is_blank(char *str)
+{
+	while (*str)
+	{
+		if (!ft_strchr("\t\n\r\v\f", *str))
+			return (false);
+		str++;
+	}
+	return (true);
 }

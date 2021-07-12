@@ -6,11 +6,38 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/24 12:32:24 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/05 18:33:15 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+int	handle_redirections(t_list *command)
+{
+	t_redirection	*redirection;
+	t_list			*node;
+
+	if (flag_redirection(command))
+		return (1);
+	node = command;
+	while (node)
+	{
+		redirection = node->content;
+		redirection->fd = create_file(redirection->file->cmd,
+				redirection->operator->cmd);
+		if (redirection->fd == -1)
+			return (1);
+		node = node->next;
+	}
+	node = command;
+	while (node)
+	{
+		redirection = node->content;
+		apply_redirection(redirection->fd, redirection->operator->cmd);
+		node = node->next;
+	}
+	return (0);
+}
 
 int	create_file(char *path, char *redirection_type)
 {
@@ -42,33 +69,6 @@ void	apply_redirection(int fd, char *redirection_type)
 	else
 		dup2(fd, STDOUT_FILENO);
 	close(fd);
-}
-
-int	handle_redirections(t_list *command)
-{
-	t_redirection	*redirection;
-	t_list			*node;
-
-	if (flag_redirection(command))
-		return (1);
-	node = command;
-	while (node)
-	{
-		redirection = node->content;
-		redirection->fd = create_file(redirection->file->cmd,
-				redirection->operator->cmd);
-		if (redirection->fd == -1)
-			return (1);
-		node = node->next;
-	}
-	node = command;
-	while (node)
-	{
-		redirection = node->content;
-		apply_redirection(redirection->fd, redirection->operator->cmd);
-		node = node->next;
-	}
-	return (0);
 }
 
 bool	save_in_and_out(int (*saved)[])

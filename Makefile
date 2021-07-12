@@ -43,16 +43,14 @@ RAW_SRCS		= bash_c_option.c \
 				  parser_utils.c \
 				  path_utils.c \
 				  redirections.c \
-				  pipeline.c \
 				  pipeline_rework.c \
 				  pipelines.c \
 				  print_debug.c \
 				  quoting.c \
+				  quoting_double.c \
 				  token.c \
 				  token_fcts.c \
 				  token_utils.c \
-				  pipes_utils.c \
-				  pipes_utils2.c \
 				  get_next_line.c \
 				  get_next_line_utils.c
 
@@ -87,7 +85,7 @@ TEST_SRCS		= $(addprefix tests/,$(TEST_RAW_SRCS))
 TEST_OBJS 		= $(TEST_SRCS:.c=.o)
 
 .c.o:
-	$(CC) $(CFLAGS) $(HEADERS) $(LIBS) -g -c $< -o $@
+	@$(CC) $(CFLAGS) $(HEADERS) $(LIBS) -g -c $< -o $@
 
 all: $(NAME)
 

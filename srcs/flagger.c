@@ -6,13 +6,42 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 19:42:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/07 10:57:46 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include "flag.h"
 #include "../libft/libft.h"
+
+void	word_flagger(t_token *token)
+{
+	if (token->role == word)
+		token->flag = check_quoting(token->cmd);
+	if (!token->flag)
+		token->flag = flag_expansion(token->cmd);
+}
+
+int	check_quoting(char *token_str)
+{
+	char	*word;
+	int		flag;
+
+	flag = 0;
+	word = token_str;
+	while (word && *word)
+	{
+		if ((*word == '\'') || (*word == '\"'))
+			word = flag_next_quote(*word, &flag, word + 1);
+		else
+			word++;
+		if (word)
+			word++;
+		else
+			return (0);
+	}
+	return (flag);
+}
 
 char	*flag_next_quote(char quote, int *flagged, char *word)
 {
@@ -33,37 +62,17 @@ char	*flag_next_quote(char quote, int *flagged, char *word)
 		return (NULL);
 }
 
-int	check_quoting(char *word)
+int	flag_expansion(char *token_str)
 {
-	int		flag;
-	int		quote_count;
+	char	*word;
 
-	flag = 0;
-	quote_count = 0;
+	word = token_str;
 	while (word && *word)
 	{
-		if ((*word == '\'') || (*word == '\"'))
-		{
-			word = flag_next_quote(*word, &flag, word + 1);
-			update_flag_count(&flag, &quote_count);
-		}
-		if (word)
-			word++;
+		if (*word == '$')
+			return (TO_EXPAND);
 		else
-			return (QUOTING_ERROR);
+			word++;
 	}
-	if (quote_count >= 2)
-		flag = MIXED_QUOTES;
-	return (flag);
-}
-
-void	update_flag_count(int *flag, int *count)
-{
-	if (!(*count) && (*flag))
-		*count += 1;
-	else if ((*count) && (*flag))
-	{
-		*count += 1;
-		*flag = 0;
-	}
+	return (0);
 }

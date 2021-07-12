@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:38:43 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/05 18:49:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ t_pipeline	*new_pipeline(t_simple_command *first)
 	t_pipeline	*new;
 
 	new = malloc(sizeof(t_pipeline));
-	new->commands = ft_lstnew(first);
-	if (new && new->commands)
+	if (new)
 	{
-		new->pipe_count = 1;
+		new->commands = ft_lstnew(first);
+		if (new->commands)
+			new->pipe_count = 1;
+		else
+			ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	}
 	else
-		display_error("Malloc failed", "new_pipeline function");
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	return (new);
 }
 
@@ -45,8 +48,6 @@ bool	check_if_pipeline(t_simple_command	*command)
 	t_list	*node;
 	t_token	*token;
 
-	if (command->redirections)
-		return (0);
 	node = command->words;
 	token = node->content;
 	while (node && node->next)
@@ -57,11 +58,44 @@ bool	check_if_pipeline(t_simple_command	*command)
 	return (0);
 }
 
-int	get_pipeline_placement(int current, int total)
+int	**allocate_pipe_tab(int	nb)
 {
-	if (current == 0)
-		return (FIRST_IN_PIPELINE);
-	if (current == (total - 1))
-		return (LAST_IN_PIPELINE);
-	return (IN_PIPELINE);
+	int	i;
+	int	**tab;
+
+	if (nb > 255)
+		return (NULL);
+	tab = malloc(sizeof(int *) * (nb + 1));
+	if (tab)
+	{
+		i = -1;
+		while (++i < nb)
+		{
+			tab[i] = malloc(sizeof(int) * 2);
+			if (!tab[i])
+			{
+				deallocate_pipe_tab(tab, i);
+				return (NULL);
+			}
+		}
+		tab[i] = NULL;
+	}
+	return (tab);
+}
+
+void	deallocate_pipe_tab(int **tab, int nb)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb)
+	{
+		close(tab[i][0]);
+		close(tab[i][1]);
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free(tab);
+	tab = NULL;
 }

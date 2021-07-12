@@ -6,22 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/01 15:58:59 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/12 13:06:48 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-bool	ft_is_blank(char *str)
-{
-	while (*str)
-	{
-		if (!ft_strchr("\t\n\r\v\f", *str))
-			return (false);
-		str++;
-	}
-	return (true);
-}
 
 void	run_minishell(void)
 {
@@ -33,7 +22,7 @@ void	run_minishell(void)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, handle_sigquit);
-		input_str = readline("minishell: ");
+		input_str = readline("Minishell: ");
 		if (!input_str)
 			ft_exit();
 		if (!ft_is_blank(input_str))
