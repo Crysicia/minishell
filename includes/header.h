@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/12 18:51:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/13 14:57:05 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ bool	is_builtin(char *str);
 bool	is_env_valid(char *env, bool can_contain_eq);
 bool	is_path(char *path);
 int		is_valid_path(char *path);
+bool	is_executable(char *path);
+char	*get_executable_path(char *path);
 bool	is_absolute_path(char *path);
 char	*get_full_path(char *path, char *executable);
 int		set_status_code(int code, bool from_builtin);

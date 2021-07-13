@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 10:09:55 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 19:58:25 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/13 15:04:38 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,21 @@
 
 char	*find_exe_path(char *command)
 {
-	struct stat	st;
 	char		**path_arr;
 	char		*current_path;
 	char		*result;
 	int			index;
 
 	if (is_path(command))
-	{
-		if ((stat(command, &st) == 0) && (st.st_mode & S_IXUSR & S_IFREG))
-			return (command);
-		return (NULL);
-	}
+		return (get_executable_path(command));
 	index = -1;
 	result = NULL;
 	path_arr = list_exe_paths();
 	while (path_arr && path_arr[++index] && !result)
 	{
 		current_path = get_full_path(path_arr[index], command);
-		if ((stat(current_path, &st) == 0) && (st.st_mode & S_IXUSR))
-			result = current_path;
-		else
+		result = get_executable_path(current_path);
+		if (!result)
 			free(current_path);
 	}
 	ft_free_matrix((void **)path_arr, ft_matrix_size((void **)path_arr));
@@ -56,6 +50,24 @@ char	**list_exe_paths(void)
 		return (result);
 }
 
+char *get_executable_path(char *path)
+{
+	if (is_executable(path))
+		return (ft_strdup(path));
+	return (NULL);
+}
+
+bool is_executable(char *path)
+{
+	struct stat st;
+
+	if ((stat(path, &st) == 0) && (st.st_mode & S_IXUSR)
+		&& (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)))
+		return (true);
+	return (false);
+}
+
+// TODO: remove this function as it is unused
 bool	is_absolute_path(char *path)
 {
 	if (!path)
