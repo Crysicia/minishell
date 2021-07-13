@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 17:01:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/15 11:27:58 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/13 16:50:02 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,16 @@ bool	change_pwd_vars(void)
 {
 	char	cwd[MAXPATHLEN];
 	t_dict	*pwd;
+	char 	*oldpwd;
 
 	pwd = ft_getenv("PWD");
+	if (!pwd)
+		oldpwd = "/";
+	else
+		oldpwd = pwd->value;
 	if (!getcwd(cwd, MAXPATHLEN))
 		return (false);
-	ft_setenv("OLDPWD", pwd->value);
+	ft_setenv("OLDPWD", oldpwd);
 	ft_setenv("PWD", cwd);
 	return (true);
 }
