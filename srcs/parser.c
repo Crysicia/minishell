@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 13:34:27 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/14 13:41:56 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,14 @@ int	parse_simple_command(t_block *dst, char **line)
 		token = get_next_token(line);
 		if (!token)
 			return (ERR_MALLOC_FAILED);
-		else if (token->role == redirection && !parse_redirection(line, new, token))
-			return (1);
+		else if (token->role == redirection)
+			parse_redirection(line, new, token);
 		else
 			ft_lstadd_back(&(new->words), ft_lstnew_safe(token, free_token));
 		if (token->role == operator)
 			break ;
 	}
 	dst->id = attribute_command_type(new);
-	if (dst->id == error)
-	{
-		dprintf(2, "in parse simple command, bloc type was set to error\n");
-	}
 	dst->kind.cmd = new;
 	return (0);
 }
@@ -92,21 +88,12 @@ int	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 	t_token			*file;
 
 	file = get_next_token(line);
-	if (file->role == word)
-	{
-		new_redir = new_redirection();
-		new_redir->operator = tok;
-		new_redir->file = file;
-		new_node = ft_lstnew_safe(new_redir, free_redirection);
-		ft_lstadd_back(&(command->redirections), new_node);
-		return (0);
-	}
-	else
-	{
-		free_token(file);
-		display_error("syntax error near unexpected token", NULL);
-		return (-1);
-	}
+	new_redir = new_redirection();
+	new_redir->operator = tok;
+	new_redir->file = file;
+	new_node = ft_lstnew_safe(new_redir, free_redirection);
+	ft_lstadd_back(&(command->redirections), new_node);
+	return (0);
 }
 
 int	parse_pipeline_command(t_block *block, char **line)

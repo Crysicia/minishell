@@ -6,34 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 12:01:30 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/14 13:43:03 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include "token.h"
-
-bool	check_command_syntax(t_list *list)
-{
-	size_t	index;
-	char	*tmp;
-
-	index = count_command_words(list);
-	if (!index)
-	{
-		if (!ft_strncmp(((t_token *)list->content)->cmd, "|", 1))
-			tmp = "pipe";
-		else if (!ft_strncmp(((t_token *)list->content)->cmd, ";", 1))
-			tmp = "semi-colon";
-		else
-			tmp = "newline";
-		printf("-Minishell: syntax error near unexpected `%s` token\n",
-			tmp);
-		return (false);
-	}
-	else
-		return (true);
-}
 
 size_t	count_command_words(t_list *list)
 {

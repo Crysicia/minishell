@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/13 14:57:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/14 15:32:20 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ char	**list_exe_paths(void);
 
 int		flag_simple_command(t_simple_command *list);
 int		flag_pipeline(t_pipeline *list);
-int		flag_redirection(t_list *list);
 int		copy_quoted_string(char quote, char *str, char *buffer);
 void	copy_double_quoted_text(char **str, char **buffer);
 int		count_expanded_len(char *str);
