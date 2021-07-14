@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/02 09:12:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/14 13:34:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ t_list	*parser_loop(char *line)
 		while (*ptr)
 		{
 			node = new_block();
-			parse_simple_command(node, &ptr);
-			if (node->id == pipeline)
-				parse_pipeline_command(node, &ptr);
+			if (parse_simple_command(node, &ptr))
+			{
+				return (NULL);
+			}
+			if (node->id == pipeline &&	parse_pipeline_command(node, &ptr))
+				return (NULL);
 			ft_lstadd_back(&parsed_list, ft_lstnew(node));
 		}
 	}
 	else
-		ft_exit();
+		ft_exit_with_error_msg("Parsing line pointer was set on NULL");
 	return (parsed_list);
 }
 
@@ -66,19 +69,23 @@ int	parse_simple_command(t_block *dst, char **line)
 		token = get_next_token(line);
 		if (!token)
 			return (ERR_MALLOC_FAILED);
-		else if (token->role == redirection)
-			parse_redirection(line, new, token);
+		else if (token->role == redirection && !parse_redirection(line, new, token))
+			return (1);
 		else
 			ft_lstadd_back(&(new->words), ft_lstnew_safe(token, free_token));
 		if (token->role == operator)
 			break ;
 	}
 	dst->id = attribute_command_type(new);
+	if (dst->id == error)
+	{
+		dprintf(2, "in parse simple command, bloc type was set to error\n");
+	}
 	dst->kind.cmd = new;
 	return (0);
 }
 
-void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
+int	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 {
 	t_list			*new_node;
 	t_redirection	*new_redir;
@@ -90,11 +97,16 @@ void	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 		new_redir = new_redirection();
 		new_redir->operator = tok;
 		new_redir->file = file;
-		new_node = ft_lstnew(new_redir);
+		new_node = ft_lstnew_safe(new_redir, free_redirection);
 		ft_lstadd_back(&(command->redirections), new_node);
+		return (0);
 	}
 	else
+	{
+		free_token(file);
 		display_error("syntax error near unexpected token", NULL);
+		return (-1);
+	}
 }
 
 int	parse_pipeline_command(t_block *block, char **line)
@@ -110,7 +122,8 @@ int	parse_pipeline_command(t_block *block, char **line)
 	command = block->kind.cmd;
 	while (check_if_pipeline(command))
 	{
-		parse_simple_command(&tmp, line);
+		if (parse_simple_command(&tmp, line))
+			dprintf(2, "in parse pipeline command, simple command parsing returned an error\n");
 		command = tmp.kind.cmd;
 		node = ft_lstnew(command);
 		if (!node)
