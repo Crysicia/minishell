@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 15:49:14 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/15 15:37:18 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,30 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 {
 	t_token	*tok;
 
-	tok = cmd->words->content;
-	if (tok && tok->role == operator)
+	if (cmd->words)
 	{
-		parser_error(tok);
-		return (true);
+		tok = cmd->words->content;
+		if (tok && tok->role == operator)
+		{
+			parser_error(tok);
+			return (true);
+		}
 	}
-	else
-	{
-		if (cmd->redirections)
-			return (check_redirections(cmd->redirections));
+	if (cmd->redirections)
+		return (check_redirections(cmd->redirections));
+	return (false);
+}
 
+bool	check_pipeline(t_pipeline *pipeline)
+{
+	t_list	*node;
+
+	node = pipeline->commands;
+	while (node)
+	{
+		if (!node || check_first_node_cmd(node->content))
+			return (true);
+		node = node->next;
 	}
 	return (false);
 }
@@ -77,7 +90,6 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 bool	check_syntax_error(t_list *list)
 {
 	t_list	*tmp;
-	t_list	*pipeline_tmp;
 	t_block	*block;
 
 	tmp = list;
@@ -87,17 +99,8 @@ bool	check_syntax_error(t_list *list)
 		if ((block->id == simple_command)
 			&& (check_first_node_cmd(block->kind.cmd)))
 			return (true);
-		else if (block->id == pipeline)
-		{
-			pipeline_tmp = block->kind.pipe->commands;
-			while (pipeline_tmp)
-			{
-				if (!pipeline_tmp || check_first_node_cmd(pipeline_tmp->content))
-					return (true);
-				pipeline_tmp = pipeline_tmp->next;
-			}
-			return (false);
-		}
+		else if (block->id == pipeline && check_pipeline(block->kind.pipe))
+			return (true);
 		tmp = tmp->next;
 	}
 	return (false);

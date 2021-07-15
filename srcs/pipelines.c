@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 12:25:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/15 15:29:15 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,13 @@ void	free_pipeline(void *to_free)
 bool	check_if_pipeline(t_simple_command	*command)
 {
 	t_list	*node;
-//	int		node_count;
 	t_token	*token;
 
-//	node_count = 0;
 	node = command->words;
 	while (node && node->next)
 	{
-//		node_count++;
 		node = node->next;
 	}
-/*	if (!node_count)
-	{
-		display_error("syntax error near unexpected newline token", NULL);
-		return (0);
-	}
-*/
 	if (!node)
 		return (0);
 	token = node->content;

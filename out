@@ -1,0 +1,10 @@
+Dockerfile
+includes
+libft
+main.c
+main.o
+Makefile
+minishell
+out
+srcs
+tests

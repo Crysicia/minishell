@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 20:14:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/15 15:26:50 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,26 @@ void	execute_all_the_commands(t_list *list)
 char	**prepare_command_and_do_redirections(t_simple_command *commands)
 {
 	t_list	*words;
-	char **arguments;
+	char	**arguments;
+	int		res;
 
-	handle_redirections(commands->redirections);
-	words = commands->words;
-	if (words)
-		arguments = command_format(words);
-	else
-		return (NULL);
-	if (!arguments)
-		return (NULL);
-	apply_all_redirections(commands->redirections);
-	return (arguments);
+	arguments = NULL;
+	res = handle_redirections(commands->redirections);
+	if (!res)
+	{
+		words = commands->words;
+		if (words)
+			arguments = command_format(words);
+		if (!arguments)
+			return (NULL);
+		res = apply_all_redirections(commands->redirections);
+		if (!res)
+			return (arguments);
+		else
+			ft_free_matrix((void **)arguments,
+				ft_matrix_size((void **)arguments));
+	}
+	return (NULL);
 }
 
 int	execute_single_command(t_simple_command *commands)

@@ -6,13 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/14 15:43:04 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/15 15:29:51 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-int	expand_redirection(t_redirection *redirection);
 
 int	handle_redirections(t_list *command)
 {
@@ -51,6 +49,7 @@ int	expand_redirection(t_redirection *redirection)
 	else if (!*expanded_str)
 	{
 		display_error(redirection->file->cmd, "Ambiguous redirect");
+		redirection->fd = -1;
 		return (1);
 	}
 	else
@@ -93,6 +92,14 @@ int	apply_all_redirections(t_list *command)
 	while (node)
 	{
 		redirection = node->content;
+		if (redirection->fd == -1)
+			return (1);
+		node = node->next;
+	}
+	node = command;
+	while (node)
+	{
+		redirection = node->content;
 		apply_redirection(redirection->fd, redirection->operator->cmd);
 		node = node->next;
 	}
@@ -103,17 +110,21 @@ void	apply_redirection(int fd, char *redirection_type)
 {
 	int	tmp;
 
-	if (!ft_strcmp(redirection_type, "<") || !ft_strcmp(redirection_type, "<<"))
+	if (fd > -1)
 	{
-		tmp = dup2(fd, STDIN_FILENO);
-		if (tmp < 0)
-			display_error(strerror(errno), NULL);
+		if (!ft_strcmp(redirection_type, "<")
+			|| !ft_strcmp(redirection_type, "<<"))
+		{
+			tmp = dup2(fd, STDIN_FILENO);
+			if (tmp < 0)
+				display_error(strerror(errno), NULL);
+		}
+		else
+		{
+			tmp = dup2(fd, STDOUT_FILENO);
+			if (tmp < 0)
+				display_error(strerror(errno), NULL);
+		}
+		close(fd);
 	}
-	else
-	{
-		tmp = dup2(fd, STDOUT_FILENO);
-		if (tmp < 0)
-			display_error(strerror(errno), NULL);
-	}
-	close(fd);
 }
