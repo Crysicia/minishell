@@ -70,6 +70,8 @@ int	builtin_cd(char **arguments)
 			return (!change_pwd_vars());
 		return (cd_error(dict->value, true, ERR_BUILTIN_FAILED));
 	}
+	if (arguments[1])
+		return (cd_error("too many arguments", false, ERR_BUILTIN_FAILED));
 	if (!chdir(arguments[0]) || !ft_strcmp(arguments[0], ""))
 		return (!change_pwd_vars());
 	return (cd_error(arguments[0], true, ERR_BUILTIN_FAILED));
