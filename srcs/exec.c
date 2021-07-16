@@ -72,10 +72,10 @@ int	execute_single_command(t_simple_command *commands)
 	char	*path;
 
 
+	save_in_and_out(&in_and_out);
 	arguments = prepare_command_and_do_redirections(commands);
 	if (!arguments)
 		return (close_all_fds(commands->redirections));
-	save_in_and_out(&in_and_out);
 	path = find_exe_path(arguments[0]);
 	if (is_builtin(arguments[0]))
 		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
