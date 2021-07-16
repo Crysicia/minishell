@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 18:04:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 11:46:14 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ bool		is_redirection(char *str);
 bool		is_escape_character(char chr);
 t_tok_type	get_token_role(char *line);
 
-char		*get_escaped_string(char *str);
-int			get_word_size(char *line);
 char		*cut_token_string(char *line);
+int			get_word_size(char *line);
+int			add_quote_len(char quote, char *str);
+bool		is_quote_closed(char quote, char *str);
 
 void		word_flagger(t_token *token);
 
