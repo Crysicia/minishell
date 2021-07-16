@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/15 14:56:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 16:27:26 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ void	load_heredoc(int fd, char *heredoc_end);
 int		heredoc_routine(int fd, char *heredoc_end);
 bool	save_in_and_out(int (*saved)[]);
 bool	restore_in_and_out(int (*saved)[]);
+
+int		close_all_fds(t_list *command);
 
 /* Pipelines */
 

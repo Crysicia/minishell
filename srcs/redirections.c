@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/15 15:29:51 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 16:27:08 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	handle_redirections(t_list *command)
 		if (redirection->file->role)
 		{
 			if (expand_redirection(redirection))
-				return (1);
+				return (close_all_fds(command));
 		}
 		redirection->fd = create_file(redirection->file->cmd,
 				redirection->operator->cmd);
@@ -36,9 +36,24 @@ int	handle_redirections(t_list *command)
 	return (0);
 }
 
+int	close_all_fds(t_list *command)
+{
+	t_redirection	*redirection;
+	t_list			*node;
+
+	node = command;
+	while (node)
+	{
+		redirection = node->content;
+		close(redirection->fd);
+		node = node->next;
+	}
+	return (1);
+}
+
 int	expand_redirection(t_redirection *redirection)
 {
-	char			*expanded_str;
+	char	*expanded_str;
 
 	expanded_str = expand_text(redirection->file->cmd);
 	if (!expanded_str)

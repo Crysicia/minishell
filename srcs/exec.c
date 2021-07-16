@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/15 15:26:50 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 16:28:39 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ char	**prepare_command_and_do_redirections(t_simple_command *commands)
 
 	arguments = NULL;
 	res = handle_redirections(commands->redirections);
-	if (!res)
+	words = commands->words;
+	if (!res && words)
 	{
-		words = commands->words;
+		print_simple_command_node(commands);
 		if (words)
 			arguments = command_format(words);
 		if (!arguments)
@@ -70,10 +71,11 @@ int	execute_single_command(t_simple_command *commands)
 	int		in_and_out[2];
 	char	*path;
 
-	save_in_and_out(&in_and_out);
+
 	arguments = prepare_command_and_do_redirections(commands);
 	if (!arguments)
-		return (1);
+		return (close_all_fds(commands->redirections));
+	save_in_and_out(&in_and_out);
 	path = find_exe_path(arguments[0]);
 	if (is_builtin(arguments[0]))
 		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);

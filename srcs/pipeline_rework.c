@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 15:20:58 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 17:22:20 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,14 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	int		fork_ret;
 
 	words = commands->words;
-	arguments = command_format(words);
+	if (words)
+		arguments = command_format(words);
+	else
+		arguments = NULL;
 	fork_ret = fork();
 	if (fork_ret == -1)
 		display_error("while attempting to fork for pipeline",
-			strerror(errno));
+					  strerror(errno));
 	else if (!fork_ret)
 		pipe_child_process_exec(pipe_fd, commands, arguments);
 	else
@@ -75,12 +78,11 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 		handle_redirections(commands->redirections);
 		apply_all_redirections(commands->redirections);
 	}
-	if (is_builtin(arguments[0]))
-	{
-		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
+	if (!arguments)
 		exit(0);
-	}
-	else
+	if (arguments && is_builtin(arguments[0]))
+		exit(set_status_code(execute_builtin(arguments[0], &arguments[1]), true));
+	else if (arguments)
 	{
 		path = find_exe_path(arguments[0]);
 		if (!path)
@@ -109,10 +111,7 @@ int	wait_pipeline_end(int pipe_count)
 	{
 		ret = waitpid(-1, NULL, 0);
 		if (ret == -1)
-		{
-			display_error("while waiting pipeline to end", strerror(errno));
 			return (-1);
-		}
 		i++;
 	}
 	wait(NULL);

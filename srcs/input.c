@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/16 10:37:29 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 17:18:12 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	handle_sigquit(int signal)
 		kill(g_globals->current_pid, signal);
 		write(2, error, ft_strlen(error));
 	}
-	if (!g_globals->current_pid)
-		write(1, "\b\b  \b\b", 6);
-	rl_replace_line("", 0);
+//	if (!g_globals->current_pid)
+//		write(1, "\b\b  \b\b", 6);
+//	rl_replace_line("", 0);
 	rl_redisplay();
 }
 

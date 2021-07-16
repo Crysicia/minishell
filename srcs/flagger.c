@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/07 10:57:46 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 16:56:42 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	word_flagger(t_token *token)
 
 int	check_quoting(char *token_str)
 {
-	char	*word;
+//	char	*word;
 	int		flag;
 
 	flag = 0;
-	word = token_str;
-	while (word && *word)
+//	word = token_str;
+	while (token_str && *token_str)
 	{
-		if ((*word == '\'') || (*word == '\"'))
-			word = flag_next_quote(*word, &flag, word + 1);
+		if ((*token_str == '\'') || (*token_str == '\"'))
+			token_str = flag_next_quote(*token_str, &flag, token_str + 1);
 		else
-			word++;
-		if (word)
-			word++;
+			token_str++;
+		if (token_str)
+			token_str++;
 		else
 			return (0);
 	}

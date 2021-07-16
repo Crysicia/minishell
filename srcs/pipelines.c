@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/15 15:29:15 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 16:34:07 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,18 @@ bool	check_if_pipeline(t_simple_command	*command)
 	t_token	*token;
 
 	node = command->words;
-	while (node && node->next)
+	if (node)
 	{
-		node = node->next;
+		while (node && node->next)
+		{
+			node = node->next;
+		}
+//	if (!node)
+//		return (0);
+		token = node->content;
+		if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
+			return (1);
 	}
-	if (!node)
-		return (0);
-	token = node->content;
-	if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
-		return (1);
 	return (0);
 }
 
