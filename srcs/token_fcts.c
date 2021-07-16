@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/16 11:49:29 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/16 11:53:23 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char	*cut_token_string(char *line)
 {
 	char	*trimmed_str;
 
-	if (is_redirection(line) && (!ft_strncmp(">>", line, 2)
-		|| !ft_strncmp("<<", line, 2)))
+	if (is_redirection(line)
+		&& (!ft_strncmp(">>", line, 2) || !ft_strncmp("<<", line, 2)))
 		trimmed_str = ft_strndup(line, 2);
 	else if ((is_operator(line) && ft_strchr("|", *line))
 		|| (is_redirection(line) && ft_strchr("><", *line)))
@@ -79,4 +79,3 @@ int	add_quote_len(char quote, char *str)
 		len++;
 	return (len);
 }
-
