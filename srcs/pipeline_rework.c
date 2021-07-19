@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 10:18:17 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 11:20:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,23 @@
 
 int	pipeline_big_loop(t_pipeline *pipeline)
 {
-	t_list	*scmd_list;
-	int		index;
-	int		**pipe_tab;
-	int		*pid_tab;
-	int		in_and_out[2];
+	t_tmp_pipe	*t;
 
-	save_in_and_out(&in_and_out);
-	pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
-	pid_tab = malloc(sizeof(int) * pipeline->pipe_count - 1);
-	if (!pipe_tab || !pid_tab)
+	t = init_pipeline_utils(pipeline);
+	if (!t)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
-	scmd_list = pipeline->commands;
-	index = -1;
-	while (scmd_list && scmd_list->next)
+	while (t->scmd_list && t->scmd_list->next)
 	{
-		pipe(pipe_tab[++index]);
-		pid_tab[index] = execute_pipe_command(pipe_tab[index], scmd_list->content);
-		dup2(pipe_tab[index][0], STDIN_FILENO);
-		scmd_list = scmd_list->next;
+		pipe(t->pipe_tab[++(t->index)]);
+		t->pid_tab[t->index] = execute_pipe_command(t->pipe_tab[t->index],
+													t->scmd_list->content);
+		dup2(t->pipe_tab[t->index][0], STDIN_FILENO);
+		t->scmd_list = t->scmd_list->next;
 	}
-	dup2(in_and_out[0], STDOUT_FILENO);
-	pid_tab[index] = execute_pipe_command(NULL, scmd_list->content);
-	wait_pipeline_end(pipeline->pipe_count - 1, pid_tab);
-	deallocate_pipe_tab(pipe_tab, pipeline->pipe_count - 1);
-	restore_in_and_out(&in_and_out);
+	dup2(t->in_and_out[0], STDOUT_FILENO);
+	t->pid_tab[t->index] = execute_pipe_command(NULL,
+												t->scmd_list->content);
+	clean_up_pipeline_utils(t, pipeline);
 	return (0);
 }
 
@@ -101,22 +93,4 @@ void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
 	g_globals->current_pid = fork_ret;
 	set_status_code(g_globals->status, false);
 	g_globals->current_pid = 0;
-}
-
-int	wait_pipeline_end(int pipe_count, int *pid_tab)
-{
-	int	ret;
-	int	i;
-
-	i = 0;
-	while (i < pipe_count)
-	{
-		ret = waitpid(pid_tab[i], NULL, 0);
-		if (ret == -1)
-			return (-1);
-		i++;
-	}
-	wait(NULL);
-	free(pid_tab);
-	return (0);
 }
