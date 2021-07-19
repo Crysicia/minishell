@@ -50,6 +50,7 @@
 typedef struct s_globals
 {
 	int		current_pid;
+	int		*pids;
 	int		status;
 	char	last_token[3];
 	t_list	*env;

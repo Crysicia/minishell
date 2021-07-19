@@ -83,7 +83,7 @@ int	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 }
 
 /*
-** Future Pierre, please remember to read this function and check its safety
+** Future Pierre, please remember to read this function and check its safety XOXO
 */
 
 int	parse_pipeline_command(t_block *block, char **line)
