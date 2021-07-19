@@ -6,27 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/16 11:53:23 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 12:24:33 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token.h"
-
-t_token	*get_next_token(char **line)
-{
-	char		*cmd;
-
-	skip_spaces(line);
-	cmd = cut_token_string(*line);
-	if (cmd)
-	{
-		*line = ft_strnstr(*line, cmd, ft_strlen(cmd));
-		*line += ft_strlen(cmd);
-		return (new_token(cmd, get_token_role(cmd)));
-	}
-	else
-		return (NULL);
-}
+#include "header.h"
 
 char	*cut_token_string(char *line)
 {

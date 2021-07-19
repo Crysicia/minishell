@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 12:04:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 12:26:21 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_globals
 {
 	int		current_pid;
 	int		status;
+	char	last_token[3];
 	t_list	*env;
 }			t_globals;
 
@@ -64,8 +65,8 @@ typedef struct s_dict
 
 void	print_prompt(void);
 void	run_minishell(void);
-bool	destroy_globals(void);
 bool	init_globals(char *envp[]);
+bool	destroy_globals(void);
 
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);

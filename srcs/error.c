@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 13:47:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 12:36:08 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ void	ft_malloc_error(void)
 	errno = swap;
 }
 
-int	parser_error(t_token *tok)
+int	parser_error(void)
 {
 	ft_putstr_fd("Minishell : unexpected syntax error near `", STDERR_FILENO);
-	ft_putstr_fd(tok->cmd, STDERR_FILENO);
+	if (*g_globals->last_token)
+		ft_putstr_fd(g_globals->last_token, STDERR_FILENO);
+	else
+		ft_putstr_fd("newline", STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 	return (-1);
 }
