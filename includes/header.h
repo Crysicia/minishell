@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 11:15:45 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 12:04:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,6 @@ typedef struct s_globals
 }			t_globals;
 
 t_globals	*g_globals;
-
-typedef struct s_command
-{
-	char	*executable;
-	char	**args;
-	char	**envp;
-}				t_command;
 
 typedef struct s_dict
 {
