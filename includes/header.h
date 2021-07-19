@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/16 16:27:26 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 10:11:09 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int		**allocate_pipe_tab(int	nb);
 void	deallocate_pipe_tab(int **tab, int nb);
 int		pipeline_big_loop(t_pipeline *pipeline);
 int		piping_loop(t_pipeline *pipeline);
-int		wait_pipeline_end(int pipe_count);
+int		wait_pipeline_end(int pipe_count, int *pid_tab);
 void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 			char **arguments);
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret);
