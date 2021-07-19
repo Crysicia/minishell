@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/16 16:38:38 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 12:33:39 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	check_redirections(t_list *list)
 		tok = redir->file;
 		if (tok->role != word)
 		{
-			display_error("unexpected syntax error near `newline'", NULL);
+			parser_error();
 			return (true);
 		}
 		node = node->next;
@@ -65,7 +65,7 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 		if (tok && tok->role == operator && !ft_strncmp(tok->cmd, "|", 1)
 			&& !cmd->redirections)
 		{
-			parser_error(tok);
+			parser_error();
 			return (true);
 		}
 	}

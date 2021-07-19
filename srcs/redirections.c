@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/16 16:27:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 12:09:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,6 @@ int	handle_redirections(t_list *command)
 	return (0);
 }
 
-int	close_all_fds(t_list *command)
-{
-	t_redirection	*redirection;
-	t_list			*node;
-
-	node = command;
-	while (node)
-	{
-		redirection = node->content;
-		close(redirection->fd);
-		node = node->next;
-	}
-	return (1);
-}
-
 int	expand_redirection(t_redirection *redirection)
 {
 	char	*expanded_str;
@@ -73,29 +58,6 @@ int	expand_redirection(t_redirection *redirection)
 		redirection->file->cmd = expanded_str;
 		return (0);
 	}
-}
-
-int	create_file(char *path, char *redirection_type)
-{
-	int	fd;
-	int	open_flags;
-
-	open_flags = O_RDWR;
-	if (ft_strcmp(redirection_type, "<"))
-		open_flags |= O_CREAT;
-	if (!ft_strcmp(redirection_type, ">>"))
-		open_flags |= O_APPEND;
-	if (ft_strcmp(redirection_type, ">>") && ft_strcmp(redirection_type, "<"))
-		open_flags |= O_TRUNC;
-	if (!ft_strcmp(redirection_type, "<<"))
-		fd = open("/tmp/heredoc", open_flags, 0644);
-	else
-		fd = open(path, open_flags, 0644);
-	if (fd == -1)
-		display_error(path, strerror(errno));
-	if (!ft_strcmp(redirection_type, "<<"))
-		fd = heredoc_routine(fd, path);
-	return (fd);
 }
 
 int	apply_all_redirections(t_list *command)

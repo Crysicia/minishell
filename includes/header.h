@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 11:15:45 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 14:21:55 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,11 @@ typedef struct s_globals
 	int		current_pid;
 	int		*pids;
 	int		status;
+	char	last_token[3];
 	t_list	*env;
 }			t_globals;
 
 t_globals	*g_globals;
-
-typedef struct s_command
-{
-	char	*executable;
-	char	**args;
-	char	**envp;
-}				t_command;
 
 typedef struct s_dict
 {
@@ -72,8 +66,8 @@ typedef struct s_dict
 
 void	print_prompt(void);
 void	run_minishell(void);
-bool	destroy_globals(void);
 bool	init_globals(char *envp[]);
+bool	destroy_globals(void);
 
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
@@ -167,7 +161,7 @@ typedef struct s_pipe_holder
 	int		**pipe_tab;
 	int		*pid_tab;
 	int		in_and_out[2];
-}				t_tmp_pipe;
+}				t_pipe;
 
 int		execute_single_command(t_simple_command *commands);
 int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
@@ -179,8 +173,8 @@ int		wait_pipeline_end(int pipe_count, int *pid_tab);
 void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 			char **arguments);
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret);
-t_tmp_pipe	*init_pipeline_utils(t_pipeline *pipeline);
-void	clean_up_pipeline_utils(t_tmp_pipe *tmp, t_pipeline *pipeline);
+t_pipe	*init_pipeline_utils(t_pipeline *pipeline);
+void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline);
 
 /* Miscellaneous */
 

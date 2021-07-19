@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/16 16:28:39 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 14:28:21 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	execute_single_command(t_simple_command *commands)
 	char	**arguments;
 	int		in_and_out[2];
 	char	*path;
-
 
 	save_in_and_out(&in_and_out);
 	arguments = prepare_command_and_do_redirections(commands);

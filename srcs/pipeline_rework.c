@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 11:20:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 14:26:07 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	pipeline_big_loop(t_pipeline *pipeline)
 {
-	t_tmp_pipe	*t;
+	t_pipe	*t;
 
 	t = init_pipeline_utils(pipeline);
 	if (!t)
@@ -23,13 +23,13 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 	{
 		pipe(t->pipe_tab[++(t->index)]);
 		t->pid_tab[t->index] = execute_pipe_command(t->pipe_tab[t->index],
-													t->scmd_list->content);
+				t->scmd_list->content);
 		dup2(t->pipe_tab[t->index][0], STDIN_FILENO);
 		t->scmd_list = t->scmd_list->next;
 	}
 	dup2(t->in_and_out[0], STDOUT_FILENO);
 	t->pid_tab[t->index] = execute_pipe_command(NULL,
-												t->scmd_list->content);
+			t->scmd_list->content);
 	clean_up_pipeline_utils(t, pipeline);
 	return (0);
 }
@@ -48,7 +48,7 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	pid = fork();
 	if (pid == -1)
 		display_error("while attempting to fork for pipeline",
-					  strerror(errno));
+			strerror(errno));
 	else if (!pid)
 		pipe_child_process_exec(pipe_fd, commands, arguments);
 	else
@@ -72,10 +72,8 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 		handle_redirections(commands->redirections);
 		apply_all_redirections(commands->redirections);
 	}
-	if (!arguments)
-		exit(0);
 	if (arguments && is_builtin(arguments[0]))
-		exit(set_status_code(execute_builtin(arguments[0], &arguments[1]), true));
+		exit(set_status_code(execute_builtin(arguments[0], &arguments[1]), 1));
 	else if (arguments)
 	{
 		path = find_exe_path(arguments[0]);
@@ -84,6 +82,7 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 		execve(path, arguments, list_to_array(g_globals->env));
 		exit(1);
 	}
+	exit(0);
 }
 
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
