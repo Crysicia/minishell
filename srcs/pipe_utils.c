@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 11:20:34 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 18:58:08 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	wait_pipeline_end(int pipe_count, int *pid_tab)
 	int	i;
 
 	i = 0;
-	dprintf(2, "pipecount [%d]\n", pipe_count);
 	while (i < pipe_count)
 	{
 		ret = waitpid(pid_tab[i], NULL, 0);
