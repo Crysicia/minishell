@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 14:29:27 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 17:49:15 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,10 @@ int	check_quoting(char *token_str)
 	flag = 0;
 	while (token_str && *token_str)
 	{
-		if ((*token_str == '\'') || (*token_str == '\"'))
+		if (*token_str == '\'' || *token_str == '"')
 			token_str = flag_next_quote(*token_str, &flag, token_str + 1);
 		else
 			token_str++;
-		if (token_str)
-			token_str++;
-		else
-			return (0);
 	}
 	return (flag);
 }

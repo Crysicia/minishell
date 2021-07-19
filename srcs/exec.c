@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/19 14:28:21 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 17:51:22 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	**prepare_command_and_do_redirections(t_simple_command *commands)
 	words = commands->words;
 	if (!res && words)
 	{
-		print_simple_command_node(commands);
 		if (words)
 			arguments = command_format(words);
 		if (!arguments)
