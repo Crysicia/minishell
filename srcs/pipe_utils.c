@@ -6,17 +6,17 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 11:20:34 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 14:27:40 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-t_tmp_pipe	*init_pipeline_utils(t_pipeline *pipeline)
+t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 {
-	t_tmp_pipe	*t;
-	
-	t = malloc(sizeof(t_tmp_pipe));
+	t_pipe	*t;
+
+	t = malloc(sizeof(t_pipe));
 	if (!t)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	save_in_and_out(&t->in_and_out);
@@ -30,7 +30,7 @@ t_tmp_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 		return (t);
 }
 
-void	clean_up_pipeline_utils(t_tmp_pipe *tmp, t_pipeline *pipeline)
+void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline)
 {
 	wait_pipeline_end(pipeline->pipe_count - 1, tmp->pid_tab);
 	deallocate_pipe_tab(tmp->pipe_tab, pipeline->pipe_count - 1);
@@ -86,7 +86,6 @@ int	wait_pipeline_end(int pipe_count, int *pid_tab)
 	int	i;
 
 	i = 0;
-	dprintf(2, "pipecount [%d]\n", pipe_count);
 	while (i < pipe_count)
 	{
 		ret = waitpid(pid_tab[i], NULL, 0);
