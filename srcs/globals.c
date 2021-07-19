@@ -24,6 +24,7 @@ bool	init_globals(char *envp[])
 	g_globals = malloc(sizeof(t_globals));
 	if (!g_globals)
 		return (false);
+	g_globals->pids = NULL;
 	g_globals->current_pid = 0;
 	g_globals->status = 0;
 	g_globals->env = array_to_list(envp);

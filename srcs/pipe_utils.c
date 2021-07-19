@@ -24,10 +24,10 @@ t_tmp_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 	t->index = -1;
 	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
 	t->pid_tab = malloc(sizeof(int) * pipeline->pipe_count - 1);
+	g_globals->pids = t->pid_tab;
 	if (!t->pipe_tab || !t->pid_tab)
 		return (NULL);
-	else
-		return (t);
+	return (t);
 }
 
 void	clean_up_pipeline_utils(t_tmp_pipe *tmp, t_pipeline *pipeline)
@@ -38,6 +38,7 @@ void	clean_up_pipeline_utils(t_tmp_pipe *tmp, t_pipeline *pipeline)
 	free(tmp->pid_tab);
 	free(tmp);
 	tmp = NULL;
+	g_globals->pids = NULL;
 }
 
 int	**allocate_pipe_tab(int	nb)
