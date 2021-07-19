@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 12:49:02 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 17:47:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 }
 
 /*
-** Future Pierre, please remember to read this function and check its safety
+** Future Pierre, please remember to read this function and check its safety XOXO
 */
 
 int	parse_pipeline_command(t_block *block, char **line)
