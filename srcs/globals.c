@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/19 12:35:04 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 14:13:07 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	update_last_seen_token(t_token *token)
 	int		i;
 	char	*str;
 	
-	if (token->role == operator || token->role == redirection)
+	if (g_globals && g_globals->last_token
+		&& (token->role == operator || token->role == redirection))
 	{
 		i = 0;
 		str = token->cmd;

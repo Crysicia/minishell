@@ -5,6 +5,7 @@
 #include "../includes/parser.h"
 #include <string.h>
 
+t_globals *g_globals;
 
 /*
 **	Ce fichier contient l'ensemble des commandes bash fonctionnelles
@@ -42,9 +43,11 @@ ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, redirection_parse_te
 	char *line = tests->input;
 	t_block raw_result;
 	int fct_ret = parse_simple_command(&raw_result, &line);
+
 	t_simple_command	*testerino = raw_result.kind.cmd;
 	t_redirection *redir =  testerino->redirections->content;
 	t_token *token = redir->operator;
+
 	cr_assert_eq(fct_ret, 0);
 	cr_expect(strcmp(token->cmd, tests->expected) == 0,
 			 "expected [%s] output for [%s] input, instead, fct returned [%s]",
@@ -123,6 +126,7 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 
 ParameterizedTest(scmd_test *tests, parser_suite, simple_command_parse_test)
 {
+
 	char *line = tests->input;
 	t_block llist;
 	int fct_ret = parse_simple_command(&llist, &line);
