@@ -22,7 +22,7 @@ void	run_minishell(void)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, handle_sigquit);
-		input_str = readline("Minishell: ");
+		input_str = readline("minishell: ");
 		if (!input_str)
 			ft_exit();
 		if (!ft_is_blank(input_str))
