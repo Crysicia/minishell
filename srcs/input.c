@@ -12,6 +12,13 @@
 
 #include "header.h"
 
+
+void reset_pids_array(void)
+{
+	free(g_globals->pids);
+	g_globals->pids = NULL;
+}
+
 void	handle_sigint(int signal)
 {
 	printf("\n");
@@ -26,16 +33,20 @@ void	handle_sigint(int signal)
 void	handle_sigquit(int signal)
 {
 	char	*error;
+	int		i = 0;
 
 	error = "Quit (core dumped)\n";
-	if (g_globals->current_pid)
+	while (g_globals->pids && g_globals->pids[i])
 	{
-		kill(g_globals->current_pid, signal);
-		write(2, error, ft_strlen(error));
+		kill(g_globals->pids[i], signal);
+		i++;
 	}
-//	if (!g_globals->current_pid)
-//		write(1, "\b\b  \b\b", 6);
-//	rl_replace_line("", 0);
+	if (g_globals->current_pid || g_globals->pids)
+		write(2, error, ft_strlen(error));
+	if (!g_globals->current_pid && !g_globals->pids)
+		write(2, "\b\b  \b\b", 6);
+	reset_pids_array();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 

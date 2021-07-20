@@ -6,17 +6,17 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 18:58:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 10:04:22 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-t_tmp_pipe	*init_pipeline_utils(t_pipeline *pipeline)
+t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 {
-	t_tmp_pipe	*t;
-	
-	t = malloc(sizeof(t_tmp_pipe));
+	t_pipe	*t;
+
+	t = malloc(sizeof(t_pipe));
 	if (!t)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	save_in_and_out(&t->in_and_out);
@@ -24,13 +24,13 @@ t_tmp_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 	t->index = -1;
 	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
 	t->pid_tab = malloc(sizeof(int) * pipeline->pipe_count - 1);
+	g_globals->pids = t->pid_tab;
 	if (!t->pipe_tab || !t->pid_tab)
 		return (NULL);
-	else
-		return (t);
+	return (t);
 }
 
-void	clean_up_pipeline_utils(t_tmp_pipe *tmp, t_pipeline *pipeline)
+void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline)
 {
 	wait_pipeline_end(pipeline->pipe_count - 1, tmp->pid_tab);
 	deallocate_pipe_tab(tmp->pipe_tab, pipeline->pipe_count - 1);
@@ -38,6 +38,7 @@ void	clean_up_pipeline_utils(t_tmp_pipe *tmp, t_pipeline *pipeline)
 	free(tmp->pid_tab);
 	free(tmp);
 	tmp = NULL;
+	g_globals->pids = NULL;
 }
 
 int	**allocate_pipe_tab(int	nb)
