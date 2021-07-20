@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 15:15:48 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:03:10 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	handle_redirections(t_list *command)
 			redirection->fd = create_file(redirection->file->cmd,
 					redirection->operator->cmd);
 		if (redirection->fd == -1)
+		{
+			dprintf(2, "Fd is negative\n");
 			return (1);
+		}
 		node = node->next;
 	}
 	return (0);

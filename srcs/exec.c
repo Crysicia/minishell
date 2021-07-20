@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 11:36:23 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:05:15 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ int	execute_single_command(t_simple_command *commands)
 	save_in_and_out(&in_and_out);
 	arguments = prepare_command_and_do_redirections(commands);
 	if (!arguments)
+	{
+		restore_in_and_out(&in_and_out);
 		return (close_all_fds(commands->redirections));
+	}
 	path = find_exe_path(arguments[0]);
 	if (is_builtin(arguments[0]))
 		set_status_code(execute_builtin(arguments[0], &arguments[1]), true);
@@ -92,6 +95,10 @@ int	execute_single_command(t_simple_command *commands)
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (0);
 }
+
+// void add_pid_to_global(int pid)
+// {}
+
 
 int	execute_command(char **command)
 {
