@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_rework.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 12:01:28 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:34:06 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 	while (t->scmd_list && t->scmd_list->next)
 	{
 		pipe(t->pipe_tab[++(t->index)]);
-		t->pid_tab[t->index] = execute_pipe_command(t->pipe_tab[t->index],
+		g_globals->pids[t->index] = execute_pipe_command(t->pipe_tab[t->index],
 				t->scmd_list->content);
 		dup2(t->pipe_tab[t->index][0], STDIN_FILENO);
 		t->scmd_list = t->scmd_list->next;
 	}
 	dup2(t->in_and_out[0], STDOUT_FILENO);
-	t->pid_tab[t->index] = execute_pipe_command(NULL,
+	g_globals->pids[t->index] = execute_pipe_command(NULL,
 			t->scmd_list->content);
 	clean_up_pipeline_utils(t, pipeline);
 	return (0);
