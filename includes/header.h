@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 12:15:35 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:31:45 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,11 @@ void	print_command_history(t_dlist *history);
 void	display_error(char *command, char *custom);
 void	ft_malloc_error(void);
 void	syntax_error(void);
+
+bool	check_pipeline(t_pipeline *pipeline);
+bool	check_first_node_cmd(t_simple_command *cmd);
+bool	check_redirections(t_list *list);
+
 int		test_redirections(void);
 bool	check_syntax_error(t_list *list);
 
