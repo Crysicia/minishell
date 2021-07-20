@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 11:00:03 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 15:15:48 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	handle_redirections(t_list *command)
 			if (expand_redirection(redirection))
 				return (close_all_fds(command));
 		}
-		if (strcmp("<<", redirection->operator->cmd))
+		if (ft_strcmp("<<", redirection->operator->cmd))
 			redirection->fd = create_file(redirection->file->cmd,
 					redirection->operator->cmd);
 		if (redirection->fd == -1)
