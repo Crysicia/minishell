@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 10:40:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:15:35 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	skip_spaces(char **line);
 /* Execution */
 
 int		evaluation_pass(t_list *list);
-bool	check_command_syntax(t_list *list);
 int		execute_command(char **command);
 int		execve_argument(char **arguments);
 void	execute_all_the_commands(t_list *list);

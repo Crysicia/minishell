@@ -6,33 +6,11 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 12:33:39 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:22:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-bool	check_command_syntax(t_list *list)
-{
-	size_t	index;
-	char	*tmp;
-
-	index = count_command_words(list);
-	if (!index)
-	{
-		if (!ft_strncmp(((t_token *)list->content)->cmd, "|", 1))
-			tmp = "pipe";
-		else if (!ft_strncmp(((t_token *)list->content)->cmd, ";", 1))
-			tmp = "semi-colon";
-		else
-			tmp = "newline";
-		printf("-Minishell: syntax error near unexpected `%s` token\n",
-			tmp);
-		return (false);
-	}
-	else
-		return (true);
-}
 
 bool	check_redirections(t_list *list)
 {
@@ -47,6 +25,7 @@ bool	check_redirections(t_list *list)
 		tok = redir->file;
 		if (tok->role != word)
 		{
+			update_last_seen_token(tok);
 			parser_error();
 			return (true);
 		}
@@ -62,8 +41,7 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 	if (cmd->words)
 	{
 		tok = cmd->words->content;
-		if (tok && tok->role == operator && !ft_strncmp(tok->cmd, "|", 1)
-			&& !cmd->redirections)
+		if (tok && tok->role == operator && !cmd->redirections)
 		{
 			parser_error();
 			return (true);
@@ -71,6 +49,11 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 	}
 	if (cmd->redirections)
 		return (check_redirections(cmd->redirections));
+	if (!cmd->words && !cmd->redirections)
+	{
+		parser_error();
+		return (true);
+	}
 	return (false);
 }
 
@@ -83,6 +66,7 @@ bool	check_pipeline(t_pipeline *pipeline)
 	{
 		if (!node || check_first_node_cmd(node->content))
 			return (true);
+		print_simple_command_node(node->content);
 		node = node->next;
 	}
 	return (false);
