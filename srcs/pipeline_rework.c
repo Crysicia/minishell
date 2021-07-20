@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 14:26:07 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:01:28 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 		path = find_exe_path(arguments[0]);
 		if (!path)
 			display_error(arguments[0], "command not found");
-		execve(path, arguments, list_to_array(g_globals->env));
+		else
+			execve(path, arguments, list_to_array(g_globals->env));
 		exit(1);
 	}
 	exit(0);
