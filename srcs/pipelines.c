@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:40:09 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 12:25:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 11:20:35 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,66 +46,18 @@ void	free_pipeline(void *to_free)
 bool	check_if_pipeline(t_simple_command	*command)
 {
 	t_list	*node;
-//	int		node_count;
 	t_token	*token;
 
-//	node_count = 0;
 	node = command->words;
-	while (node && node->next)
+	if (node)
 	{
-//		node_count++;
-		node = node->next;
-	}
-/*	if (!node_count)
-	{
-		display_error("syntax error near unexpected newline token", NULL);
-		return (0);
-	}
-*/
-	if (!node)
-		return (0);
-	token = node->content;
-	if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
-		return (1);
-	return (0);
-}
-
-int	**allocate_pipe_tab(int	nb)
-{
-	int	i;
-	int	**tab;
-
-	tab = malloc(sizeof(int *) * (nb + 1));
-	if (tab)
-	{
-		i = -1;
-		while (++i < nb)
+		while (node && node->next)
 		{
-			tab[i] = malloc(sizeof(int) * 2);
-			if (!tab[i])
-			{
-				deallocate_pipe_tab(tab, i);
-				return (NULL);
-			}
+			node = node->next;
 		}
-		tab[i] = NULL;
+		token = node->content;
+		if (token->role == operator && !ft_strncmp(token->cmd, "|", 1))
+			return (1);
 	}
-	return (tab);
-}
-
-void	deallocate_pipe_tab(int **tab, int nb)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb)
-	{
-		close(tab[i][0]);
-		close(tab[i][1]);
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
-	}
-	free(tab);
-	tab = NULL;
+	return (0);
 }

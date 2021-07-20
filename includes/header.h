@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 15:32:20 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:31:45 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,13 @@
 typedef struct s_globals
 {
 	int		current_pid;
+	int		*pids;
 	int		status;
+	char	last_token[3];
 	t_list	*env;
 }			t_globals;
 
 t_globals	*g_globals;
-
-typedef struct s_command
-{
-	char	*executable;
-	char	**args;
-	char	**envp;
-}				t_command;
 
 typedef struct s_dict
 {
@@ -71,8 +66,8 @@ typedef struct s_dict
 
 void	print_prompt(void);
 void	run_minishell(void);
-bool	destroy_globals(void);
 bool	init_globals(char *envp[]);
+bool	destroy_globals(void);
 
 void	handle_sigint(int signal);
 void	handle_sigquit(int signal);
@@ -88,7 +83,6 @@ void	skip_spaces(char **line);
 /* Execution */
 
 int		evaluation_pass(t_list *list);
-bool	check_command_syntax(t_list *list);
 int		execute_command(char **command);
 int		execve_argument(char **arguments);
 void	execute_all_the_commands(t_list *list);
@@ -145,16 +139,29 @@ void	copy_env_var_to_buffer(char **str, char *buffer);
 
 /* Redirections */
 
+int		expand_redirection(t_redirection *redirection);
 int		handle_redirections(t_list *command);
 int		apply_all_redirections(t_list *command);
 int		create_file(char *path, char *redirection_type);
 void	apply_redirection(int fd, char *redirection_type);
+int		look_for_heredoc(t_list *list);
 void	load_heredoc(int fd, char *heredoc_end);
 int		heredoc_routine(int fd, char *heredoc_end);
 bool	save_in_and_out(int (*saved)[]);
 bool	restore_in_and_out(int (*saved)[]);
 
+int		close_all_fds(t_list *command);
+
 /* Pipelines */
+
+typedef struct s_pipe_holder
+{
+	t_list	*scmd_list;
+	int		index;
+	int		**pipe_tab;
+	int		*pid_tab;
+	int		in_and_out[2];
+}				t_pipe;
 
 int		execute_single_command(t_simple_command *commands);
 int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
@@ -162,10 +169,12 @@ int		**allocate_pipe_tab(int	nb);
 void	deallocate_pipe_tab(int **tab, int nb);
 int		pipeline_big_loop(t_pipeline *pipeline);
 int		piping_loop(t_pipeline *pipeline);
-int		wait_pipeline_end(int pipe_count);
+int		wait_pipeline_end(int pipe_count, int *pid_tab);
 void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 			char **arguments);
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret);
+t_pipe	*init_pipeline_utils(t_pipeline *pipeline);
+void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline);
 
 /* Miscellaneous */
 
@@ -194,6 +203,11 @@ void	print_command_history(t_dlist *history);
 void	display_error(char *command, char *custom);
 void	ft_malloc_error(void);
 void	syntax_error(void);
+
+bool	check_pipeline(t_pipeline *pipeline);
+bool	check_first_node_cmd(t_simple_command *cmd);
+bool	check_redirections(t_list *list);
+
 int		test_redirections(void);
 bool	check_syntax_error(t_list *list);
 

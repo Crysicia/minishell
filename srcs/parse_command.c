@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 16:31:31 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 13:43:03 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/15 14:31:54 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,19 @@ char	**command_format(t_list *list)
 	size_t	count;
 	char	**tab;
 
+	index = count_command_words(list);
+	tab = malloc((index + 1) * sizeof(char **));
+	if (!tab)
+		ft_malloc_error();
+	tmp = list;
 	count = 0;
-	tab = NULL;
-	if (check_command_syntax(list))
+	while (count < index)
 	{
-		index = count_command_words(list);
-		tab = malloc((index + 1) * sizeof(char **));
-		if (!tab)
-			ft_malloc_error();
-		tmp = list;
-		while (count < index)
-		{
-			tok = tmp->content;
-			tab[count] = ft_strdup(tok->cmd);
-			count++;
-			tmp = tmp->next;
-		}
-		tab[count] = NULL;
+		tok = tmp->content;
+		tab[count] = ft_strdup(tok->cmd);
+		count++;
+		tmp = tmp->next;
 	}
+	tab[count] = NULL;
 	return (tab);
 }

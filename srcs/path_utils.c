@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 10:09:55 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/13 18:13:15 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/20 11:44:00 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ char	**list_exe_paths(void)
 		return (result);
 }
 
-char *get_executable_path(char *path)
+char	*get_executable_path(char *path)
 {
 	if (is_executable(path))
 		return (ft_strdup(path));
 	return (NULL);
 }
 
-bool is_executable(char *path)
+bool	is_executable(char *path)
 {
-	struct stat st;
+	struct stat	st;
 
 	if ((stat(path, &st) == 0) && (st.st_mode & S_IXUSR)
 		&& (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)))

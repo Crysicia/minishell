@@ -5,8 +5,8 @@
 #include "../includes/token.h"
 
 typedef struct	s_input_test {
-	char input[20];
-	char result[20];
+	char input[30];
+	char result[30];
 }				t_tok_input_test;
 
 /*
@@ -35,6 +35,19 @@ ParameterizedTestParameters(tokenizer_suite, token_test)
 		{ .input = "'bo\"njou\"r' \"toi\"", .result = "'bo\"njou\"r'"},
 		/* Antislash use */
 		{ .input = "\\$TEST", .result = "\\$TEST"},
+
+		/* words followed by different cases of quoting */
+		{ .input = "bonjour'toi", .result = "bonjour'toi"},
+		{ .input = "bonjour'toi'", .result = "bonjour'toi'"},
+		{ .input = "bonjour'toi pikachu", .result = "bonjour'toi"},
+		{ .input = "bonjour'toi bellatre''", .result = "bonjour'toi bellatre''"},
+		{ .input = "bonjour'toi''", .result = "bonjour'toi''"},
+		{ .input = "bonjour\"toi", .result = "bonjour\"toi"},
+		{ .input = "bonjour\"'$USER'\"", .result = "bonjour\"'$USER'\""},
+		{ .input = "bonjour\"'$USER'", .result = "bonjour\"'$USER'"},
+		{ .input = "bonjour\"'$USER' toi", .result = "bonjour\"'$USER'"},
+		{ .input = "\"'\"' toi", .result = "\"'\"'"},
+		
 	};
 	return (cr_make_param_array(t_tok_input_test, tests,
 								sizeof(tests)/sizeof(t_tok_input_test)));

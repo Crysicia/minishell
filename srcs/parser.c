@@ -6,28 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 16:54:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 13:41:56 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 17:47:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include "token.h"
-
-t_token	*get_next_token(char **line)
-{
-	char		*cmd;
-
-	skip_spaces(line);
-	cmd = cut_token_string(*line);
-	if (cmd)
-	{
-		*line = ft_strnstr(*line, cmd, ft_strlen(cmd));
-		*line += ft_strlen(cmd);
-		return (new_token(cmd, get_token_role(cmd)));
-	}
-	else
-		return (NULL);
-}
 
 t_list	*parser_loop(char *line)
 {
@@ -43,10 +27,8 @@ t_list	*parser_loop(char *line)
 		{
 			node = new_block();
 			if (parse_simple_command(node, &ptr))
-			{
 				return (NULL);
-			}
-			if (node->id == pipeline &&	parse_pipeline_command(node, &ptr))
+			if (node->id == pipeline && parse_pipeline_command(node, &ptr))
 				return (NULL);
 			ft_lstadd_back(&parsed_list, ft_lstnew(node));
 		}
@@ -69,7 +51,8 @@ int	parse_simple_command(t_block *dst, char **line)
 		token = get_next_token(line);
 		if (!token)
 			return (ERR_MALLOC_FAILED);
-		else if (token->role == redirection)
+		update_last_seen_token(token);
+		if (token->role == redirection)
 			parse_redirection(line, new, token);
 		else
 			ft_lstadd_back(&(new->words), ft_lstnew_safe(token, free_token));
@@ -88,6 +71,9 @@ int	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 	t_token			*file;
 
 	file = get_next_token(line);
+	if (!file)
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
+	update_last_seen_token(file);
 	new_redir = new_redirection();
 	new_redir->operator = tok;
 	new_redir->file = file;
@@ -95,6 +81,10 @@ int	parse_redirection(char **line, t_simple_command *command, t_token *tok)
 	ft_lstadd_back(&(command->redirections), new_node);
 	return (0);
 }
+
+/*
+** Future Pierre, please remember to read this function and check its safety XOXO
+*/
 
 int	parse_pipeline_command(t_block *block, char **line)
 {
@@ -110,7 +100,7 @@ int	parse_pipeline_command(t_block *block, char **line)
 	while (check_if_pipeline(command))
 	{
 		if (parse_simple_command(&tmp, line))
-			dprintf(2, "in parse pipeline command, simple command parsing returned an error\n");
+			return (1);
 		command = tmp.kind.cmd;
 		node = ft_lstnew(command);
 		if (!node)

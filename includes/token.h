@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 18:04:01 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/19 12:31:55 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_token
 t_list		*command_parse(char *line);
 int			evaluate_token(t_list **list);
 t_token		*get_next_token(char **line);
+void		update_last_seen_token(t_token *tok);
 
 t_token		*new_token(char *str, t_tok_type type);
 void		free_token(void *token);
@@ -40,16 +41,17 @@ bool		is_redirection(char *str);
 bool		is_escape_character(char chr);
 t_tok_type	get_token_role(char *line);
 
-char		*get_escaped_string(char *str);
-int			get_word_size(char *line);
 char		*cut_token_string(char *line);
+int			get_word_size(char *line);
+int			add_quote_len(char quote, char *str);
+bool		is_quote_closed(char quote, char *str);
 
 void		word_flagger(t_token *token);
 
 void		expand_env_variable(char **str, char **buffer);
 void		copy_escaped_character(char **str, char **buffer);
 
-int			parser_error(t_token *tok);
+int			parser_error(void);
 
 int			remove_mixed_quotes(t_token *token);
 char		*expand_text(char *str);

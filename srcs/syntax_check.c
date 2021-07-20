@@ -6,32 +6,67 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 15:49:14 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:31:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-bool	check_command_syntax(t_list *list)
+bool	check_syntax_error(t_list *list)
 {
-	size_t	index;
-	char	*tmp;
+	t_list	*tmp;
+	t_block	*block;
 
-	index = count_command_words(list);
-	if (!index)
+	tmp = list;
+	while (tmp)
 	{
-		if (!ft_strncmp(((t_token *)list->content)->cmd, "|", 1))
-			tmp = "pipe";
-		else if (!ft_strncmp(((t_token *)list->content)->cmd, ";", 1))
-			tmp = "semi-colon";
-		else
-			tmp = "newline";
-		printf("-Minishell: syntax error near unexpected `%s` token\n",
-			tmp);
-		return (false);
+		block = tmp->content;
+		if ((block->id == simple_command)
+			&& (check_first_node_cmd(block->kind.cmd)))
+			return (true);
+		else if (block->id == pipeline && check_pipeline(block->kind.pipe))
+			return (true);
+		tmp = tmp->next;
 	}
-	else
+	return (false);
+}
+
+bool	check_pipeline(t_pipeline *pipeline)
+{
+	t_list	*node;
+
+	node = pipeline->commands;
+	while (node)
+	{
+		if (!node || check_first_node_cmd(node->content))
+			return (true);
+		print_simple_command_node(node->content);
+		node = node->next;
+	}
+	return (false);
+}
+
+bool	check_first_node_cmd(t_simple_command *cmd)
+{
+	t_token	*tok;
+
+	if (cmd->words)
+	{
+		tok = cmd->words->content;
+		if (tok && tok->role == operator && !cmd->redirections)
+		{
+			parser_error();
+			return (true);
+		}
+	}
+	if (cmd->redirections)
+		return (check_redirections(cmd->redirections));
+	if (!cmd->words && !cmd->redirections)
+	{
+		parser_error();
 		return (true);
+	}
+	return (false);
 }
 
 bool	check_redirections(t_list *list)
@@ -47,58 +82,11 @@ bool	check_redirections(t_list *list)
 		tok = redir->file;
 		if (tok->role != word)
 		{
-			display_error("unexpected syntax error near `newline'", NULL);
+			update_last_seen_token(tok);
+			parser_error();
 			return (true);
 		}
 		node = node->next;
-	}
-	return (false);
-}
-
-bool	check_first_node_cmd(t_simple_command *cmd)
-{
-	t_token	*tok;
-
-	tok = cmd->words->content;
-	if (tok && tok->role == operator)
-	{
-		parser_error(tok);
-		return (true);
-	}
-	else
-	{
-		if (cmd->redirections)
-			return (check_redirections(cmd->redirections));
-
-	}
-	return (false);
-}
-
-bool	check_syntax_error(t_list *list)
-{
-	t_list	*tmp;
-	t_list	*pipeline_tmp;
-	t_block	*block;
-
-	tmp = list;
-	while (tmp)
-	{
-		block = tmp->content;
-		if ((block->id == simple_command)
-			&& (check_first_node_cmd(block->kind.cmd)))
-			return (true);
-		else if (block->id == pipeline)
-		{
-			pipeline_tmp = block->kind.pipe->commands;
-			while (pipeline_tmp)
-			{
-				if (!pipeline_tmp || check_first_node_cmd(pipeline_tmp->content))
-					return (true);
-				pipeline_tmp = pipeline_tmp->next;
-			}
-			return (false);
-		}
-		tmp = tmp->next;
 	}
 	return (false);
 }
