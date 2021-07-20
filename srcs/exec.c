@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 10:39:16 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 11:36:23 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,14 @@ int	execute_single_command(t_simple_command *commands)
 	else if (path)
 	{
 		free(path);
+		path = NULL;
 		execute_command(arguments);
 	}
 	else
 		display_error(arguments[0], "command not found");
 	restore_in_and_out(&in_and_out);
+	free(path);
+	path = NULL;
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (0);
 }
