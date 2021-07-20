@@ -6,18 +6,12 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/16 17:18:12 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 15:47:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-
-void reset_pids_array(void)
-{
-	free(g_globals->pids);
-	g_globals->pids = NULL;
-}
 
 void	handle_sigint(int signal)
 {
@@ -45,7 +39,6 @@ void	handle_sigquit(int signal)
 		write(2, error, ft_strlen(error));
 	if (!g_globals->current_pid && !g_globals->pids)
 		write(2, "\b\b  \b\b", 6);
-	reset_pids_array();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
