@@ -5,13 +5,57 @@
 #include "../includes/parser.h"
 #include <string.h>
 
-t_globals *g_globals;
-
 /*
 **	Ce fichier contient l'ensemble des commandes bash fonctionnelles
 **	Il est amené à être amélioré avec le projet
 **
 */
+
+/* QUOTES TESTS */
+
+typedef struct	s_input_test {
+	char input[30];
+	char result[30];
+	int	flag;
+}				t_tok_input_test;
+
+
+ParameterizedTestParameters(quoting_suite, quotes_removal_test)
+{
+	static t_tok_input_test tests[] = {
+		{ .input = "bonjour'bonjour'", .result = "bonjourbonjour", .flag = SINGLE_QUOTES},
+		{ .input = "bonjour'bonjour", .result = "bonjour'bonjour", .flag = 0},
+		{ .input = "bonjour'bonjour\"bonjour\"", .result = "bonjour'bonjourbonjour", .flag = DOUBLE_QUOTES},
+		{ .input = "'bonjour'bonjour", .result = "bonjourbonjour", .flag = SINGLE_QUOTES},
+		{ .input = "bonjour'bon\"jour'\"", .result = "bonjourbon\"jour\"", .flag = SINGLE_QUOTES},
+/*
+		{ .input = "", .result = ""},
+		{ .input = "", .result = ""},
+		{ .input = "", .result = ""},
+		{ .input = "", .result = ""},
+*/
+	};
+
+	return (cr_make_param_array(t_tok_input_test, tests,
+							   sizeof(tests)/sizeof(t_tok_input_test)));
+}
+
+ParameterizedTest(t_tok_input_test *params, quoting_suite, quotes_removal_test)
+{
+	char *str;
+	t_token *token;
+	str = params->input;
+	token = get_next_token(&str);
+	cr_assert_not_null(token, "for [%s]\ntoken should be allocated and this is not the case", params->input);
+	word_flagger(token);
+	cr_expect_eq(token->flag, params->flag, "for [%s]\ntoken flag should be [%x]\nInstead we got [%x]",
+				 params->input, params->flag, token->flag);
+	remove_mixed_quotes(token);
+	cr_expect_str_eq(token->cmd, params->result);
+	free_token(token);
+}
+
+/* REDIRECTIONS TESTS */
 
 typedef struct	s_testing_cmd_parse{
 	char		input[40];
