@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 12:48:51 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/06 19:39:58 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:37:48 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # define BACKSLASH 0x11
 # define SINGLE_QUOTES 0x12
 # define DOUBLE_QUOTES 0x14
-# define TO_EXPAND 0x16
+# define MIXED_QUOTES 0x16
+# define TO_EXPAND 0x20
 # define QUOTING_ERROR 0x40
 
 int		check_quoting(char *token_str);

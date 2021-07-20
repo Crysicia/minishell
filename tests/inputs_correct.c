@@ -28,8 +28,9 @@ ParameterizedTestParameters(quoting_suite, quotes_removal_test)
 		{ .input = "bonjour'bonjour\"bonjour\"", .result = "bonjour'bonjourbonjour", .flag = DOUBLE_QUOTES},
 		{ .input = "'bonjour'bonjour", .result = "bonjourbonjour", .flag = SINGLE_QUOTES},
 		{ .input = "bonjour'bon\"jour'\"", .result = "bonjourbon\"jour\"", .flag = SINGLE_QUOTES},
+
+		{ .input = "'bonjour'\"bonjour\"", .result = "bonjourbonjour", .flag = MIXED_QUOTES},
 /*
-		{ .input = "", .result = ""},
 		{ .input = "", .result = ""},
 		{ .input = "", .result = ""},
 		{ .input = "", .result = ""},
