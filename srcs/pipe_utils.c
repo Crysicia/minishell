@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 10:04:22 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 10:57:47 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 {
-	t_pipe	*t;
+	t_pipe				*t;
+	t_list				*pipe_node;
+	t_simple_command	*tmp;
 
 	t = malloc(sizeof(t_pipe));
 	if (!t)
@@ -27,6 +29,13 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 	g_globals->pids = t->pid_tab;
 	if (!t->pipe_tab || !t->pid_tab)
 		return (NULL);
+	pipe_node = pipeline->commands;
+	while (pipe_node)
+	{
+		tmp = pipe_node->content;
+		look_for_heredoc(tmp->redirections);
+		pipe_node = pipe_node->next;
+	}
 	return (t);
 }
 

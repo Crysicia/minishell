@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 10:03:53 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 10:39:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	**prepare_command_and_do_redirections(t_simple_command *commands)
 	int		res;
 
 	arguments = NULL;
+	look_for_heredoc(commands->redirections);
 	res = handle_redirections(commands->redirections);
 	words = commands->words;
 	if (!res && words)

@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 12:08:51 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 12:09:21 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 10:58:57 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	create_file(char *path, char *redirection_type)
 		fd = open(path, open_flags, 0644);
 	if (fd == -1)
 		display_error(path, strerror(errno));
-	if (!ft_strcmp(redirection_type, "<<"))
-		fd = heredoc_routine(fd, path);
 	return (fd);
 }
 
