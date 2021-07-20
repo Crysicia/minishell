@@ -6,29 +6,41 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 12:22:19 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 12:23:49 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-bool	check_redirections(t_list *list)
+bool	check_syntax_error(t_list *list)
 {
-	t_list			*node;
-	t_redirection	*redir;
-	t_token			*tok;
+	t_list	*tmp;
+	t_block	*block;
 
-	node = list;
+	tmp = list;
+	while (tmp)
+	{
+		block = tmp->content;
+		if ((block->id == simple_command)
+			&& (check_first_node_cmd(block->kind.cmd)))
+			return (true);
+		else if (block->id == pipeline && check_pipeline(block->kind.pipe))
+			return (true);
+		tmp = tmp->next;
+	}
+	return (false);
+}
+
+bool	check_pipeline(t_pipeline *pipeline)
+{
+	t_list	*node;
+
+	node = pipeline->commands;
 	while (node)
 	{
-		redir = node->content;
-		tok = redir->file;
-		if (tok->role != word)
-		{
-			update_last_seen_token(tok);
-			parser_error();
+		if (!node || check_first_node_cmd(node->content))
 			return (true);
-		}
+		print_simple_command_node(node->content);
 		node = node->next;
 	}
 	return (false);
@@ -57,36 +69,24 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 	return (false);
 }
 
-bool	check_pipeline(t_pipeline *pipeline)
+bool	check_redirections(t_list *list)
 {
-	t_list	*node;
+	t_list			*node;
+	t_redirection	*redir;
+	t_token			*tok;
 
-	node = pipeline->commands;
+	node = list;
 	while (node)
 	{
-		if (!node || check_first_node_cmd(node->content))
+		redir = node->content;
+		tok = redir->file;
+		if (tok->role != word)
+		{
+			update_last_seen_token(tok);
+			parser_error();
 			return (true);
-		print_simple_command_node(node->content);
+		}
 		node = node->next;
-	}
-	return (false);
-}
-
-bool	check_syntax_error(t_list *list)
-{
-	t_list	*tmp;
-	t_block	*block;
-
-	tmp = list;
-	while (tmp)
-	{
-		block = tmp->content;
-		if ((block->id == simple_command)
-			&& (check_first_node_cmd(block->kind.cmd)))
-			return (true);
-		else if (block->id == pipeline && check_pipeline(block->kind.pipe))
-			return (true);
-		tmp = tmp->next;
 	}
 	return (false);
 }
