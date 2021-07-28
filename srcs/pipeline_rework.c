@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 16:34:06 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/28 11:48:11 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,5 @@ void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
 {
 	if (pipe_fd)
 		close(pipe_fd[1]);
-	g_globals->current_pid = fork_ret;
 	set_status_code(g_globals->status, false);
-	g_globals->current_pid = 0;
 }

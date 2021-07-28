@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 16:05:15 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/28 12:22:17 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,35 @@ int	execute_single_command(t_simple_command *commands)
 	return (0);
 }
 
-// void add_pid_to_global(int pid)
-// {}
+void add_pid_to_global(int pid)
+{
+	int i;
+	int j;
+	int *tmp;
 
+	i = 0;
+	j = -1;
+	while (g_globals->pids && g_globals->pids[i])
+		i++;
+	tmp = malloc(sizeof(int) * (i + 2));
+	if (!tmp)
+		ft_malloc_error();
+	while (++j < i)
+		tmp[j] = g_globals->pids[j];
+	tmp[j + 1] = pid;
+	tmp[j + 2] = 0;
+	free(g_globals->pids);
+	g_globals->pids = tmp;
+}
+
+void reset_pids_from_global(void)
+{
+	free(g_globals->pids);
+	g_globals->pids = malloc(sizeof(int));
+	if (!g_globals->pids)
+		ft_malloc_error();
+	g_globals->pids[0] = 0;
+}
 
 int	execute_command(char **command)
 {
@@ -118,10 +144,10 @@ int	execute_command(char **command)
 	}
 	else
 	{
-		g_globals->current_pid = pid;
+		add_pid_to_global(pid);
 		wait(&g_globals->status);
 		set_status_code(g_globals->status, false);
-		g_globals->current_pid = 0;
+		reset_pids_from_global();
 	}
 	return (-2);
 }

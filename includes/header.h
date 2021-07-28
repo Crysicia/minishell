@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 16:51:49 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/28 11:48:18 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,5 +209,9 @@ bool	check_redirections(t_list *list);
 
 int		test_redirections(void);
 bool	check_syntax_error(t_list *list);
+
+
+void	add_pid_to_global(int pid);
+void	reset_pids_from_global(void);
 
 #endif
