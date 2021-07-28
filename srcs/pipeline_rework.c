@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/28 11:48:11 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/28 17:03:24 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 	{
 		path = find_exe_path(arguments[0]);
 		if (!path)
+		{
 			display_error(arguments[0], "command not found");
+			exit(127);
+		}
 		else
 			execve(path, arguments, list_to_array(g_globals->env));
 		exit(1);
@@ -88,6 +91,7 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
 {
+	(void)fork_ret;
 	if (pipe_fd)
 		close(pipe_fd[1]);
 	set_status_code(g_globals->status, false);

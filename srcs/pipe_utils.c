@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 16:39:52 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/28 17:05:37 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,12 @@ int	wait_pipeline_end(int pipe_count)
 	i = 0;
 	while (i < pipe_count)
 	{
-		ret = waitpid(g_globals->pids[i], NULL, 0);
+		ret = waitpid(g_globals->pids[i], &g_globals->status, 0);
 		if (ret == -1)
 			return (-1);
 		i++;
 	}
-	wait(NULL);
+	wait(&g_globals->status);
+	set_status_code(g_globals->status, false);
 	return (0);
 }

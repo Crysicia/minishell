@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 15:47:23 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/28 16:47:54 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 void	handle_sigint(int signal)
 {
 	printf("\n");
-	if (g_globals->current_pid)
-		kill(g_globals->current_pid, signal);
+	if (g_globals->pids && g_globals->pids[0])
+		kill(g_globals->pids[0], signal);
 	rl_replace_line("", 0);
 	rl_redisplay();
-	if (!g_globals->current_pid)
+	if (!g_globals->pids || !g_globals->pids[0])
 		print_prompt();
 }
 
@@ -35,12 +35,10 @@ void	handle_sigquit(int signal)
 		kill(g_globals->pids[i], signal);
 		i++;
 	}
-	if (g_globals->current_pid || g_globals->pids)
+	if (g_globals->pids)
 		write(2, error, ft_strlen(error));
-	if (!g_globals->current_pid && !g_globals->pids)
+	if (!g_globals->pids)
 		write(2, "\b\b  \b\b", 6);
-	rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 void	print_prompt(void)

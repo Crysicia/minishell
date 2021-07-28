@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/28 12:22:17 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/28 17:05:25 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@ int	set_status_code(int code, bool from_builtin)
 {
 	if (from_builtin)
 		return (g_globals->status = code);
-	g_globals->status = WEXITSTATUS(code);
+	if (WIFEXITED(code))
+		g_globals->status = WEXITSTATUS(code);
+	if (WIFSIGNALED(code))
+	{
+		g_globals->status = WTERMSIG(code);
+		if (g_globals->status != 131)
+			g_globals->status += 131;
+	}
 	return (g_globals->status);
 }
 
@@ -88,10 +95,12 @@ int	execute_single_command(t_simple_command *commands)
 		execute_command(arguments);
 	}
 	else
+	{
 		display_error(arguments[0], "command not found");
+		set_status_code(127, true);
+	}
 	restore_in_and_out(&in_and_out);
 	free(path);
-	path = NULL;
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (0);
 }
@@ -103,16 +112,19 @@ void add_pid_to_global(int pid)
 	int *tmp;
 
 	i = 0;
-	j = -1;
+	j = 0;
 	while (g_globals->pids && g_globals->pids[i])
 		i++;
 	tmp = malloc(sizeof(int) * (i + 2));
 	if (!tmp)
 		ft_malloc_error();
-	while (++j < i)
+	while (j < i)
+	{
 		tmp[j] = g_globals->pids[j];
-	tmp[j + 1] = pid;
-	tmp[j + 2] = 0;
+		j++;
+	}
+	tmp[j] = pid;
+	tmp[j + 1] = 0;
 	free(g_globals->pids);
 	g_globals->pids = tmp;
 }
