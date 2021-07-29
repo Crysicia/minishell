@@ -2,7 +2,7 @@ SHELL			= /bin/sh
 .SUFFIXES:
 .SUFFIXES:		.c .o .a
 CC				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror -fsanitize=address
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
@@ -95,7 +95,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@echo $(GREEN)"Compiling minishell executable ..."$(RST)
-	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo $(GREEN)"Minishell is ready !\nEnter \"./minishell\" for execution."$(RST)
 
 $(LIBFT):

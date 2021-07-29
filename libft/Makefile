@@ -6,7 +6,7 @@
 #    By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/15 11:22:32 by lpassera          #+#    #+#              #
-#    Updated: 2021/04/30 10:12:06 by lpassera         ###   ########.fr        #
+#    Updated: 2021/07/29 14:32:04 by pcharton         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ SRCS 		= ft_memset.c \
 BONUS_SRCS	= ft_lstnew.c \
 			  ft_lstnew_safe.c \
 			  ft_lstadd_front.c \
- 			  ft_lstsize.c \
+			  ft_lstsize.c \
 			  ft_lstlast.c \
 			  ft_lstadd_back.c \
 			  ft_lstdelone.c \
