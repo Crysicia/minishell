@@ -2,7 +2,7 @@ SHELL			= /bin/sh
 .SUFFIXES:
 .SUFFIXES:		.c .o .a
 CC				= gcc
-CFLAGS 			= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS 			= -Wall -Wextra -Werror
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion
@@ -107,7 +107,7 @@ test: $(TEST)
 	$(RM) *.test
 
 $(TEST): $(NO_MAIN) $(TEST_OBJS) $(LIBFT)
-	$(CC) $(NO_MAIN) $(TEST_OBJS) $(CRITERION) $(LIBS) -o $(TEST)
+	$(CC) $(CFLAGS) $(NO_MAIN) $(TEST_OBJS) $(CRITERION) $(LIBS) -o $(TEST)
 	$(RM) $(TEST_OBJS)
 
 clean:
