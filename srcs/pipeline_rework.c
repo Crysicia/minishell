@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_rework.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 12:01:28 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/28 17:03:24 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 	while (t->scmd_list && t->scmd_list->next)
 	{
 		pipe(t->pipe_tab[++(t->index)]);
-		t->pid_tab[t->index] = execute_pipe_command(t->pipe_tab[t->index],
+		g_globals->pids[t->index] = execute_pipe_command(t->pipe_tab[t->index],
 				t->scmd_list->content);
 		dup2(t->pipe_tab[t->index][0], STDIN_FILENO);
 		t->scmd_list = t->scmd_list->next;
 	}
 	dup2(t->in_and_out[0], STDOUT_FILENO);
-	t->pid_tab[t->index] = execute_pipe_command(NULL,
+	g_globals->pids[t->index] = execute_pipe_command(NULL,
 			t->scmd_list->content);
 	clean_up_pipeline_utils(t, pipeline);
 	return (0);
@@ -78,7 +78,10 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 	{
 		path = find_exe_path(arguments[0]);
 		if (!path)
+		{
 			display_error(arguments[0], "command not found");
+			exit(127);
+		}
 		else
 			execve(path, arguments, list_to_array(g_globals->env));
 		exit(1);
@@ -88,9 +91,8 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
 {
+	(void)fork_ret;
 	if (pipe_fd)
 		close(pipe_fd[1]);
-	g_globals->current_pid = fork_ret;
 	set_status_code(g_globals->status, false);
-	g_globals->current_pid = 0;
 }

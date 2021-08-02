@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 12:36:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/28 12:23:14 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	ft_malloc_error(void)
 	swap = errno;
 	errno = ENOMEM;
 	error = strerror(errno);
-	printf("Malloc error %s_n", error);
+	ft_putstr_fd("Malloc error ", STDERR_FILENO);
+	ft_putstr_fd(error, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	errno = swap;
 }
 

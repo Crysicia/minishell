@@ -45,7 +45,8 @@ void	clean_exit(void)
 {
 	int	status;
 
-	write(2, "exit\n", 5);
+	if (g_globals->pids[0] == 0)
+		write(2, "exit\n", 5);
 	status = g_globals->status;
 	destroy_globals();
 	exit(status);

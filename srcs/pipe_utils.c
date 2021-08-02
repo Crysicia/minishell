@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 10:57:47 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/28 17:05:37 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 	t->scmd_list = pipeline->commands;
 	t->index = -1;
 	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
-	t->pid_tab = malloc(sizeof(int) * pipeline->pipe_count - 1);
-	g_globals->pids = t->pid_tab;
-	if (!t->pipe_tab || !t->pid_tab)
+	g_globals->pids = malloc(sizeof(int) * pipeline->pipe_count - 1);
+	if (!t->pipe_tab || !g_globals->pids) // WARNING IT COULD LEAK HERE
 		return (NULL);
 	pipe_node = pipeline->commands;
 	while (pipe_node)
@@ -41,10 +40,10 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline)
 {
-	wait_pipeline_end(pipeline->pipe_count - 1, tmp->pid_tab);
+	wait_pipeline_end(pipeline->pipe_count - 1);
 	deallocate_pipe_tab(tmp->pipe_tab, pipeline->pipe_count - 1);
 	restore_in_and_out(&tmp->in_and_out);
-	free(tmp->pid_tab);
+	free(g_globals->pids);
 	free(tmp);
 	tmp = NULL;
 	g_globals->pids = NULL;
@@ -90,7 +89,7 @@ void	deallocate_pipe_tab(int **tab, int nb)
 	tab = NULL;
 }
 
-int	wait_pipeline_end(int pipe_count, int *pid_tab)
+int	wait_pipeline_end(int pipe_count)
 {
 	int	ret;
 	int	i;
@@ -98,11 +97,12 @@ int	wait_pipeline_end(int pipe_count, int *pid_tab)
 	i = 0;
 	while (i < pipe_count)
 	{
-		ret = waitpid(pid_tab[i], NULL, 0);
+		ret = waitpid(g_globals->pids[i], &g_globals->status, 0);
 		if (ret == -1)
 			return (-1);
 		i++;
 	}
-	wait(NULL);
+	wait(&g_globals->status);
+	set_status_code(g_globals->status, false);
 	return (0);
 }

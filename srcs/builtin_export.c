@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 19:41:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 17:03:02 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	display_export(void)
 			printf("=\"%s\"", ((t_dict *)list->content)->value);
 		printf("\n");
 		list = list->next;
+
 	}
 	ft_lstclear(&list, free_dict);
 	return (SUCCESS);

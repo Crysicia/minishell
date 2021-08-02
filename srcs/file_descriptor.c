@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_descriptor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 12:08:51 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 10:58:57 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 15:59:45 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	close_all_fds(t_list *command)
 	while (node)
 	{
 		redirection = node->content;
-		close(redirection->fd);
+		if (redirection->fd != -1)
+			close(redirection->fd);
 		node = node->next;
 	}
 	return (1);
