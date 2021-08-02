@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 12:24:33 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:48:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	get_word_size(char *line)
 
 bool	is_quote_closed(char quote, char *str)
 {
-	str++;
+	if (*str)
+		str++;
 	while (*str)
 	{
 		if (*str == quote)

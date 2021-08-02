@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 17:51:52 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:44:24 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ char	*expand_text(char *str)
 	{
 		if (*str == '$')
 			expand_env_variable(&str, &buffer);
-		else if (*str == '\'')
+		else if (*str == '\'' && is_quote_closed(*str, str))
 			copy_simple_quoted_text(&str, &buffer);
-		else if (*str == '"')
+		else if (*str == '"' && is_quote_closed(*str, str))
 			copy_double_quoted_text(&str, &buffer);
 		else
 			copy_unquoted_text(&str, &buffer);

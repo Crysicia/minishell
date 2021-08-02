@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 17:49:15 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:37:17 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	check_quoting(char *token_str)
 	flag = 0;
 	while (token_str && *token_str)
 	{
-		if (*token_str == '\'' || *token_str == '"')
+		if ((*token_str == '\'' || *token_str == '"')
+			&& is_quote_closed(*token_str, token_str))
 			token_str = flag_next_quote(*token_str, &flag, token_str + 1);
 		else
 			token_str++;
@@ -44,12 +45,17 @@ char	*flag_next_quote(char quote, int *flagged, char *word)
 	ptr = word;
 	while (*ptr && *ptr != quote)
 		ptr++;
-	if (*ptr)
+	if (!*flagged && *ptr)
 	{
 		if (quote == '\'')
 			*flagged = SINGLE_QUOTES;
 		else if (quote == '"')
 			*flagged = DOUBLE_QUOTES;
+		return (ptr);
+	}
+	else if (*flagged && *ptr)
+	{
+		*flagged = MIXED_QUOTES;
 		return (ptr);
 	}
 	else
