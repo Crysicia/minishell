@@ -31,10 +31,7 @@ int	handle_redirections(t_list *command)
 			redirection->fd = create_file(redirection->file->cmd,
 					redirection->operator->cmd);
 		if (redirection->fd == -1)
-		{
-			dprintf(2, "Fd is negative\n");
 			return (1);
-		}
 		node = node->next;
 	}
 	return (0);
