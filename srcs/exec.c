@@ -105,11 +105,11 @@ int	execute_single_command(t_simple_command *commands)
 	return (0);
 }
 
-void add_pid_to_global(int pid)
+void	add_pid_to_global(int pid)
 {
-	int i;
-	int j;
-	int *tmp;
+	int	i;
+	int	j;
+	int	*tmp;
 
 	i = 0;
 	j = 0;
@@ -129,7 +129,7 @@ void add_pid_to_global(int pid)
 	g_globals->pids = tmp;
 }
 
-void reset_pids_from_global(void)
+void	reset_pids_from_global(void)
 {
 	free(g_globals->pids);
 	g_globals->pids = malloc(sizeof(int));

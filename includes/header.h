@@ -210,7 +210,6 @@ bool	check_redirections(t_list *list);
 int		test_redirections(void);
 bool	check_syntax_error(t_list *list);
 
-
 void	add_pid_to_global(int pid);
 void	reset_pids_from_global(void);
 

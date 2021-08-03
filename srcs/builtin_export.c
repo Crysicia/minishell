@@ -46,7 +46,6 @@ int	display_export(void)
 			printf("=\"%s\"", ((t_dict *)list->content)->value);
 		printf("\n");
 		list = list->next;
-
 	}
 	ft_lstclear(&list, free_dict);
 	return (SUCCESS);

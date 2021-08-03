@@ -12,7 +12,6 @@
 
 #include "header.h"
 
-
 void	handle_sigint(int signal)
 {
 	printf("\n");
@@ -27,8 +26,9 @@ void	handle_sigint(int signal)
 void	handle_sigquit(int signal)
 {
 	char	*error;
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	error = "Quit (core dumped)\n";
 	while (g_globals->pids && g_globals->pids[i])
 	{
