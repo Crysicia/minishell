@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 15:14:30 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 16:17:35 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,19 @@ char	*get_variable_name(char **str)
 void	expand_exit_status(char **str, char **buffer)
 {
 	char	*exit_status;
-
+	char	*to_free;
+	
 	exit_status = ft_itoa((unsigned char)g_globals->status);
-	ft_strlcpy(*buffer, exit_status, ft_strlen(exit_status) + 1);
+	if (!exit_status)
+	{
+		free(*buffer);
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
+	}
+	to_free = *buffer;
+	*buffer = ft_strjoin(*buffer, exit_status);
+	free(to_free);
+	if (!*buffer)
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	*str += 1;
 	free(exit_status);
 	exit_status = NULL;
