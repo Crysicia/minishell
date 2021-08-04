@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 16:17:35 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 16:21:36 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	expand_exit_status(char **str, char **buffer)
 {
 	char	*exit_status;
 	char	*to_free;
-	
+
 	exit_status = ft_itoa((unsigned char)g_globals->status);
 	if (!exit_status)
 	{
