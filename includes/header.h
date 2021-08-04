@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 14:52:26 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:12:44 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*get_variable_name_and_add_len(char *str, int *i, int *len);
 
 char	*get_variable_name(char **str);
 void	expand_exit_status(char **str, char **buffer);
+void	add_a_dollar(char **buffer);
 
 /* Builtins */
 
