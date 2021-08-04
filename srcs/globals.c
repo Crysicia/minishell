@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/19 14:29:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 14:28:48 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,19 @@ void	update_last_seen_token(t_token *token)
 	}
 	(void)i;
 	(void)str;
+}
+
+int	set_status_code(int code, bool from_builtin)
+{
+	if (from_builtin)
+		return (g_globals->status = code);
+	if (WIFEXITED(code))
+		g_globals->status = WEXITSTATUS(code);
+	if (WIFSIGNALED(code))
+	{
+		g_globals->status = WTERMSIG(code);
+		if (g_globals->status != 131)
+			g_globals->status += 131;
+	}
+	return (g_globals->status);
 }

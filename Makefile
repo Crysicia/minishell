@@ -37,6 +37,7 @@ RAW_SRCS		= bash_c_option.c \
 				  ft_exit.c \
 				  file_descriptor.c \
 				  globals.c \
+				  global_pids.c \
 				  heredoc.c \
 				  input.c \
 				  parse_command.c \
@@ -48,6 +49,7 @@ RAW_SRCS		= bash_c_option.c \
 				  pipeline_rework.c \
 				  pipelines.c \
 				  pipe_utils.c \
+				  pipe_utils_free.c \
 				  print_debug.c \
 				  quoting.c \
 				  quoting_double.c \

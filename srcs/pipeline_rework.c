@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/28 17:03:24 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/04 13:51:53 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,21 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	return (pid);
 }
 
-void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
-								char **arguments)
+void	dup_pipe_stdout(int pipe_fd[2])
 {
-	char	*path;
-
 	if (pipe_fd)
 	{
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[0]);
 	}
+}
+
+void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
+								char **arguments)
+{
+	char	*path;
+
+	dup_pipe_stdout(pipe_fd);
 	if (commands->redirections)
 	{
 		handle_redirections(commands->redirections);

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/28 11:48:18 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/04 14:30:23 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int		execve_argument(char **arguments);
 void	execute_all_the_commands(t_list *list);
 size_t	count_command_words(t_list *list);
 char	**command_format(t_list *list);
+void	find_and_exec_command(char **arguments);
 
 char	*find_exe_path(char *command);
 char	**list_exe_paths(void);
@@ -122,8 +123,6 @@ int		execute_builtin(char *str, char **arguments);
 bool	is_builtin(char *str);
 bool	is_env_valid(char *env, bool can_contain_eq);
 bool	is_path(char *path);
-int		is_valid_path(char *path);
-bool	is_executable(char *path);
 char	*get_executable_path(char *path);
 bool	is_absolute_path(char *path);
 char	*get_full_path(char *path, char *executable);
@@ -165,7 +164,7 @@ typedef struct s_pipe_holder
 int		execute_single_command(t_simple_command *commands);
 int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
 int		**allocate_pipe_tab(int	nb);
-void	deallocate_pipe_tab(int **tab, int nb);
+void	deallocate_pipe_tab(int **tab, int nb, bool should_close);
 int		pipeline_big_loop(t_pipeline *pipeline);
 int		piping_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
@@ -173,6 +172,7 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 			char **arguments);
 void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret);
 t_pipe	*init_pipeline_utils(t_pipeline *pipeline);
+void	*free_pipeline_utils(t_pipe *t, t_pipeline *pipeline);
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline);
 
 /* Miscellaneous */

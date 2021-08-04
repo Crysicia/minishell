@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:47:07 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/12 13:25:32 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 13:51:47 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	clean_exit(void)
 {
 	int	status;
 
-	if (!g_globals->pids)
+	if (!g_globals->pids || g_globals->pids[0] == 0)
 		write(2, "exit\n", 5);
 	status = g_globals->status;
 	destroy_globals();

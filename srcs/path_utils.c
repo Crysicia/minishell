@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 10:09:55 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 11:44:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 14:26:24 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,12 @@ char	**list_exe_paths(void)
 
 char	*get_executable_path(char *path)
 {
-	if (is_executable(path))
-		return (ft_strdup(path));
-	return (NULL);
-}
-
-bool	is_executable(char *path)
-{
 	struct stat	st;
 
 	if ((stat(path, &st) == 0) && (st.st_mode & S_IXUSR)
 		&& (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)))
-		return (true);
-	return (false);
-}
-
-// TODO: remove this function as it is unused
-bool	is_absolute_path(char *path)
-{
-	if (!path)
-		return (false);
-	return (*path == '/');
+		return (ft_strdup(path));
+	return (NULL);
 }
 
 bool	is_path(char *path)
