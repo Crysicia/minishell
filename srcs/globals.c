@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/04 14:28:48 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/04 14:52:46 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ bool	init_globals(char *envp[])
 	if (!g_globals)
 		return (false);
 	g_globals->pids = NULL;
-	g_globals->current_pid = 0;
 	g_globals->status = 0;
 	g_globals->env = array_to_list(envp);
 	ft_memset(g_globals->last_token, 0, 3);
@@ -30,6 +29,7 @@ bool	init_globals(char *envp[])
 bool	destroy_globals(void)
 {
 	ft_lstclear(&g_globals->env, free_dict);
+	free(g_globals->pids);
 	free(g_globals);
 	return (false);
 }
