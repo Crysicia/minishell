@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 14:51:24 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:02:03 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	handle_sigquit(int signal)
 	}
 	if (!g_globals->pids || g_globals->pids[0] == 0)
 		write(2, "\b\b  \b\b", 6);
-	if (g_globals->pids)
+	if (g_globals->pids && g_globals->pids[0] != 0)
 	{
 		write(2, error, ft_strlen(error));
 		reset_pids_from_global();
