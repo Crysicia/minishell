@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 16:44:24 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:14:30 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	*get_variable_name(char **str)
 	size_t	index;
 
 	index = 1;
-	while (*(*str + index) && ft_isalnum(*(*str + index)))
+	while (*(*str + index)
+		&& (ft_isalnum(*(*str + index)) || *(*str + index) == '_'))
 		index++;
 	var_name = ft_strndup(*str + 1, index - 1);
 	*str += index;
@@ -78,10 +79,26 @@ void	expand_env_variable(char **str, char **buffer)
 	else if (**str == '?')
 		expand_exit_status(str, buffer);
 	else
-	{
-		**buffer = '$';
-		*buffer += 1;
-	}
+		add_a_dollar(buffer);
 	free(name);
 	name = NULL;
+}
+
+void	add_a_dollar(char **buffer)
+{
+	char	*to_free;
+	char	*tmp;
+
+	tmp = ft_strdup("$");
+	if (!tmp)
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
+	to_free = *buffer;
+	*buffer = ft_strjoin(*buffer, tmp);
+	free(tmp);
+	if (!*buffer)
+	{
+		free(to_free);
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
+	}
+	free(to_free);
 }
