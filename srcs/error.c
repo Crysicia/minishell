@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/28 12:23:14 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:21:53 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_malloc_error(void)
 
 int	parser_error(void)
 {
-	ft_putstr_fd("Minishell : unexpected syntax error near `", STDERR_FILENO);
+	ft_putstr_fd("minishell: unexpected syntax error near `", STDERR_FILENO);
 	if (*g_globals->last_token)
 		ft_putstr_fd(g_globals->last_token, STDERR_FILENO);
 	else

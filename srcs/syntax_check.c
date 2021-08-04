@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 12:31:27 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:18:05 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ bool	check_pipeline(t_pipeline *pipeline)
 	{
 		if (!node || check_first_node_cmd(node->content))
 			return (true);
-		print_simple_command_node(node->content);
 		node = node->next;
 	}
 	return (false);
