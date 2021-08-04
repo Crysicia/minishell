@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 15:18:05 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/04 16:01:36 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ bool	check_first_node_cmd(t_simple_command *cmd)
 		tok = cmd->words->content;
 		if (tok && tok->role == operator && !cmd->redirections)
 		{
-			parser_error();
+			if (tok->cmd[0] != 0)
+				parser_error();
 			return (true);
 		}
 	}
