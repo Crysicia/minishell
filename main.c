@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/07/20 16:46:31 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/04 14:35:43 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ void	run_minishell(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	(void)argv;
 	if (!init_globals(envp))
 		return (1);
 	if (argc == 1)
 		run_minishell();
-	else if ((argc == 3) && check_bash_c_option(argv[1]))
-		bash_c_option(argv[2]);
 	else
 		return (-1);
 	destroy_globals();
