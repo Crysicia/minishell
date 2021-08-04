@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 15:12:47 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:14:30 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_variable_name(char **str)
 
 	index = 1;
 	while (*(*str + index)
-			&& (ft_isalnum(*(*str + index)) || *(*str + index) == '_'))
+		&& (ft_isalnum(*(*str + index)) || *(*str + index) == '_'))
 		index++;
 	var_name = ft_strndup(*str + 1, index - 1);
 	*str += index;
