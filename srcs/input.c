@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 15:02:03 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/05 14:32:46 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	handle_sigint(int signal)
 	if (g_globals->pids && g_globals->pids[0])
 		kill(g_globals->pids[0], signal);
 	rl_replace_line("", 0);
-	rl_redisplay();
 	if (!g_globals->pids || !g_globals->pids[0])
 		print_prompt();
 }
