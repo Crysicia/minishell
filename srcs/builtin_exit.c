@@ -30,6 +30,7 @@ int	exit_error(char *argument, char *message, int code)
 {
 	char	buffer[MAXPATHLEN];
 
+	ft_bzero(buffer, MAXPATHLEN);
 	g_globals->status = code;
 	if (argument)
 	{
