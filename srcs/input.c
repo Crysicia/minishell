@@ -20,6 +20,7 @@ void	handle_sigint(int signal)
 	rl_replace_line("", 0);
 	if (!g_globals->pids || !g_globals->pids[0])
 		print_prompt();
+	g_globals->status = 130;
 }
 
 void	handle_sigquit(int signal)
