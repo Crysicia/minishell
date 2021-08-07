@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 11:53:36 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 12:09:09 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 		pipe(t->pipe_tab[++(t->index)]);
 		g_globals->pids[t->index] = execute_pipe_command(t->pipe_tab[t->index],
 				t->scmd_list->content);
-		dup2(t->pipe_tab[t->index][0], STDIN_FILENO);
+		if (dup2(t->pipe_tab[t->index][0], STDIN_FILENO) == -1)
+			strerror(errno);
 		close(t->pipe_tab[t->index][0]);
 		t->scmd_list = t->scmd_list->next;
 	}
-	dup2(t->in_and_out[0], STDOUT_FILENO);
+	if (dup2(t->in_and_out[0], STDOUT_FILENO) == -1)
+		strerror(errno);
 	g_globals->pids[t->index] = execute_pipe_command(NULL,
 			t->scmd_list->content);
 	clean_up_pipeline_utils(t, pipeline);
@@ -53,7 +55,7 @@ int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
 	else if (!pid)
 		pipe_child_process_exec(pipe_fd, commands, arguments);
 	else
-		pipe_parent_process_exec(pipe_fd, pid);
+		pipe_parent_process_exec(pipe_fd);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (pid);
 }
@@ -62,7 +64,9 @@ void	dup_pipe_stdout(int pipe_fd[2])
 {
 	if (pipe_fd)
 	{
-		dup2(pipe_fd[1], STDOUT_FILENO);
+		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+			strerror(errno);
+		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 	}
 }
@@ -89,15 +93,18 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 			exit(127);
 		}
 		else
+		{
+			dprintf(2, "Hello sunshine you should see me\n");
 			execve(path, arguments, list_to_array(g_globals->env));
+			dprintf(2, "Hello sunshine you should not see me\n");
+		}
 		exit(1);
 	}
 	exit(0);
 }
 
-void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
+void	pipe_parent_process_exec(int pipe_fd[2])
 {
-	(void)fork_ret;
 	if (pipe_fd)
 		close(pipe_fd[1]);
 	set_status_code(g_globals->status, false);

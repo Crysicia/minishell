@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 15:12:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 12:08:55 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int		piping_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
 void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 			char **arguments);
-void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret);
+void	pipe_parent_process_exec(int pipe_fd[2]);
 t_pipe	*init_pipeline_utils(t_pipeline *pipeline);
 void	*free_pipeline_utils(t_pipe *t, t_pipeline *pipeline);
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline);
