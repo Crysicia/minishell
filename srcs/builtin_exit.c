@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:47:07 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/04 13:51:47 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/07 15:24:28 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	clean_exit(void)
 		write(2, "exit\n", 5);
 	status = g_globals->status;
 	destroy_globals();
+	rl_clear_history();
 	exit(status);
 }
 

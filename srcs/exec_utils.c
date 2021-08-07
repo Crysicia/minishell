@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/12 20:05:27 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 14:15:52 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 15:15:18 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ bool	save_in_and_out(int (*saved)[])
 {
 	ft_bzero(*saved, 2 * sizeof(int));
 	(*saved)[0] = dup(STDOUT_FILENO);
-	dprintf(2, "dup stdout = %d\n", (*saved)[0]);
 	if ((*saved)[0] == -1)
 		return (false);
 	(*saved)[1] = dup(STDIN_FILENO);
-	dprintf(2, "dup stdin = %d\n", (*saved)[1]);
 	if ((*saved)[1] == -1)
 	{
 		close((*saved)[0]);
@@ -37,9 +35,7 @@ bool	restore_in_and_out(int (*saved)[])
 	if (dup2((*saved)[0], STDOUT_FILENO) == -1
 			|| dup2((*saved)[1], STDIN_FILENO) == -1)
 		ret = false;
-	dprintf(2, "closing dup stdout %d\n", (*saved)[0]);
 	close((*saved)[0]);
-	dprintf(2, "closing dup stdin %d\n", (*saved)[1]);
 	close((*saved)[1]);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 14:11:52 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 15:15:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 	while (t->scmd_list && t->scmd_list->next)
 	{
 		pipe(t->pipe_tab[++(t->index)]);
-		dprintf(2, "pipe values %d %d\n", t->pipe_tab[t->index][0], t->pipe_tab[t->index][1]);
 		g_globals->pids[t->index] = execute_pipe_command(t->pipe_tab[t->index],
 				t->scmd_list->content);
 		t->scmd_list = t->scmd_list->next;
 	}
-	dprintf(2, "in %d and out %d\n", t->in_and_out[0], t->in_and_out[1]);
 	if (dup2(t->in_and_out[0], STDOUT_FILENO) == -1)
 		display_error(strerror(errno), NULL);
 	g_globals->pids[t->index] = execute_pipe_command(NULL,
