@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 12:08:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 12:16:10 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # include "../libft/libft.h" 
 # include "token.h"
 # include "parser.h"
-# include "pipes.h"
 # include "flag.h"
 # define BUILTINS_NB 7
 

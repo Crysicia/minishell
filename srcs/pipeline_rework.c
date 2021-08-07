@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 12:09:09 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 12:18:54 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,7 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 			exit(127);
 		}
 		else
-		{
-			dprintf(2, "Hello sunshine you should see me\n");
 			execve(path, arguments, list_to_array(g_globals->env));
-			dprintf(2, "Hello sunshine you should not see me\n");
-		}
 		exit(1);
 	}
 	exit(0);
