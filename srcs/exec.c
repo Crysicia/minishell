@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/07 12:35:08 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 15:02:34 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	execute_all_the_commands(t_list *list)
 	}
 }
 
+
 char	**prepare_command_and_do_redirections(t_simple_command *commands)
 {
 	t_list	*words;
@@ -39,9 +40,8 @@ char	**prepare_command_and_do_redirections(t_simple_command *commands)
 
 	arguments = NULL;
 	look_for_heredoc(commands->redirections);
-	res = handle_redirections(commands->redirections);
 	words = commands->words;
-	if (!res && words)
+	if (words)
 	{
 		if (words)
 			arguments = command_format(words);
@@ -84,6 +84,11 @@ int	execute_single_command(t_simple_command *commands)
 	int		in_and_out[2];
 
 	save_in_and_out(&in_and_out);
+	if (handle_redirections(commands->redirections))
+	{
+		restore_in_and_out(&in_and_out);
+		return (1);
+	}
 	arguments = prepare_command_and_do_redirections(commands);
 	if (!arguments)
 	{
