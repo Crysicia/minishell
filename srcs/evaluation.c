@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 15:31:54 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 18:15:55 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ int	flag_simple_command(t_simple_command *list)
 		token = tmp->content;
 		word_flagger(token);
 		if (token->flag)
+		{
 			remove_mixed_quotes(token);
+		}
 		tmp = tmp->next;
 	}
 	return (0);
