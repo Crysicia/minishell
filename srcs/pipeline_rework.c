@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 12:18:54 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 12:22:45 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 		pipe(t->pipe_tab[++(t->index)]);
 		g_globals->pids[t->index] = execute_pipe_command(t->pipe_tab[t->index],
 				t->scmd_list->content);
-		if (dup2(t->pipe_tab[t->index][0], STDIN_FILENO) == -1)
-			strerror(errno);
-		close(t->pipe_tab[t->index][0]);
 		t->scmd_list = t->scmd_list->next;
 	}
 	if (dup2(t->in_and_out[0], STDOUT_FILENO) == -1)
@@ -102,6 +99,11 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 void	pipe_parent_process_exec(int pipe_fd[2])
 {
 	if (pipe_fd)
+	{
+		if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+			strerror(errno);
+		close(pipe_fd[0]);
 		close(pipe_fd[1]);
+	}
 	set_status_code(g_globals->status, false);
 }
