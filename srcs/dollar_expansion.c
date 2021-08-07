@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 16:21:36 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 15:43:21 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,20 @@ char	*get_variable_name(char **str)
 {
 	char	*var_name;
 	size_t	index;
+	int		boup;
 
 	index = 1;
-	while (*(*str + index)
-		&& (ft_isalnum(*(*str + index)) || *(*str + index) == '_'))
-		index++;
+	boup = 0;
+	if (!ft_isdigit(*(*str + index)))
+	{
+		while (*(*str + index)
+			   && (ft_isalnum(*(*str + index)) || *(*str + index) == '_'))
+			index++;
+	}
+	else
+		boup = 1;
 	var_name = ft_strndup(*str + 1, index - 1);
-	*str += index;
+	*str += index + boup;
 	return (var_name);
 }
 
@@ -76,9 +83,11 @@ void	expand_env_variable(char **str, char **buffer)
 	char	*tmp;
 
 	name = get_variable_name(str);
-	if (name && *name)
+	env_var = NULL;
+	if (name)
 	{
-		env_var = ft_getenv(name);
+		if (*name)
+			env_var = ft_getenv(name);
 		if (env_var && *buffer)
 		{
 			tmp = ft_strjoin(*buffer, env_var->value);

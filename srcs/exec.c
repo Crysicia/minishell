@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/07 15:02:34 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 15:43:46 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	execute_all_the_commands(t_list *list)
 		tmp = tmp->next;
 	}
 }
-
 
 char	**prepare_command_and_do_redirections(t_simple_command *commands)
 {
