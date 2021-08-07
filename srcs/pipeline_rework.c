@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 13:51:53 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/07 11:53:36 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	pipeline_big_loop(t_pipeline *pipeline)
 		g_globals->pids[t->index] = execute_pipe_command(t->pipe_tab[t->index],
 				t->scmd_list->content);
 		dup2(t->pipe_tab[t->index][0], STDIN_FILENO);
+		close(t->pipe_tab[t->index][0]);
 		t->scmd_list = t->scmd_list->next;
 	}
 	dup2(t->in_and_out[0], STDOUT_FILENO);
