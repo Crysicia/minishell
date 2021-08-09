@@ -6,16 +6,23 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/09 17:11:20 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/09 19:22:53 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
 int	ft_execute_pipe_command(t_simple_command *cmd, int stdin, int stdout, int to_close);
-void	v2_pipe_child_process_exec(t_simple_command *commands,
-								   char **arguments);
+void	v2_pipe_child_process_exec(t_simple_command *cmd, char **arguments);
 void	v2_pipe_parent_process_exec(int to_close);
+
+void	close_in_out(int stdin, int stdout)
+{
+	if (stdin != -1 && close(stdin) == -1)
+		display_error("closing invalid fd on in fd", NULL);
+	if (stdout != -1 && close(stdout) == -1)
+		display_error("closing invalid fd on out fd", NULL);
+}
 
 int	the_pipe_come_again(t_pipeline *pipeline)
 {
@@ -23,26 +30,27 @@ int	the_pipe_come_again(t_pipeline *pipeline)
 	int	pipe_fd[2];
 	int		new_stdin;
 	int		new_stdout;
-	int		save[2];
-	
+	int		save;
+
 	t = init_pipeline_utils(pipeline);
 	new_stdin = STDIN_FILENO;
 	new_stdout = -1;
-	save_in_and_out(&save);
+	save = dup(STDIN_FILENO);
 	while (t->scmd_list && t->scmd_list->next)
 	{
 		pipe(pipe_fd);
 		new_stdout = pipe_fd[1];
 		g_globals->pids[++(t->index)] = ft_execute_pipe_command(t->scmd_list->content, new_stdin, new_stdout, pipe_fd[0]);
-		close(new_stdin);
-		close(new_stdout);
+		close_in_out(new_stdin, new_stdout);
 		new_stdin = pipe_fd[0];
 		t->scmd_list = t->scmd_list->next;
 	}
-	g_globals->pids[++(t->index)] = ft_execute_pipe_command(t->scmd_list->content, new_stdin, -1, -1);
-	close(new_stdin);
+	g_globals->pids[(t->index)] = ft_execute_pipe_command(t->scmd_list->content, new_stdin, -1, -1);
+	dprintf(2, "new_stdin %d new_stdout %d\n", new_stdin, new_stdout);
+	close_in_out(new_stdin, -1);
 	clean_up_pipeline_utils(t, pipeline);
-	restore_in_and_out(&save);
+	dup2(save, STDIN_FILENO);
+	close(save);
 	return (0);
 }
 
@@ -69,10 +77,9 @@ int	ft_execute_pipe_command(t_simple_command *cmd, int stdin, int stdout, int to
 		if (stdout != -1 && dup2(stdout, STDOUT_FILENO) == -1)
 			display_error("other big problem in ft_execute_pipe_command", NULL);
 		v2_pipe_child_process_exec(cmd, arguments);
-
 	}
 	else
-		set_status_code(g_globals->status, false);
+		set_status_code(g_globals->status, false);	
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (pid);
 }

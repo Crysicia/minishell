@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/09 17:15:12 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/09 18:35:36 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 	t_list				*pipe_node;
 	t_simple_command	*tmp;
 
-	t = malloc(sizeof(t_pipe));
+	t = ft_calloc(1, sizeof(t_pipe));
 	if (!t)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	t->scmd_list = pipeline->commands;
 	t->index = -1;
-	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
-	g_globals->pids = malloc(sizeof(int) * pipeline->pipe_count - 1);
+	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count);
+	g_globals->pids = ft_calloc(pipeline->pipe_count, sizeof(int));
 	if (!t->pipe_tab || !g_globals->pids)
 		return (free_pipeline_utils(t, pipeline));
 	pipe_node = pipeline->commands;
@@ -52,13 +52,13 @@ int	**allocate_pipe_tab(int	nb)
 	int	i;
 	int	**tab;
 
-	tab = malloc(sizeof(int *) * (nb + 1));
+	tab = ft_calloc(nb + 1, sizeof(int *));
 	if (tab)
 	{
 		i = -1;
 		while (++i < nb)
 		{
-			tab[i] = malloc(sizeof(int) * 2);
+			tab[i] = ft_calloc(2, sizeof(int));
 			if (!tab[i])
 			{
 				deallocate_pipe_tab(tab, i, false);
