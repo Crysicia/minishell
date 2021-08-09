@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 12:16:10 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/09 14:26:39 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ typedef struct s_pipe_holder
 	t_list	*scmd_list;
 	int		index;
 	int		**pipe_tab;
-	int		in_and_out[2];
 }				t_pipe;
 
 int		execute_single_command(t_simple_command *commands);
@@ -173,6 +172,9 @@ void	pipe_parent_process_exec(int pipe_fd[2]);
 t_pipe	*init_pipeline_utils(t_pipeline *pipeline);
 void	*free_pipeline_utils(t_pipe *t, t_pipeline *pipeline);
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline);
+
+
+int	the_pipe_come_again(t_pipeline *pipeline);
 
 /* Miscellaneous */
 

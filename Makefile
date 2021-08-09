@@ -46,6 +46,7 @@ RAW_SRCS		= builtin_cd.c \
 				  path_utils.c \
 				  redirections.c \
 				  pipeline_rework.c \
+				  pipeline_v3.c \
 				  pipelines.c \
 				  pipe_utils.c \
 				  pipe_utils_free.c \

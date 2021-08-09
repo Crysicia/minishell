@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/07 15:43:46 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/09 16:48:50 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	execute_all_the_commands(t_list *list)
 		if (ptr->id == simple_command || ptr->id == only_redirections)
 			ret = execute_single_command(ptr->kind.cmd);
 		else if (ptr->id == pipeline)
-			ret = pipeline_big_loop(ptr->kind.pipe);
+			ret = the_pipe_come_again(ptr->kind.pipe);
+//			ret = pipeline_big_loop(ptr->kind.pipe);
 		tmp = tmp->next;
 	}
 }

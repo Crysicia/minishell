@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 14:24:29 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/09 16:17:06 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 	t = malloc(sizeof(t_pipe));
 	if (!t)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
-	save_in_and_out(&t->in_and_out);
 	t->scmd_list = pipeline->commands;
 	t->index = -1;
+	dprintf(2, "number of pipes == %d\n", pipeline->pipe_count -1);
 	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
 	g_globals->pids = malloc(sizeof(int) * pipeline->pipe_count - 1);
 	if (!t->pipe_tab || !g_globals->pids)
@@ -42,7 +42,6 @@ void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline)
 {
 	wait_pipeline_end(pipeline->pipe_count - 1);
 	deallocate_pipe_tab(tmp->pipe_tab, pipeline->pipe_count - 1, true);
-	restore_in_and_out(&tmp->in_and_out);
 	free(g_globals->pids);
 	free(tmp);
 	tmp = NULL;
@@ -81,6 +80,7 @@ int	wait_pipeline_end(int pipe_count)
 	while (i < pipe_count)
 	{
 		ret = waitpid(g_globals->pids[i], &g_globals->status, 0);
+		dprintf(2, "wait return on %d pid %d\n", g_globals->pids[i], ret);
 		if (ret == -1)
 			return (-1);
 		i++;
