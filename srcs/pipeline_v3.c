@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/09 17:06:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:11:20 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	the_pipe_come_again(t_pipeline *pipeline)
 	close(new_stdin);
 	clean_up_pipeline_utils(t, pipeline);
 	restore_in_and_out(&save);
-	dprintf(2, "i am not out !\n");
 	return (0);
 }
 
@@ -67,26 +66,13 @@ int	ft_execute_pipe_command(t_simple_command *cmd, int stdin, int stdout, int to
 			close(to_close);
 		if (dup2(stdin, STDIN_FILENO) == -1)
 			display_error("big problem in ft_execute_pipe_command", NULL);
-		if (dup2(stdout, STDOUT_FILENO) == -1)
-			display_error("big problem in ft_execute_pipe_command", NULL);
-		/*
-		if (stdin != -1 && dup2(stdin, STDIN_FILENO) != -1 && close(stdin) == -1)
-			display_error("big problem in ft_execute_pipe_command", NULL);
-		if (stdout != -1 && dup2(stdout, STDOUT_FILENO) != -1 && close(stdout) == -1)
+		if (stdout != -1 && dup2(stdout, STDOUT_FILENO) == -1)
 			display_error("other big problem in ft_execute_pipe_command", NULL);
-		*/
 		v2_pipe_child_process_exec(cmd, arguments);
 
 	}
-/*
 	else
-	{
-		if (stdin != -1 && close(stdin) == -1)
-			display_error("closing error\n", NULL);
-			
-		v2_pipe_parent_process_exec(stdout);
-	}
-*/
+		set_status_code(g_globals->status, false);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (pid);
 }
@@ -115,12 +101,4 @@ void	v2_pipe_child_process_exec(t_simple_command *commands, char **arguments)
 		exit(1);
 	}
 	exit(0);
-}
-
-void	v2_pipe_parent_process_exec(int to_close)
-{
-	dprintf(2, "pipe fd %d\n", to_close);
-	if (to_close != -1 && close(to_close) == -1)
-		display_error("closing error\n", NULL);
-	set_status_code(g_globals->status, false);
 }

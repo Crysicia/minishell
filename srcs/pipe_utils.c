@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/09 16:17:06 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:15:12 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	t->scmd_list = pipeline->commands;
 	t->index = -1;
-	dprintf(2, "number of pipes == %d\n", pipeline->pipe_count -1);
 	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count - 1);
 	g_globals->pids = malloc(sizeof(int) * pipeline->pipe_count - 1);
 	if (!t->pipe_tab || !g_globals->pids)
@@ -80,7 +79,6 @@ int	wait_pipeline_end(int pipe_count)
 	while (i < pipe_count)
 	{
 		ret = waitpid(g_globals->pids[i], &g_globals->status, 0);
-		dprintf(2, "wait return on %d pid %d\n", g_globals->pids[i], ret);
 		if (ret == -1)
 			return (-1);
 		i++;
