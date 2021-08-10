@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 19:35:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/10 14:33:50 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 14:39:48 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	copy_unquoted_text(char **str, char **buffer)
 	*str += i;
 }
 
-/* let's work on that */
-
 void	copy_simple_quoted_text(char **str, char **buffer)
 {
 	int		i;
@@ -64,7 +62,7 @@ void	copy_simple_quoted_text(char **str, char **buffer)
 	char	save;
 
 	i = 1;
-	while (*(*str + i) && (*(*str + i) != '\''))
+	while (*(*str + i) != '\'')
 		i++;
 	save = *(*str + i + 1);
 	*(*str + i + 1) = 0;

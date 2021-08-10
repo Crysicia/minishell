@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 11:10:21 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/10 14:17:15 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 15:29:42 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	copy_double_quoted_text(char **str, char **buffer)
 	char	*start;
 
 	*str += 1;
-	expanded = ft_calloc(count_expanded_len(*str) + 1, sizeof(char));
+	expanded = ft_calloc(count_expanded_len(*str) + 1 + 2, sizeof(char));
 	if (!expanded)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	start = expanded;
+	*expanded++ = '"';
 	copying_loop(str, expanded);
 	swap = ft_strjoin(*buffer, start);
 	free(*buffer);
@@ -70,6 +71,7 @@ void	copying_loop(char **str, char *expanded)
 			expanded++;
 		}
 	}
+	*expanded++ = '"';
 }
 
 char	*get_variable_name_and_add_len(char *str, int *i, int *len)
