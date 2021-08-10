@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 14:13:21 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 10:59:37 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 10:46:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ void	load_heredoc(int fd, char *heredoc_end)
 			end = false;
 		expanded = expand_text(buffer);
 		if (end)
+		{
 			ft_putendl_fd(expanded, fd);
+		}
 		free(buffer);
 		free(expanded);
 	}

@@ -33,6 +33,7 @@ RAW_SRCS		= builtin_cd.c \
 				  exec_utils.c \
 				  exec_builtin.c \
 				  flagger.c \
+				  flagger_utils.c \
 				  ft_exit.c \
 				  file_descriptor.c \
 				  globals.c \
