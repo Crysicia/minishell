@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/07 15:43:21 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 12:08:57 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ void	expand_env_variable(char **str, char **buffer)
 
 	name = get_variable_name(str);
 	env_var = NULL;
-	if (name)
+	if (**str == '?')
+		expand_exit_status(str, buffer);
+	else if (name)
 	{
 		if (*name)
 			env_var = ft_getenv(name);
@@ -95,8 +97,6 @@ void	expand_env_variable(char **str, char **buffer)
 			*buffer = tmp;
 		}
 	}
-	else if (**str == '?')
-		expand_exit_status(str, buffer);
 	else
 		add_a_dollar(buffer);
 	free(name);
