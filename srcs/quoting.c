@@ -6,27 +6,11 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 19:35:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/10 14:39:48 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 15:36:10 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-int	remove_mixed_quotes(t_token *token)
-{
-	char	*buffer;
-	char	*to_eval;
-
-	to_eval = token->cmd;
-	buffer = expand_text(to_eval);
-	free(token->cmd);
-	token->cmd = ft_strdup(buffer);
-	if (!token->cmd)
-		ft_exit_with_error_msg(strerror(errno));
-	free(buffer);
-	buffer = NULL;
-	return (1);
-}
 
 /*	Should not change */
 

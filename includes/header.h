@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/09 14:26:39 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 15:38:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ char	*get_variable_name_and_add_len(char *str, int *i, int *len);
 
 /* Variable expansion */
 
+int		expand_token(t_token *token);
+char	*expand_text(char *str);
 char	*get_variable_name(char **str);
 void	expand_exit_status(char **str, char **buffer);
 void	add_a_dollar(char **buffer);

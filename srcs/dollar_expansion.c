@@ -6,12 +6,28 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/10 12:08:57 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 15:36:22 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include "flag.h"
+
+int	expand_token(t_token *token)
+{
+	char	*buffer;
+	char	*to_eval;
+
+	to_eval = token->cmd;
+	buffer = expand_text(to_eval);
+	free(token->cmd);
+	token->cmd = ft_strdup(buffer);
+	if (!token->cmd)
+		ft_exit_with_error_msg(strerror(errno));
+	free(buffer);
+	buffer = NULL;
+	return (1);
+}
 
 char	*expand_text(char *str)
 {
