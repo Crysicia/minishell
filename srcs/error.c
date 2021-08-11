@@ -6,25 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 14:16:30 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 14:24:16 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-void	ft_malloc_error(void)
-{
-	int		swap;
-	char	*error;
-
-	swap = errno;
-	errno = ENOMEM;
-	error = strerror(errno);
-	ft_putstr_fd("Malloc error ", STDERR_FILENO);
-	ft_putstr_fd(error, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	errno = swap;
-}
 
 int	parser_error(void)
 {
