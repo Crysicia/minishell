@@ -6,27 +6,13 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 19:35:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 17:49:34 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 08:39:52 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int	remove_mixed_quotes(t_token *token)
-{
-	char	*buffer;
-	char	*to_eval;
-
-	to_eval = token->cmd;
-	buffer = expand_text(to_eval);
-	free(token->cmd);
-	token->cmd = ft_strdup(buffer);
-	if (!token->cmd)
-		ft_exit_with_error_msg(strerror(errno));
-	free(buffer);
-	buffer = NULL;
-	return (1);
-}
+/*	Should not change */
 
 void	copy_unquoted_text(char **str, char **buffer)
 {
@@ -57,16 +43,38 @@ void	copy_simple_quoted_text(char **str, char **buffer)
 {
 	int		i;
 	char	*tmp;
+	char	save;
 
 	i = 1;
-	while (*(*str + i) && (*(*str + i) != '\''))
+	while (*(*str + i) != '\'')
 		i++;
-	*(*str + i) = 0;
-	tmp = ft_strjoin(*buffer, *str + 1);
+	save = *(*str + i + 1);
+	*(*str + i + 1) = 0;
+	tmp = ft_strjoin(*buffer, *str);
 	if (!tmp)
 		display_error(MSG_MALLOC_FAILED, NULL);
 	free(*buffer);
 	*buffer = tmp;
-	*(*str + i) = '\'';
+	*(*str + i + 1) = save;
 	*str += i + 1;
+}
+
+void	remove_quoting(char *str)
+{
+	char	quote;
+
+	quote = 0;
+	while (*str)
+	{
+		if ((*str == '"' || *str == '\'') && is_quote_closed(*str, str))
+		{
+			quote = *str;
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
+			while (*str != quote)
+				str++;
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
+		}
+		else
+			str++;
+	}
 }

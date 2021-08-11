@@ -1,77 +1,86 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline_rework.c                                  :+:      :+:    :+:   */
+/*   pipeline_v3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/20 09:25:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 13:51:53 by lpassera         ###   ########.fr       */
+/*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
+/*   Updated: 2021/08/11 11:29:02 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int	pipeline_big_loop(t_pipeline *pipeline)
+void	close_in_out(int stdin, int stdout)
+{
+	if (stdin != -1 && close(stdin) == -1)
+		display_error("closing invalid fd on in fd", NULL);
+	if (stdout != -1 && close(stdout) == -1)
+		display_error("closing invalid fd on out fd", NULL);
+}
+
+int	the_pipe_come_again(t_pipeline *pipeline)
 {
 	t_pipe	*t;
+	int		pipe_fd[2];
+	int		in;
+	int		out;
 
 	t = init_pipeline_utils(pipeline);
-	if (!t)
-		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
+	in = STDIN_FILENO;
+	out = -1;
 	while (t->scmd_list && t->scmd_list->next)
 	{
-		pipe(t->pipe_tab[++(t->index)]);
-		g_globals->pids[t->index] = execute_pipe_command(t->pipe_tab[t->index],
-				t->scmd_list->content);
-		dup2(t->pipe_tab[t->index][0], STDIN_FILENO);
+		pipe(pipe_fd);
+		out = pipe_fd[1];
+		g_globals->pids[++(t->index)] = ft_do_pipe(t->scmd_list->content,
+				in, out, pipe_fd[0]);
+		close_in_out(in, out);
+		in = pipe_fd[0];
 		t->scmd_list = t->scmd_list->next;
 	}
-	dup2(t->in_and_out[0], STDOUT_FILENO);
-	g_globals->pids[t->index] = execute_pipe_command(NULL,
-			t->scmd_list->content);
+	g_globals->pids[(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
+	close_in_out(in, -1);
 	clean_up_pipeline_utils(t, pipeline);
+	dup2(t->save_stdin, STDIN_FILENO);
+	close(t->save_stdin);
 	return (0);
 }
 
-int	execute_pipe_command(int pipe_fd[2], t_simple_command *commands)
+int	ft_do_pipe(t_simple_command *cmd, int stdin, int stdout, int to_close)
 {
 	char	**arguments;
 	t_list	*words;
 	int		pid;
 
-	words = commands->words;
+	words = cmd->words;
 	if (words)
 		arguments = command_format(words);
 	else
 		arguments = NULL;
 	pid = fork();
 	if (pid == -1)
-		display_error("while attempting to fork for pipeline",
-			strerror(errno));
+		display_error("while attempting to fork for pipeline", strerror(errno));
 	else if (!pid)
-		pipe_child_process_exec(pipe_fd, commands, arguments);
+	{
+		if (to_close != -1)
+			close(to_close);
+		if (dup2(stdin, STDIN_FILENO) == -1
+			|| (stdout != -1 && dup2(stdout, STDOUT_FILENO) == -1))
+			display_error("dup error in ft_execute_command", NULL);
+		v2_pipe_child_process_exec(cmd, arguments);
+	}
 	else
-		pipe_parent_process_exec(pipe_fd, pid);
+		set_status_code(g_globals->status, false);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (pid);
 }
 
-void	dup_pipe_stdout(int pipe_fd[2])
-{
-	if (pipe_fd)
-	{
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[0]);
-	}
-}
-
-void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
-								char **arguments)
+void	v2_pipe_child_process_exec(t_simple_command *commands, char **arguments)
 {
 	char	*path;
 
-	dup_pipe_stdout(pipe_fd);
 	if (commands->redirections)
 	{
 		handle_redirections(commands->redirections);
@@ -92,12 +101,4 @@ void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
 		exit(1);
 	}
 	exit(0);
-}
-
-void	pipe_parent_process_exec(int pipe_fd[2], int fork_ret)
-{
-	(void)fork_ret;
-	if (pipe_fd)
-		close(pipe_fd[1]);
-	set_status_code(g_globals->status, false);
 }

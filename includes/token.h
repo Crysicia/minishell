@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:03:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/19 12:31:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 11:30:58 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ bool		is_quote_closed(char quote, char *str);
 
 void		word_flagger(t_token *token);
 
+int			expand_token(t_token *token);
 void		expand_env_variable(char **str, char **buffer);
 void		copy_escaped_character(char **str, char **buffer);
 
 int			parser_error(void);
 
-int			remove_mixed_quotes(t_token *token);
 char		*expand_text(char *str);
 void		copy_unquoted_text(char **str, char **buffer);
 void		copy_simple_quoted_text(char **str, char **buffer);

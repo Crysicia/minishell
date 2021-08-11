@@ -23,13 +23,21 @@ typedef struct	s_input_test {
 ParameterizedTestParameters(quoting_suite, quotes_removal_test)
 {
 	static t_tok_input_test tests[] = {
-		{ .input = "bonjour'bonjour'", .result = "bonjourbonjour", .flag = SINGLE_QUOTES},
-		{ .input = "bonjour'bonjour", .result = "bonjour'bonjour", .flag = 0},
-		{ .input = "bonjour'bonjour\"bonjour\"", .result = "bonjour'bonjourbonjour", .flag = DOUBLE_QUOTES},
-		{ .input = "'bonjour'bonjour", .result = "bonjourbonjour", .flag = SINGLE_QUOTES},
-		{ .input = "bonjour'bon\"jour'\"", .result = "bonjourbon\"jour\"", .flag = SINGLE_QUOTES},
 
-		{ .input = "'bonjour'\"bonjour\"", .result = "bonjourbonjour", .flag = MIXED_QUOTES},
+		{ .input = "bonjour'bonjour", .result = "bonjour'bonjour", .flag = 0 | 1 << _NO_QUOTES },
+		{ .input = "bonjour\"bonjour", .result = "bonjour\"bonjour", .flag = 0 | 1 << _NO_QUOTES },
+		{ .input = "bon'jour\"bonjour", .result = "bon'jour\"bonjour", .flag = 0 | 1 << _NO_QUOTES },
+		{ .input = "bonjour\"bonj'our", .result = "bonjour\"bonj'our", .flag = 0 | 1 << _NO_QUOTES },
+
+		{ .input = "bonjour'bonjour\"bonjour\"", .result = "bonjour'bonjourbonjour", .flag = 0 | 1 << _DOUBLE_QUOTES},
+		{ .input = "bonjourbonjour\"bonjour\"", .result = "bonjourbonjourbonjour", .flag = 0 | 1 << _DOUBLE_QUOTES},
+		{ .input = "\"bonjour\"", .result = "bonjour", .flag = 0 | 1 << _DOUBLE_QUOTES},
+
+		{ .input = "bonjour'bonjour'", .result = "bonjourbonjour", .flag = 0 | 1 << _SINGLE_QUOTES },
+		{ .input = "'bonjour'bonjour", .result = "bonjourbonjour", .flag = 0 | 1 << _SINGLE_QUOTES},
+		{ .input = "bonjour'bon\"jour'\"", .result = "bonjourbon\"jour\"", .flag = 0 | 1 << _SINGLE_QUOTES},
+
+		{ .input = "'bonjour'\"bonjour\"", .result = "bonjourbonjour", .flag = 0 | 1 << _SINGLE_QUOTES | 1 << _DOUBLE_QUOTES},
 /*
 		{ .input = "", .result = ""},
 		{ .input = "", .result = ""},
@@ -51,7 +59,7 @@ ParameterizedTest(t_tok_input_test *params, quoting_suite, quotes_removal_test)
 	word_flagger(token);
 	cr_expect_eq(token->flag, params->flag, "for [%s]\ntoken flag should be [%x]\nInstead we got [%x]",
 				 params->input, params->flag, token->flag);
-	remove_mixed_quotes(token);
+	remove_quoting(token->cmd);
 	cr_expect_str_eq(token->cmd, params->result);
 	free_token(token);
 }

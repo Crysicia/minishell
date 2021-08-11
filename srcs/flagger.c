@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/20 16:37:17 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 11:45:47 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,22 @@
 void	word_flagger(t_token *token)
 {
 	if (token->role == word)
-		token->flag = check_quoting(token->cmd);
-	if (!token->flag)
-		token->flag = flag_expansion(token->cmd);
+		flag_quoting(token->cmd, &token->flag);
+	flag_expansion(token->cmd, &token->flag);
 }
 
-int	check_quoting(char *token_str)
+void	flag_quoting(char *token_str, int *flag)
 {
-	int		flag;
-
-	flag = 0;
 	while (token_str && *token_str)
 	{
 		if ((*token_str == '\'' || *token_str == '"')
 			&& is_quote_closed(*token_str, token_str))
-			token_str = flag_next_quote(*token_str, &flag, token_str + 1);
+			token_str = flag_next_quote(*token_str, flag, token_str + 1);
 		else
 			token_str++;
 	}
-	return (flag);
+	if (!get_flag(flag, _SINGLE_QUOTES) && !get_flag(flag, _DOUBLE_QUOTES))
+		set_flag(flag, _NO_QUOTES);
 }
 
 char	*flag_next_quote(char quote, int *flagged, char *word)
@@ -45,34 +42,42 @@ char	*flag_next_quote(char quote, int *flagged, char *word)
 	ptr = word;
 	while (*ptr && *ptr != quote)
 		ptr++;
-	if (!*flagged && *ptr)
+	if (*ptr)
 	{
 		if (quote == '\'')
-			*flagged = SINGLE_QUOTES;
+			set_flag(flagged, _SINGLE_QUOTES);
 		else if (quote == '"')
-			*flagged = DOUBLE_QUOTES;
-		return (ptr);
-	}
-	else if (*flagged && *ptr)
-	{
-		*flagged = MIXED_QUOTES;
+			set_flag(flagged, _DOUBLE_QUOTES);
 		return (ptr);
 	}
 	else
 		return (NULL);
 }
 
-int	flag_expansion(char *token_str)
+void	flag_expansion(char *token_str, int *flag)
 {
 	char	*word;
+	char	quote;
 
 	word = token_str;
+	quote = 0;
 	while (word && *word)
 	{
-		if (*word == '$')
-			return (TO_EXPAND);
-		else
+		if (*word == '"' && !quote)
+			quote = '"';
+		else if (*word == '"' && quote == '"')
+			quote = 0;
+		if (*word == '\'' && !quote && is_quote_closed(*word, word))
+		{
 			word++;
+			while (*word != '\'')
+				word++;
+		}
+		if (*word && *word == '$')
+		{
+			set_flag(flag, _EXPANSION);
+			break ;
+		}
+		word++;
 	}
-	return (0);
 }

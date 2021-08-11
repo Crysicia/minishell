@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 17:13:51 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/04 14:31:39 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 11:02:13 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_all_the_commands(t_list *list)
 		if (ptr->id == simple_command || ptr->id == only_redirections)
 			ret = execute_single_command(ptr->kind.cmd);
 		else if (ptr->id == pipeline)
-			ret = pipeline_big_loop(ptr->kind.pipe);
+			ret = the_pipe_come_again(ptr->kind.pipe);
 		tmp = tmp->next;
 	}
 }
@@ -39,9 +39,8 @@ char	**prepare_command_and_do_redirections(t_simple_command *commands)
 
 	arguments = NULL;
 	look_for_heredoc(commands->redirections);
-	res = handle_redirections(commands->redirections);
 	words = commands->words;
-	if (!res && words)
+	if (words)
 	{
 		if (words)
 			arguments = command_format(words);
@@ -84,6 +83,11 @@ int	execute_single_command(t_simple_command *commands)
 	int		in_and_out[2];
 
 	save_in_and_out(&in_and_out);
+	if (handle_redirections(commands->redirections))
+	{
+		restore_in_and_out(&in_and_out);
+		return (1);
+	}
 	arguments = prepare_command_and_do_redirections(commands);
 	if (!arguments)
 	{

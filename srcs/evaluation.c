@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/14 15:31:54 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 12:17:17 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,32 @@ int	flag_simple_command(t_simple_command *list)
 	{
 		token = tmp->content;
 		word_flagger(token);
-		if (token->flag)
-			remove_mixed_quotes(token);
+		if (get_flag(&token->flag, _EXPANSION))
+		{
+			expand_token(token);
+			parse_expanded_variable(tmp);
+		}
+		token = tmp->content;
+		remove_quoting(token->cmd);
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+int	expand_token(t_token *token)
+{
+	char	*buffer;
+	char	*to_eval;
+
+	to_eval = token->cmd;
+	buffer = expand_text(to_eval);
+	if (!buffer)
+		ft_exit_with_error_msg(strerror(errno));
+	free(token->cmd);
+	token->cmd = ft_strdup(buffer);
+	if (!token->cmd)
+		ft_exit_with_error_msg(strerror(errno));
+	free(buffer);
+	buffer = NULL;
+	return (1);
 }

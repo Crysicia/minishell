@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 18:09:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/07/15 14:49:06 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/07 17:56:28 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,8 @@ int					parse_redirection(char **line,
 						t_simple_command *command,
 						struct s_token *token);
 int					parse_pipeline_command(t_block *first, char **line);
+
+t_list				*get_other_arguments(char *str, t_list *end);
+int					parse_expanded_variable(t_list *node);
 
 #endif
