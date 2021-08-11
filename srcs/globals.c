@@ -72,7 +72,7 @@ int	set_status_code(int code, bool from_builtin)
 	{
 		g_globals->status = WTERMSIG(code);
 		if (g_globals->status != 131)
-			g_globals->status += 131;
+			g_globals->status += 128;
 	}
 	return (g_globals->status);
 }

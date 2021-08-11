@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_v3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 15:16:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 14:56:30 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int	ft_do_pipe(t_simple_command *cmd, int stdin, int stdout, int to_close)
 			display_error("dup error in ft_execute_command", NULL);
 		v2_pipe_child_process_exec(cmd, arguments);
 	}
-	else
-		set_status_code(g_globals->status, false);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (pid);
 }
