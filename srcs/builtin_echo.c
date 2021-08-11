@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 11:17:18 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/25 09:37:49 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 12:20:43 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_arguments(char **arguments)
 	{
 		ft_putstr_fd(*ptr, 1);
 		if (*(ptr + 1))
-			write(1, " ", 1);
+			ft_putchar_fd(' ', 1);
 		ptr++;
 	}
 }
@@ -73,6 +73,6 @@ int	builtin_echo(char **arguments)
 		print_arguments(ptr);
 	}
 	if (!n_option)
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 	return (0);
 }
