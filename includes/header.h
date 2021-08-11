@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 17:32:05 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 18:33:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*get_variable_name_and_add_len(char *str, int *i, int *len);
 char	*expand_text(char *str);
 char	*get_variable_name(char **str);
 void	expand_exit_status(char **str, char **buffer);
-void	add_a_dollar(char **buffer);
+void	add_a_dollar(char **str, char **buffer);
 void	remove_quoting(char *str);
 
 /* Builtins */

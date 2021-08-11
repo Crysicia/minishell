@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 11:28:14 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 18:36:48 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,32 +82,35 @@ void	expand_env_variable(char **str, char **buffer)
 	char	*name;
 	char	*tmp;
 
-	name = get_variable_name(str);
-	env_var = NULL;
-	if (**str == '?')
+	if (*(*str + 1) == '?')
 		expand_exit_status(str, buffer);
-	else if (name)
-	{
-		if (*name)
-			env_var = ft_getenv(name);
-		if (env_var && *buffer)
-		{
-			tmp = ft_strjoin(*buffer, env_var->value);
-			free(*buffer);
-			*buffer = tmp;
-		}
-	}
+	else if (*(*str + 1) == '$' || !*(*str + 1))
+		add_a_dollar(str, buffer);
 	else
-		add_a_dollar(buffer);
-	free(name);
-	name = NULL;
+	{
+		name = get_variable_name(str);
+		env_var = NULL;
+		if (name)
+		{
+			if (*name)
+				env_var = ft_getenv(name);
+			if (env_var && *buffer)
+			{
+				tmp = ft_strjoin(*buffer, env_var->value);
+				free(*buffer);
+				*buffer = tmp;
+			}
+		}
+		free(name);
+	}
 }
 
-void	add_a_dollar(char **buffer)
+void	add_a_dollar(char **str, char **buffer)
 {
 	char	*to_free;
 	char	*tmp;
 
+	*str += 1;
 	tmp = ft_strdup("$");
 	if (!tmp)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
