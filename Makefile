@@ -2,7 +2,7 @@ SHELL			= /bin/sh
 .SUFFIXES:
 .SUFFIXES:		.c .o .a
 CC				= gcc
-CFLAGS 			= -Wall -Wextra -Werror
+CFLAGS 			= -Wall -Wextra -Werror #-fsanitize=address
 RM 				= rm -f
 HEADERS 		= -I./includes -I./libft
 CRITERION		= -lcriterion

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_v3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 11:29:02 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 14:56:30 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	the_pipe_come_again(t_pipeline *pipeline)
 		in = pipe_fd[0];
 		t->scmd_list = t->scmd_list->next;
 	}
-	g_globals->pids[(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
+	g_globals->pids[++(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
 	close_in_out(in, -1);
 	clean_up_pipeline_utils(t, pipeline);
 	dup2(t->save_stdin, STDIN_FILENO);
@@ -71,8 +71,6 @@ int	ft_do_pipe(t_simple_command *cmd, int stdin, int stdout, int to_close)
 			display_error("dup error in ft_execute_command", NULL);
 		v2_pipe_child_process_exec(cmd, arguments);
 	}
-	else
-		set_status_code(g_globals->status, false);
 	ft_free_matrix((void **)arguments, ft_matrix_size((void **)arguments));
 	return (pid);
 }

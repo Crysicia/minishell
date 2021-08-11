@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 16:33:30 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/04 14:52:46 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 15:03:22 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	set_status_code(int code, bool from_builtin)
 	{
 		g_globals->status = WTERMSIG(code);
 		if (g_globals->status != 131)
-			g_globals->status += 131;
+			g_globals->status += 128;
 	}
 	return (g_globals->status);
 }
