@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 08:38:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 08:42:28 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	flag_simple_command(t_simple_command *list)
 		if (get_flag(&token->flag, _EXPANSION))
 		{
 			expand_token(token);
+			parse_expanded_variable(tmp);
 		}
 		remove_quoting(token->cmd);
 		tmp = tmp->next;
