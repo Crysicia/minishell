@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 11:29:02 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 15:16:44 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int	the_pipe_come_again(t_pipeline *pipeline)
 		in = pipe_fd[0];
 		t->scmd_list = t->scmd_list->next;
 	}
-	g_globals->pids[(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
+	g_globals->pids[++(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
 	close_in_out(in, -1);
-	clean_up_pipeline_utils(t, pipeline);
 	dup2(t->save_stdin, STDIN_FILENO);
 	close(t->save_stdin);
+	clean_up_pipeline_utils(t, pipeline);
 	return (0);
 }
 
