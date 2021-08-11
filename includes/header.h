@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 11:31:19 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 16:10:31 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,15 +160,12 @@ typedef struct s_pipe_holder
 	t_list	*scmd_list;
 	int		save_stdin;
 	int		index;
-	int		**pipe_tab;
 }				t_pipe;
 
-int		**allocate_pipe_tab(int	nb);
-void	deallocate_pipe_tab(int **tab, int nb, bool should_close);
 int		wait_pipeline_end(int pipe_count);
 
 t_pipe	*init_pipeline_utils(t_pipeline *pipeline);
-void	*free_pipeline_utils(t_pipe *t, t_pipeline *pipeline);
+void	*free_pipeline_utils(t_pipe *t);
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline);
 
 int		the_pipe_come_again(t_pipeline *pipeline);
@@ -201,7 +198,6 @@ void	print_command_history(t_dlist *history);
 /* Error managment */
 
 void	display_error(char *command, char *custom);
-void	ft_malloc_error(void);
 void	syntax_error(void);
 
 bool	check_pipeline(t_pipeline *pipeline);

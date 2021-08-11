@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/11 12:49:26 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 16:13:20 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ int	dict_key_cmp(void *dict1, void *dict2)
 
 int	display_export(void)
 {
+	t_list *head;
 	t_list	*list;
 
 	list = ft_lstmap(g_globals->env, dup_dict, free_dict);
+	head = list;
 	ft_lstsort(&list, dict_key_cmp);
 	while (list)
 	{
@@ -52,7 +54,7 @@ int	display_export(void)
 		ft_putchar_fd('\n', 1);
 		list = list->next;
 	}
-	ft_lstclear(&list, free_dict);
+	ft_lstclear(&head, free_dict);
 	return (SUCCESS);
 }
 

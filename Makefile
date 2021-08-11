@@ -49,7 +49,6 @@ RAW_SRCS		= builtin_cd.c \
 				  pipeline_v3.c \
 				  pipelines.c \
 				  pipe_utils.c \
-				  pipe_utils_free.c \
 				  print_debug.c \
 				  quoting.c \
 				  quoting_double.c \

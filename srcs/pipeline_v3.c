@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 15:30:19 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 16:08:59 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ int	the_pipe_come_again(t_pipeline *pipeline)
 	}
 	g_globals->pids[++(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
 	close_in_out(in, -1);
-	in = t->save_stdin;
-	
-	dup2(in, STDIN_FILENO);
-	close(in);
+	dup2(t->save_stdin, STDIN_FILENO);
+	close(t->save_stdin);
 	clean_up_pipeline_utils(t, pipeline);
 	return (0);
 }
