@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 13:42:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/04 16:01:36 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 14:09:18 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	check_syntax_error(t_list *list)
 	while (tmp)
 	{
 		block = tmp->content;
-		if ((block->id == simple_command)
+		if ((block->id == simple_command || block-> id == only_redirections)
 			&& (check_first_node_cmd(block->kind.cmd)))
 			return (true);
 		else if (block->id == pipeline && check_pipeline(block->kind.pipe))
