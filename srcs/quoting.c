@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 19:35:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/10 15:36:10 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 08:39:52 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,24 @@ void	copy_simple_quoted_text(char **str, char **buffer)
 	*buffer = tmp;
 	*(*str + i + 1) = save;
 	*str += i + 1;
+}
+
+void	remove_quoting(char *str)
+{
+	char	quote;
+
+	quote = 0;
+	while (*str)
+	{
+		if ((*str == '"' || *str == '\'') && is_quote_closed(*str, str))
+		{
+			quote = *str;
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
+			while (*str != quote)
+				str++;
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
+		}
+		else
+			str++;
+	}
 }
