@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/11 12:23:54 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 12:49:26 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,14 @@ int	display_export(void)
 	ft_lstsort(&list, dict_key_cmp);
 	while (list)
 	{
-		printf("export %s", ((t_dict *)list->content)->key);
+		ft_putstr_fd("export ", 1);
+		ft_putstr_fd(((t_dict *)list->content)->key, 1);
 		if (((t_dict *)list->content)->value)
-			printf("=\"%s\"", ((t_dict *)list->content)->value);
+		{
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(((t_dict *)list->content)->value, 1);
+			ft_putchar_fd('"', 1);
+		}
 		ft_putchar_fd('\n', 1);
 		list = list->next;
 	}
