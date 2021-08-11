@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/07 14:43:56 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 10:40:23 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ int	handle_redirections(t_list *command)
 	{
 		redirection = node->content;
 		word_flagger(redirection->file);
-		if (redirection->file->role)
+		if (redirection->file->role
+			&& get_flag(&redirection->file->flag, _EXPANSION)
+			&& ft_strcmp("<<", redirection->operator->cmd))
 		{
 			if (expand_redirection(redirection))
 				return (close_all_fds(command));
 		}
+		remove_quoting(redirection->file->cmd);
 		if (ft_strcmp("<<", redirection->operator->cmd))
 			redirection->fd = create_file(redirection->file->cmd,
 					redirection->operator->cmd);
