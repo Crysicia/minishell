@@ -15,16 +15,16 @@ typedef struct env_test
 ParameterizedTestParameters(expansion_suite, dollar_expansion_test)
 {
 	static unit test[] = {
-		{.word = "$USER", .flag = 0, .expected = "lpassera"},
-		{.word = "$USER $PATH", .flag = 0, .expected = "lpassera /etc"},
+		{.word = "$USER", .flag = 0 | 1 << _EXPANSION, .expected = "lpassera"},
+		{.word = "$USER $PATH", .flag = 0 | 1 << _EXPANSION, .expected = "lpassera /etc"},
 
-		{.word = "'bonjour'", .flag = SINGLE_QUOTES, .expected = "bonjour"},
-		{.word = "'$USER'", .flag = SINGLE_QUOTES, .expected = "$USER"},
+		{.word = "'bonjour'", .flag = 0 | 1 << _SINGLE_QUOTES, .expected = "bonjour"},
+		{.word = "'$USER'", .flag = 0 | 1 << _SINGLE_QUOTES, .expected = "$USER"},
 	
-		{.word = "bonjour", .flag = DOUBLE_QUOTES, .expected = "bonjour"},
-		{.word = "\"$USER\"", .flag = DOUBLE_QUOTES, .expected = "lpassera"},
-		{.word = "\"$USE\"", .flag = DOUBLE_QUOTES, .expected = ""},
-		{.word = "\"$USER $PATH\"", .flag = DOUBLE_QUOTES, .expected = "lpassera /etc"},
+		{.word = "bonjour", .flag = 0 | 1 << _DOUBLE_QUOTES, .expected = "bonjour"},
+		{.word = "\"$USER\"", .flag = 0 | 1 << _DOUBLE_QUOTES | 1 << _EXPANSION, .expected = "lpassera"},
+		{.word = "\"$USE\"", .flag = 0 | 1 << _DOUBLE_QUOTES | 1 << _EXPANSION, .expected = ""},
+		{.word = "\"$USER $PATH\"", .flag = 0 | 1 << _DOUBLE_QUOTES | 1 << _EXPANSION, .expected = "lpassera /etc"},
 
 	};
 	return (cr_make_param_array(unit, test, sizeof(test)/sizeof(unit)));
@@ -39,6 +39,7 @@ ParameterizedTest(unit *params, expansion_suite, dollar_expansion_test)
 	t_token *fake_token = new_token(alloc_param, word);
 	fake_token->flag = params->flag;
 
-	remove_mixed_quotes(fake_token);
+	expand_token(fake_token);
+	remove_quoting(fake_token->cmd);
 	cr_expect_str_eq(fake_token->cmd, params->expected);
 }

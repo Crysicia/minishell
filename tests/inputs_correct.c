@@ -59,7 +59,7 @@ ParameterizedTest(t_tok_input_test *params, quoting_suite, quotes_removal_test)
 	word_flagger(token);
 	cr_expect_eq(token->flag, params->flag, "for [%s]\ntoken flag should be [%x]\nInstead we got [%x]",
 				 params->input, params->flag, token->flag);
-	remove_mixed_quotes(token);
+	remove_quoting(token->cmd);
 	cr_expect_str_eq(token->cmd, params->result);
 	free_token(token);
 }
