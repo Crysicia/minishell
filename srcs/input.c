@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 14:49:59 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 16:01:44 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	handle_sigint(int signal)
 {
-	printf("\n");
+	if (isatty(STDIN_FILENO))
+		printf("\n");
 	if (g_globals->pids && g_globals->pids[0])
 		kill(g_globals->pids[0], signal);
 	rl_replace_line("", 0);
+	rl_on_new_line();
 	if (!g_globals->pids || !g_globals->pids[0])
-		print_prompt();
+		rl_redisplay();
 }
 
 void	handle_sigquit(int signal)

@@ -1,4 +1,5 @@
 /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
@@ -26,9 +27,10 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 	dprintf(2, "save_stdin %d\n", t->save_stdin);
 	t->save_stdin = dup(STDIN_FILENO);
 		dprintf(2, "save_stdin %d\n", t->save_stdin);
-	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count);
+	//t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count);
 	g_globals->pids = ft_calloc(pipeline->pipe_count, sizeof(int));
-	if (!t->pipe_tab || !g_globals->pids)
+	if (!g_globals->pids)
+	//	(!t->pipe_tab || 
 		return (free_pipeline_utils(t, pipeline));
 	pipe_node = pipeline->commands;
 	while (pipe_node)
@@ -43,7 +45,7 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline)
 {
 	wait_pipeline_end(pipeline->pipe_count);
-	deallocate_pipe_tab(tmp->pipe_tab, pipeline->pipe_count, true);
+//	deallocate_pipe_tab(tmp->pipe_tab, pipeline->pipe_count, true);
 	free(g_globals->pids);
 	free(tmp);
 	tmp = NULL;
