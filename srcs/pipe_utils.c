@@ -23,6 +23,9 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	t->scmd_list = pipeline->commands;
 	t->index = -1;
+	dprintf(2, "save_stdin %d\n", t->save_stdin);
+	t->save_stdin = dup(STDIN_FILENO);
+		dprintf(2, "save_stdin %d\n", t->save_stdin);
 	t->pipe_tab = allocate_pipe_tab(pipeline->pipe_count);
 	g_globals->pids = ft_calloc(pipeline->pipe_count, sizeof(int));
 	if (!t->pipe_tab || !g_globals->pids)
@@ -34,7 +37,6 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 		look_for_heredoc(tmp->redirections);
 		pipe_node = pipe_node->next;
 	}
-	t->save_stdin = dup(STDIN_FILENO);
 	return (t);
 }
 

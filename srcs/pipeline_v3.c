@@ -42,9 +42,9 @@ int	the_pipe_come_again(t_pipeline *pipeline)
 	}
 	g_globals->pids[++(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
 	close_in_out(in, -1);
-	clean_up_pipeline_utils(t, pipeline);
 	dup2(t->save_stdin, STDIN_FILENO);
 	close(t->save_stdin);
+	clean_up_pipeline_utils(t, pipeline);
 	return (0);
 }
 

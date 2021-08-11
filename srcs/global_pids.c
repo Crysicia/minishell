@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 14:29:49 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/04 14:31:00 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 14:20:22 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	add_pid_to_global(int pid)
 		i++;
 	tmp = malloc(sizeof(int) * (i + 2));
 	if (!tmp)
-		ft_malloc_error();
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	while (j < i)
 	{
 		tmp[j] = g_globals->pids[j];
@@ -41,6 +41,6 @@ void	reset_pids_from_global(void)
 	free(g_globals->pids);
 	g_globals->pids = malloc(sizeof(int));
 	if (!g_globals->pids)
-		ft_malloc_error();
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	g_globals->pids[0] = 0;
 }
