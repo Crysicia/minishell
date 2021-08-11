@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 11:28:40 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 12:00:22 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	flag_simple_command(t_simple_command *list)
 			expand_token(token);
 			parse_expanded_variable(tmp);
 		}
+		token = tmp->content;
 		remove_quoting(token->cmd);
 		tmp = tmp->next;
 	}
