@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:02:45 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 16:08:59 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 17:41:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ int	the_pipe_come_again(t_pipeline *pipeline)
 		in = pipe_fd[0];
 		t->scmd_list = t->scmd_list->next;
 	}
-	g_globals->pids[++(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
+	t->index += 1;
+	g_globals->pids[(t->index)] = ft_do_pipe(t->scmd_list->content, in, -1, -1);
 	close_in_out(in, -1);
-	dup2(t->save_stdin, STDIN_FILENO);
-	close(t->save_stdin);
 	clean_up_pipeline_utils(t, pipeline);
 	return (0);
 }
@@ -80,10 +79,7 @@ void	v2_pipe_child_process_exec(t_simple_command *commands, char **arguments)
 	char	*path;
 
 	if (commands->redirections)
-	{
-		handle_redirections(commands->redirections);
 		apply_all_redirections(commands->redirections);
-	}
 	if (arguments && is_builtin(arguments[0]))
 		exit(set_status_code(execute_builtin(arguments[0], &arguments[1]), 1));
 	else if (arguments)

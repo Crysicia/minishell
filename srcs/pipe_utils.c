@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 16:35:51 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 17:40:46 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline)
 {
 	wait_pipeline_end(pipeline->pipe_count);
+	if (dup2(tmp->save_stdin, STDIN_FILENO))
+		display_error("dup in clean_up_pipe_utils failed", NULL);
+	close(tmp->save_stdin);
 	free(g_globals->pids);
 	free(tmp);
 	tmp = NULL;

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/11 10:40:23 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 17:34:34 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,19 @@ void	apply_redirection(int fd, char *redirection_type)
 				display_error(strerror(errno), NULL);
 		}
 		close(fd);
+	}
+}
+
+void	create_pipeline_files(t_pipeline *pipeline)
+{
+	t_list				*node;
+	t_simple_command	*cmd;
+
+	node = pipeline->commands;
+	while (node)
+	{
+		cmd = node->content;
+		handle_redirections(cmd->redirections);
+		node = node->next;
 	}
 }

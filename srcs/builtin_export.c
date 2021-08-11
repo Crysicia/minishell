@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 15:50:15 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/11 16:13:20 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 17:41:39 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	dict_key_cmp(void *dict1, void *dict2)
 
 int	display_export(void)
 {
-	t_list *head;
+	t_list	*head;
 	t_list	*list;
 
 	list = ft_lstmap(g_globals->env, dup_dict, free_dict);

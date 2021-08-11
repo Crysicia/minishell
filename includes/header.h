@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 16:10:31 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 17:32:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	copy_env_var_to_buffer(char **str, char *buffer);
 
 /* Redirections */
 
+void	create_pipeline_files(t_pipeline *pipeline);
 int		expand_redirection(t_redirection *redirection);
 int		handle_redirections(t_list *command);
 int		apply_all_redirections(t_list *command);
