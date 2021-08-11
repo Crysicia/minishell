@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 10:25:57 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/10 12:14:25 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 11:25:51 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_pipe	*init_pipeline_utils(t_pipeline *pipeline)
 		look_for_heredoc(tmp->redirections);
 		pipe_node = pipe_node->next;
 	}
+	t->save_stdin = dup(STDIN_FILENO);
 	return (t);
 }
 
@@ -76,10 +77,10 @@ int	wait_pipeline_end(int pipe_count)
 	int	i;
 
 	i = 0;
-	dprintf(2, "pipecount %d\n", pipe_count);
 	while (i < pipe_count)
 	{
 		ret = waitpid(g_globals->pids[i], &g_globals->status, 0);
+		dprintf(2, "for process %d exit status is %d\n", ret, g_globals->status);
 		if (ret == -1)
 			return (-1);
 		i++;

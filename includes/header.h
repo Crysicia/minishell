@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 19:17:41 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 08:20:13 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 11:31:19 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	skip_spaces(char **line);
 /* Execution */
 
 int		evaluation_pass(t_list *list);
+int		execute_single_command(t_simple_command *commands);
 int		execute_command(char **command);
 int		execve_argument(char **arguments);
 void	execute_all_the_commands(t_list *list);
@@ -107,6 +108,7 @@ char	*expand_text(char *str);
 char	*get_variable_name(char **str);
 void	expand_exit_status(char **str, char **buffer);
 void	add_a_dollar(char **buffer);
+void	remove_quoting(char *str);
 
 /* Builtins */
 
@@ -156,26 +158,23 @@ int		close_all_fds(t_list *command);
 typedef struct s_pipe_holder
 {
 	t_list	*scmd_list;
+	int		save_stdin;
 	int		index;
 	int		**pipe_tab;
 }				t_pipe;
 
-int		execute_single_command(t_simple_command *commands);
-int		execute_pipe_command(int pipe_fd[2], t_simple_command *commands);
 int		**allocate_pipe_tab(int	nb);
 void	deallocate_pipe_tab(int **tab, int nb, bool should_close);
-int		pipeline_big_loop(t_pipeline *pipeline);
-int		piping_loop(t_pipeline *pipeline);
 int		wait_pipeline_end(int pipe_count);
-void	pipe_child_process_exec(int pipe_fd[2], t_simple_command *commands,
-			char **arguments);
-void	pipe_parent_process_exec(int pipe_fd[2]);
+
 t_pipe	*init_pipeline_utils(t_pipeline *pipeline);
 void	*free_pipeline_utils(t_pipe *t, t_pipeline *pipeline);
 void	clean_up_pipeline_utils(t_pipe *tmp, t_pipeline *pipeline);
 
-
-int	the_pipe_come_again(t_pipeline *pipeline);
+int		the_pipe_come_again(t_pipeline *pipeline);
+int		ft_do_pipe(t_simple_command *cmd, int stdin, int stdout, int to_close);
+void	v2_pipe_child_process_exec(t_simple_command *cmd, char **arguments);
+void	v2_pipe_parent_process_exec(int to_close);
 
 /* Miscellaneous */
 
