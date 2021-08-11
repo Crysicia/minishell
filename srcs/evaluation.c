@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 12:00:22 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 12:17:17 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	expand_token(t_token *token)
 
 	to_eval = token->cmd;
 	buffer = expand_text(to_eval);
+	if (!buffer)
+		ft_exit_with_error_msg(strerror(errno));
 	free(token->cmd);
 	token->cmd = ft_strdup(buffer);
 	if (!token->cmd)
