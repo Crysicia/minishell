@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 11:36:29 by pcharton          #+#    #+#             */
-/*   Updated: 2021/08/11 18:36:48 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/12 08:12:30 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	expand_exit_status(char **str, char **buffer)
 	free(to_free);
 	if (!*buffer)
 		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
-	*str += 1;
+	*str += 2;
 	free(exit_status);
 	exit_status = NULL;
 }
