@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/11 15:43:02 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/12 06:55:19 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	run_minishell(void)
 		input_list = parser_loop(input_str);
 		if (!check_syntax_error(input_list))
 		{
+			ft_bzero(g_globals->last_token, 3);
 			ret = evaluation_pass(input_list);
 			if (!ret)
 				execute_all_the_commands(input_list);

@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:47:07 by lpassera          #+#    #+#             */
-/*   Updated: 2021/08/11 12:23:13 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/12 06:39:09 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	clean_exit(void)
 {
 	int	status;
 
-	if (!g_globals->pids || g_globals->pids[0] == 0)
+	if ((!g_globals->pids || g_globals->pids[0] == 0) && ft_strcmp(g_globals->last_token, "|"))
 		ft_putendl_fd("exit", 2);
 	status = g_globals->status;
 	destroy_globals();
