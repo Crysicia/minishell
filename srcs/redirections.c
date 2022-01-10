@@ -6,81 +6,106 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 10:35:34 by lpassera          #+#    #+#             */
-/*   Updated: 2021/05/24 12:32:24 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 10:40:23 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int	create_file(char *path, char *redirection_type)
-{
-	int	fd;
-	int	open_flags;
-
-	open_flags = O_RDWR;
-	if (ft_strcmp(redirection_type, "<"))
-		open_flags |= O_CREAT;
-	if (!ft_strcmp(redirection_type, ">>"))
-		open_flags |= O_APPEND;
-	if (ft_strcmp(redirection_type, ">>") && ft_strcmp(redirection_type, "<"))
-		open_flags |= O_TRUNC;
-	fd = open(path, open_flags, 0644);
-	return (fd);
-}
-
-void	apply_redirection(char *path, char *redirection_type)
-{
-	int	fd;
-
-	fd = create_file(path, redirection_type);
-	if (fd == -1)
-	{
-		display_error(path, strerror(errno));
-		exit(1);
-	}
-	if (!ft_strcmp(redirection_type, "<"))
-		dup2(fd, STDIN_FILENO);
-	else
-		dup2(fd, STDOUT_FILENO);
-	close(fd);
-}
-
-void	handle_redirections(t_list *command)
+int	handle_redirections(t_list *command)
 {
 	t_redirection	*redirection;
+	t_list			*node;
 
-	while (command)
+	node = command;
+	while (node)
 	{
-		redirection = command->content;
-		apply_redirection(redirection->file->cmd, redirection->operator->cmd);
-		command = command->next;
+		redirection = node->content;
+		word_flagger(redirection->file);
+		if (redirection->file->role
+			&& get_flag(&redirection->file->flag, _EXPANSION)
+			&& ft_strcmp("<<", redirection->operator->cmd))
+		{
+			if (expand_redirection(redirection))
+				return (close_all_fds(command));
+		}
+		remove_quoting(redirection->file->cmd);
+		if (ft_strcmp("<<", redirection->operator->cmd))
+			redirection->fd = create_file(redirection->file->cmd,
+					redirection->operator->cmd);
+		if (redirection->fd == -1)
+			return (1);
+		node = node->next;
+	}
+	return (0);
+}
+
+int	expand_redirection(t_redirection *redirection)
+{
+	char	*expanded_str;
+
+	expanded_str = expand_text(redirection->file->cmd);
+	if (!expanded_str)
+	{
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
+		return (-1);
+	}
+	else if (!*expanded_str)
+	{
+		display_error(redirection->file->cmd, "Ambiguous redirect");
+		redirection->fd = -1;
+		return (1);
+	}
+	else
+	{
+		free(redirection->file->cmd);
+		redirection->file->cmd = expanded_str;
+		return (0);
 	}
 }
 
-bool	save_in_and_out(int (*saved)[])
+int	apply_all_redirections(t_list *command)
 {
-	ft_bzero(*saved, 2 * sizeof(int));
-	(*saved)[0] = dup(STDOUT_FILENO);
-	if ((*saved)[0] == -1)
-		return (false);
-	(*saved)[1] = dup(STDIN_FILENO);
-	if ((*saved)[1] == -1)
+	t_redirection	*redirection;
+	t_list			*node;
+
+	node = command;
+	while (node)
 	{
-		close((*saved)[0]);
-		return (false);
+		redirection = node->content;
+		if (redirection->fd == -1)
+			return (1);
+		node = node->next;
 	}
-	return (true);
+	node = command;
+	while (node)
+	{
+		redirection = node->content;
+		apply_redirection(redirection->fd, redirection->operator->cmd);
+		node = node->next;
+	}
+	return (0);
 }
 
-bool	restore_in_and_out(int (*saved)[])
+void	apply_redirection(int fd, char *redirection_type)
 {
-	bool	ret;
+	int	tmp;
 
-	ret = true;
-	if (dup2((*saved)[0], STDOUT_FILENO) == -1
-			|| dup2((*saved)[1], STDIN_FILENO) == -1)
-		ret = false;
-	close((*saved)[0]);
-	close((*saved)[1]);
-	return (ret);
+	if (fd > -1)
+	{
+		if (!ft_strcmp(redirection_type, "<")
+			|| !ft_strcmp(redirection_type, "<<"))
+		{
+			tmp = dup2(fd, STDIN_FILENO);
+			if (tmp < 0)
+				display_error(strerror(errno), NULL);
+		}
+		else
+		{
+			tmp = dup2(fd, STDOUT_FILENO);
+			if (tmp < 0)
+				display_error(strerror(errno), NULL);
+		}
+		close(fd);
+	}
 }

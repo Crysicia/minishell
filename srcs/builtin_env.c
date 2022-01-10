@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 12:09:29 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/27 14:40:36 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/11 12:22:27 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	builtin_env(char **arguments)
 	{
 		env = dict_to_env(node->content);
 		if (((t_dict *)node->content)->value)
-			printf("%s\n", env);
+			ft_putendl_fd(env, 1);
 		free(env);
 		node = node->next;
 	}

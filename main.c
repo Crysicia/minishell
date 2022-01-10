@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 12:45:25 by lpassera          #+#    #+#             */
-/*   Updated: 2021/06/11 19:32:35 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:47:36 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ void	run_minishell(void)
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, handle_sigquit);
 		input_str = readline("minishell: ");
-		add_history(input_str);
+		if (!input_str)
+			ft_exit();
+		if (!ft_is_blank(input_str))
+			add_history(input_str);
 		input_list = parser_loop(input_str);
 		if (!check_syntax_error(input_list))
 		{
@@ -37,14 +41,15 @@ void	run_minishell(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	if (!init_globals(envp))
-		return (1);
+	(void)argv;
 	if (argc == 1)
+	{
+		if (!init_globals(envp))
+			return (-2);
 		run_minishell();
-	else if ((argc == 3) && check_bash_c_option(argv[1]))
-		bash_c_option(argv[2]);
+		destroy_globals();
+	}
 	else
 		return (-1);
-	destroy_globals();
 	return (0);
 }

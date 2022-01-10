@@ -6,11 +6,26 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 09:36:30 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 20:28:44 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/20 16:48:05 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token.h"
+#include "header.h"
+
+char	*cut_token_string(char *line)
+{
+	char	*trimmed_str;
+
+	if (is_redirection(line)
+		&& (!ft_strncmp(">>", line, 2) || !ft_strncmp("<<", line, 2)))
+		trimmed_str = ft_strndup(line, 2);
+	else if ((is_operator(line) && ft_strchr("|", *line))
+		|| (is_redirection(line) && ft_strchr("><", *line)))
+		trimmed_str = ft_strndup(line, 1);
+	else
+		trimmed_str = ft_strndup(line, get_word_size(line));
+	return (trimmed_str);
+}
 
 int	get_word_size(char *line)
 {
@@ -19,46 +34,33 @@ int	get_word_size(char *line)
 	i = 0;
 	while (line[i] && !is_operator(&line[i]) && !is_redirection(&line[i])
 		&& !is_space(line[i]))
+	{
+		if (ft_strchr("'\"", line[i]) && is_quote_closed(line[i], &line[i]))
+			i += add_quote_len(line[i], &line[i]);
 		i++;
+	}
 	return (i);
 }
 
-char	*cut_token_string(char *line)
+bool	is_quote_closed(char quote, char *str)
 {
-	char	*trimmed_str;
-
-	if (is_escape_character(*line))
-		trimmed_str = get_escaped_string(line);
-	else if (is_redirection(line) && (!ft_strncmp(">>", line, 2)
-			|| !ft_strncmp("<<", line, 2)))
-		trimmed_str = ft_strndup(line, 2);
-	else if ((is_operator(line) && ft_strchr("|", *line))
-		|| (is_redirection(line) && ft_strchr("><", *line)))
-		trimmed_str = ft_strndup(line, 1);
-	else
-		trimmed_str = ft_strndup(line, get_word_size(line));
-	if (!trimmed_str)
-		ft_malloc_error();
-	return (trimmed_str);
+	if (*str)
+		str++;
+	while (*str)
+	{
+		if (*str == quote)
+			return (true);
+		str++;
+	}
+	return (false);
 }
 
-char	*get_escaped_string(char *str)
+int	add_quote_len(char quote, char *str)
 {
-	char	*result;
-	char	quote;
-	size_t	index;
+	int	len;
 
-	index = 0;
-	while (str[index] && is_escape_character(str[index]))
-	{
-		quote = str[index++];
-		while (str[index] && (str[index] != quote))
-			index++;
-		if (str[index] && str[index] == quote)
-			index++;
-		while (ft_isalnum(str[index]))
-			index++;
-	}
-	result = ft_strndup(str, index);
-	return (result);
+	len = 1;
+	while (str[len] && str[len] != quote)
+		len++;
+	return (len);
 }

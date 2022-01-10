@@ -1,30 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   btree.h                                            :+:      :+:    :+:   */
+/*   flagger_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/27 21:45:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/04/27 22:50:38 by pcharton         ###   ########.fr       */
+/*   Created: 2021/08/10 11:28:45 by pcharton          #+#    #+#             */
+/*   Updated: 2021/08/10 11:45:04 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BTREE_H
-# define BTREE_H
+#include "header.h"
+#include "flag.h"
 
-# include <stdlib.h>
-
-typedef struct s_btree
+void	set_flag(int *flag, int bit)
 {
-	struct s_btree	*left;
-	struct s_btree	*right;
-	void			*item;
-}					t_btree;
+	*flag |= (1 << bit);
+}
 
-t_btree	*btree_create_node(void *item);
-void	btree_apply_prefix(t_btree *root, void (*applyf)(void *));
-void	btree_apply_infix(t_btree *root, void (*applyf)(void *));
-void	btree_apply_suffix(t_btree *root, void (*applyf)(void *));
+bool	get_flag(int *flag, int bit)
+{
+	if (*flag & (1 << bit))
+		return (true);
+	else
+		return (false);
+}
 
-#endif
+void	print_flags(int *flag)
+{
+	int	i;
+
+	i = 0;
+	while (i < 32)
+	{
+		if (get_flag(flag, i))
+		{
+			ft_putnbr_fd(i, STDERR_FILENO);
+			ft_putendl_fd(" : flag is set", STDERR_FILENO);
+		}
+		i++;
+	}
+}

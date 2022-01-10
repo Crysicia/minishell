@@ -6,13 +6,34 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 11:48:01 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 19:42:55 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/10 11:45:47 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token.h"
 #include "flag.h"
 #include "../libft/libft.h"
+
+void	word_flagger(t_token *token)
+{
+	if (token->role == word)
+		flag_quoting(token->cmd, &token->flag);
+	flag_expansion(token->cmd, &token->flag);
+}
+
+void	flag_quoting(char *token_str, int *flag)
+{
+	while (token_str && *token_str)
+	{
+		if ((*token_str == '\'' || *token_str == '"')
+			&& is_quote_closed(*token_str, token_str))
+			token_str = flag_next_quote(*token_str, flag, token_str + 1);
+		else
+			token_str++;
+	}
+	if (!get_flag(flag, _SINGLE_QUOTES) && !get_flag(flag, _DOUBLE_QUOTES))
+		set_flag(flag, _NO_QUOTES);
+}
 
 char	*flag_next_quote(char quote, int *flagged, char *word)
 {
@@ -24,46 +45,39 @@ char	*flag_next_quote(char quote, int *flagged, char *word)
 	if (*ptr)
 	{
 		if (quote == '\'')
-			*flagged = SINGLE_QUOTES;
+			set_flag(flagged, _SINGLE_QUOTES);
 		else if (quote == '"')
-			*flagged = DOUBLE_QUOTES;
+			set_flag(flagged, _DOUBLE_QUOTES);
 		return (ptr);
 	}
 	else
 		return (NULL);
 }
 
-int	check_quoting(char *word)
+void	flag_expansion(char *token_str, int *flag)
 {
-	int		flag;
-	int		quote_count;
+	char	*word;
+	char	quote;
 
-	flag = 0;
-	quote_count = 0;
+	word = token_str;
+	quote = 0;
 	while (word && *word)
 	{
-		if ((*word == '\'') || (*word == '\"'))
+		if (*word == '"' && !quote)
+			quote = '"';
+		else if (*word == '"' && quote == '"')
+			quote = 0;
+		if (*word == '\'' && !quote && is_quote_closed(*word, word))
 		{
-			word = flag_next_quote(*word, &flag, word + 1);
-			update_flag_count(&flag, &quote_count);
-		}
-		if (word)
 			word++;
-		else
-			return (QUOTING_ERROR);
-	}
-	if (quote_count >= 2)
-		flag = MIXED_QUOTES;
-	return (flag);
-}
-
-void	update_flag_count(int *flag, int *count)
-{
-	if (!(*count) && (*flag))
-		*count += 1;
-	else if ((*count) && (*flag))
-	{
-		*count += 1;
-		*flag = 0;
+			while (*word != '\'')
+				word++;
+		}
+		if (*word && *word == '$')
+		{
+			set_flag(flag, _EXPANSION);
+			break ;
+		}
+		word++;
 	}
 }

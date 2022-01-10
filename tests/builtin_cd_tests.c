@@ -101,10 +101,10 @@ Test(cd_builtin, valid_path_mult_args_tests, .init=init_filesystem, .fini=destro
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		cr_log_warn("Error with getcwd, errno is %d %s", errno, strerror(errno));
-	cr_expect_eq(res, 0);
-	cr_expect_str_eq(oldpwd->value, "/parent");
-	cr_expect_str_eq(pwd->value, "/");
-	cr_expect_str_eq(cwd, "/", 
+	cr_expect_eq(res, 1);
+	cr_expect_str_eq(oldpwd->value, "");
+	cr_expect_str_eq(pwd->value, "/parent");
+	cr_expect_str_eq(cwd, "/parent", 
 		"Expected current working directory to be [%s], instead got [%s], for path [%s]",
 		"/",
 		cwd,

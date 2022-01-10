@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 20:31:36 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 20:28:00 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/05 14:32:46 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,34 @@
 void	handle_sigint(int signal)
 {
 	printf("\n");
-	if (g_globals->current_pid)
-		kill(g_globals->current_pid, signal);
-	rl_redisplay();
-	print_prompt();
+	if (g_globals->pids && g_globals->pids[0])
+		kill(g_globals->pids[0], signal);
+	rl_replace_line("", 0);
+	if (!g_globals->pids || !g_globals->pids[0])
+		print_prompt();
+	g_globals->status = 130;
 }
 
-/*	rl_replace_line("", 0); */
+void	handle_sigquit(int signal)
+{
+	char	*error;
+	int		i;
+
+	i = 0;
+	error = "Quit (core dumped)\n";
+	while (g_globals->pids && g_globals->pids[i])
+	{
+		kill(g_globals->pids[i], signal);
+		i++;
+	}
+	if (!g_globals->pids || g_globals->pids[0] == 0)
+		write(2, "\b\b  \b\b", 6);
+	if (g_globals->pids && g_globals->pids[0] != 0)
+	{
+		write(2, error, ft_strlen(error));
+		reset_pids_from_global();
+	}
+}
 
 void	print_prompt(void)
 {
@@ -33,4 +54,15 @@ void	skip_spaces(char **line)
 {
 	while (line && *line && (**line == ' ' || **line == '\t'))
 		*line += 1;
+}
+
+bool	ft_is_blank(char *str)
+{
+	while (*str)
+	{
+		if (!ft_strchr("\t\n\r\v\f", *str))
+			return (false);
+		str++;
+	}
+	return (true);
 }

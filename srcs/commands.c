@@ -6,7 +6,7 @@
 /*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 14:38:46 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/15 14:38:46 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/07/14 13:35:28 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_simple_command	*new_simple_command(void)
 		new->redirections = NULL;
 	}
 	else
-		display_error("Malloc failed", "new_simple_command function");
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	return (new);
 }
 
@@ -50,7 +50,7 @@ t_redirection	*new_redirection(void)
 		new->file = NULL;
 	}
 	else
-		display_error("Malloc failed", "new_simple_command function");
+		ft_exit_with_error_msg(MSG_MALLOC_FAILED);
 	return (new);
 }
 

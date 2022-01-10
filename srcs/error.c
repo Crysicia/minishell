@@ -6,15 +6,11 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:53 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/26 15:55:51 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:21:53 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "header.h"
-#include <errno.h>
-#include <string.h>
-#include "../libft/libft.h"
-#include "token.h"
+#include "header.h"
 
 void	ft_malloc_error(void)
 {
@@ -24,57 +20,38 @@ void	ft_malloc_error(void)
 	swap = errno;
 	errno = ENOMEM;
 	error = strerror(errno);
-	printf("Malloc error %s_n", error);
+	ft_putstr_fd("Malloc error ", STDERR_FILENO);
+	ft_putstr_fd(error, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	errno = swap;
 }
 
-int	parser_error(t_token *tok)
+int	parser_error(void)
 {
-	ft_putstr_fd("Minishell : unexpected syntax error near `", STDERR_FILENO);
-	ft_putstr_fd(tok->cmd, STDERR_FILENO);
+	ft_putstr_fd("minishell: unexpected syntax error near `", STDERR_FILENO);
+	if (*g_globals->last_token)
+		ft_putstr_fd(g_globals->last_token, STDERR_FILENO);
+	else
+		ft_putstr_fd("newline", STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 	return (-1);
 }
 
-bool	check_first_node_cmd(t_simple_command *cmd)
+void	display_error(char *command, char *custom)
 {
-	t_token	*tok;
+	int		i;
+	char	buffer[256];
+	char	*first;
 
-	tok = cmd->words->content;
-	if (tok->role == operator)
+	ft_bzero(&buffer[0], 256);
+	first = "minishell:  ";
+	i = ft_strlcpy(&buffer[0], first, ft_strlen(first) + 1);
+	i += ft_strlcpy(&buffer[i - 1], command, ft_strlen(command) + 1);
+	if (custom)
 	{
-		parser_error(tok);
-		return (true);
+		i += ft_strlcpy(&buffer[i - 1], ": ", 3);
+		i += ft_strlcpy(& buffer[i - 1], custom, ft_strlen(custom) + 1);
 	}
-	else
-		return (false);
-}
-
-bool	check_syntax_error(t_list *list)
-{
-	t_list	*tmp;
-	t_list	*pipeline_tmp;
-	t_block	*block;
-
-	tmp = list;
-	while (tmp)
-	{
-		block = tmp->content;
-		if ((block->id == simple_command)
-			&& (check_first_node_cmd(block->kind.cmd)))
-			return (true);
-		else if (block->id == pipeline)
-		{
-			pipeline_tmp = block->kind.pipe->commands;
-			while (pipeline_tmp)
-			{
-				if (check_first_node_cmd(pipeline_tmp->content))
-					return (true);
-				pipeline_tmp = pipeline_tmp->next;
-			}
-			return (false);
-		}
-		tmp = tmp->next;
-	}
-	return (false);
+	buffer[i - 1] = '\n';
+	write(2, buffer, ft_strlen(buffer));
 }

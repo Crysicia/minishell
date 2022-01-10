@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharton <pcharton@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 11:12:16 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 12:58:11 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:14:22 by lpassera         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_simple_command_node(t_simple_command *command)
 	t_token				*tmp;
 	t_redirection		*tmp2;
 
-	puts("printing words list");
+	printf("printing words list\n");
 	node = command->words;
 	while (node)
 	{
@@ -26,7 +26,7 @@ void	print_simple_command_node(t_simple_command *command)
 		printf("[%s]---", tmp->cmd);
 		node = node->next;
 	}
-	puts("\nprinting redirection list");
+	printf("\nprinting redirection list\n");
 	node = command->redirections;
 	while (node)
 	{
@@ -77,10 +77,10 @@ void	print_command_history(t_dlist *history)
 	t_dlist	*tmp;
 
 	tmp = history;
-	puts("Printing commands history");
+	printf("Printing commands history\n");
 	while (tmp)
 	{
-		puts(tmp->content);
+		printf("%s\n", (char *)tmp->content);
 		tmp = tmp->previous;
 	}
 }

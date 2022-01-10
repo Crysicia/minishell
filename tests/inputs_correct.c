@@ -5,12 +5,66 @@
 #include "../includes/parser.h"
 #include <string.h>
 
-
 /*
 **	Ce fichier contient l'ensemble des commandes bash fonctionnelles
 **	Il est amené à être amélioré avec le projet
 **
 */
+
+/* QUOTES TESTS */
+
+typedef struct	s_input_test {
+	char input[30];
+	char result[30];
+	int	flag;
+}				t_tok_input_test;
+
+
+ParameterizedTestParameters(quoting_suite, quotes_removal_test)
+{
+	static t_tok_input_test tests[] = {
+
+		{ .input = "bonjour'bonjour", .result = "bonjour'bonjour", .flag = 0 | 1 << _NO_QUOTES },
+		{ .input = "bonjour\"bonjour", .result = "bonjour\"bonjour", .flag = 0 | 1 << _NO_QUOTES },
+		{ .input = "bon'jour\"bonjour", .result = "bon'jour\"bonjour", .flag = 0 | 1 << _NO_QUOTES },
+		{ .input = "bonjour\"bonj'our", .result = "bonjour\"bonj'our", .flag = 0 | 1 << _NO_QUOTES },
+
+		{ .input = "bonjour'bonjour\"bonjour\"", .result = "bonjour'bonjourbonjour", .flag = 0 | 1 << _DOUBLE_QUOTES},
+		{ .input = "bonjourbonjour\"bonjour\"", .result = "bonjourbonjourbonjour", .flag = 0 | 1 << _DOUBLE_QUOTES},
+		{ .input = "\"bonjour\"", .result = "bonjour", .flag = 0 | 1 << _DOUBLE_QUOTES},
+
+		{ .input = "bonjour'bonjour'", .result = "bonjourbonjour", .flag = 0 | 1 << _SINGLE_QUOTES },
+		{ .input = "'bonjour'bonjour", .result = "bonjourbonjour", .flag = 0 | 1 << _SINGLE_QUOTES},
+		{ .input = "bonjour'bon\"jour'\"", .result = "bonjourbon\"jour\"", .flag = 0 | 1 << _SINGLE_QUOTES},
+
+		{ .input = "'bonjour'\"bonjour\"", .result = "bonjourbonjour", .flag = 0 | 1 << _SINGLE_QUOTES | 1 << _DOUBLE_QUOTES},
+/*
+		{ .input = "", .result = ""},
+		{ .input = "", .result = ""},
+		{ .input = "", .result = ""},
+*/
+	};
+
+	return (cr_make_param_array(t_tok_input_test, tests,
+							   sizeof(tests)/sizeof(t_tok_input_test)));
+}
+
+ParameterizedTest(t_tok_input_test *params, quoting_suite, quotes_removal_test)
+{
+	char *str;
+	t_token *token;
+	str = params->input;
+	token = get_next_token(&str);
+	cr_assert_not_null(token, "for [%s]\ntoken should be allocated and this is not the case", params->input);
+	word_flagger(token);
+	cr_expect_eq(token->flag, params->flag, "for [%s]\ntoken flag should be [%x]\nInstead we got [%x]",
+				 params->input, params->flag, token->flag);
+	remove_quoting(token->cmd);
+	cr_expect_str_eq(token->cmd, params->result);
+	free_token(token);
+}
+
+/* REDIRECTIONS TESTS */
 
 typedef struct	s_testing_cmd_parse{
 	char		input[40];
@@ -42,9 +96,11 @@ ParameterizedTest(t_testing_cmd_parse *tests, parser_suite, redirection_parse_te
 	char *line = tests->input;
 	t_block raw_result;
 	int fct_ret = parse_simple_command(&raw_result, &line);
+
 	t_simple_command	*testerino = raw_result.kind.cmd;
 	t_redirection *redir =  testerino->redirections->content;
 	t_token *token = redir->operator;
+
 	cr_assert_eq(fct_ret, 0);
 	cr_expect(strcmp(token->cmd, tests->expected) == 0,
 			 "expected [%s] output for [%s] input, instead, fct returned [%s]",
@@ -123,6 +179,7 @@ ParameterizedTestParameters(parser_suite, simple_command_parse_test) {
 
 ParameterizedTest(scmd_test *tests, parser_suite, simple_command_parse_test)
 {
+
 	char *line = tests->input;
 	t_block llist;
 	int fct_ret = parse_simple_command(&llist, &line);

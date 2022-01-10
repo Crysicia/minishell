@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 08:53:01 by lpassera          #+#    #+#             */
-/*   Updated: 2021/04/07 13:31:38 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/07/05 18:58:59 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*ft_free_matrix(void **matrix, size_t size)
 	while (index < size)
 	{
 		free(matrix[index]);
+		matrix[index] = NULL;
 		index++;
 	}
 	free(matrix);

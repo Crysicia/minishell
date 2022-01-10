@@ -36,6 +36,7 @@ t_dict	*env_to_dict(char *env)
 		key = ft_strndup(env, (int)(delimiter - env));
 		dict = new_dict(key, &delimiter[1]);
 		free(key);
+		key = NULL;
 	}
 	return (dict);
 }
@@ -66,8 +67,11 @@ void	free_dict(void *elem)
 
 	dict = elem;
 	free(dict->key);
+	dict->key = NULL;
 	free(dict->value);
+	dict->value = NULL;
 	free(dict);
+	dict = NULL;
 }
 
 t_dict	*new_dict(char *key, char *value)

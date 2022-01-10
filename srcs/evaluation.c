@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:21:54 by pcharton          #+#    #+#             */
-/*   Updated: 2021/06/11 19:41:10 by pcharton         ###   ########.fr       */
+/*   Updated: 2021/08/11 12:17:17 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	evaluation_pass(t_list *list)
 		ptr = list->content;
 		if (ptr->id == simple_command)
 			ret = flag_simple_command(ptr->kind.cmd);
+		else if (ptr->id == pipeline)
+			ret = flag_pipeline(ptr->kind.pipe);
 		if (!ret)
 			tmp = tmp->next;
 		else
@@ -33,53 +35,58 @@ int	evaluation_pass(t_list *list)
 	return (0);
 }
 
+int	flag_pipeline(t_pipeline *list)
+{
+	t_list				*node;
+	t_simple_command	*to_flag;
+
+	node = list->commands;
+	while (node)
+	{
+		to_flag = node->content;
+		if (flag_simple_command(to_flag))
+			ft_exit_with_error_msg("error while flagging pipeline");
+		node = node->next;
+	}
+	return (0);
+}
+
 int	flag_simple_command(t_simple_command *list)
 {
 	t_token			*token;
 	t_list			*tmp;
-	t_redirection	*redir;
 
 	tmp = list->words;
 	while (tmp)
 	{
 		token = tmp->content;
 		word_flagger(token);
-		if (token->flag != QUOTING_ERROR)
-			remove_mixed_quotes(token);
-		else
-			return (-1);
-		tmp = tmp->next;
-	}
-	tmp = list->redirections;
-	while (tmp)
-	{
-		redir = tmp->content;
-		word_flagger(redir->file);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-void	word_flagger(t_token *token)
-{
-	if (token->role == word)
-	{
-		token->flag = check_quoting(token->cmd);
-		if (token->flag == QUOTING_ERROR)
+		if (get_flag(&token->flag, _EXPANSION))
 		{
-			ft_putendl_fd("Minishell: error: quotes were not closed properly",
-				2);
+			expand_token(token);
+			parse_expanded_variable(tmp);
 		}
+		token = tmp->content;
+		remove_quoting(token->cmd);
+		tmp = tmp->next;
 	}
+	return (0);
 }
 
-/*
-int	flag_pipeline(t_pipeline *list)
+int	expand_token(t_token *token)
 {
-	return (0);
+	char	*buffer;
+	char	*to_eval;
+
+	to_eval = token->cmd;
+	buffer = expand_text(to_eval);
+	if (!buffer)
+		ft_exit_with_error_msg(strerror(errno));
+	free(token->cmd);
+	token->cmd = ft_strdup(buffer);
+	if (!token->cmd)
+		ft_exit_with_error_msg(strerror(errno));
+	free(buffer);
+	buffer = NULL;
+	return (1);
 }
-int	flag_redirection(t_list *list)
-{
-	return (0);
-}
-*/

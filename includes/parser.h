@@ -6,7 +6,7 @@
 /*   By: lpassera <lpassera@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 18:09:25 by pcharton          #+#    #+#             */
-/*   Updated: 2021/05/25 16:31:50 by lpassera         ###   ########.fr       */
+/*   Updated: 2021/08/07 17:56:28 by pcharton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum e_command_type
 
 typedef struct s_redirection
 {
+	int				fd;
 	struct s_token	*operator;
 	struct s_token	*file;
 }				t_redirection;
@@ -71,9 +72,12 @@ t_command_type		attribute_command_type(t_simple_command *command);
 
 t_list				*parser_loop(char *line);
 int					parse_simple_command(t_block *dst, char **line);
-void				parse_redirection(char **line,
+int					parse_redirection(char **line,
 						t_simple_command *command,
 						struct s_token *token);
 int					parse_pipeline_command(t_block *first, char **line);
+
+t_list				*get_other_arguments(char *str, t_list *end);
+int					parse_expanded_variable(t_list *node);
 
 #endif
